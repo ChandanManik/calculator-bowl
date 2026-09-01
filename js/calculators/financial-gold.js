@@ -1191,10 +1191,7 @@ function renderGoldCalculator(container, calcDef) {
   };
 
   function getAppTheme() {
-    const isDark = document.documentElement.getAttribute("data-theme") === "dark" ||
-      document.body.classList.contains("dark") ||
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-    return isDark ? "dark" : "light";
+    return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
   }
 
   function loadCandlestickChart(interval = currentCandleInterval) {

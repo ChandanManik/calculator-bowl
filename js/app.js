@@ -17,14 +17,14 @@ function initApp() {
   initTheme();
   initRouter();
   initSearch();
+  initMobileMenu();
 }
 
 /* ==========================================================================
    Theme Management (Light / Dark Mode)
    ========================================================================== */
 function initTheme() {
-  const savedTheme = localStorage.getItem("calculatorbowl-theme") || 
-                     (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const savedTheme = localStorage.getItem("calculatorbowl-theme") || "light";
   document.documentElement.setAttribute("data-theme", savedTheme);
   updateThemeIcon(savedTheme);
 
@@ -880,6 +880,74 @@ function attachSearchEvents(input, dropdown) {
       dropdown.style.display = "none";
     }
   });
+}
+
+function updateActiveNav(activeId) {
+  document.querySelectorAll(".nav-link, .mobile-nav-link").forEach(link => {
+    const href = link.getAttribute("href") || "";
+    if (activeId && href.includes(activeId)) {
+      link.classList.add("active");
+    } else if (!activeId && (href === "/" || href === "")) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
+  });
+}
+
+function initMobileMenu() {
+  const menuBtn = document.getElementById("mobileMenuBtn");
+  const drawer = document.getElementById("mobileNavDrawer");
+  if (!menuBtn || !drawer) return;
+
+  menuBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = drawer.classList.toggle("is-open");
+    menuBtn.classList.toggle("is-active", isOpen);
+    menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    drawer.setAttribute("aria-hidden", isOpen ? "false" : "true");
+    document.body.classList.toggle("drawer-open", isOpen);
+  });
+
+  // Close drawer on internal link click
+  drawer.addEventListener("click", (e) => {
+    if (e.target.closest("a")) {
+      drawer.classList.remove("is-open");
+      menuBtn.classList.remove("is-active");
+      menuBtn.setAttribute("aria-expanded", "false");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("drawer-open");
+    }
+  });
+
+  // Close drawer on click outside
+  document.addEventListener("click", (e) => {
+    if (drawer.classList.contains("is-open") && !drawer.contains(e.target) && !menuBtn.contains(e.target)) {
+      drawer.classList.remove("is-open");
+      menuBtn.classList.remove("is-active");
+      menuBtn.setAttribute("aria-expanded", "false");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("drawer-open");
+    }
+  });
+
+  // Close drawer on Escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer.classList.contains("is-open")) {
+      drawer.classList.remove("is-open");
+      menuBtn.classList.remove("is-active");
+      menuBtn.setAttribute("aria-expanded", "false");
+      drawer.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("drawer-open");
+    }
+  });
+
+  // Mobile drawer search input listener
+  const mobileInput = document.getElementById("mobileSearchInput");
+  const mobileDropdown = document.getElementById("mobileSearchResults");
+  if (mobileInput && mobileDropdown) {
+    attachSearchEvents(mobileInput, mobileDropdown);
+  }
 }
 
 // Global FAQ Toggle helper

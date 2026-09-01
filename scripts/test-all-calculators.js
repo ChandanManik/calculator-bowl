@@ -62,7 +62,9 @@ const sandbox = {
     querySelector: () => null,
     querySelectorAll: () => [],
     addEventListener: () => {},
-    createElement: (tag) => ({ style: {}, setAttribute: () => {}, appendChild: () => {} })
+    createElement: (tag) => ({ style: {}, setAttribute: () => {}, appendChild: () => {} }),
+    documentElement: { setAttribute: () => {}, getAttribute: () => null },
+    body: { classList: { contains: () => false, add: () => {}, remove: () => {}, toggle: () => {} } }
   },
   console: console,
   setTimeout: setTimeout,

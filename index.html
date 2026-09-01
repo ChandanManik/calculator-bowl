@@ -123,6 +123,32 @@
         <button type="button" id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Theme">
           🌙
         </button>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobileNavDrawer" aria-hidden="true">
+      <div class="mobile-nav-content">
+        <div class="mobile-search-wrapper">
+          <span class="mobile-search-icon">🔍</span>
+          <input type="text" id="mobileSearchInput" placeholder="Search 37+ calculators..." class="mobile-search-input" autocomplete="off">
+        </div>
+        <div id="mobileSearchResults" class="mobile-search-results"></div>
+        <nav class="mobile-nav-links" aria-label="Mobile Main Navigation">
+          <a href="/" class="mobile-nav-link"><span class="nav-icon">🏠</span> <span>Home</span></a>
+          <a href="/financial" class="mobile-nav-link"><span class="nav-icon">💰</span> <span>Financial &amp; Loans</span></a>
+          <a href="/math" class="mobile-nav-link"><span class="nav-icon">➗</span> <span>Math &amp; Fractions</span></a>
+          <a href="/conversions" class="mobile-nav-link"><span class="nav-icon">🔄</span> <span>Unit Conversions</span></a>
+          <a href="/datetime" class="mobile-nav-link"><span class="nav-icon">⏱️</span> <span>Date &amp; Time</span></a>
+          <a href="/network" class="mobile-nav-link"><span class="nav-icon">🌐</span> <span>Network &amp; Speed</span></a>
+        </nav>
       </div>
     </div>
   </header>
