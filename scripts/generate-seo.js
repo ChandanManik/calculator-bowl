@@ -38,22 +38,22 @@ xml += `  <!-- Homepage -->\n  <url>\n    <loc>${baseUrl}/</loc>\n    <lastmod>$
 // Category Hubs
 xml += `  <!-- Pillar Category Hubs -->\n`;
 for (const [clusterKey, cluster] of Object.entries(TOPICAL_CLUSTERS)) {
-  xml += `  <url>\n    <loc>${baseUrl}/#/${cluster.id}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.90</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}/${cluster.id}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.90</priority>\n  </url>\n`;
 }
 xml += `\n`;
 
 // Dedicated Institutional & Directory Pages
 xml += `  <!-- Institutional, Legal & Directory Pages -->\n`;
 const institutionalPages = [
-  { path: "#/calculators-list", priority: "0.85", freq: "weekly" },
-  { path: "#/help", priority: "0.75", freq: "monthly" },
-  { path: "#/suggestions", priority: "0.70", freq: "monthly" },
-  { path: "#/contact", priority: "0.70", freq: "monthly" },
-  { path: "#/terms", priority: "0.60", freq: "monthly" },
-  { path: "#/privacy", priority: "0.60", freq: "monthly" }
+  { path: "/calculators-list", priority: "0.85", freq: "weekly" },
+  { path: "/help", priority: "0.75", freq: "monthly" },
+  { path: "/suggestions", priority: "0.70", freq: "monthly" },
+  { path: "/contact", priority: "0.70", freq: "monthly" },
+  { path: "/terms", priority: "0.60", freq: "monthly" },
+  { path: "/privacy", priority: "0.60", freq: "monthly" }
 ];
 institutionalPages.forEach(p => {
-  xml += `  <url>\n    <loc>${baseUrl}/${p.path}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${p.freq}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>\n`;
+  xml += `  <url>\n    <loc>${baseUrl}${p.path}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${p.freq}</changefreq>\n    <priority>${p.priority}</priority>\n  </url>\n`;
 });
 xml += `\n`;
 
@@ -63,7 +63,7 @@ for (const [clusterKey, cluster] of Object.entries(TOPICAL_CLUSTERS)) {
   xml += `  <!-- Pillar: ${cluster.title} -->\n`;
   (cluster.calculators || []).forEach(calc => {
     totalCalcs++;
-    xml += `  <url>\n    <loc>${baseUrl}/#/calc/${calc.id}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.80</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>${baseUrl}/calc/${calc.id}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.80</priority>\n  </url>\n`;
   });
   xml += `\n`;
 }
@@ -85,18 +85,18 @@ llms += `- **Multilingual**: 26 supported languages with instant localized UI.\n
 
 // Internal Linking Directory
 for (const [clusterKey, cluster] of Object.entries(TOPICAL_CLUSTERS)) {
-  llms += `## 📁 ${cluster.title} (Category Hub: [${cluster.title}](${baseUrl}/#/${cluster.id}))\n\n`;
+  llms += `## 📁 ${cluster.title} (Category Hub: [${cluster.title}](${baseUrl}/${cluster.id}))\n\n`;
   llms += `*Description*: ${cluster.description}\n\n`;
 
   (cluster.calculators || []).forEach(calc => {
     // Collect internal related links
     const siblings = (cluster.calculators || []).filter(c => c.id !== calc.id);
-    const relatedLinks = siblings.slice(0, 3).map(s => `[${s.shortName || s.name}](${baseUrl}/#/calc/${s.id})`).join(', ');
+    const relatedLinks = siblings.slice(0, 3).map(s => `[${s.shortName || s.name}](${baseUrl}/calc/${s.id})`).join(', ');
 
-    llms += `### [${calc.name}](${baseUrl}/#/calc/${calc.id})\n`;
-    llms += `- **Direct URL**: \`${baseUrl}/#/calc/${calc.id}\`\n`;
+    llms += `### [${calc.name}](${baseUrl}/calc/${calc.id})\n`;
+    llms += `- **Direct URL**: \`${baseUrl}/calc/${calc.id}\`\n`;
     llms += `- **Summary**: ${calc.description}\n`;
-    llms += `- **Parent Category**: [${cluster.title}](${baseUrl}/#/${cluster.id})\n`;
+    llms += `- **Parent Category**: [${cluster.title}](${baseUrl}/${cluster.id})\n`;
     if (relatedLinks) {
       llms += `- **Internal Cross-Links**: Related in this cluster: ${relatedLinks}\n`;
     }

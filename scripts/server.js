@@ -34,8 +34,21 @@ const server = http.createServer((req, res) => {
 
   fs.stat(filePath, (err, stats) => {
     if (err || !stats.isFile()) {
-      res.writeHead(404, { 'Content-Type': 'text/plain' });
-      res.end('404 Not Found');
+      // If it's a static file request with extension (like .js, .css, .png), return 404
+      const ext = path.extname(reqPath).toLowerCase();
+      if (ext && ext !== '.html') {
+        res.writeHead(404, { 'Content-Type': 'text/plain' });
+        res.end('404 Not Found');
+        return;
+      }
+      
+      // SPA Fallback: Serve index.html for clean routes (e.g. /financial, /calc/loan-calculator)
+      const indexPath = path.join(PUBLIC_DIR, 'index.html');
+      res.writeHead(200, {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Access-Control-Allow-Origin': '*'
+      });
+      fs.createReadStream(indexPath).pipe(res);
       return;
     }
 

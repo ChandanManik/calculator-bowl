@@ -34,7 +34,7 @@ const TOPICAL_CLUSTERS = {
           title: "Related Financial Tools & Cross-References",
           html: `
             <p>
-              When evaluating a financing plan, choosing the right loan structure is crucial. Different borrowing options serve specific needs: residential purchases require long-term amortization, while short-term promissory debt uses simple interest. Explore our comprehensive <a href="#/financial" class="in-text-link">💰 Financial Hub</a> to view all fiscal tools.
+              When evaluating a financing plan, choosing the right loan structure is crucial. Different borrowing options serve specific needs: residential purchases require long-term amortization, while short-term promissory debt uses simple interest. Explore our comprehensive <a href="/financial" class="in-text-link">💰 Financial Hub</a> to view all fiscal tools.
             </p>
             <p>
               Compare your borrowing costs against potential investment yields to see whether accelerating loan repayment or investing surplus capital generates higher net worth over time.
@@ -62,7 +62,7 @@ const TOPICAL_CLUSTERS = {
           title: "Maximize Your Wealth: Related Tools",
           html: `
             <p>
-              Building long-term wealth requires a balance between generating compound investment growth and minimizing high-interest borrowing liabilities. Access our complete <a href="#/financial" class="in-text-link">💰 Financial Planning Hub</a> for total debt-to-asset modeling.
+              Building long-term wealth requires a balance between generating compound investment growth and minimizing high-interest borrowing liabilities. Access our complete <a href="/financial" class="in-text-link">💰 Financial Planning Hub</a> for total debt-to-asset modeling.
             </p>
             <p>
               You can cross-reference your projected investment yields against personal debt obligations or compare with linear simple interest models below.
@@ -90,7 +90,7 @@ const TOPICAL_CLUSTERS = {
           title: "Debt & Interest Cross-References",
           html: `
             <p>
-              Simple interest is standard for short-term promissory notes, auto dealer add-on contracts, and basic savings bonds. For investments that re-invest accrued interest, visit our exponential <a href="#/financial" class="in-text-link">💰 Financial Hub</a>.
+              Simple interest is standard for short-term promissory notes, auto dealer add-on contracts, and basic savings bonds. For investments that re-invest accrued interest, visit our exponential <a href="/financial" class="in-text-link">💰 Financial Hub</a>.
             </p>
             <p>
               Compare simple interest yields with compound growth or analyze retail discounts using the related solvers below.
@@ -118,7 +118,7 @@ const TOPICAL_CLUSTERS = {
           title: "Homeowner Financing Cross-References",
           html: `
             <p>
-              Homeownership represents a significant portion of personal capital allocation. Beyond primary mortgage debt, homeowners often manage secondary personal loans or vehicle financing alongside equity accumulation. Visit our <a href="#/financial" class="in-text-link">💰 Financial Hub</a> for a complete list of amortization tools.
+              Homeownership represents a significant portion of personal capital allocation. Beyond primary mortgage debt, homeowners often manage secondary personal loans or vehicle financing alongside equity accumulation. Visit our <a href="/financial" class="in-text-link">💰 Financial Hub</a> for a complete list of amortization tools.
             </p>
             <p>
               Analyze how extra monthly mortgage prepayments compare against investing in compound index funds using the related calculators below.
@@ -146,7 +146,7 @@ const TOPICAL_CLUSTERS = {
           title: "Vehicle Financing & Associated Tools",
           html: `
             <p>
-              Automobile financing terms typically range between 36 and 72 months. Comparing auto dealership APR rates with uncollateralized personal borrowing helps ensure optimal cost efficiency. Explore our overarching <a href="#/financial" class="in-text-link">💰 Financial Hub</a> for comprehensive lending calculators.
+              Automobile financing terms typically range between 36 and 72 months. Comparing auto dealership APR rates with uncollateralized personal borrowing helps ensure optimal cost efficiency. Explore our overarching <a href="/financial" class="in-text-link">💰 Financial Hub</a> for comprehensive lending calculators.
             </p>
             <p>
               Calculate retail sales taxes or determine amortization schedules with the corresponding tools below.
@@ -174,7 +174,7 @@ const TOPICAL_CLUSTERS = {
           title: "Retail & Consumer Pricing Tools",
           html: `
             <p>
-              Sales taxes vary significantly by municipality, state, and country. When budgeting for consumer purchases, dining, or retail goods, precision calculation prevents budget overruns. Visit our <a href="#/financial" class="in-text-link">💰 Financial Hub</a> for more fiscal utilities.
+              Sales taxes vary significantly by municipality, state, and country. When budgeting for consumer purchases, dining, or retail goods, precision calculation prevents budget overruns. Visit our <a href="/financial" class="in-text-link">💰 Financial Hub</a> for more fiscal utilities.
             </p>
             <p>
               Combine sales tax calculations with restaurant gratuity or general percentage changes using the cross-references below.
@@ -202,7 +202,7 @@ const TOPICAL_CLUSTERS = {
           title: "Dining & Practical Financial Tools",
           html: `
             <p>
-              Gratuity customs vary between 15% and 25% depending on service quality and regional norms. Easily divide food, tax, and service charges across group dinners. Visit our <a href="#/financial" class="in-text-link">💰 Financial Hub</a> for everyday money management tools.
+              Gratuity customs vary between 15% and 25% depending on service quality and regional norms. Easily divide food, tax, and service charges across group dinners. Visit our <a href="/financial" class="in-text-link">💰 Financial Hub</a> for everyday money management tools.
             </p>
             <p>
               Calculate retail sales taxes or general percent changes with our specialized tools below.
@@ -230,7 +230,7 @@ const TOPICAL_CLUSTERS = {
           title: "Income & Career Financial Tools",
           html: `
             <p>
-              Understanding your gross compensation across hourly, bi-weekly, and annual frequencies enables effective household budgeting. Visit our <a href="#/financial" class="in-text-link">💰 Financial Hub</a> to plan long-term savings and investments.
+              Understanding your gross compensation across hourly, bi-weekly, and annual frequencies enables effective household budgeting. Visit our <a href="/financial" class="in-text-link">💰 Financial Hub</a> to plan long-term savings and investments.
             </p>
             <p>
               Model your future investment growth or optimize debt payoff strategies with the companion tools below.
@@ -258,7 +258,7 @@ const TOPICAL_CLUSTERS = {
           title: "Debt Elimination Strategies",
           html: `
             <p>
-              High-interest revolving debt carries compounding annual percentage rates. Accelerating repayments can save thousands in interest fees. Explore our <a href="#/financial" class="in-text-link">💰 Financial Hub</a> for amortization solutions.
+              High-interest revolving debt carries compounding annual percentage rates. Accelerating repayments can save thousands in interest fees. Explore our <a href="/financial" class="in-text-link">💰 Financial Hub</a> for amortization solutions.
             </p>
             <p>
               Compare debt interest against personal loan consolidation or future wealth accumulation below.
@@ -286,7 +286,7 @@ const TOPICAL_CLUSTERS = {
           title: "Wealth & Investment Growth Models",
           html: `
             <p>
-              Future value calculations account for the time value of money, compound returns, and recurring annuity contributions. Access our comprehensive <a href="#/financial" class="in-text-link">💰 Financial Hub</a> for asset modeling.
+              Future value calculations account for the time value of money, compound returns, and recurring annuity contributions. Access our comprehensive <a href="/financial" class="in-text-link">💰 Financial Hub</a> for asset modeling.
             </p>
             <p>
               Project your retirement nest egg or examine business depreciation schedules with the tools below.
@@ -314,7 +314,7 @@ const TOPICAL_CLUSTERS = {
           title: "Commercial Pricing & Margin Tools",
           html: `
             <p>
-              Maintaining healthy profit margins is fundamental to retail, wholesale, and service businesses. Visit our <a href="#/financial" class="in-text-link">💰 Financial Hub</a> for enterprise and consumer calculation tools.
+              Maintaining healthy profit margins is fundamental to retail, wholesale, and service businesses. Visit our <a href="/financial" class="in-text-link">💰 Financial Hub</a> for enterprise and consumer calculation tools.
             </p>
             <p>
               Compute retail sales taxes or discount savings using our specialized cross-references below.
@@ -342,7 +342,7 @@ const TOPICAL_CLUSTERS = {
           title: "Fixed Asset Accounting Tools",
           html: `
             <p>
-              Capital asset depreciation allocates equipment and property costs over their operational service life. Explore our <a href="#/financial" class="in-text-link">💰 Financial Hub</a> for corporate valuation tools.
+              Capital asset depreciation allocates equipment and property costs over their operational service life. Explore our <a href="/financial" class="in-text-link">💰 Financial Hub</a> for corporate valuation tools.
             </p>
             <p>
               Evaluate commercial profit margins or model long-term future asset values with the calculators below.
@@ -370,7 +370,7 @@ const TOPICAL_CLUSTERS = {
           title: "Precious Metals & Investment Tools",
           html: `
             <p>
-              Gold serves as a global monetary standard and hedge against inflation. Determining accurate jewelry market valuation requires factoring in karat purity (fineness), gross-to-fine weight ratios, and jeweler fabrication fees. Explore our comprehensive <a href="#/financial" class="in-text-link">💰 Financial Hub</a> for complete capital allocation tools.
+              Gold serves as a global monetary standard and hedge against inflation. Determining accurate jewelry market valuation requires factoring in karat purity (fineness), gross-to-fine weight ratios, and jeweler fabrication fees. Explore our comprehensive <a href="/financial" class="in-text-link">💰 Financial Hub</a> for complete capital allocation tools.
             </p>
             <p>
               Compare gold investment returns against compound index funds or calculate sales taxes using the related tools below.
@@ -398,10 +398,10 @@ const TOPICAL_CLUSTERS = {
           title: "Cryptocurrency & Wealth Preservation Tools",
           html: `
             <p>
-              Bitcoin (BTC) is a decentralized digital commodity with a provably scarce fixed supply of 21 million coins. Analyzing crypto investments requires disciplined dollar-cost averaging (DCA), transaction fee optimization in satoshis/vByte, and tracking four-year issuance halving epochs. Explore our comprehensive <a href="#/financial" class="in-text-link">💰 Financial Hub</a> to view all investment and valuation calculators.
+              Bitcoin (BTC) is a decentralized digital commodity with a provably scarce fixed supply of 21 million coins. Analyzing crypto investments requires disciplined dollar-cost averaging (DCA), transaction fee optimization in satoshis/vByte, and tracking four-year issuance halving epochs. Explore our comprehensive <a href="/financial" class="in-text-link">💰 Financial Hub</a> to view all investment and valuation calculators.
             </p>
             <p>
-              Compare Bitcoin's digital scarcity against physical <a href="#/gold-calculator" class="in-text-link">🥇 Live Gold Price Calculator</a> or simulate long-term compound wealth growth using the related tools below.
+              Compare Bitcoin's digital scarcity against physical <a href="/gold-calculator" class="in-text-link">🥇 Live Gold Price Calculator</a> or simulate long-term compound wealth growth using the related tools below.
             </p>
           `,
           suggestedLinks: [
@@ -455,7 +455,7 @@ const TOPICAL_CLUSTERS = {
           title: "Math Suite & Essential Solvers",
           html: `
             <p>
-              Standard arithmetic operations form the bedrock of daily computations. For advanced statistical modeling and fractional algebra, explore our dedicated <a href="#/math" class="in-text-link">➗ Math & Statistics Hub</a>.
+              Standard arithmetic operations form the bedrock of daily computations. For advanced statistical modeling and fractional algebra, explore our dedicated <a href="/math" class="in-text-link">➗ Math & Statistics Hub</a>.
             </p>
             <p>
               Perform percent calculations, fraction arithmetic, or scientific conversions with our specialized companion tools below.
@@ -483,7 +483,7 @@ const TOPICAL_CLUSTERS = {
           title: "Percentage & Proportional Analytics",
           html: `
             <p>
-              Percentage mathematics is essential across personal finance, scientific data, and commercial sales. Browse our full <a href="#/math" class="in-text-link">➗ Math & Statistics Hub</a> for all quantitative solvers.
+              Percentage mathematics is essential across personal finance, scientific data, and commercial sales. Browse our full <a href="/math" class="in-text-link">➗ Math & Statistics Hub</a> for all quantitative solvers.
             </p>
             <p>
               Calculate commercial discounts or convert fractions to decimals using the recommended tools below.
@@ -511,7 +511,7 @@ const TOPICAL_CLUSTERS = {
           title: "Fraction & Rational Number Suite",
           html: `
             <p>
-              Mastering fraction arithmetic requires finding Least Common Denominators (LCD) and Greatest Common Divisors (GCD). Access our <a href="#/math" class="in-text-link">➗ Math & Statistics Hub</a> for full fraction utilities.
+              Mastering fraction arithmetic requires finding Least Common Denominators (LCD) and Greatest Common Divisors (GCD). Access our <a href="/math" class="in-text-link">➗ Math & Statistics Hub</a> for full fraction utilities.
             </p>
             <p>
               Convert fractions to decimals or solve mixed number operations with the specialized tools below.
@@ -539,7 +539,7 @@ const TOPICAL_CLUSTERS = {
           title: "Fraction & Decimal Number Systems",
           html: `
             <p>
-              Converting rational fractions to decimal equivalents enables swift engineering and financial calculations. Explore our <a href="#/math" class="in-text-link">➗ Math Hub</a> for complete fraction tools.
+              Converting rational fractions to decimal equivalents enables swift engineering and financial calculations. Explore our <a href="/math" class="in-text-link">➗ Math Hub</a> for complete fraction tools.
             </p>
             <p>
               Convert decimals back to simplified fractions or perform mixed fraction operations below.
@@ -567,7 +567,7 @@ const TOPICAL_CLUSTERS = {
           title: "Rational Decimal Conversions",
           html: `
             <p>
-              Decimal-to-fraction conversions identify exact rational quotients from floating-point measurements. Visit our <a href="#/math" class="in-text-link">➗ Math Hub</a> for algebra tools.
+              Decimal-to-fraction conversions identify exact rational quotients from floating-point measurements. Visit our <a href="/math" class="in-text-link">➗ Math Hub</a> for algebra tools.
             </p>
             <p>
               Calculate fraction operations or solve proportions using the cross-references below.
@@ -595,7 +595,7 @@ const TOPICAL_CLUSTERS = {
           title: "Mixed Number & Fraction Operations",
           html: `
             <p>
-              Mixed numbers combine integers and fractional remainders. Explore our <a href="#/math" class="in-text-link">➗ Math & Statistics Hub</a> for complete fraction solutions.
+              Mixed numbers combine integers and fractional remainders. Explore our <a href="/math" class="in-text-link">➗ Math & Statistics Hub</a> for complete fraction solutions.
             </p>
             <p>
               Find Greatest Common Factors or convert fractions to decimals with the tools below.
@@ -623,7 +623,7 @@ const TOPICAL_CLUSTERS = {
           title: "Rational Number Simplification Tools",
           html: `
             <p>
-              Reducing a fraction to its lowest irreducible form ensures mathematical precision. When combining multiple fractions, explore our overarching <a href="#/math" class="in-text-link">➗ Math Hub</a>.
+              Reducing a fraction to its lowest irreducible form ensures mathematical precision. When combining multiple fractions, explore our overarching <a href="/math" class="in-text-link">➗ Math Hub</a>.
             </p>
             <p>
               Perform complete fraction arithmetic or convert rational values to percentages below.
@@ -651,7 +651,7 @@ const TOPICAL_CLUSTERS = {
           title: "Divisibility & Multiple Calculations",
           html: `
             <p>
-              GCF and LCM calculations are fundamental to simplifying algebraic fractions and finding common denominators. Visit our <a href="#/math" class="in-text-link">➗ Math Hub</a>.
+              GCF and LCM calculations are fundamental to simplifying algebraic fractions and finding common denominators. Visit our <a href="/math" class="in-text-link">➗ Math Hub</a>.
             </p>
             <p>
               Examine full prime factor trees or simplify ratio comparisons using the companion solvers below.
@@ -679,7 +679,7 @@ const TOPICAL_CLUSTERS = {
           title: "Number Theory & Prime Decompositions",
           html: `
             <p>
-              The Fundamental Theorem of Arithmetic establishes that every integer has a unique prime factorization. Browse our <a href="#/math" class="in-text-link">➗ Math & Statistics Hub</a> for number theory tools.
+              The Fundamental Theorem of Arithmetic establishes that every integer has a unique prime factorization. Browse our <a href="/math" class="in-text-link">➗ Math & Statistics Hub</a> for number theory tools.
             </p>
             <p>
               Find Greatest Common Factors or calculate exponential powers with the tools below.
@@ -707,7 +707,7 @@ const TOPICAL_CLUSTERS = {
           title: "Proportions & Aspect Ratio Tools",
           html: `
             <p>
-              Ratios compare relative quantities in geometry, chemistry, recipe scaling, and screen aspect dimensions. Explore our full <a href="#/math" class="in-text-link">➗ Math Hub</a>.
+              Ratios compare relative quantities in geometry, chemistry, recipe scaling, and screen aspect dimensions. Explore our full <a href="/math" class="in-text-link">➗ Math Hub</a>.
             </p>
             <p>
               Convert ratios to percentages or solve fraction arithmetic using the cross-references below.
@@ -735,7 +735,7 @@ const TOPICAL_CLUSTERS = {
           title: "Algebraic Solvers & Functions",
           html: `
             <p>
-              Quadratic equations model parabolic trajectories, physics kinematics, and revenue optimization. Discover more algebraic tools in our <a href="#/math" class="in-text-link">➗ Math & Statistics Hub</a>.
+              Quadratic equations model parabolic trajectories, physics kinematics, and revenue optimization. Discover more algebraic tools in our <a href="/math" class="in-text-link">➗ Math & Statistics Hub</a>.
             </p>
             <p>
               Solve power exponents or prime factor structures with the solvers below.
@@ -763,7 +763,7 @@ const TOPICAL_CLUSTERS = {
           title: "Statistical Data Analysis Tools",
           html: `
             <p>
-              Measures of central tendency summarize large datasets into representative single metrics. For deeper statistical dispersion and variance modeling, access our complete <a href="#/math" class="in-text-link">➗ Math & Statistics Hub</a>.
+              Measures of central tendency summarize large datasets into representative single metrics. For deeper statistical dispersion and variance modeling, access our complete <a href="/math" class="in-text-link">➗ Math & Statistics Hub</a>.
             </p>
             <p>
               Measure sample variance, standard deviation, or scientific magnitude with the specialized tools below.
@@ -791,7 +791,7 @@ const TOPICAL_CLUSTERS = {
           title: "Dispersion & Statistical Modeling",
           html: `
             <p>
-              Standard deviation quantifies the spread of data points around the arithmetic mean. Visit our <a href="#/math" class="in-text-link">➗ Math & Statistics Hub</a> for complete data analysis solutions.
+              Standard deviation quantifies the spread of data points around the arithmetic mean. Visit our <a href="/math" class="in-text-link">➗ Math & Statistics Hub</a> for complete data analysis solutions.
             </p>
             <p>
               Examine central tendency measures or scientific notation formats with the related tools below.
@@ -819,7 +819,7 @@ const TOPICAL_CLUSTERS = {
           title: "Scientific & Numerical Scale Tools",
           html: `
             <p>
-              Scientific notation streamlines handling astronomically large or microscopic numbers in physics, chemistry, and engineering. Explore our full <a href="#/math" class="in-text-link">➗ Math & Science Hub</a>.
+              Scientific notation streamlines handling astronomically large or microscopic numbers in physics, chemistry, and engineering. Explore our full <a href="/math" class="in-text-link">➗ Math & Science Hub</a>.
             </p>
             <p>
               Evaluate powers and exponents or calculate physical metric conversions with the cross-references below.
@@ -847,7 +847,7 @@ const TOPICAL_CLUSTERS = {
           title: "Exponents & Power Rules",
           html: `
             <p>
-              Exponents represent repeated multiplication and power scaling. Explore our <a href="#/math" class="in-text-link">➗ Math Hub</a> to master polynomial algebra and roots.
+              Exponents represent repeated multiplication and power scaling. Explore our <a href="/math" class="in-text-link">➗ Math Hub</a> to master polynomial algebra and roots.
             </p>
             <p>
               Convert to scientific notation or solve quadratic equations using the specialized solvers below.
@@ -904,7 +904,7 @@ const TOPICAL_CLUSTERS = {
           title: "Thermal & Physical Conversion Tools",
           html: `
             <p>
-              Thermodynamic conversions require precise linear equations. Visit our comprehensive <a href="#/conversions" class="in-text-link">🔄 Unit Conversions Hub</a> to translate between international metric and imperial standards.
+              Thermodynamic conversions require precise linear equations. Visit our comprehensive <a href="/conversions" class="in-text-link">🔄 Unit Conversions Hub</a> to translate between international metric and imperial standards.
             </p>
             <p>
               Translate lengths, distances, or mass with the cross-referenced converters below.
@@ -932,7 +932,7 @@ const TOPICAL_CLUSTERS = {
           title: "Dimensional Measurement Tools",
           html: `
             <p>
-              Length standards govern architecture, engineering, and daily distance calculations. Access our <a href="#/conversions" class="in-text-link">🔄 Unit Conversions Hub</a> for all physical translation tables.
+              Length standards govern architecture, engineering, and daily distance calculations. Access our <a href="/conversions" class="in-text-link">🔄 Unit Conversions Hub</a> for all physical translation tables.
             </p>
             <p>
               Convert weights, mass, or temperature scales with the specialized tools below.
@@ -960,7 +960,7 @@ const TOPICAL_CLUSTERS = {
           title: "Mass & Density Conversion Tools",
           html: `
             <p>
-              Mass and weight conversions are essential in shipping, cooking, health, and science. Explore our complete <a href="#/conversions" class="in-text-link">🔄 Unit Conversions Hub</a> for all dimensional conversion matrices.
+              Mass and weight conversions are essential in shipping, cooking, health, and science. Explore our complete <a href="/conversions" class="in-text-link">🔄 Unit Conversions Hub</a> for all dimensional conversion matrices.
             </p>
             <p>
               Convert linear distance, temperature, or compute personal chronological age with the tools below.
@@ -1013,7 +1013,7 @@ const TOPICAL_CLUSTERS = {
           title: "Temporal & Chronological Tools",
           html: `
             <p>
-              Calculating exact chronological age involves factoring in variable month lengths and leap year cycles. Explore our <a href="#/datetime" class="in-text-link">⏱️ Date & Time Hub</a> for complete temporal utilities.
+              Calculating exact chronological age involves factoring in variable month lengths and leap year cycles. Explore our <a href="/datetime" class="in-text-link">⏱️ Date & Time Hub</a> for complete temporal utilities.
             </p>
             <p>
               Calculate elapsed hours/minutes or measure physical mass with the related calculators below.
@@ -1041,7 +1041,7 @@ const TOPICAL_CLUSTERS = {
           title: "Time & Schedule Analysis Tools",
           html: `
             <p>
-              Tracking elapsed hours and minutes is essential for work timesheets, flight durations, and project billing. Visit our <a href="#/datetime" class="in-text-link">⏱️ Date & Time Hub</a> for more scheduling utilities.
+              Tracking elapsed hours and minutes is essential for work timesheets, flight durations, and project billing. Visit our <a href="/datetime" class="in-text-link">⏱️ Date & Time Hub</a> for more scheduling utilities.
             </p>
             <p>
               Determine chronological age or calculate statistical averages using the cross-references below.
@@ -1069,7 +1069,7 @@ const TOPICAL_CLUSTERS = {
           title: "Meteorological & Chronological Cross-References",
           html: `
             <p>
-              Weather tracking and atmospheric conditions are intimately tied to solar cycles, daylight duration, and thermodynamic temperature conversions. Explore our full <a href="#/datetime" class="in-text-link">⏱️ Date & Time Hub</a> for chronological utilities.
+              Weather tracking and atmospheric conditions are intimately tied to solar cycles, daylight duration, and thermodynamic temperature conversions. Explore our full <a href="/datetime" class="in-text-link">⏱️ Date & Time Hub</a> for chronological utilities.
             </p>
             <p>
               Convert temperature units across Celsius, Fahrenheit, and Kelvin or calculate time differences with the tools below.
@@ -1122,7 +1122,7 @@ const TOPICAL_CLUSTERS = {
           title: "Bandwidth & Network Diagnostics",
           html: `
             <p>
-              Internet bandwidth and network latency dictate your streaming quality, online gaming responsiveness, and file download durations. Explore our dedicated <a href="#/network" class="in-text-link">🌐 Network Hub</a> for data estimation and bandwidth utilities.
+              Internet bandwidth and network latency dictate your streaming quality, online gaming responsiveness, and file download durations. Explore our dedicated <a href="/network" class="in-text-link">🌐 Network Hub</a> for data estimation and bandwidth utilities.
             </p>
             <p>
               Estimate your household monthly data consumption or compare transfer rates with the related tools below.
@@ -1150,7 +1150,7 @@ const TOPICAL_CLUSTERS = {
           title: "Data Allocation & Network Planning",
           html: `
             <p>
-              Managing streaming quality settings prevents unexpected ISP broadband overage fees and ensures sufficient bandwidth across multi-device households. Visit our <a href="#/network" class="in-text-link">🌐 Network Hub</a> for live diagnostics.
+              Managing streaming quality settings prevents unexpected ISP broadband overage fees and ensures sufficient bandwidth across multi-device households. Visit our <a href="/network" class="in-text-link">🌐 Network Hub</a> for live diagnostics.
             </p>
             <p>
               Test your active connection throughput or calculate time durations using the cross-references below.

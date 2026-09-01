@@ -48,29 +48,79 @@ function updateThemeIcon(theme) {
 }
 
 /* ==========================================================================
-   Router & Dynamic View Controller
+   Router & Dynamic View Controller (Clean HTML5 History API)
    ========================================================================== */
-function initRouter() {
-  window.addEventListener("hashchange", handleRoute);
+function navigateTo(url) {
+  if (!url) return;
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('mailto:') || url.startsWith('tel:') || url.endsWith('.xml') || url.startsWith('#')) {
+    return;
+  }
+  window.history.pushState(null, '', url);
   handleRoute();
 }
 
+function initRouter() {
+  window.addEventListener('popstate', handleRoute);
+  
+  // Intercept all internal anchor clicks for instant SPA routing
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href) return;
+    if (
+      href.startsWith('http://') ||
+      href.startsWith('https://') ||
+      href.startsWith('mailto:') ||
+      href.startsWith('tel:') ||
+      href.endsWith('.xml') ||
+      link.getAttribute('target') === '_blank' ||
+      e.ctrlKey || e.metaKey || e.shiftKey
+    ) {
+      return;
+    }
+    // Only intercept root/clean path links
+    if (href.startsWith('/') || href.startsWith('./') || (!href.startsWith('#') && !href.includes(':'))) {
+      e.preventDefault();
+      navigateTo(href);
+    }
+  });
+
+  handleRoute();
+}
+
+function getCurrentRoutePath() {
+  // Backward compatibility: If user visits /#/financial or /#/calc/loan-calculator, rewrite to clean path
+  if (window.location.hash && window.location.hash.startsWith('#/')) {
+    const cleanPath = window.location.hash.slice(1);
+    window.history.replaceState(null, '', cleanPath);
+    return cleanPath;
+  }
+  
+  let pathname = window.location.pathname || '/';
+  // Remove trailing slashes (except root '/')
+  if (pathname.length > 1 && pathname.endsWith('/')) {
+    pathname = pathname.slice(0, -1);
+  }
+  return pathname;
+}
+
 function handleRoute() {
-  const hash = window.location.hash || "#/";
+  const path = getCurrentRoutePath();
   const mainView = document.getElementById("mainContent");
   if (!mainView) return;
 
   window.scrollTo({ top: 0, behavior: 'instant' });
 
   // Route 1: Home View
-  if (hash === "#/" || hash === "") {
+  if (path === "/" || path === "" || path === "/index.html") {
     renderHomeView(mainView);
     updateSEO(
       "Free Online Calculators & Step-by-Step Solvers | CalculatorBowl", 
       "Explore hundreds of free online calculators for finance, math, fractions, loans, and unit conversions with step-by-step mathematical solutions.",
       {
         pageType: "website",
-        breadcrumbs: [{ name: "Home", link: "#/" }]
+        breadcrumbs: [{ name: "Home", link: "/" }]
       }
     );
     updateBreadcrumbs([]);
@@ -78,36 +128,8 @@ function handleRoute() {
     return;
   }
 
-  // Route 2: Pillar Category View (e.g. #/financial, #/math, #/conversions)
-  const pillarMatch = hash.match(/^#\/([a-z0-9-]+)$/);
-  if (pillarMatch && TOPICAL_CLUSTERS[pillarMatch[1]]) {
-    const clusterId = pillarMatch[1];
-    const cluster = TOPICAL_CLUSTERS[clusterId];
-    renderPillarView(mainView, cluster);
-
-    const pillarContent = (typeof CATEGORY_PILLAR_CONTENT !== "undefined" && CATEGORY_PILLAR_CONTENT[cluster.id])
-      ? CATEGORY_PILLAR_CONTENT[cluster.id]
-      : null;
-    const currentFaqs = (pillarContent && pillarContent.faqs) ? pillarContent.faqs : cluster.faqs;
-
-    const breadcrumbs = [
-      { name: "Home", link: "#/" },
-      { name: cluster.title, link: `#/${cluster.id}`, current: true }
-    ];
-
-    updateSEO(cluster.seoTitle, cluster.seoDescription, {
-      pageType: "cluster",
-      cluster: cluster,
-      faqs: currentFaqs,
-      breadcrumbs: breadcrumbs
-    });
-    updateBreadcrumbs(breadcrumbs);
-    updateActiveNav(cluster.id);
-    return;
-  }
-
-  // Route 3: Specific Calculator View (e.g. #/calc/loan-calculator)
-  const calcMatch = hash.match(/^#\/calc\/([a-z0-9-]+)$/);
+  // Route 2: Specific Calculator View (e.g. /calc/loan-calculator)
+  const calcMatch = path.match(/^\/calc\/([a-z0-9-]+)$/);
   if (calcMatch) {
     const calcId = calcMatch[1];
     const calc = getCalculatorById(calcId);
@@ -121,9 +143,9 @@ function handleRoute() {
       const currentFaqs = (richContent && richContent.faqs) ? richContent.faqs : cluster.faqs;
 
       const breadcrumbs = [
-        { name: "Home", link: "#/" },
-        { name: cluster.title, link: `#/${cluster.id}` },
-        { name: calc.shortName, link: `#/calc/${calc.id}`, current: true }
+        { name: "Home", link: "/" },
+        { name: cluster.title, link: `/${cluster.id}` },
+        { name: calc.shortName, link: `/calc/${calc.id}`, current: true }
       ];
 
       updateSEO(calc.seoTitle, calc.seoDescription, {
@@ -139,28 +161,56 @@ function handleRoute() {
     }
   }
 
+  // Route 3: Pillar Category View (e.g. /financial, /math, /conversions, /datetime, /network)
+  const pillarMatch = path.match(/^\/([a-z0-9-]+)$/);
+  if (pillarMatch && TOPICAL_CLUSTERS[pillarMatch[1]]) {
+    const clusterId = pillarMatch[1];
+    const cluster = TOPICAL_CLUSTERS[clusterId];
+    renderPillarView(mainView, cluster);
+
+    const pillarContent = (typeof CATEGORY_PILLAR_CONTENT !== "undefined" && CATEGORY_PILLAR_CONTENT[cluster.id])
+      ? CATEGORY_PILLAR_CONTENT[cluster.id]
+      : null;
+    const currentFaqs = (pillarContent && pillarContent.faqs) ? pillarContent.faqs : cluster.faqs;
+
+    const breadcrumbs = [
+      { name: "Home", link: "/" },
+      { name: cluster.title, link: `/${cluster.id}`, current: true }
+    ];
+
+    updateSEO(cluster.seoTitle, cluster.seoDescription, {
+      pageType: "cluster",
+      cluster: cluster,
+      faqs: currentFaqs,
+      breadcrumbs: breadcrumbs
+    });
+    updateBreadcrumbs(breadcrumbs);
+    updateActiveNav(cluster.id);
+    return;
+  }
+
   // Route 4: Dedicated Institutional & Directory Pages
-  if (hash === "#/help") {
+  if (path === "/help") {
     renderHelpView(mainView);
     return;
   }
-  if (hash === "#/suggestions") {
+  if (path === "/suggestions") {
     renderSuggestionsView(mainView);
     return;
   }
-  if (hash === "#/contact") {
+  if (path === "/contact") {
     renderContactView(mainView);
     return;
   }
-  if (hash === "#/terms") {
+  if (path === "/terms") {
     renderTermsView(mainView);
     return;
   }
-  if (hash === "#/privacy") {
+  if (path === "/privacy") {
     renderPrivacyView(mainView);
     return;
   }
-  if (hash === "#/calculators-list") {
+  if (path === "/calculators-list") {
     renderCalculatorsListView(mainView);
     return;
   }
@@ -221,9 +271,10 @@ function updateSEO(title, description, options = {}) {
   // Clean Canonical URL (Strips tracking query params to prevent duplicate indexing)
   const canonicalTag = document.getElementById("canonicalUrl");
   const cleanBase = (window.location.origin && window.location.origin !== "null" && window.location.origin.startsWith("http"))
-    ? (window.location.origin + window.location.pathname)
-    : "https://calculatorbowl.com/";
-  const currentUrl = cleanBase.replace(/\/+$/, "") + "/" + (window.location.hash || "#/");
+    ? window.location.origin
+    : "https://calculatorbowl.com";
+  const currentPath = getCurrentRoutePath();
+  const currentUrl = cleanBase.replace(/\/+$/, "") + (currentPath === "/" ? "/" : currentPath);
   if (canonicalTag) {
     canonicalTag.setAttribute("href", currentUrl);
   }
@@ -333,7 +384,7 @@ function renderHomeView(container) {
     const cluster = TOPICAL_CLUSTERS[clusterKey];
     const itemsHtml = cluster.calculators.map(c => `
       <li class="directory-item">
-        <a href="#/calc/${c.id}">
+        <a href="/calc/${c.id}">
           <span style="display: flex; align-items: center; gap: 0.45rem;">
             <span>${c.icon}</span>
             <span>${c.name}</span>
@@ -348,7 +399,7 @@ function renderHomeView(container) {
         <div class="directory-cat-header">
           <h2 class="directory-cat-title">
             <span>${cluster.icon}</span>
-            <a href="#/${cluster.id}">${cluster.title}</a>
+            <a href="/${cluster.id}">${cluster.title}</a>
           </h2>
           <span class="cluster-card-badge">${cluster.badge}</span>
         </div>
@@ -358,7 +409,7 @@ function renderHomeView(container) {
           ${itemsHtml}
         </ul>
 
-        <a href="#/${cluster.id}" class="directory-view-all">
+        <a href="/${cluster.id}" class="directory-view-all">
           <span>More ${cluster.shortTitle} Calculators »</span>
         </a>
       </div>
@@ -370,7 +421,7 @@ function renderHomeView(container) {
   const popularCalcs = allCalcs.slice(0, 6);
   const popularListHtml = popularCalcs.map(p => `
     <li class="popular-tool-item">
-      <a href="#/calc/${p.id}">
+      <a href="/calc/${p.id}">
         <span style="font-size: 1.2rem;">${p.icon}</span>
         <div style="flex: 1;">
           <div style="font-size: 0.88rem; font-weight: 700;">${p.shortName}</div>
@@ -414,12 +465,12 @@ function renderHomeView(container) {
             Popular Specialized Solvers:
           </div>
           <div class="quick-tools-grid">
-            <a href="#/calc/loan-calculator" class="quick-tool-card"><span>💳</span> <span>Loan Calculator</span></a>
-            <a href="#/calc/fractions-operations" class="quick-tool-card"><span>🔢</span> <span>Fraction Calculator</span></a>
-            <a href="#/calc/compound-interest" class="quick-tool-card"><span>📈</span> <span>Compound Interest</span></a>
-            <a href="#/calc/percentage-calculator" class="quick-tool-card"><span>📊</span> <span>Percentage Calculator</span></a>
-            <a href="#/calc/mortgage-calculator" class="quick-tool-card"><span>🏠</span> <span>Mortgage Payments</span></a>
-            <a href="#/calc/temperature-converter" class="quick-tool-card"><span>🌡️</span> <span>Temperature Converter</span></a>
+            <a href="/calc/loan-calculator" class="quick-tool-card"><span>💳</span> <span>Loan Calculator</span></a>
+            <a href="/calc/fractions-operations" class="quick-tool-card"><span>🔢</span> <span>Fraction Calculator</span></a>
+            <a href="/calc/compound-interest" class="quick-tool-card"><span>📈</span> <span>Compound Interest</span></a>
+            <a href="/calc/percentage-calculator" class="quick-tool-card"><span>📊</span> <span>Percentage Calculator</span></a>
+            <a href="/calc/mortgage-calculator" class="quick-tool-card"><span>🏠</span> <span>Mortgage Payments</span></a>
+            <a href="/calc/temperature-converter" class="quick-tool-card"><span>🌡️</span> <span>Temperature Converter</span></a>
           </div>
         </div>
 
@@ -532,7 +583,7 @@ function renderPillarView(container, cluster) {
       </div>
       <h3 class="cluster-card-title" style="font-size: 1.15rem; margin-bottom: 0.4rem;">${c.name}</h3>
       <p class="cluster-card-desc" style="margin-bottom: 1.25rem;">${c.description}</p>
-      <a href="#/calc/${c.id}" class="btn btn-primary btn-sm" style="margin-top: auto; width: 100%;">
+      <a href="/calc/${c.id}" class="btn btn-primary btn-sm" style="margin-top: auto; width: 100%;">
         <span>Open Calculator →</span>
       </a>
     </div>
@@ -610,7 +661,7 @@ function renderCalculatorView(container, calc, cluster) {
 
   const relatedHtml = relatedCalcs.map(r => `
     <li>
-      <a href="#/calc/${r.id}" class="related-calc-link">
+      <a href="/calc/${r.id}" class="related-calc-link">
         <span>${r.icon} ${r.shortName}</span>
         <span style="color: var(--text-muted);">→</span>
       </a>
@@ -641,7 +692,7 @@ function renderCalculatorView(container, calc, cluster) {
       <!-- Left Column: Main Calculator Tool -->
       <div class="calculator-card-main">
         <div class="calc-header">
-          <a href="#/${cluster.id}" class="calc-cluster-tag">
+          <a href="/${cluster.id}" class="calc-cluster-tag">
             <span>${cluster.icon} ${cluster.title}</span>
           </a>
           <h1 class="calc-title">${calc.name}</h1>
@@ -658,7 +709,7 @@ function renderCalculatorView(container, calc, cluster) {
         <!-- Category Navigation Widget -->
         <div class="sidebar-widget">
           <h3 class="widget-title">📁 Calculator Category</h3>
-          <a href="#/${cluster.id}" class="pillar-hub-badge">
+          <a href="/${cluster.id}" class="pillar-hub-badge">
             <span>${cluster.icon} All ${cluster.shortTitle} Calculators</span>
             <span>View All →</span>
           </a>
@@ -716,7 +767,7 @@ function renderCalculatorView(container, calc, cluster) {
 
           <div class="suggested-matrix-grid">
             ${calc.contextualGuide.suggestedLinks.map(s => `
-              <a href="#/calc/${s.id}" class="suggested-matrix-card">
+              <a href="/calc/${s.id}" class="suggested-matrix-card">
                 <span style="font-size: 1.25rem;">${s.icon}</span>
                 <span>${s.label}</span>
               </a>
@@ -731,13 +782,13 @@ function renderCalculatorView(container, calc, cluster) {
           </h3>
           <div class="contextual-guide-body">
             <p>
-              Looking for more mathematical and financial tools? Explore our comprehensive <a href="#/${cluster.id}" class="in-text-link">${cluster.icon} ${cluster.title} Hub</a> to compare formulas, amortizations, and calculation models.
+              Looking for more mathematical and financial tools? Explore our comprehensive <a href="/${cluster.id}" class="in-text-link">${cluster.icon} ${cluster.title} Hub</a> to compare formulas, amortizations, and calculation models.
             </p>
           </div>
 
           <div class="suggested-matrix-grid">
             ${relatedCalcs.slice(0, 4).map(r => `
-              <a href="#/calc/${r.id}" class="suggested-matrix-card">
+              <a href="/calc/${r.id}" class="suggested-matrix-card">
                 <span style="font-size: 1.25rem;">${r.icon}</span>
                 <span>${r.name}</span>
               </a>
@@ -812,7 +863,7 @@ function attachSearchEvents(input, dropdown) {
     }
 
     dropdown.innerHTML = matches.slice(0, 6).map(m => `
-      <div class="search-result-item" onclick="window.location.hash='#/calc/${m.id}'; document.querySelectorAll('.search-results-dropdown').forEach(d => d.style.display='none');">
+      <div class="search-result-item" onclick="navigateTo('/calc/${m.id}'); document.querySelectorAll('.search-results-dropdown').forEach(d => d.style.display='none');">
         <div class="search-result-info">
           <div class="search-result-name">${m.icon} ${m.name}</div>
           <div class="search-result-cluster">${m.clusterTitle} • ${m.badge}</div>
@@ -848,8 +899,8 @@ window.toggleFaq = function(button) {
    ========================================================================== */
 function renderHelpView(container) {
   const breadcrumbs = [
-    { name: "Home", link: "#/" },
-    { name: "Help Center & User Guide", link: "#/help", current: true }
+    { name: "Home", link: "/" },
+    { name: "Help Center & User Guide", link: "/help", current: true }
   ];
 
   updateSEO(
@@ -977,8 +1028,8 @@ function renderHelpView(container) {
    ========================================================================== */
 function renderSuggestionsView(container) {
   const breadcrumbs = [
-    { name: "Home", link: "#/" },
-    { name: "Requests & Suggestions", link: "#/suggestions", current: true }
+    { name: "Home", link: "/" },
+    { name: "Requests & Suggestions", link: "/suggestions", current: true }
   ];
 
   updateSEO(
@@ -1076,8 +1127,8 @@ function renderSuggestionsView(container) {
    ========================================================================== */
 function renderContactView(container) {
   const breadcrumbs = [
-    { name: "Home", link: "#/" },
-    { name: "Contact Us", link: "#/contact", current: true }
+    { name: "Home", link: "/" },
+    { name: "Contact Us", link: "/contact", current: true }
   ];
 
   updateSEO(
@@ -1169,8 +1220,8 @@ function renderContactView(container) {
    ========================================================================== */
 function renderTermsView(container) {
   const breadcrumbs = [
-    { name: "Home", link: "#/" },
-    { name: "Legal Information & Terms of Use", link: "#/terms", current: true }
+    { name: "Home", link: "/" },
+    { name: "Legal Information & Terms of Use", link: "/terms", current: true }
   ];
 
   updateSEO(
@@ -1235,8 +1286,8 @@ function renderTermsView(container) {
    ========================================================================== */
 function renderPrivacyView(container) {
   const breadcrumbs = [
-    { name: "Home", link: "#/" },
-    { name: "Privacy Policy", link: "#/privacy", current: true }
+    { name: "Home", link: "/" },
+    { name: "Privacy Policy", link: "/privacy", current: true }
   ];
 
   updateSEO(
@@ -1312,8 +1363,8 @@ function renderPrivacyView(container) {
    ========================================================================== */
 function renderCalculatorsListView(container) {
   const breadcrumbs = [
-    { name: "Home", link: "#/" },
-    { name: "Calculator List (A–Z Directory)", link: "#/calculators-list", current: true }
+    { name: "Home", link: "/" },
+    { name: "Calculator List (A–Z Directory)", link: "/calculators-list", current: true }
   ];
 
   updateSEO(
@@ -1373,7 +1424,7 @@ function renderCalculatorsListView(container) {
         <ul class="az-calc-list">
           ${calcs.map(c => `
             <li class="az-calc-item" data-name="${c.name.toLowerCase()}" data-desc="${c.description.toLowerCase()}" data-category="${c.category}">
-              <a href="#/calc/${c.id}" class="az-calc-link">
+              <a href="/calc/${c.id}" class="az-calc-link">
                 <span class="az-calc-bullet">•</span>
                 <span class="az-calc-name">${c.name}</span>
               </a>
