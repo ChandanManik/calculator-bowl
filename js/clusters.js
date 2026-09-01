@@ -15,7 +15,7 @@ const TOPICAL_CLUSTERS = {
     "colorClass": "financial",
     "badge": "14 Calculators",
     "description": "Plan your loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
-    "seoTitle": "Financial, Gold, Bitcoin & Loan Calculators - Free Online Tools | CalculatorBowl",
+    "seoTitle": "Financial, Loan & Investment Calculators | CalculatorBowl",
     "seoDescription": "Accurate financial calculators for loans, mortgages, gold valuation, bitcoin and cryptocurrency conversions, compound interest, simple interest, sales tax, and investment planning.",
     "calculators": [
       {
