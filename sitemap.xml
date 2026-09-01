@@ -8,45 +8,133 @@
     <priority>1.00</priority>
   </url>
 
-  <!-- Pillar Category Hubs -->
+  <!-- Master A-Z Calculators Directory -->
   <url>
-    <loc>https://calculatorbowl.com/financial</loc>
+    <loc>https://calculatorbowl.com/calculators/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
+  </url>
+
+  <!-- Top-Level Category Hubs -->
+  <url>
+    <loc>https://calculatorbowl.com/calculators/finance/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/math</loc>
+    <loc>https://calculatorbowl.com/calculators/math/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/conversions</loc>
+    <loc>https://calculatorbowl.com/calculators/conversion/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/datetime</loc>
+    <loc>https://calculatorbowl.com/calculators/date-time/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/network</loc>
+    <loc>https://calculatorbowl.com/calculators/tech-network/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
 
-  <!-- Institutional, Legal & Directory Pages -->
+  <!-- Subcategory Hubs -->
   <url>
-    <loc>https://calculatorbowl.com/calculators-list</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/loans/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/finance/interest/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/finance/business/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/finance/investment/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/basic/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/percentage/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/fractions/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/algebra/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/statistics/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/conversion/measurement/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/date-time/calendar/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/date-time/environment/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/tech-network/speed/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/tech-network/data/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Institutional & Legal Pages -->
   <url>
     <loc>https://calculatorbowl.com/help</loc>
     <lastmod>2026-09-01</lastmod>
@@ -78,233 +166,233 @@
     <priority>0.60</priority>
   </url>
 
-  <!-- Pillar: Financial Calculators -->
+  <!-- Category: Financial Calculators -->
   <url>
-    <loc>https://calculatorbowl.com/calc/loan-calculator</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/loans/loan-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/compound-interest</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/simple-interest</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/mortgage-calculator</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/loans/mortgage-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/auto-loan</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/loans/auto-loan-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/sales-tax</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/business/sales-tax-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/tip-calculator</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/business/tip-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/salary-calculator</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/business/salary-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/credit-card-payoff</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/loans/credit-card-payoff-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/future-value</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/investment/future-value-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/margin-markup</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/business/profit-margin-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/depreciation-calculator</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/business/depreciation-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/gold-calculator</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/investment/gold-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/bitcoin-calculator</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-
-  <!-- Pillar: Math & Statistics Calculators -->
-  <url>
-    <loc>https://calculatorbowl.com/calc/basic-calculator</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/percentage-calculator</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/fractions-operations</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/fraction-to-decimal</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/decimal-to-fraction</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/mixed-number-calc</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/fraction-simplifier</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/gcf-lcm-calculator</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/prime-factorization</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/ratio-calculator</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/quadratic-formula</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/mean-median-mode</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/standard-deviation</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/scientific-notation</loc>
-    <lastmod>2026-09-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://calculatorbowl.com/calc/exponent-calculator</loc>
+    <loc>https://calculatorbowl.com/calculators/finance/investment/bitcoin-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
 
-  <!-- Pillar: Unit Conversion Calculators -->
+  <!-- Category: Math & Statistics Calculators -->
   <url>
-    <loc>https://calculatorbowl.com/calc/temperature-converter</loc>
+    <loc>https://calculatorbowl.com/calculators/math/basic/basic-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/length-converter</loc>
+    <loc>https://calculatorbowl.com/calculators/math/percentage/percentage-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/weight-converter</loc>
+    <loc>https://calculatorbowl.com/calculators/math/fractions/fraction-arithmetic-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/fractions/fraction-to-decimal-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/fractions/decimal-to-fraction-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/fractions/mixed-numbers-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/fractions/fraction-simplifier-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/algebra/gcf-lcm-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/algebra/prime-factorization-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/algebra/ratio-proportion-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/algebra/quadratic-formula-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/statistics/mean-median-mode-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/statistics/standard-deviation-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/algebra/scientific-notation-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/algebra/exponent-power-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
 
-  <!-- Pillar: Date & Time Calculators -->
+  <!-- Category: Unit Conversion Calculators -->
   <url>
-    <loc>https://calculatorbowl.com/calc/age-calculator</loc>
+    <loc>https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/time-calculator</loc>
+    <loc>https://calculatorbowl.com/calculators/conversion/measurement/length-converter/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/weather-forecast</loc>
+    <loc>https://calculatorbowl.com/calculators/conversion/measurement/weight-converter/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
 
-  <!-- Pillar: Network & Internet Calculators -->
+  <!-- Category: Date & Time Calculators -->
   <url>
-    <loc>https://calculatorbowl.com/calc/internet-speed-test</loc>
+    <loc>https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://calculatorbowl.com/calc/streaming-data-calculator</loc>
+    <loc>https://calculatorbowl.com/calculators/date-time/calendar/time-duration-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/date-time/environment/weather-forecast-calculator/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Category: Network & Internet Calculators -->
+  <url>
+    <loc>https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/</loc>
+    <lastmod>2026-09-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>

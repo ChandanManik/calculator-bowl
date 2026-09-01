@@ -1,4 +1,13 @@
 /**
+ * Complete Rebuilder for js/app.js with Modern Hierarchical Router
+ */
+const fs = require('fs');
+const path = require('path');
+
+const rootDir = path.resolve(__dirname, '..');
+const appJsPath = path.join(rootDir, 'js/app.js');
+
+const appJsContent = `/**
  * ============================================================================
  * CalculatorBowl Application Core Engine & Hierarchical Router
  * Architecture: /calculators/[category]/[subcategory]/[calculator-name]/
@@ -151,7 +160,7 @@ function handleRoute() {
   }
 
   // Route 3: Hierarchical Calculator View (/calculators/:category/:subcategory/:calcSlug/)
-  const hierarchicalCalcMatch = path.match(/^\/calculators\/([a-z0-9-]+)\/([a-z0-9-]+)\/([a-z0-9-]+)\/?$/);
+  const hierarchicalCalcMatch = path.match(/^\\/calculators\\/([a-z0-9-]+)\\/([a-z0-9-]+)\\/([a-z0-9-]+)\\/?$/);
   if (hierarchicalCalcMatch) {
     const [, catKey, subcatKey, calcSlug] = hierarchicalCalcMatch;
     const calc = getCalculatorByPath(catKey, subcatKey, calcSlug) || getCalculatorById(calcSlug);
@@ -192,7 +201,7 @@ function handleRoute() {
   }
 
   // Route 4: Subcategory Hub View (/calculators/:category/:subcategory/)
-  const subcatMatch = path.match(/^\/calculators\/([a-z0-9-]+)\/([a-z0-9-]+)\/?$/);
+  const subcatMatch = path.match(/^\\/calculators\\/([a-z0-9-]+)\\/([a-z0-9-]+)\\/?$/);
   if (subcatMatch) {
     const [, catKey, subcatKey] = subcatMatch;
     const cluster = TOPICAL_CLUSTERS[catKey];
@@ -203,7 +212,7 @@ function handleRoute() {
   }
 
   // Route 5: Category Hub View (/calculators/:category/)
-  const catMatch = path.match(/^\/calculators\/([a-z0-9-]+)\/?$/);
+  const catMatch = path.match(/^\\/calculators\\/([a-z0-9-]+)\\/?$/);
   if (catMatch && TOPICAL_CLUSTERS[catMatch[1]]) {
     const clusterId = catMatch[1];
     const cluster = TOPICAL_CLUSTERS[clusterId];
@@ -239,7 +248,7 @@ function handleRoute() {
   }
 
   // Route 6: 301 Permanent Client-side Redirect for Legacy /calc/[id]
-  const legacyCalcMatch = path.match(/^\/calc\/([a-z0-9-]+)\/?$/);
+  const legacyCalcMatch = path.match(/^\\/calc\\/([a-z0-9-]+)\\/?$/);
   if (legacyCalcMatch) {
     const legacyId = legacyCalcMatch[1];
     const calc = getCalculatorById(legacyId);
@@ -326,14 +335,14 @@ function updateBreadcrumbs(items) {
   container.innerHTML = items.map((item, idx) => {
     const isLast = idx === items.length - 1;
     if (isLast) {
-      return `<span class="breadcrumb-item current">${item.name}</span>`;
+      return \`<span class="breadcrumb-item current">\${item.name}</span>\`;
     }
-    return `
+    return \`
       <span class="breadcrumb-item">
-        <a href="${item.link}">${item.name}</a>
+        <a href="\${item.link}">\${item.name}</a>
         <span class="breadcrumb-separator">›</span>
       </span>
-    `;
+    \`;
   }).join("");
 }
 
@@ -354,7 +363,7 @@ function updateSEO(title, description, options = {}) {
   if (currentPath !== "/" && !currentPath.endsWith("/")) {
     currentPath = currentPath + "/";
   }
-  const currentUrl = cleanBase.replace(/\/+$/, "") + (currentPath === "/" ? "/" : currentPath);
+  const currentUrl = cleanBase.replace(/\\/+$/, "") + (currentPath === "/" ? "/" : currentPath);
   if (canonicalTag) {
     canonicalTag.setAttribute("href", currentUrl);
   }
@@ -404,7 +413,7 @@ function updateSEO(title, description, options = {}) {
           "@type": "ListItem",
           "position": idx + 1,
           "name": b.name,
-          "item": b.link ? (cleanBase.replace(/\/+$/, '') + b.link) : currentUrl
+          "item": b.link ? (cleanBase.replace(/\\/+$/, '') + b.link) : currentUrl
         }))
       });
     }
@@ -455,59 +464,59 @@ function renderHomeView(container) {
     const cluster = TOPICAL_CLUSTERS[clusterKey];
     if (!cluster) return '';
     const clusterUrl = cluster.url || ('/calculators/' + (cluster.canonicalId || cluster.id) + '/');
-    const itemsHtml = cluster.calculators.map(c => `
+    const itemsHtml = cluster.calculators.map(c => \`
       <li class="directory-item">
-        <a href="${c.url || ('/calculators/' + c.category + '/' + c.subcategory + '/' + c.slug + '/')}">
+        <a href="\${c.url || ('/calculators/' + c.category + '/' + c.subcategory + '/' + c.slug + '/')}">
           <span style="display: flex; align-items: center; gap: 0.45rem;">
-            <span>${c.icon}</span>
-            <span>${c.name}</span>
+            <span>\${c.icon}</span>
+            <span>\${c.name}</span>
           </span>
-          <span class="directory-item-badge">${c.badge}</span>
+          <span class="directory-item-badge">\${c.badge}</span>
         </a>
       </li>
-    `).join("");
+    \`).join("");
 
-    return `
+    return \`
       <div class="directory-category-card">
         <div class="directory-cat-header">
           <h2 class="directory-cat-title">
-            <span>${cluster.icon}</span>
-            <a href="${clusterUrl}">${cluster.title}</a>
+            <span>\${cluster.icon}</span>
+            <a href="\${clusterUrl}">\${cluster.title}</a>
           </h2>
-          <span class="cluster-card-badge">${cluster.badge}</span>
+          <span class="cluster-card-badge">\${cluster.badge}</span>
         </div>
-        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">${cluster.description}</p>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem;">\${cluster.description}</p>
         
         <ul class="directory-items-grid">
-          ${itemsHtml}
+          \${itemsHtml}
         </ul>
 
-        <a href="${clusterUrl}" class="directory-view-all">
-          <span>More ${cluster.shortTitle} Calculators »</span>
+        <a href="\${clusterUrl}" class="directory-view-all">
+          <span>More \${cluster.shortTitle} Calculators »</span>
         </a>
       </div>
-    `;
+    \`;
   }).join("");
 
   const allCalcs = getAllCalculators();
   const popularCalcs = allCalcs.slice(0, 6);
-  const popularListHtml = popularCalcs.map(p => `
+  const popularListHtml = popularCalcs.map(p => \`
     <li class="popular-tool-item">
-      <a href="${p.url}">
-        <span style="font-size: 1.2rem;">${p.icon}</span>
+      <a href="\${p.url}">
+        <span style="font-size: 1.2rem;">\${p.icon}</span>
         <div style="flex: 1;">
-          <div style="font-size: 0.88rem; font-weight: 700;">${p.shortName}</div>
-          <div style="font-size: 0.72rem; color: var(--text-muted);">${p.subcatTitle || p.clusterTitle}</div>
+          <div style="font-size: 0.88rem; font-weight: 700;">\${p.shortName}</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted);">\${p.subcatTitle || p.clusterTitle}</div>
         </div>
         <span style="color: var(--text-muted); font-size: 0.8rem;">→</span>
       </a>
     </li>
-  `).join("");
+  \`).join("");
 
-  container.innerHTML = `
+  container.innerHTML = \`
     <section class="home-hero-calc-section">
       <div id="homeBasicCalcRoot" style="width: 100%; display: flex; justify-content: center;">
-        ${getBasicCalculatorMarkup("homeBasic")}
+        \${getBasicCalculatorMarkup("homeBasic")}
       </div>
 
       <div class="home-hero-content">
@@ -561,14 +570,14 @@ function renderHomeView(container) {
           </a>
         </div>
 
-        ${categoryCardsHtml}
+        \${categoryCardsHtml}
       </main>
 
       <aside class="cluster-sidebar">
         <div class="sidebar-widget">
           <h3 class="widget-title">🔥 Most Popular Tools</h3>
           <ul class="popular-tools-list">
-            ${popularListHtml}
+            \${popularListHtml}
           </ul>
         </div>
 
@@ -612,7 +621,7 @@ function renderHomeView(container) {
         </div>
       </div>
     </section>
-  `;
+  \`;
 
   const heroInput = document.getElementById("heroSearchInput");
   const heroDropdown = document.getElementById("heroSearchResults");
@@ -630,19 +639,19 @@ function renderHomeView(container) {
    View 2: Category Hub View
    ========================================================================== */
 function renderPillarView(container, cluster) {
-  const cardsHtml = cluster.calculators.map(c => `
+  const cardsHtml = cluster.calculators.map(c => \`
     <div class="cluster-card" style="padding: 1.5rem;">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
-        <span style="font-size: 1.75rem;">${c.icon}</span>
-        <span class="cluster-card-badge">${c.subcatTitle || c.badge}</span>
+        <span style="font-size: 1.75rem;">\${c.icon}</span>
+        <span class="cluster-card-badge">\${c.subcatTitle || c.badge}</span>
       </div>
-      <h3 class="cluster-card-title" style="font-size: 1.15rem; margin-bottom: 0.4rem;">${c.name}</h3>
-      <p class="cluster-card-desc" style="margin-bottom: 1.25rem;">${c.description}</p>
-      <a href="${c.url}" class="btn btn-primary btn-sm" style="margin-top: auto; width: 100%;">
+      <h3 class="cluster-card-title" style="font-size: 1.15rem; margin-bottom: 0.4rem;">\${c.name}</h3>
+      <p class="cluster-card-desc" style="margin-bottom: 1.25rem;">\${c.description}</p>
+      <a href="\${c.url}" class="btn btn-primary btn-sm" style="margin-top: auto; width: 100%;">
         <span>Open Calculator →</span>
       </a>
     </div>
-  `).join("");
+  \`).join("");
 
   const pillarContent = (typeof CATEGORY_PILLAR_CONTENT !== "undefined" && CATEGORY_PILLAR_CONTENT[cluster.id])
     ? CATEGORY_PILLAR_CONTENT[cluster.id]
@@ -650,31 +659,31 @@ function renderPillarView(container, cluster) {
 
   const currentFaqs = (pillarContent && pillarContent.faqs) ? pillarContent.faqs : cluster.faqs;
 
-  const faqsHtml = currentFaqs.map((faq, idx) => `
+  const faqsHtml = currentFaqs.map((faq, idx) => \`
     <div class="faq-item">
       <button type="button" class="faq-question" onclick="toggleFaq(this)">
-        <span>${faq.q}</span>
+        <span>\${faq.q}</span>
         <span>▼</span>
       </button>
-      <div class="faq-answer" style="${idx === 0 ? '' : 'display: none;'}">
-        <p>${faq.a}</p>
+      <div class="faq-answer" style="\${idx === 0 ? '' : 'display: none;'}">
+        <p>\${faq.a}</p>
       </div>
     </div>
-  `).join("");
+  \`).join("");
 
-  container.innerHTML = `
+  container.innerHTML = \`
     <div style="margin-bottom: 2rem;">
       <span class="brand-badge" style="font-size: 0.8rem; margin-bottom: 0.5rem; display: inline-block;">Category Directory</span>
       <h1 class="hero-title" style="font-size: 2.25rem; text-align: left; margin-bottom: 0.5rem;">
-        ${cluster.icon} ${cluster.title}
+        \${cluster.icon} \${cluster.title}
       </h1>
       <p class="hero-subtitle" style="text-align: left; margin: 0 0 1.5rem; max-width: 800px;">
-        ${cluster.description}
+        \${cluster.description}
       </p>
     </div>
 
     <div class="clusters-grid">
-      ${cardsHtml}
+      \${cardsHtml}
     </div>
 
     <section class="calc-seo-content" style="margin-top: 2.5rem;">
@@ -683,27 +692,27 @@ function renderPillarView(container, cluster) {
       </div>
 
       <h2 class="seo-content-title" style="font-size: 1.65rem; margin-bottom: 1rem;">
-        ${pillarContent ? pillarContent.articleTitle : `Comprehensive Guide to ${cluster.title}`}
+        \${pillarContent ? pillarContent.articleTitle : \`Comprehensive Guide to \${cluster.title}\`}
       </h2>
 
-      ${pillarContent && pillarContent.diagramHtml ? pillarContent.diagramHtml : ''}
+      \${pillarContent && pillarContent.diagramHtml ? pillarContent.diagramHtml : ''}
 
       <div class="seo-content-text" style="font-size: 0.96rem; line-height: 1.75; color: var(--text-secondary);">
-        ${pillarContent ? pillarContent.articleHtml : `
+        \${pillarContent ? pillarContent.articleHtml : \`
           <p>
-            Explore our full suite of precision calculators for ${cluster.shortTitle}.
+            Explore our full suite of precision calculators for \${cluster.shortTitle}.
           </p>
-        `}
+        \`}
       </div>
 
       <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.85rem; color: var(--text-primary);">
-        Frequently Asked Questions (${cluster.shortTitle})
+        Frequently Asked Questions (\${cluster.shortTitle})
       </h3>
       <div class="faq-accordion">
-        ${faqsHtml}
+        \${faqsHtml}
       </div>
     </section>
-  `;
+  \`;
 }
 
 /* ==========================================================================
@@ -713,19 +722,19 @@ function renderSubcategoryView(container, cluster, subcategoryKey) {
   const matchingCalcs = cluster.calculators.filter(c => c.subcategory === subcategoryKey);
   const subcatTitle = matchingCalcs[0]?.subcatTitle || (subcategoryKey.charAt(0).toUpperCase() + subcategoryKey.slice(1));
 
-  const cardsHtml = matchingCalcs.map(c => `
+  const cardsHtml = matchingCalcs.map(c => \`
     <div class="cluster-card" style="padding: 1.5rem;">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
-        <span style="font-size: 1.75rem;">${c.icon}</span>
-        <span class="cluster-card-badge">${c.badge}</span>
+        <span style="font-size: 1.75rem;">\${c.icon}</span>
+        <span class="cluster-card-badge">\${c.badge}</span>
       </div>
-      <h3 class="cluster-card-title" style="font-size: 1.15rem; margin-bottom: 0.4rem;">${c.name}</h3>
-      <p class="cluster-card-desc" style="margin-bottom: 1.25rem;">${c.description}</p>
-      <a href="${c.url}" class="btn btn-primary btn-sm" style="margin-top: auto; width: 100%;">
+      <h3 class="cluster-card-title" style="font-size: 1.15rem; margin-bottom: 0.4rem;">\${c.name}</h3>
+      <p class="cluster-card-desc" style="margin-bottom: 1.25rem;">\${c.description}</p>
+      <a href="\${c.url}" class="btn btn-primary btn-sm" style="margin-top: auto; width: 100%;">
         <span>Open Calculator →</span>
       </a>
     </div>
-  `).join("");
+  \`).join("");
 
   const breadcrumbs = [
     { name: "Home", link: "/" },
@@ -734,8 +743,8 @@ function renderSubcategoryView(container, cluster, subcategoryKey) {
   ];
 
   updateSEO(
-    `${subcatTitle} - ${cluster.title} | CalculatorBowl`,
-    `Precision online calculators for ${subcatTitle.toLowerCase()} under ${cluster.title.toLowerCase()}. Calculate with instant formulas and step-by-step solutions.`,
+    \`\${subcatTitle} - \${cluster.title} | CalculatorBowl\`,
+    \`Precision online calculators for \${subcatTitle.toLowerCase()} under \${cluster.title.toLowerCase()}. Calculate with instant formulas and step-by-step solutions.\`,
     {
       pageType: "cluster",
       canonicalPath: '/calculators/' + cluster.id + '/' + subcategoryKey + '/',
@@ -746,21 +755,21 @@ function renderSubcategoryView(container, cluster, subcategoryKey) {
   updateBreadcrumbs(breadcrumbs);
   updateActiveNav(cluster.canonicalId || cluster.id);
 
-  container.innerHTML = `
+  container.innerHTML = \`
     <div style="margin-bottom: 2rem;">
       <span class="brand-badge" style="font-size: 0.8rem; margin-bottom: 0.5rem; display: inline-block;">Subcategory Hub</span>
       <h1 class="hero-title" style="font-size: 2.25rem; text-align: left; margin-bottom: 0.5rem;">
-        ${cluster.icon} ${subcatTitle}
+        \${cluster.icon} \${subcatTitle}
       </h1>
       <p class="hero-subtitle" style="text-align: left; margin: 0 0 1.5rem; max-width: 800px;">
-        Explore all ${subcatTitle.toLowerCase()} tools and solvers under the ${cluster.title} category.
+        Explore all \${subcatTitle.toLowerCase()} tools and solvers under the \${cluster.title} category.
       </p>
     </div>
 
     <div class="clusters-grid">
-      ${cardsHtml}
+      \${cardsHtml}
     </div>
-  `;
+  \`;
 }
 
 /* ==========================================================================
@@ -769,14 +778,14 @@ function renderSubcategoryView(container, cluster, subcategoryKey) {
 function renderCalculatorView(container, calc, cluster) {
   const relatedCalcs = getRelatedCalculators(cluster.id, calc.id);
 
-  const relatedHtml = relatedCalcs.slice(0, 5).map(r => `
+  const relatedHtml = relatedCalcs.slice(0, 5).map(r => \`
     <li>
-      <a href="${r.url}" class="related-calc-link">
-        <span>${r.icon} ${r.shortName}</span>
+      <a href="\${r.url}" class="related-calc-link">
+        <span>\${r.icon} \${r.shortName}</span>
         <span style="color: var(--text-muted);">→</span>
       </a>
     </li>
-  `).join("");
+  \`).join("");
 
   const richContent = (typeof CALCULATOR_RICH_CONTENT !== "undefined" && CALCULATOR_RICH_CONTENT[calc.id]) 
     ? CALCULATOR_RICH_CONTENT[calc.id] 
@@ -784,27 +793,27 @@ function renderCalculatorView(container, calc, cluster) {
 
   const currentFaqs = (richContent && richContent.faqs) ? richContent.faqs : cluster.faqs;
 
-  const faqsHtml = currentFaqs.map(faq => `
+  const faqsHtml = currentFaqs.map(faq => \`
     <div class="faq-item">
       <button type="button" class="faq-question" onclick="toggleFaq(this)">
-        <span>${faq.q}</span>
+        <span>\${faq.q}</span>
         <span>▼</span>
       </button>
       <div class="faq-answer">
-        <p>${faq.a}</p>
+        <p>\${faq.a}</p>
       </div>
     </div>
-  `).join("");
+  \`).join("");
 
-  container.innerHTML = `
+  container.innerHTML = \`
     <div class="calculator-layout">
       <div class="calculator-card-main">
         <div class="calc-header">
-          <a href="${cluster.url || ('/calculators/' + cluster.id + '/')}" class="calc-cluster-tag">
-            <span>${cluster.icon} ${cluster.title} › ${calc.subcatTitle || calc.subcategory}</span>
+          <a href="\${cluster.url || ('/calculators/' + cluster.id + '/')}" class="calc-cluster-tag">
+            <span>\${cluster.icon} \${cluster.title} › \${calc.subcatTitle || calc.subcategory}</span>
           </a>
-          <h1 class="calc-title">${calc.name}</h1>
-          <p class="calc-summary">${calc.description}</p>
+          <h1 class="calc-title">\${calc.name}</h1>
+          <p class="calc-summary">\${calc.description}</p>
         </div>
 
         <div id="dynamicCalculatorBody" class="calc-body">
@@ -815,16 +824,16 @@ function renderCalculatorView(container, calc, cluster) {
       <aside class="cluster-sidebar">
         <div class="sidebar-widget">
           <h3 class="widget-title">📁 Calculator Category</h3>
-          <a href="${cluster.url || ('/calculators/' + cluster.id + '/')}" class="pillar-hub-badge">
-            <span>${cluster.icon} All ${cluster.shortTitle} Calculators</span>
+          <a href="\${cluster.url || ('/calculators/' + cluster.id + '/')}" class="pillar-hub-badge">
+            <span>\${cluster.icon} All \${cluster.shortTitle} Calculators</span>
             <span>View All →</span>
           </a>
           
           <h4 style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.6rem; letter-spacing: 0.05em;">
-            Related in ${calc.subcatTitle || cluster.shortTitle}:
+            Related in \${calc.subcatTitle || cluster.shortTitle}:
           </h4>
           <ul class="related-calcs-list">
-            ${relatedHtml}
+            \${relatedHtml}
           </ul>
         </div>
 
@@ -846,52 +855,52 @@ function renderCalculatorView(container, calc, cluster) {
       </div>
 
       <h2 class="seo-content-title" style="font-size: 1.65rem; margin-bottom: 1rem;">
-        ${richContent ? richContent.articleTitle : `Complete Guide to ${calc.name}`}
+        \${richContent ? richContent.articleTitle : \`Complete Guide to \${calc.name}\`}
       </h2>
 
-      ${richContent && richContent.diagramHtml ? richContent.diagramHtml : ''}
+      \${richContent && richContent.diagramHtml ? richContent.diagramHtml : ''}
 
       <div class="seo-content-text" style="font-size: 0.96rem; line-height: 1.75; color: var(--text-secondary);">
-        ${richContent ? richContent.articleHtml : `
+        \${richContent ? richContent.articleHtml : \`
           <p>
             This calculator provides precision calculations using verified mathematical formulas and algorithmic principles. All equations are computed directly in your browser with zero latency.
           </p>
-        `}
+        \`}
       </div>
 
-      ${calc.contextualGuide ? `
+      \${calc.contextualGuide ? \`
         <div class="contextual-guide-card">
           <h3 class="contextual-guide-title">
-            <span>🔗</span> ${calc.contextualGuide.title}
+            <span>🔗</span> \${calc.contextualGuide.title}
           </h3>
           <div class="contextual-guide-body">
-            ${calc.contextualGuide.html}
+            \${calc.contextualGuide.html}
           </div>
-          ${calc.contextualGuide.suggestedLinks ? `
+          \${calc.contextualGuide.suggestedLinks ? \`
             <div class="contextual-links-grid">
-              ${calc.contextualGuide.suggestedLinks.map(link => {
+              \${calc.contextualGuide.suggestedLinks.map(link => {
                 const targetCalc = getCalculatorById(link.id);
                 const targetUrl = targetCalc ? targetCalc.url : ('/calculators/' + link.id + '/');
-                return `
-                  <a href="${targetUrl}" class="contextual-link-btn">
-                    <span>${link.icon}</span>
-                    <span>${link.label}</span>
+                return \`
+                  <a href="\${targetUrl}" class="contextual-link-btn">
+                    <span>\${link.icon}</span>
+                    <span>\${link.label}</span>
                   </a>
-                `;
+                \`;
               }).join("")}
             </div>
-          ` : ''}
+          \` : ''}
         </div>
-      ` : ''}
+      \` : ''}
 
       <h3 style="font-family: var(--font-heading); font-size: 1.3rem; margin-top: 2rem; margin-bottom: 0.85rem; color: var(--text-primary);">
-        Frequently Asked Questions (${calc.shortName})
+        Frequently Asked Questions (\${calc.shortName})
       </h3>
       <div class="faq-accordion">
-        ${faqsHtml}
+        \${faqsHtml}
       </div>
     </section>
-  `;
+  \`;
 
   const calcBody = document.getElementById("dynamicCalculatorBody");
   if (calcBody && typeof window[calc.renderFunction] === "function") {
@@ -939,24 +948,24 @@ function attachSearchEvents(input, dropdown) {
     );
 
     if (matches.length === 0) {
-      dropdown.innerHTML = `
+      dropdown.innerHTML = \`
         <div style="padding: 1rem; text-align: center; color: var(--text-muted); font-size: 0.88rem;">
-          No calculators found matching "<b>${e.target.value}</b>".
+          No calculators found matching "<b>\${e.target.value}</b>".
         </div>
-      `;
+      \`;
       dropdown.style.display = "block";
       return;
     }
 
-    dropdown.innerHTML = matches.slice(0, 6).map(m => `
-      <div class="search-result-item" onclick="navigateTo('${m.url}'); document.querySelectorAll('.search-results-dropdown, .mobile-search-results').forEach(d => d.style.display='none');">
+    dropdown.innerHTML = matches.slice(0, 6).map(m => \`
+      <div class="search-result-item" onclick="navigateTo('\${m.url}'); document.querySelectorAll('.search-results-dropdown, .mobile-search-results').forEach(d => d.style.display='none');">
         <div class="search-result-info">
-          <div class="search-result-name">${m.icon} ${m.name}</div>
-          <div class="search-result-cluster">${m.subcatTitle || m.clusterTitle} • ${m.badge}</div>
+          <div class="search-result-name">\${m.icon} \${m.name}</div>
+          <div class="search-result-cluster">\${m.subcatTitle || m.clusterTitle} • \${m.badge}</div>
         </div>
         <span style="color: var(--accent-primary); font-size: 0.85rem;">Open →</span>
       </div>
-    `).join("");
+    \`).join("");
 
     dropdown.style.display = "block";
   });
@@ -1049,7 +1058,7 @@ function renderHelpView(container) {
   );
   updateBreadcrumbs(breadcrumbs);
 
-  container.innerHTML = `
+  container.innerHTML = \`
     <div class="calc-seo-content" style="max-width: 900px; margin: 0 auto;">
       <h1 class="hero-title" style="font-size: 2.25rem; margin-bottom: 0.75rem;">📚 Help Center &amp; User Manual</h1>
       <p class="hero-subtitle" style="margin-bottom: 2rem;">
@@ -1077,7 +1086,7 @@ function renderHelpView(container) {
         </a>
       </div>
     </div>
-  `;
+  \`;
 }
 
 function renderSuggestionsView(container) {
@@ -1092,7 +1101,7 @@ function renderSuggestionsView(container) {
   );
   updateBreadcrumbs(breadcrumbs);
 
-  container.innerHTML = `
+  container.innerHTML = \`
     <div class="calc-seo-content" style="max-width: 750px; margin: 0 auto;">
       <h1 class="hero-title" style="font-size: 2.15rem; margin-bottom: 0.75rem;">💡 Suggest a New Calculator</h1>
       <p class="hero-subtitle" style="margin-bottom: 2rem;">
@@ -1123,7 +1132,7 @@ function renderSuggestionsView(container) {
         </button>
       </form>
     </div>
-  `;
+  \`;
 }
 
 function renderContactView(container) {
@@ -1138,7 +1147,7 @@ function renderContactView(container) {
   );
   updateBreadcrumbs(breadcrumbs);
 
-  container.innerHTML = `
+  container.innerHTML = \`
     <div class="calc-seo-content" style="max-width: 750px; margin: 0 auto;">
       <h1 class="hero-title" style="font-size: 2.15rem; margin-bottom: 0.75rem;">📬 Contact CalculatorBowl</h1>
       <p class="hero-subtitle" style="margin-bottom: 2rem;">
@@ -1163,7 +1172,7 @@ function renderContactView(container) {
         </button>
       </form>
     </div>
-  `;
+  \`;
 }
 
 function renderTermsView(container) {
@@ -1178,7 +1187,7 @@ function renderTermsView(container) {
   );
   updateBreadcrumbs(breadcrumbs);
 
-  container.innerHTML = `
+  container.innerHTML = \`
     <div class="calc-seo-content" style="max-width: 850px; margin: 0 auto;">
       <h1 class="hero-title" style="font-size: 2.15rem; margin-bottom: 0.75rem;">📜 Terms of Service</h1>
       <p class="hero-subtitle" style="margin-bottom: 2rem;">
@@ -1195,7 +1204,7 @@ function renderTermsView(container) {
         The design, code, interactive engines, and educational articles on CalculatorBowl are protected under copyright law. Unauthorized scraping, reproduction, or redistribution is strictly prohibited.
       </p>
     </div>
-  `;
+  \`;
 }
 
 function renderPrivacyView(container) {
@@ -1210,7 +1219,7 @@ function renderPrivacyView(container) {
   );
   updateBreadcrumbs(breadcrumbs);
 
-  container.innerHTML = `
+  container.innerHTML = \`
     <div class="calc-seo-content" style="max-width: 850px; margin: 0 auto;">
       <h1 class="hero-title" style="font-size: 2.15rem; margin-bottom: 0.75rem;">🔒 Privacy Policy</h1>
       <p class="hero-subtitle" style="margin-bottom: 2rem;">
@@ -1227,7 +1236,7 @@ function renderPrivacyView(container) {
         CalculatorBowl uses browser LocalStorage strictly for saving your UI theme preferences (Light/Dark mode) and handheld calculator history tape.
       </p>
     </div>
-  `;
+  \`;
 }
 
 /* ==========================================================================
@@ -1254,42 +1263,42 @@ function renderCalculatorsListView(container) {
   const azBarHtml = alphabet.map(letter => {
     const count = grouped[letter] ? grouped[letter].length : 0;
     if (count > 0) {
-      return `<button type="button" class="az-letter-btn active" onclick="scrollToLetter('${letter}')">${letter}</button>`;
+      return \`<button type="button" class="az-letter-btn active" onclick="scrollToLetter('\${letter}')">\${letter}</button>\`;
     }
-    return `<span class="az-letter-btn disabled">${letter}</span>`;
+    return \`<span class="az-letter-btn disabled">\${letter}</span>\`;
   }).join("");
 
   const letterSectionsHtml = alphabet.map(letter => {
     const items = grouped[letter] || [];
     if (items.length === 0) return "";
 
-    const itemsHtml = items.map(c => `
-      <li class="az-calc-item" data-name="${c.name.toLowerCase()}" data-desc="${c.description.toLowerCase()}">
-        <a href="${c.url}">
-          <span class="az-item-icon">${c.icon}</span>
+    const itemsHtml = items.map(c => \`
+      <li class="az-calc-item" data-name="\${c.name.toLowerCase()}" data-desc="\${c.description.toLowerCase()}">
+        <a href="\${c.url}">
+          <span class="az-item-icon">\${c.icon}</span>
           <div class="az-item-info">
-            <span class="az-item-title">${c.name}</span>
-            <span class="az-item-desc">${c.description}</span>
+            <span class="az-item-title">\${c.name}</span>
+            <span class="az-item-desc">\${c.description}</span>
           </div>
-          <span class="az-item-badge">${c.subcatTitle || c.clusterTitle}</span>
+          <span class="az-item-badge">\${c.subcatTitle || c.clusterTitle}</span>
         </a>
       </li>
-    `).join("");
+    \`).join("");
 
-    return `
-      <section class="az-letter-group" id="letter-${letter}">
+    return \`
+      <section class="az-letter-group" id="letter-\${letter}">
         <div class="az-letter-header">
-          <span class="az-letter-badge">${letter}</span>
-          <span class="az-count-badge">${items.length} Calculators</span>
+          <span class="az-letter-badge">\${letter}</span>
+          <span class="az-count-badge">\${items.length} Calculators</span>
         </div>
         <ul class="az-items-list">
-          ${itemsHtml}
+          \${itemsHtml}
         </ul>
       </section>
-    `;
+    \`;
   }).join("");
 
-  container.innerHTML = `
+  container.innerHTML = \`
     <div class="calc-seo-content" style="max-width: 1050px; margin: 0 auto;">
       <div style="text-align: center; margin-bottom: 2rem;">
         <span class="brand-badge" style="margin-bottom: 0.5rem; display: inline-block;">📚 Master Directory</span>
@@ -1314,11 +1323,11 @@ function renderCalculatorsListView(container) {
       </div>
 
       <nav class="az-index-bar" aria-label="Alphabetical Jump Navigation" style="display: flex; flex-wrap: wrap; gap: 0.35rem; justify-content: center; margin-bottom: 2rem;">
-        ${azBarHtml}
+        \${azBarHtml}
       </nav>
 
       <div id="azListContainer">
-        ${letterSectionsHtml}
+        \${letterSectionsHtml}
       </div>
       
       <div id="azNoResults" style="display: none; padding: 3rem 1.5rem; text-align: center; background: var(--bg-subtle); border-radius: var(--radius-lg); border: 1.5px dashed var(--border-color); margin-top: 1rem;">
@@ -1327,7 +1336,7 @@ function renderCalculatorsListView(container) {
         <p style="margin: 0; color: var(--text-secondary); font-size: 0.95rem;">Try searching for a different keyword or press <kbd style="padding: 2px 6px; background: var(--bg-surface); border-radius: 4px; border: 1px solid var(--border-color); font-family: var(--font-mono);">Ctrl + K</kbd> for the universal spotlight.</p>
       </div>
     </div>
-  `;
+  \`;
 }
 
 window.filterAzCatalog = function(query) {
@@ -1365,7 +1374,7 @@ window.filterAzCatalog = function(query) {
 };
 
 window.scrollToLetter = function(letter) {
-  const el = document.getElementById(`letter-${letter}`);
+  const el = document.getElementById(\`letter-\${letter}\`);
   if (el) {
     const yOffset = -90;
     const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
@@ -1376,7 +1385,7 @@ window.scrollToLetter = function(letter) {
 window.handleFeedbackSubmit = function(event) {
   event.preventDefault();
   const form = event.target;
-  form.innerHTML = `
+  form.innerHTML = \`
     <div style="padding: 2rem 1.5rem; background: rgba(16, 185, 129, 0.08); border: 1.5px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-xl); text-align: center; color: #059669;">
       <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🎉</div>
       <h3 style="color: #059669; margin: 0 0 0.5rem; font-family: var(--font-heading);">Message Successfully Received!</h3>
@@ -1384,5 +1393,9 @@ window.handleFeedbackSubmit = function(event) {
         Thank you for contributing to CalculatorBowl. Our engineering team reviews all user proposals, algorithm suggestions, and feedback regularly.
       </p>
     </div>
-  `;
+  \`;
 };
+`;
+
+fs.writeFileSync(appJsPath, appJsContent, 'utf8');
+console.log('✅ js/app.js successfully rewritten with complete hierarchical router!');
