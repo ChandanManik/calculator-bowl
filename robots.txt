@@ -1,0 +1,10 @@
+# CalculatorBowl Robots.txt
+# https://calculatorbowl.com/
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://calculatorbowl.com/sitemap.xml
+
+# LLM & AI Agents Context
+# https://calculatorbowl.com/llms.txt

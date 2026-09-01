@@ -1,0 +1,264 @@
+# CalculatorBowl - LLM & AI Search Engine Directory
+
+> CalculatorBowl (https://calculatorbowl.com/) is a free, 100% client-side calculation portal providing step-by-step mathematical solutions, amortization schedules, financial projections, and unit conversions.
+
+## Core Capabilities & Features
+- **Client-Side Processing**: Instant zero-latency mathematical and financial calculations.
+- **Step-by-Step Breakdowns**: Detailed mathematical solutions showing formulas, variable substitutions, and simplification steps.
+- **Topical Clustering & Internal Linking**: Calculators are connected in a bidirectional cluster mesh to related financial and mathematical tools.
+- **Multilingual**: 26 supported languages with instant localized UI.
+
+---
+
+## 📁 Financial Calculators (Category Hub: [Financial Calculators](https://calculatorbowl.com/#/financial))
+
+*Description*: Plan your loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.
+
+### [Personal & Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/loan-calculator`
+- **Summary**: Calculate monthly payments, total interest, and amortization schedule for any loan.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest), [Mortgage Calculator](https://calculatorbowl.com/#/calc/mortgage-calculator)
+
+### [Compound Interest Calculator](https://calculatorbowl.com/#/calc/compound-interest)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/compound-interest`
+- **Summary**: Calculate the future value of your savings and investments with daily, monthly, or annual compounding.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest), [Mortgage Calculator](https://calculatorbowl.com/#/calc/mortgage-calculator)
+
+### [Simple Interest Calculator (I = Prt)](https://calculatorbowl.com/#/calc/simple-interest)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/simple-interest`
+- **Summary**: Calculate simple interest, principal, rate, time, and total maturity amount with step-by-step formula.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Mortgage Calculator](https://calculatorbowl.com/#/calc/mortgage-calculator)
+
+### [Mortgage Payment Calculator](https://calculatorbowl.com/#/calc/mortgage-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/mortgage-calculator`
+- **Summary**: Estimate monthly home mortgage payments including principal, interest, and term calculations.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+### [Auto & Car Loan Calculator](https://calculatorbowl.com/#/calc/auto-loan)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/auto-loan`
+- **Summary**: Calculate monthly car payments, total loan cost, and interest on vehicle purchases.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+### [Sales Tax & Discount Calculator](https://calculatorbowl.com/#/calc/sales-tax)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/sales-tax`
+- **Summary**: Calculate total retail price, state and local sales tax amount, and percentage discount savings.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+### [Tip Calculator & Bill Splitter](https://calculatorbowl.com/#/calc/tip-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/tip-calculator`
+- **Summary**: Calculate restaurant tips, gratuity percentages, and split bills evenly among multiple people.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+### [Salary & Hourly Wage Calculator](https://calculatorbowl.com/#/calc/salary-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/salary-calculator`
+- **Summary**: Convert hourly pay to salary, bi-weekly, monthly, and annual gross earnings with overtime.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+### [Credit Card Payoff Calculator](https://calculatorbowl.com/#/calc/credit-card-payoff)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/credit-card-payoff`
+- **Summary**: Calculate months to become debt-free, total interest charges, and debt payoff savings.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+### [Future Value (FV) Calculator](https://calculatorbowl.com/#/calc/future-value)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/future-value`
+- **Summary**: Calculate the future value of periodic savings, lump sums, annuities, and compound interest.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+### [Profit Margin & Markup Calculator](https://calculatorbowl.com/#/calc/margin-markup)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/margin-markup`
+- **Summary**: Calculate gross profit margin, markup percentage, cost of goods, and selling price.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+### [Asset Depreciation Calculator](https://calculatorbowl.com/#/calc/depreciation-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/depreciation-calculator`
+- **Summary**: Calculate asset depreciation schedules using Straight-Line, Double Declining Balance, and SYD.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+### [Live Gold Price, Carat Purity & Jewelry Value Calculator](https://calculatorbowl.com/#/calc/gold-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/gold-calculator`
+- **Summary**: Calculate live gold value by weight (grams, troy ounces, tola/vori, kg) across 24K, 22K, 18K, 14K purities with making charges, VAT, scrap value, and live interactive gold trend charts.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+### [Live Bitcoin Converter, Satoshi Matrix & DCA Profit Calculator](https://calculatorbowl.com/#/calc/bitcoin-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/bitcoin-calculator`
+- **Summary**: Convert BTC and Satoshis to USD, EUR, GBP, JPY, CAD, AUD, INR, and BDT with live spot prices, historical DCA backtesting, Bitcoin Halving countdown, and mining profitability.
+- **Parent Category**: [Financial Calculators](https://calculatorbowl.com/#/financial)
+- **Internal Cross-Links**: Related in this cluster: [Loan Calculator](https://calculatorbowl.com/#/calc/loan-calculator), [Compound Interest](https://calculatorbowl.com/#/calc/compound-interest), [Simple Interest](https://calculatorbowl.com/#/calc/simple-interest)
+
+---
+
+## 📁 Math & Statistics Calculators (Category Hub: [Math & Statistics Calculators](https://calculatorbowl.com/#/math))
+
+*Description*: Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, quadratic equations, mean/median/mode, standard deviation, and exponents with step-by-step proofs.
+
+### [Standard Online Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/basic-calculator`
+- **Summary**: Classic handheld online calculator with LCD display, memory keys (MC, MR, M+, M-), and history tape.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations), [Fraction to Decimal](https://calculatorbowl.com/#/calc/fraction-to-decimal)
+
+### [Percentage Calculator (3-in-1)](https://calculatorbowl.com/#/calc/percentage-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/percentage-calculator`
+- **Summary**: Calculate what is X% of Y, percentage increase/decrease, and X is what percent of Y.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations), [Fraction to Decimal](https://calculatorbowl.com/#/calc/fraction-to-decimal)
+
+### [Fraction Arithmetic Calculator (+, −, ×, ÷)](https://calculatorbowl.com/#/calc/fractions-operations)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/fractions-operations`
+- **Summary**: Add, subtract, multiply, and divide fractions with step-by-step common denominators and simplification.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction to Decimal](https://calculatorbowl.com/#/calc/fraction-to-decimal)
+
+### [Fraction to Decimal Calculator](https://calculatorbowl.com/#/calc/fraction-to-decimal)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/fraction-to-decimal`
+- **Summary**: Convert proper and improper fractions or mixed numbers into terminating or repeating decimals.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [Decimal to Fraction Calculator](https://calculatorbowl.com/#/calc/decimal-to-fraction)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/decimal-to-fraction`
+- **Summary**: Convert any decimal number into a simplified proper fraction, improper fraction, or mixed number.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [Mixed Numbers Calculator (½)](https://calculatorbowl.com/#/calc/mixed-number-calc)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/mixed-number-calc`
+- **Summary**: Add, subtract, multiply, and divide mixed numbers with whole numbers and proper fractions.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [Fraction Simplifier & Reducer](https://calculatorbowl.com/#/calc/fraction-simplifier)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/fraction-simplifier`
+- **Summary**: Reduce fractions to their simplest lowest terms using the Greatest Common Divisor (GCD).
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [GCF & LCM Calculator](https://calculatorbowl.com/#/calc/gcf-lcm-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/gcf-lcm-calculator`
+- **Summary**: Find the Greatest Common Factor (GCF) and Least Common Multiple (LCM) of multiple integers.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [Prime Factorization & Factor Tree Calculator](https://calculatorbowl.com/#/calc/prime-factorization)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/prime-factorization`
+- **Summary**: Find prime factors, exponential prime decomposition, all positive divisors, and factor count.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [Ratio & Proportion Calculator (A:B = C:D)](https://calculatorbowl.com/#/calc/ratio-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/ratio-calculator`
+- **Summary**: Solve proportions (A : B = C : D), simplify multi-term ratios, and divide amounts proportionally.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [Quadratic Formula Solver (ax² + bx + c = 0)](https://calculatorbowl.com/#/calc/quadratic-formula)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/quadratic-formula`
+- **Summary**: Solve quadratic equations with real and complex roots, discriminant analysis (Δ = b² - 4ac), and vertex.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [Mean, Median, Mode & Range Calculator](https://calculatorbowl.com/#/calc/mean-median-mode)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/mean-median-mode`
+- **Summary**: Find the average (mean), middle value (median), most frequent value (mode), and range for any data set.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [Standard Deviation & Variance Calculator](https://calculatorbowl.com/#/calc/standard-deviation)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/standard-deviation`
+- **Summary**: Calculate sample and population standard deviation (s, σ), variance (s², σ²), and sum of squares with deviation steps.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [Scientific Notation Calculator & Converter](https://calculatorbowl.com/#/calc/scientific-notation)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/scientific-notation`
+- **Summary**: Convert standard numbers to scientific notation (a × 10ᵇ), engineering notation, and E-notation format.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+### [Exponent & Power Calculator (xʸ)](https://calculatorbowl.com/#/calc/exponent-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/exponent-calculator`
+- **Summary**: Calculate base raised to any power (xʸ), including negative, fractional, and zero exponents.
+- **Parent Category**: [Math & Statistics Calculators](https://calculatorbowl.com/#/math)
+- **Internal Cross-Links**: Related in this cluster: [Basic Calculator](https://calculatorbowl.com/#/calc/basic-calculator), [Percentage Calculator](https://calculatorbowl.com/#/calc/percentage-calculator), [Fraction Calculator](https://calculatorbowl.com/#/calc/fractions-operations)
+
+---
+
+## 📁 Unit Conversion Calculators (Category Hub: [Unit Conversion Calculators](https://calculatorbowl.com/#/conversions))
+
+*Description*: Convert temperature, length, distance, weight, and mass across metric and imperial systems.
+
+### [Temperature Unit Converter](https://calculatorbowl.com/#/calc/temperature-converter)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/temperature-converter`
+- **Summary**: Convert between Celsius (°C), Fahrenheit (°F), Kelvin (K), and Rankine (°R) scales.
+- **Parent Category**: [Unit Conversion Calculators](https://calculatorbowl.com/#/conversions)
+- **Internal Cross-Links**: Related in this cluster: [Length Converter](https://calculatorbowl.com/#/calc/length-converter), [Weight Converter](https://calculatorbowl.com/#/calc/weight-converter)
+
+### [Length & Distance Converter](https://calculatorbowl.com/#/calc/length-converter)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/length-converter`
+- **Summary**: Translate meters, feet, inches, centimeters, kilometers, miles, and yards with exact conversion ratios.
+- **Parent Category**: [Unit Conversion Calculators](https://calculatorbowl.com/#/conversions)
+- **Internal Cross-Links**: Related in this cluster: [Temperature Converter](https://calculatorbowl.com/#/calc/temperature-converter), [Weight Converter](https://calculatorbowl.com/#/calc/weight-converter)
+
+### [Weight & Mass Converter](https://calculatorbowl.com/#/calc/weight-converter)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/weight-converter`
+- **Summary**: Convert kilograms (kg), pounds (lbs), ounces (oz), grams (g), stone (st), and tons with exact ratios.
+- **Parent Category**: [Unit Conversion Calculators](https://calculatorbowl.com/#/conversions)
+- **Internal Cross-Links**: Related in this cluster: [Temperature Converter](https://calculatorbowl.com/#/calc/temperature-converter), [Length Converter](https://calculatorbowl.com/#/calc/length-converter)
+
+---
+
+## 📁 Date & Time Calculators (Category Hub: [Date & Time Calculators](https://calculatorbowl.com/#/datetime))
+
+*Description*: Calculate exact chronological age, next birthday countdown, elapsed time duration, and live weather forecast with interactive radar maps and sunrise/sunset times.
+
+### [Exact Chronological Age Calculator](https://calculatorbowl.com/#/calc/age-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/age-calculator`
+- **Summary**: Calculate exact age in years, months, days, total weeks, hours, minutes, and countdown to your next birthday.
+- **Parent Category**: [Date & Time Calculators](https://calculatorbowl.com/#/datetime)
+- **Internal Cross-Links**: Related in this cluster: [Time Calculator](https://calculatorbowl.com/#/calc/time-calculator), [Weather & Radar](https://calculatorbowl.com/#/calc/weather-forecast)
+
+### [Time Duration & Difference Calculator](https://calculatorbowl.com/#/calc/time-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/time-calculator`
+- **Summary**: Calculate elapsed time duration, hours and minutes difference between two timestamps, and decimal hours.
+- **Parent Category**: [Date & Time Calculators](https://calculatorbowl.com/#/datetime)
+- **Internal Cross-Links**: Related in this cluster: [Age Calculator](https://calculatorbowl.com/#/calc/age-calculator), [Weather & Radar](https://calculatorbowl.com/#/calc/weather-forecast)
+
+### [Live Weather Forecast & Radar Map Calculator](https://calculatorbowl.com/#/calc/weather-forecast)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/weather-forecast`
+- **Summary**: Real-time local weather forecasts, interactive live radar maps, hourly temperatures, UV index, sunrise/sunset, and heat index calculations.
+- **Parent Category**: [Date & Time Calculators](https://calculatorbowl.com/#/datetime)
+- **Internal Cross-Links**: Related in this cluster: [Age Calculator](https://calculatorbowl.com/#/calc/age-calculator), [Time Calculator](https://calculatorbowl.com/#/calc/time-calculator)
+
+---
+
+## 📁 Network & Internet Calculators (Category Hub: [Network & Internet Calculators](https://calculatorbowl.com/#/network))
+
+*Description*: Measure live broadband internet download speed, upload bandwidth, latency ping, jitter, and calculate streaming data consumption across YouTube, Netflix, 4K video, and Zoom.
+
+### [Live Internet Speed & Ping Test](https://calculatorbowl.com/#/calc/internet-speed-test)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/internet-speed-test`
+- **Summary**: Test real-time internet download speed, upload bandwidth, ping latency, jitter, and get gaming & 4K streaming ratings.
+- **Parent Category**: [Network & Internet Calculators](https://calculatorbowl.com/#/network)
+- **Internal Cross-Links**: Related in this cluster: [Streaming Data Calculator](https://calculatorbowl.com/#/calc/streaming-data-calculator)
+
+### [Streaming & Data Usage Calculator](https://calculatorbowl.com/#/calc/streaming-data-calculator)
+- **Direct URL**: `https://calculatorbowl.com/#/calc/streaming-data-calculator`
+- **Summary**: Calculate daily and monthly internet data consumption for YouTube, Netflix (4K/1080p), Spotify, Zoom, and monitor ISP monthly caps.
+- **Parent Category**: [Network & Internet Calculators](https://calculatorbowl.com/#/network)
+- **Internal Cross-Links**: Related in this cluster: [Internet Speed Test](https://calculatorbowl.com/#/calc/internet-speed-test)
+
+---
+

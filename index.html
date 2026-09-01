@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalculatorBowl - Free Online Calculators with Step-by-Step Solutions</title>
+  <meta name="description" content="Explore hundreds of free online calculators for finance, math, fractions, loans, and conversions with detailed step-by-step mathematical solutions.">
+  <meta name="keywords" content="calculator, loan calculator, fraction calculator, compound interest, math solver, topical cluster calculators, calculatorbowl">
+  <meta name="author" content="CalculatorBowl">
+  
+  <!-- Canonical Link -->
+  <link rel="canonical" id="canonicalUrl" href="https://calculatorbowl.com/">
+
+  <!-- LLM & AI Agents Context Standard -->
+  <link rel="alternate" type="text/plain" href="llms.txt" title="LLM Context">
+
+  <!-- Search Engine Crawlers -->
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+  <!-- Manifest & Theme -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CalculatorBowl">
+
+  <!-- Open Graph & Social Sharing -->
+  <meta property="og:site_name" content="CalculatorBowl">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" id="ogTitle" content="CalculatorBowl - Free Online Calculators with Step-by-Step Solutions">
+  <meta property="og:description" id="ogDesc" content="Fast, 100% client-side calculators with step-by-step formulas, amortization schedules, and math breakdowns.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" id="ogUrl" content="https://calculatorbowl.com/">
+  <meta property="og:image" id="ogImage" content="https://calculatorbowl.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="CalculatorBowl - Comprehensive Calculator Suite">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@CalculatorBowl">
+  <meta name="twitter:title" id="twitterTitle" content="CalculatorBowl - Free Online Calculators with Step-by-Step Solutions">
+  <meta name="twitter:description" id="twitterDesc" content="Fast, 100% client-side calculators with step-by-step formulas, amortization schedules, and math breakdowns.">
+  <meta name="twitter:image" id="twitterImage" content="https://calculatorbowl.com/og-image.png">
+
+  <!-- Favicon SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234f46e5'/><text y='.9em' x='50%25' text-anchor='middle' font-size='70' fill='white' font-family='sans-serif' font-weight='bold'>🥣</text></svg>">
+
+  <!-- DNS Prefetch & Font Preconnect for High-Speed Loading -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet Preload & Link -->
+  <link rel="preload" href="css/style.css" as="style">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Schema.org Structured Data (Dynamic JSON-LD) -->
+  <script id="seo-json-ld" type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "@id": "https://calculatorbowl.com/#app",
+        "name": "CalculatorBowl",
+        "url": "https://calculatorbowl.com/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "description": "Comprehensive client-side mathematical and financial calculators with step-by-step breakdowns, amortization schedules, and topical cluster authority.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <!-- Brand Logo -->
+      <a href="#/" class="brand-logo" id="brandLogo">
+        <div class="brand-icon">🥣</div>
+        <span>Calculator<span style="color: var(--accent-primary);">Bowl</span></span>
+        <span class="brand-badge">PRO</span>
+      </a>
+
+      <!-- Header Cluster Navigation -->
+      <nav class="header-nav" id="headerNav" aria-label="Main Navigation">
+        <a href="#/" class="nav-link">🏠 Home</a>
+        <a href="#/financial" class="nav-link">💰 Financial</a>
+        <a href="#/math" class="nav-link">➗ Math & Fractions</a>
+        <a href="#/conversions" class="nav-link">🔄 Conversions</a>
+        <a href="#/datetime" class="nav-link">⏱️ Date & Time</a>
+        <a href="#/network" class="nav-link">🌐 Network</a>
+      </nav>
+
+      <!-- Header Search & Actions -->
+      <div class="header-actions">
+        <div style="position: relative;">
+          <button type="button" class="search-trigger" id="headerSearchTrigger" onclick="document.getElementById('headerSearchInput').focus();">
+            <span>🔍</span>
+            <input type="text" id="headerSearchInput" placeholder="Quick search..." style="background: transparent; border: none; outline: none; width: 100%; color: var(--text-primary); font-size: 0.88rem;">
+            <span class="search-shortcut">Ctrl K</span>
+          </button>
+          <div id="headerSearchResults" class="search-results-dropdown" style="width: 320px; right: 0; left: auto;"></div>
+        </div>
+
+        <!-- Language Selector Dropdown -->
+        <div id="langSelectorContainer"></div>
+
+        <!-- Dark / Light Theme Toggle -->
+        <button type="button" id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Theme">
+          🌙
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Google Translate Hidden Anchor -->
+  <div id="google_translate_element" style="display:none;" aria-hidden="true"></div>
+
+  <!-- Main Container -->
+  <main class="main-wrapper">
+    <!-- Dynamic Breadcrumbs -->
+    <nav class="breadcrumb-container" id="breadcrumbNav" aria-label="Breadcrumb" style="display: none;"></nav>
+
+    <!-- Dynamic Main Content -->
+    <div id="mainContent" class="animate-fade-in">
+      <!-- Injected by js/app.js -->
+    </div>
+  </main>
+
+  <!-- CalculatorSoup-Style Dedicated Pages Footer -->
+  <footer class="site-footer soup-style-footer">
+    <div class="soup-footer-container">
+      <nav class="soup-footer-nav" aria-label="Footer Navigation">
+        <!-- Row 1: Help | Requests & Suggestions | Contact Us -->
+        <div class="soup-footer-row">
+          <a href="#/help" class="soup-link">Help</a>
+          <span class="soup-divider">|</span>
+          <a href="#/suggestions" class="soup-link">Requests &amp; Suggestions</a>
+          <span class="soup-divider">|</span>
+          <a href="#/contact" class="soup-link">Contact Us</a>
+        </div>
+
+        <!-- Row 2: Legal Information & Terms of Use | Privacy Policy -->
+        <div class="soup-footer-row">
+          <a href="#/terms" class="soup-link">Legal Information &amp; Terms of Use</a>
+          <span class="soup-divider">|</span>
+          <a href="#/privacy" class="soup-link">Privacy Policy</a>
+        </div>
+
+        <!-- Row 3: Calculator List | Converter List | Site Map -->
+        <div class="soup-footer-row">
+          <a href="#/calculators-list" class="soup-link">Calculator List</a>
+          <span class="soup-divider">|</span>
+          <a href="#/conversions" class="soup-link">Converter List</a>
+          <span class="soup-divider">|</span>
+          <a href="sitemap.xml" target="_blank" class="soup-link">Site Map</a>
+        </div>
+      </nav>
+
+      <div class="soup-footer-copyright">
+        <p>© 2026 CalculatorBowl. All rights reserved. Free online calculators with step-by-step solutions.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Performance Optimized Scripts (Deferred Execution) -->
+  <script src="js/calculator-content.js" defer></script>
+  <script src="js/clusters.js" defer></script>
+  <script src="js/calculators/basic-calculator.js" defer></script>
+  <script src="js/calculators/financial-loan.js" defer></script>
+  <script src="js/calculators/financial-compound.js" defer></script>
+  <script src="js/calculators/financial-simple-tax.js" defer></script>
+  <script src="js/calculators/financial-business.js" defer></script>
+  <script src="js/calculators/financial-gold.js" defer></script>
+  <script src="js/calculators/financial-bitcoin.js" defer></script>
+  <script src="js/calculators/math-fractions.js" defer></script>
+  <script src="js/calculators/math-fractions-advanced.js" defer></script>
+  <script src="js/calculators/math-percentage.js" defer></script>
+  <script src="js/calculators/math-statistics.js" defer></script>
+  <script src="js/calculators/conversion-temperature.js" defer></script>
+  <script src="js/calculators/datetime-weight.js" defer></script>
+  <script src="js/calculators/datetime-weather.js" defer></script>
+  <script src="js/calculators/tech-network.js" defer></script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/app.js" defer></script>
+
+  <!-- Service Worker Registration for Instant Loads & Offline Capability -->
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>

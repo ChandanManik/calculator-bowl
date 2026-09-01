@@ -1,0 +1,19 @@
+{
+  "name": "CalculatorBowl - Free Online Calculators with Step-by-Step Solutions",
+  "short_name": "CalculatorBowl",
+  "description": "Comprehensive client-side mathematical, financial, fraction, and unit conversion calculators with step-by-step breakdowns.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#4f46e5",
+  "categories": ["education", "finance", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%234f46e5'/><text y='.9em' x='50%25' text-anchor='middle' font-size='70' fill='white' font-family='sans-serif' font-weight='bold'>🥣</text></svg>",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

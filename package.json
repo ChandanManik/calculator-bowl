@@ -1,0 +1,25 @@
+{
+  "name": "calculatorbowl",
+  "version": "1.0.0",
+  "description": "CalculatorBowl - Free Online Calculators with Step-by-Step Solutions",
+  "main": "index.html",
+  "scripts": {
+    "start": "node scripts/server.js",
+    "dev": "node scripts/server.js",
+    "seo": "node scripts/generate-seo.js",
+    "build:seo": "node scripts/generate-seo.js",
+    "test": "node scripts/test-all-calculators.js"
+  },
+  "keywords": [
+    "calculator",
+    "calculatorbowl",
+    "math",
+    "financial",
+    "loans",
+    "conversions",
+    "seo",
+    "llms"
+  ],
+  "author": "CalculatorBowl",
+  "license": "MIT"
+}
