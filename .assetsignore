@@ -8,3 +8,8 @@ scripts/
 package.json
 package-lock.json
 bun.lockb
+.env
+.env.*
+.agents/
+AGENTS.md
+GEMINI.md
