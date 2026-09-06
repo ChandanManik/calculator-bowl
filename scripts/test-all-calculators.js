@@ -17,6 +17,7 @@ const jsFiles = [
   'js/calculators/financial-business.js',
   'js/calculators/financial-gold.js',
   'js/calculators/financial-bitcoin.js',
+  'js/calculators/financial-investment-solvers.js',
   'js/calculators/math-fractions.js',
   'js/calculators/math-fractions-advanced.js',
   'js/calculators/math-percentage.js',
@@ -91,6 +92,7 @@ const loadOrder = [
   'js/calculators/financial-business.js',
   'js/calculators/financial-gold.js',
   'js/calculators/financial-bitcoin.js',
+  'js/calculators/financial-investment-solvers.js',
   'js/calculators/math-fractions.js',
   'js/calculators/math-fractions-advanced.js',
   'js/calculators/math-percentage.js',
@@ -104,7 +106,13 @@ const loadOrder = [
 
 for (const relPath of loadOrder) {
   const fullPath = path.join(rootDir, relPath);
-  const code = fs.readFileSync(fullPath, 'utf8');
+  let code = fs.readFileSync(fullPath, 'utf8');
+  if (relPath.includes('clusters.js')) {
+    code = code.replace('const TOPICAL_CLUSTERS', 'globalThis.TOPICAL_CLUSTERS');
+  }
+  if (relPath.includes('calculator-content.js')) {
+    code = code.replace('const CALCULATOR_RICH_CONTENT', 'globalThis.CALCULATOR_RICH_CONTENT');
+  }
   try {
     vm.runInContext(code, context, { filename: relPath });
   } catch (err) {
@@ -113,7 +121,7 @@ for (const relPath of loadOrder) {
 }
 
 const clusters = sandbox.TOPICAL_CLUSTERS || {};
-const contentData = sandbox.CALCULATOR_CONTENT || {};
+const richContent = sandbox.CALCULATOR_RICH_CONTENT || {};
 console.log(`Found ${Object.keys(clusters).length} clusters.`);
 
 let missingCalculators = [];
@@ -123,16 +131,19 @@ for (const [clusterKey, cluster] of Object.entries(clusters)) {
   console.log(`\nCluster: [${cluster.id}] ${cluster.title} (${cluster.calculators.length} calcs)`);
   for (const calc of cluster.calculators) {
     totalCalculators++;
-    // Check if calc has content in calculator-content.js or a specialized renderer
-    const hasContent = !!contentData[calc.id];
-    // Check if there is an init or render function
-    const hasSpecialRenderer = typeof sandbox[calc.id] === 'function' || 
-      typeof sandbox[`render_${calc.id.replace(/-/g, '_')}`] === 'function';
+    const hasRichContent = !!richContent[calc.id];
+    const hasRenderer = typeof sandbox[calc.renderFunction] === 'function';
     
-    // Check if clusters have required properties
     if (!calc.id || !calc.name || !calc.description) {
-      console.error(`❌ Calc missing metadata:`, calc);
+      console.error(`❌ Calc missing metadata:`, calc.id);
     }
+    if (!hasRenderer) {
+      console.warn(`⚠️ Calc missing renderFunction [${calc.renderFunction}]: ${calc.id}`);
+    }
+    if (!hasRichContent) {
+      console.warn(`⚠️ Calc missing richContent: ${calc.id}`);
+    }
+    console.log(`  ✓ [${calc.id}] ${calc.shortName} -> ${calc.url} (Renderer: ${calc.renderFunction}, RichContent: ${hasRichContent ? 'YES' : 'NO'})`);
   }
 }
 console.log(`\nTotal verified calculators: ${totalCalculators}`);

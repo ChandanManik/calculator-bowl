@@ -13,8 +13,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Financial",
     "icon": "💰",
     "colorClass": "financial",
-    "badge": "14 Calculators",
-    "description": "Plan your loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
+    "badge": "18 Calculators",
+    "description": "Plan your retirement savings, 401(k), ROI, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
     "seoTitle": "Financial, Loan & Investment Calculators | CalculatorBowl",
     "seoDescription": "Accurate financial calculators for loans, mortgages, gold valuation, bitcoin and cryptocurrency conversions, compound interest, simple interest, sales tax, and investment planning.",
     "calculators": [
@@ -561,6 +561,162 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Investment & Wealth",
         "slug": "bitcoin-calculator",
         "url": "/calculators/finance/investment/bitcoin-calculator/",
+        "subcatUrl": "/calculators/finance/investment/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "retirement-calculator",
+        "name": "Retirement & 401(k) Savings Calculator",
+        "shortName": "Retirement Calc",
+        "icon": "🏖️",
+        "badge": "High CPC",
+        "description": "Calculate your retirement nest egg, monthly 401(k) / IRA contributions, safe withdrawal rate, and retirement timeline.",
+        "seoTitle": "Retirement Calculator - 401(k), IRA & Nest Egg Planner",
+        "seoDescription": "Plan your retirement savings, 401(k) and IRA growth, compound interest accumulation, and sustainable monthly retirement income.",
+        "category": "finance",
+        "renderFunction": "renderRetirementCalculator",
+        "contextualGuide": {
+          "title": "Retirement & Long-Term Wealth Cross-References",
+          "html": "\n            <p>\n              Achieving financial independence requires consistent compound asset accumulation and disciplined risk mitigation. Visit our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> to model total debt obligations and asset growth.\n            </p>\n            <p>\n              Cross-reference your retirement savings with compound interest growth or model asset purchasing power after inflation below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "compound-interest",
+              "label": "Compound Interest Planner",
+              "icon": "📈"
+            },
+            {
+              "id": "inflation-calculator",
+              "label": "Inflation Impact on Savings",
+              "icon": "📉"
+            },
+            {
+              "id": "future-value",
+              "label": "Future Value of Assets",
+              "icon": "🔮"
+            }
+          ]
+        },
+        "subcategory": "investment",
+        "subcatTitle": "Investment & Wealth",
+        "slug": "retirement-calculator",
+        "url": "/calculators/finance/investment/retirement-calculator/",
+        "subcatUrl": "/calculators/finance/investment/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "roi-calculator",
+        "name": "ROI (Return on Investment) Calculator",
+        "shortName": "ROI Calculator",
+        "icon": "🎯",
+        "badge": "Investing",
+        "description": "Calculate total return on investment percentage (ROI %), annualized ROI (CAGR), and net profit from any venture.",
+        "seoTitle": "ROI Calculator - Return on Investment & Annualized CAGR",
+        "seoDescription": "Calculate return on investment (ROI %), annualized rate of return (CAGR), and net capital gains with step-by-step formula breakdown.",
+        "category": "finance",
+        "renderFunction": "renderRoiCalculator",
+        "contextualGuide": {
+          "title": "Investment Analysis & Return Tools",
+          "html": "\n            <p>\n              Return on Investment (ROI) evaluates the performance and efficiency of capital allocation across equities, real estate, and business ventures. Explore our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> for comprehensive portfolio tools.\n            </p>\n            <p>\n              Compare your ROI against profit margins or examine the time-discounted present value of returns below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "margin-markup",
+              "label": "Profit Margin & Markup",
+              "icon": "📊"
+            },
+            {
+              "id": "present-value",
+              "label": "Present Value Discounting",
+              "icon": "⏳"
+            },
+            {
+              "id": "compound-interest",
+              "label": "Compound Interest Growth",
+              "icon": "📈"
+            }
+          ]
+        },
+        "subcategory": "investment",
+        "subcatTitle": "Investment & Wealth",
+        "slug": "roi-calculator",
+        "url": "/calculators/finance/investment/roi-calculator/",
+        "subcatUrl": "/calculators/finance/investment/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "present-value",
+        "name": "Present Value (PV) Calculator",
+        "shortName": "Present Value",
+        "icon": "⏳",
+        "badge": "TVM",
+        "description": "Calculate the current worth of a future sum of money or stream of cash flows given a specified discount rate.",
+        "seoTitle": "Present Value Calculator - TVM Discounted Cash Flow",
+        "seoDescription": "Calculate present value (PV) of future sums or cash flows based on discount rate and compounding frequency with algebraic steps.",
+        "category": "finance",
+        "renderFunction": "renderPresentValueCalculator",
+        "contextualGuide": {
+          "title": "Time Value of Money (TVM) Cross-References",
+          "html": "\n            <p>\n              The time value of money establishes that money received today is worth more than the same sum in the future due to its potential earning capacity. Access our complete <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> for financial valuation modeling.\n            </p>\n            <p>\n              Contrast present value discounting against forward future value accumulation or model inflation erosion below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "future-value",
+              "label": "Future Value (FV) Solver",
+              "icon": "🔮"
+            },
+            {
+              "id": "compound-interest",
+              "label": "Compound Interest Growth",
+              "icon": "📈"
+            },
+            {
+              "id": "inflation-calculator",
+              "label": "Inflation & Purchasing Power",
+              "icon": "📉"
+            }
+          ]
+        },
+        "subcategory": "investment",
+        "subcatTitle": "Investment & Wealth",
+        "slug": "present-value-calculator",
+        "url": "/calculators/finance/investment/present-value-calculator/",
+        "subcatUrl": "/calculators/finance/investment/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "inflation-calculator",
+        "name": "Inflation & Purchasing Power Calculator",
+        "shortName": "Inflation Calc",
+        "icon": "📉",
+        "badge": "Economics",
+        "description": "Calculate how inflation erodes purchasing power, future equivalent costs, and cumulative price increases over time.",
+        "seoTitle": "Inflation Calculator - Purchasing Power & CPI Price Increase",
+        "seoDescription": "Calculate the future cost of goods, loss of purchasing power, and cumulative inflation over time with clear step-by-step formulas.",
+        "category": "finance",
+        "renderFunction": "renderInflationCalculator",
+        "contextualGuide": {
+          "title": "Macroeconomic & Wealth Preservation Tools",
+          "html": "\n            <p>\n              Inflation quietly diminishes the real purchasing power of uninvested capital. To maintain real net worth, long-term investments must yield returns higher than the prevailing Consumer Price Index (CPI). Explore our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> for inflation-hedging tools.\n            </p>\n            <p>\n              Compare inflation rates against gold price appreciation or retirement nest egg growth using the cross-references below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "gold-calculator",
+              "label": "Live Gold Price (Inflation Hedge)",
+              "icon": "🥇"
+            },
+            {
+              "id": "retirement-calculator",
+              "label": "Retirement Nest Egg Planner",
+              "icon": "🏖️"
+            },
+            {
+              "id": "salary-calculator",
+              "label": "Salary & Wage Conversion",
+              "icon": "💼"
+            }
+          ]
+        },
+        "subcategory": "investment",
+        "subcatTitle": "Investment & Wealth",
+        "slug": "inflation-calculator",
+        "url": "/calculators/finance/investment/inflation-calculator/",
         "subcatUrl": "/calculators/finance/investment/",
         "categoryUrl": "/calculators/finance/"
       }

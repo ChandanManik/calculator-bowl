@@ -3649,6 +3649,290 @@ const CALCULATOR_RICH_CONTENT = {
         a: "A typical four-person household with multiple 4K video streams, remote video calls, and gaming consumes between 600 GB and 1,200 GB (1.2 TB) of broadband data per month."
       }
     ]
+  },
+
+  // 38. Retirement & 401(k) Calculator
+  "retirement-calculator": {
+    articleTitle: "The Definitive Guide to Retirement Planning, 401(k) Growth & Safe Withdrawals",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🏖️ Wealth Accumulation</span>
+          <h4>How Compounding Dominates Principal Savings Over Time</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 220" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="220" rx="12" fill="var(--bg-subtle)" />
+            <line x1="60" y1="20" x2="60" y2="180" stroke="var(--border-color)" stroke-width="2" />
+            <line x1="60" y1="180" x2="560" y2="180" stroke="var(--border-color)" stroke-width="2" />
+            <!-- Cumulative Out of Pocket Contributions (Linear) -->
+            <path d="M 60,170 L 280,120 L 560,70 L 560,180 L 60,180 Z" fill="rgba(59, 130, 246, 0.2)" />
+            <path d="M 60,170 L 280,120 L 560,70" fill="none" stroke="#3b82f6" stroke-width="3" />
+            <!-- Compound Interest Snowball (Exponential Hockey Stick) -->
+            <path d="M 60,170 Q 320,130 560,25 L 560,70 L 280,120 L 60,170 Z" fill="rgba(16, 185, 129, 0.35)" />
+            <path d="M 60,170 Q 320,130 560,25" fill="none" stroke="#10b981" stroke-width="3" />
+            <!-- Text Labels -->
+            <text x="340" y="45" fill="#10b981" font-weight="700" font-size="12">Compound Earnings (~70% of Wealth)</text>
+            <text x="340" y="105" fill="#3b82f6" font-weight="700" font-size="12">Personal Contributions (~30%)</text>
+            <text x="60" y="200" fill="var(--text-muted)" font-size="11">Age 25-30</text>
+            <text x="280" y="200" fill="var(--text-muted)" font-size="11">Age 45-50</text>
+            <text x="500" y="200" fill="var(--text-muted)" font-size="11">Retirement (Age 65)</text>
+            <text x="15" y="105" fill="var(--text-muted)" font-size="11" transform="rotate(-90 15,105)">Portfolio $</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Thanks to exponential compounding, the vast majority of a multi-million-dollar retirement portfolio consists of accrued investment returns rather than out-of-pocket savings. Starting just 10 years earlier can more than double your nest egg.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Retirement planning is the methodical process of setting retirement income goals, projecting future living expenses, and systematically investing surplus income into tax-advantaged accounts (such as 401(k)s, 403(b)s, and Individual Retirement Accounts/IRAs) to generate a self-sustaining nest egg.
+      </p>
+
+      <h3 class="content-subheading">1. The Mechanics of Retirement Wealth Accumulation</h3>
+      <p>
+        Building a nest egg relies on the continuous compounding of monthly contributions coupled with dividend reinvestment and capital appreciation. The portfolio value at retirement age is determined by:
+      </p>
+      <div class="math-formula-box">
+        FV = P(1 + r)^t + PMT \\times \\left[ \\frac{(1 + r)^t - 1}{r} \\right]
+      </div>
+      <p>
+        Where <b>P</b> represents initial savings, <b>PMT</b> represents monthly recurring deposits, <b>r</b> is the periodic expected rate of return (historically 8%–10% nominal for broad equity indexes like the S&amp;P 500), and <b>t</b> is the total number of compounding periods until retirement.
+      </p>
+
+      <h3 class="content-subheading">2. The 4% Rule &amp; Safe Withdrawal Rates (SWR)</h3>
+      <p>
+        Developed through the landmark <i>Trinity Study</i>, the <b>4% Safe Withdrawal Rule</b> indicates that a retiree with a balanced portfolio of equities and bonds can safely withdraw 4% of their initial portfolio value in the first year of retirement, adjusting subsequent annual withdrawals for inflation, with a 95%+ probability of never exhausting their wealth over a 30-year span.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "How much money should I save for retirement each month?",
+        a: "A widely accepted financial benchmark is saving 15% to 20% of your gross annual salary toward retirement, which includes any employer 401(k) matching contributions."
+      },
+      {
+        q: "What is the 4% Safe Withdrawal Rule in retirement?",
+        a: "The 4% rule states that you can withdraw 4% of your total retirement nest egg in your first year of retirement (and adjust for inflation annually thereafter) without running out of money over a 30-year retirement period."
+      },
+      {
+        q: "What is the difference between a 401(k) and a Traditional or Roth IRA?",
+        a: "A 401(k) is an employer-sponsored plan with higher annual contribution limits ($23,000+ for 2024/2025) and often an employer matching bonus. An IRA is an individual retirement account opened independently with a lower contribution limit ($7,000) offering wider investment selections."
+      }
+    ]
+  },
+
+  // 39. ROI (Return on Investment) Calculator
+  "roi-calculator": {
+    articleTitle: "Comprehensive Guide to Return on Investment (ROI) & Annualized CAGR",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🎯 Performance Metric</span>
+          <h4>Simple ROI vs. Annualized Return (CAGR) Comparison</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 200" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="200" rx="12" fill="var(--bg-subtle)" />
+            <!-- Bar 1: Simple ROI -->
+            <rect x="100" y="50" width="160" height="100" rx="8" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" stroke-width="2" />
+            <text x="180" y="85" fill="#3b82f6" font-weight="700" font-size="16" text-anchor="middle">Simple ROI</text>
+            <text x="180" y="115" fill="var(--text-primary)" font-size="20" font-weight="800" text-anchor="middle">+100%</text>
+            <text x="180" y="135" fill="var(--text-muted)" font-size="11" text-anchor="middle">Ignores Time Factor</text>
+            <!-- Arrow -->
+            <text x="300" y="105" fill="var(--text-muted)" font-size="22" text-anchor="middle">vs</text>
+            <!-- Bar 2: CAGR over 10 yrs -->
+            <rect x="340" y="50" width="160" height="100" rx="8" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="2" />
+            <text x="420" y="85" fill="#10b981" font-weight="700" font-size="16" text-anchor="middle">Annualized CAGR</text>
+            <text x="420" y="115" fill="var(--text-primary)" font-size="20" font-weight="800" text-anchor="middle">+7.18% / yr</text>
+            <text x="420" y="135" fill="var(--text-muted)" font-size="11" text-anchor="middle">Normalized over 10 Years</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> While a 100% total gain sounds extraordinary, achieving it over 10 years equates to a 7.18% annual return (CAGR). Always evaluate holding period duration when comparing investment performance.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Return on Investment (ROI)</b> is a universal financial profitability metric used by retail investors, real estate operators, and corporate finance officers to evaluate the economic efficiency or comparative profitability of capital deployed.
+      </p>
+
+      <h3 class="content-subheading">1. The Mathematical ROI Formula</h3>
+      <p>
+        Simple ROI expresses net financial gain as a percentage relative to the original cash outlay:
+      </p>
+      <div class="math-formula-box">
+        \\text{ROI (\\%)} = \\left( \\frac{\\text{Gross Proceeds} - \\text{Initial Cost}}{\\text{Initial Cost}} \\right) \\times 100 = \\left( \\frac{\\text{Net Profit}}{\\text{Cost of Investment}} \\right) \\times 100
+      </div>
+
+      <h3 class="content-subheading">2. The Crucial Role of Annualized ROI (CAGR)</h3>
+      <p>
+        Simple ROI fails to account for holding period duration. Doubling your money (+100% ROI) in 1 year yields an annualized return of 100%, whereas doubling your money over 10 years yields a Compound Annual Growth Rate (CAGR) of 7.18% per year. The compound annualized return formula is expressed as:
+      </p>
+      <div class="math-formula-box">
+        \\text{Annualized ROI (CAGR)} = \\left[ \\left( \\frac{\\text{Ending Value}}{\\text{Beginning Value}} \\right)^{\\frac{1}{t}} - 1 \\right] \\times 100\\%
+      </div>
+    `,
+    faqs: [
+      {
+        q: "What is considered a good Return on Investment (ROI)?",
+        a: "In the public stock market, an annualized ROI of 7% to 10% (matching historical S&P 500 returns) is considered standard and healthy. In venture capital or high-risk real estate development, investors often target 20%+ annualized returns."
+      },
+      {
+        q: "How does Simple ROI differ from Annualized ROI (CAGR)?",
+        a: "Simple ROI measures total cumulative percentage profit regardless of how long the investment was held, while Annualized ROI (CAGR) computes the geometric average return generated each year, making investments with different timelines easily comparable."
+      },
+      {
+        q: "Can Return on Investment (ROI) be negative?",
+        a: "Yes. If an investment sells for less than its original purchase price, the Net Profit is negative, producing a negative percentage ROI indicating capital loss."
+      }
+    ]
+  },
+
+  // 40. Present Value (PV) Calculator
+  "present-value": {
+    articleTitle: "Present Value (PV) Theory & Time Value of Money (TVM) Explained",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">⏳ Time Value of Money</span>
+          <h4>How Discounting Reduces Future Sums to Present Worth</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 200" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="200" rx="12" fill="var(--bg-subtle)" />
+            <!-- Today's Present Value -->
+            <circle cx="100" cy="110" r="38" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" stroke-width="2.5" />
+            <text x="100" y="108" fill="#3b82f6" font-weight="800" font-size="14" text-anchor="middle">$25,417</text>
+            <text x="100" y="125" fill="var(--text-muted)" font-size="10" text-anchor="middle">Present Value</text>
+            <!-- Connecting Arrow with Discount Rate -->
+            <line x1="145" y1="110" x2="445" y2="110" stroke="#f59e0b" stroke-width="3" stroke-dasharray="6,4" />
+            <polygon points="455,110 445,103 445,117" fill="#f59e0b" />
+            <text x="295" y="95" fill="#f59e0b" font-weight="700" font-size="12" text-anchor="middle">Discount Rate (7% over 10 Yrs)</text>
+            <!-- Future Sum -->
+            <circle cx="500" cy="110" r="48" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="2.5" />
+            <text x="500" y="108" fill="#10b981" font-weight="800" font-size="16" text-anchor="middle">$50,000</text>
+            <text x="500" y="125" fill="var(--text-muted)" font-size="10" text-anchor="middle">Target Future Value</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Core Principle:</b> Because money today can be invested to earn interest, receiving $50,000 in 10 years at a 7% discount rate is worth only $25,417 in today's money.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        The <b>Time Value of Money (TVM)</b> is a cornerstone axiom of financial economics stating that a dollar received today is intrinsically worth more than a dollar received in the future due to its potential earning capacity, inflation, and counterparty default risk.
+      </p>
+
+      <h3 class="content-subheading">1. The Discounting Formula for Present Value</h3>
+      <p>
+        Present Value discounts a projected future lump sum <i>FV</i> back to the current day using an assumed discount rate (opportunity cost of capital) <i>r</i> and compounding frequency <i>n</i>:
+      </p>
+      <div class="math-formula-box">
+        PV = \\frac{FV}{\\left(1 + \\frac{r}{n}\\right)^{nt}}
+      </div>
+      <p>
+        Where:
+      </p>
+      <ul class="content-list">
+        <li><b>PV:</b> Present Value (lump-sum capital needed today).</li>
+        <li><b>FV:</b> Expected or required Future Value sum.</li>
+        <li><b>r:</b> Annual discount rate or required rate of return.</li>
+        <li><b>n:</b> Compounding frequency per year (1 for annual, 12 for monthly, 365 for daily).</li>
+        <li><b>t:</b> Number of years until the future sum is received.</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "Why is Present Value important in finance and business?",
+        a: "Present Value allows investors and corporate leaders to evaluate future cash flows on equal terms, determining whether an upfront investment cost is justified by discounted future revenues (Net Present Value analysis)."
+      },
+      {
+        q: "How does the discount rate affect Present Value?",
+        a: "The discount rate has an inverse relationship with Present Value: a higher discount rate yields a lower Present Value, while a lower discount rate produces a higher Present Value."
+      },
+      {
+        q: "What is the difference between Present Value (PV) and Future Value (FV)?",
+        a: "Present Value looks backwards from a future sum to determine what it is worth today, whereas Future Value calculates what a current sum will grow to in the future after accumulating compound interest."
+      }
+    ]
+  },
+
+  // 41. Inflation & Purchasing Power Calculator
+  "inflation-calculator": {
+    articleTitle: "Understanding Inflation, CPI Price Increases & Purchasing Power Erosion",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">📉 Real Purchasing Power</span>
+          <h4>How a 3.5% Inflation Rate Decays Cash Purchasing Power</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 200" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="200" rx="12" fill="var(--bg-subtle)" />
+            <!-- Bar 1: Year 0 -->
+            <rect x="70" y="40" width="70" height="120" rx="6" fill="rgba(16, 185, 129, 0.4)" stroke="#10b981" stroke-width="2" />
+            <text x="105" y="110" fill="#10b981" font-weight="800" font-size="14" text-anchor="middle">$1,000</text>
+            <text x="105" y="180" fill="var(--text-muted)" font-size="11" text-anchor="middle">Year 0 (100%)</text>
+            <!-- Bar 2: Year 10 -->
+            <rect x="200" y="75" width="70" height="85" rx="6" fill="rgba(245, 158, 11, 0.4)" stroke="#f59e0b" stroke-width="2" />
+            <text x="235" y="125" fill="#f59e0b" font-weight="800" font-size="14" text-anchor="middle">$709</text>
+            <text x="235" y="180" fill="var(--text-muted)" font-size="11" text-anchor="middle">Year 10 (71%)</text>
+            <!-- Bar 3: Year 20 -->
+            <rect x="330" y="100" width="70" height="60" rx="6" fill="rgba(239, 68, 68, 0.4)" stroke="#ef4444" stroke-width="2" />
+            <text x="365" y="135" fill="#ef4444" font-weight="800" font-size="14" text-anchor="middle">$503</text>
+            <text x="365" y="180" fill="var(--text-muted)" font-size="11" text-anchor="middle">Year 20 (50%)</text>
+            <!-- Bar 4: Year 30 -->
+            <rect x="460" y="118" width="70" height="42" rx="6" fill="rgba(185, 28, 28, 0.4)" stroke="#b91c1c" stroke-width="2" />
+            <text x="495" y="145" fill="#b91c1c" font-weight="800" font-size="14" text-anchor="middle">$356</text>
+            <text x="495" y="180" fill="var(--text-muted)" font-size="11" text-anchor="middle">Year 30 (36%)</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>The Silent Wealth Tax:</b> At an average annual inflation rate of 3.5%, cash left sitting in an uninvested savings account loses approximately 50% of its purchasing power every 20 years.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Inflation</b> is the broad economic phenomenon whereby the general price level of goods and services across an economy increases over time, resulting in a proportionate decline in the purchasing power of each nominal unit of currency.
+      </p>
+
+      <h3 class="content-subheading">1. Measuring Price Changes: The Consumer Price Index (CPI)</h3>
+      <p>
+        Government statistical bureaus calculate inflation by tracking the monthly price fluctuation of a standardized basket of consumer items, including food, energy, housing, healthcare, and transportation. The future equivalent cost of goods is computed using the compound growth equation:
+      </p>
+      <div class="math-formula-box">
+        \\text{Future Cost} = \\text{Base Amount} \\times (1 + i)^t
+      </div>
+
+      <h3 class="content-subheading">2. Real vs. Nominal Returns: Overcoming Inflation</h3>
+      <p>
+        Investors must distinguish between <b>nominal returns</b> (the raw dollar percentage gained) and <b>real returns</b> (profit earned after subtracting the inflation rate):
+      </p>
+      <div class="math-formula-box">
+        \\text{Real Return Rate} \\approx \\text{Nominal Return} - \\text{Inflation Rate}
+      </div>
+      <p>
+        Assets such as equities, commercial real estate, and physical gold have historically served as effective long-term inflation hedges by appreciating in line with or exceeding the general price index.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "What causes inflation in an economy?",
+        a: "Inflation is primarily driven by three factors: demand-pull inflation (demand for goods outpaces supply), cost-push inflation (rising wages and raw material costs), and built-in inflation (wage-price spirals and monetary expansion)."
+      },
+      {
+        q: "What is the Rule of 72 for inflation?",
+        a: "Dividing 72 by the annual inflation rate tells you approximately how many years it will take for prices to double (e.g., at 3% inflation, prices will double in approximately 72 ÷ 3 = 24 years)."
+      },
+      {
+        q: "How can individuals protect their wealth against inflation?",
+        a: "To protect purchasing power, individuals invest in income-producing assets that outpace inflation, such as broad-market index funds, real estate, Treasury Inflation-Protected Securities (TIPS), and precious metals like gold."
+      }
+    ]
   }
 };
 
