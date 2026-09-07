@@ -337,6 +337,32 @@ function updateBreadcrumbs(items) {
   }).join("");
 }
 
+/* ==========================================================================
+   Google Analytics 4 (GA4) SPA Route Tracking
+   Measurement ID: G-SE1P3EY0GJ
+   ========================================================================== */
+let lastTrackedGA4Path = null;
+
+function trackGA4PageView(pageTitle, pageLocation, pagePath) {
+  if (typeof window.gtag === "function") {
+    // Prevent duplicate page_view tracking for the identical URL path
+    if (lastTrackedGA4Path === pagePath) return;
+    lastTrackedGA4Path = pagePath;
+
+    window.gtag("set", {
+      page_title: pageTitle,
+      page_location: pageLocation,
+      page_path: pagePath
+    });
+
+    window.gtag("event", "page_view", {
+      page_title: pageTitle,
+      page_location: pageLocation,
+      page_path: pagePath
+    });
+  }
+}
+
 function updateSEO(title, description, options = {}) {
   document.title = title;
   
@@ -444,6 +470,9 @@ function updateSEO(title, description, options = {}) {
       "@graph": graph
     }, null, 2);
   }
+
+  // Google Analytics 4 (GA4) SPA Pageview Tracking
+  trackGA4PageView(title, currentUrl, currentPath);
 }
 
 /* ==========================================================================
