@@ -13,8 +13,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Financial",
     "icon": "💰",
     "colorClass": "financial",
-    "badge": "18 Calculators",
-    "description": "Plan your retirement savings, 401(k), ROI, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
+    "badge": "22 Calculators",
+    "description": "Plan your retirement savings, 401(k), ROI, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
     "seoTitle": "Financial, Loan & Investment Calculators | CalculatorBowl",
     "seoDescription": "Accurate financial calculators for loans, mortgages, gold valuation, bitcoin and cryptocurrency conversions, compound interest, simple interest, sales tax, and investment planning.",
     "calculators": [
@@ -718,6 +718,162 @@ const TOPICAL_CLUSTERS = {
         "slug": "inflation-calculator",
         "url": "/calculators/finance/investment/inflation-calculator/",
         "subcatUrl": "/calculators/finance/investment/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "debt-to-income-calculator",
+        "name": "Debt-to-Income (DTI) Ratio Calculator",
+        "shortName": "DTI Calculator",
+        "icon": "⚖️",
+        "badge": "Mortgage Qualification",
+        "description": "Calculate your front-end and back-end debt-to-income ratio, mortgage borrowing capacity, and lender qualification limits.",
+        "seoTitle": "Debt-to-Income (DTI) Ratio Calculator - Front-End & Back-End Housing Ratios",
+        "seoDescription": "Calculate front-end and back-end debt-to-income (DTI) ratios, mortgage qualification status (Conventional, FHA, VA, USDA), and borrowing limits.",
+        "category": "finance",
+        "renderFunction": "renderDtiCalculator",
+        "contextualGuide": {
+          "title": "Mortgage & Debt Capacity Cross-References",
+          "html": "\n            <p>\n              Lenders evaluate your Debt-to-Income (DTI) ratio to gauge whether your gross monthly cashflow can reliably support new mortgage debt alongside existing recurring liabilities. Explore our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> for complete home financing tools.\n            </p>\n            <p>\n              Model monthly mortgage amortization schedules or plan personal loan consolidation using the companion solvers below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "mortgage-calculator",
+              "label": "Mortgage Payment Solver",
+              "icon": "🏠"
+            },
+            {
+              "id": "loan-calculator",
+              "label": "Personal & Auto Loans",
+              "icon": "💳"
+            },
+            {
+              "id": "salary-calculator",
+              "label": "Gross Income & Wage Tool",
+              "icon": "💼"
+            }
+          ]
+        },
+        "subcategory": "loans",
+        "subcatTitle": "Loans & Mortgages",
+        "slug": "debt-to-income-calculator",
+        "url": "/calculators/finance/loans/debt-to-income-calculator/",
+        "subcatUrl": "/calculators/finance/loans/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "cd-calculator",
+        "name": "CD (Certificate of Deposit) / Fixed Deposit (FDR) Calculator",
+        "shortName": "CD Calculator",
+        "icon": "🪙",
+        "badge": "Fixed Income",
+        "description": "Calculate CD interest earnings, maturity balance, compounding yield, and early withdrawal penalties for bank certificates of deposit.",
+        "seoTitle": "CD Calculator - Certificate of Deposit & Fixed Deposit Maturity Solver",
+        "seoDescription": "Calculate certificate of deposit (CD) and fixed deposit (FDR) maturity value, APY yield, total interest, and early withdrawal penalties.",
+        "category": "finance",
+        "renderFunction": "renderCdCalculator",
+        "contextualGuide": {
+          "title": "Fixed Income & Savings Cross-References",
+          "html": "\n            <p>\n              Certificates of Deposit (CDs) and Fixed Deposit Receipts (FDR) lock in a guaranteed fixed annual percentage yield (APY) for a predetermined maturity duration. Visit our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> to compare fixed yields against equity growth.\n            </p>\n            <p>\n              Convert nominal rates into effective APY or model multi-decade compound interest accumulation with the calculators below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "compound-interest",
+              "label": "Compound Interest Planner",
+              "icon": "📈"
+            },
+            {
+              "id": "apr-to-apy-converter",
+              "label": "APR to APY Converter",
+              "icon": "🔄"
+            },
+            {
+              "id": "simple-interest",
+              "label": "Simple Interest Formula",
+              "icon": "🪙"
+            }
+          ]
+        },
+        "subcategory": "interest",
+        "subcatTitle": "Interest Solvers",
+        "slug": "cd-calculator",
+        "url": "/calculators/finance/interest/cd-calculator/",
+        "subcatUrl": "/calculators/finance/interest/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "early-loan-payoff-calculator",
+        "name": "Early Loan Payoff & Extra Payment Calculator",
+        "shortName": "Early Payoff",
+        "icon": "⚡",
+        "badge": "Debt Payoff",
+        "description": "Calculate total interest saved and payoff time eliminated by making extra monthly, annual, or lump-sum loan payments.",
+        "seoTitle": "Early Loan Payoff Calculator - Extra Payment & Interest Savings",
+        "seoDescription": "See how much time and interest you save by making extra monthly or lump-sum payments on your mortgage, auto loan, or personal loan.",
+        "category": "finance",
+        "renderFunction": "renderEarlyLoanPayoffCalculator",
+        "contextualGuide": {
+          "title": "Debt Acceleration Cross-References",
+          "html": "\n            <p>\n              Prepaying loan principal reduces your remaining amortization balance immediately, eliminating downstream compound interest fees and cutting years off your debt timeline. Explore our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> for amortization tools.\n            </p>\n            <p>\n              Compare extra mortgage payments against credit card debt elimination or evaluate borrowing ratios below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "mortgage-calculator",
+              "label": "Mortgage Payment Solver",
+              "icon": "🏠"
+            },
+            {
+              "id": "credit-card-payoff",
+              "label": "Credit Card Debt Payoff",
+              "icon": "💳"
+            },
+            {
+              "id": "debt-to-income-calculator",
+              "label": "Debt-to-Income (DTI) Solver",
+              "icon": "⚖️"
+            }
+          ]
+        },
+        "subcategory": "loans",
+        "subcatTitle": "Loans & Mortgages",
+        "slug": "early-loan-payoff-calculator",
+        "url": "/calculators/finance/loans/early-loan-payoff-calculator/",
+        "subcatUrl": "/calculators/finance/loans/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "apr-to-apy-converter",
+        "name": "APR to APY Converter & Interest Rate Calculator",
+        "shortName": "APR to APY",
+        "icon": "🔄",
+        "badge": "Rate Conversion",
+        "description": "Convert nominal Annual Percentage Rate (APR) to effective Annual Percentage Yield (APY) and vice versa with compounding frequencies.",
+        "seoTitle": "APR to APY Converter - Nominal Rate to Effective Annual Yield",
+        "seoDescription": "Convert APR to APY and APY to APR across daily, monthly, quarterly, and continuous compounding with instant formula breakdown.",
+        "category": "finance",
+        "renderFunction": "renderAprToApyCalculator",
+        "contextualGuide": {
+          "title": "Interest Rate Dynamics Cross-References",
+          "html": "\n            <p>\n              Lenders quote APR on loans to indicate nominal annual interest costs, while banks quote APY on deposit accounts to reflect the compounding boost. Access our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> for complete interest calculation solvers.\n            </p>\n            <p>\n              Model certificate of deposit yields or analyze compound interest schedules using the related tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "cd-calculator",
+              "label": "CD & Fixed Deposit Solver",
+              "icon": "🪙"
+            },
+            {
+              "id": "compound-interest",
+              "label": "Compound Interest Planner",
+              "icon": "📈"
+            },
+            {
+              "id": "simple-interest",
+              "label": "Simple Interest Formula",
+              "icon": "🪙"
+            }
+          ]
+        },
+        "subcategory": "interest",
+        "subcatTitle": "Interest Solvers",
+        "slug": "apr-to-apy-converter",
+        "url": "/calculators/finance/interest/apr-to-apy-converter/",
+        "subcatUrl": "/calculators/finance/interest/",
         "categoryUrl": "/calculators/finance/"
       }
     ],

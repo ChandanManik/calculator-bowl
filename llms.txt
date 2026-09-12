@@ -13,7 +13,7 @@
 
 ## 📁 Financial Calculators (Category Hub: [Financial Calculators](https://calculatorbowl.com/calculators/finance/))
 
-*Description*: Plan your retirement savings, 401(k), ROI, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.
+*Description*: Plan your retirement savings, 401(k), ROI, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.
 
 ### [Personal & Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/finance/loans/loan-calculator/`
@@ -139,6 +139,34 @@
 - **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
 - **Subcategory**: `Investment & Wealth`
 - **Summary**: Calculate how inflation erodes purchasing power, future equivalent costs, and cumulative price increases over time.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
+### [Debt-to-Income (DTI) Ratio Calculator](https://calculatorbowl.com/calculators/finance/loans/debt-to-income-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/loans/debt-to-income-calculator/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Loans & Mortgages`
+- **Summary**: Calculate your front-end and back-end debt-to-income ratio, mortgage borrowing capacity, and lender qualification limits.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
+### [CD (Certificate of Deposit) / Fixed Deposit (FDR) Calculator](https://calculatorbowl.com/calculators/finance/interest/cd-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/interest/cd-calculator/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Interest Solvers`
+- **Summary**: Calculate CD interest earnings, maturity balance, compounding yield, and early withdrawal penalties for bank certificates of deposit.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
+### [Early Loan Payoff & Extra Payment Calculator](https://calculatorbowl.com/calculators/finance/loans/early-loan-payoff-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/loans/early-loan-payoff-calculator/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Loans & Mortgages`
+- **Summary**: Calculate total interest saved and payoff time eliminated by making extra monthly, annual, or lump-sum loan payments.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
+### [APR to APY Converter & Interest Rate Calculator](https://calculatorbowl.com/calculators/finance/interest/apr-to-apy-converter/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/interest/apr-to-apy-converter/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Interest Solvers`
+- **Summary**: Convert nominal Annual Percentage Rate (APR) to effective Annual Percentage Yield (APY) and vice versa with compounding frequencies.
 - **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
 
 ## 📁 Math & Statistics Calculators (Category Hub: [Math & Statistics Calculators](https://calculatorbowl.com/calculators/math/))

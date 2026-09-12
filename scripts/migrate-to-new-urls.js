@@ -24,6 +24,10 @@ const URL_MAP = {
   'margin-markup': { category: 'finance', subcategory: 'business', subcatTitle: 'Business & Tax', slug: 'profit-margin-calculator' },
   'depreciation-calculator': { category: 'finance', subcategory: 'business', subcatTitle: 'Business & Tax', slug: 'depreciation-calculator' },
   'tip-calculator': { category: 'finance', subcategory: 'business', subcatTitle: 'Business & Tax', slug: 'tip-calculator' },
+  'debt-to-income-calculator': { category: 'finance', subcategory: 'loans', subcatTitle: 'Loans & Mortgages', slug: 'debt-to-income-calculator' },
+  'cd-calculator': { category: 'finance', subcategory: 'interest', subcatTitle: 'Interest Solvers', slug: 'cd-calculator' },
+  'early-loan-payoff-calculator': { category: 'finance', subcategory: 'loans', subcatTitle: 'Loans & Mortgages', slug: 'early-loan-payoff-calculator' },
+  'apr-to-apy-converter': { category: 'finance', subcategory: 'interest', subcatTitle: 'Interest Solvers', slug: 'apr-to-apy-converter' },
 
   'basic-calculator': { category: 'math', subcategory: 'basic', subcatTitle: 'Basic Arithmetic', slug: 'basic-calculator' },
   'percentage-calculator': { category: 'math', subcategory: 'percentage', subcatTitle: 'Percentage Tools', slug: 'percentage-calculator' },

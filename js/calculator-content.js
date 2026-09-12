@@ -3933,6 +3933,560 @@ const CALCULATOR_RICH_CONTENT = {
         a: "To protect purchasing power, individuals invest in income-producing assets that outpace inflation, such as broad-market index funds, real estate, Treasury Inflation-Protected Securities (TIPS), and precious metals like gold."
       }
     ]
+  },
+
+  /* ==========================================================================
+     Debt-to-Income (DTI) Ratio Calculator
+     ========================================================================== */
+  "debt-to-income-calculator": {
+    infographicHtml: `
+      <div class="content-infographic-card">
+        <h4 class="infographic-title">📊 Debt-to-Income (DTI) Lending Benchmarks & Capacity</h4>
+        <div class="infographic-svg-wrapper">
+          <svg viewBox="0 0 600 220" width="100%" height="220" xmlns="http://www.w3.org/2000/svg" style="background: var(--bg-card); border-radius: 8px;">
+            <!-- Background scale -->
+            <rect x="40" y="50" width="520" height="36" rx="8" fill="var(--border-color)" />
+            <!-- Zone: Excellent <= 28% / 36% -->
+            <rect x="40" y="50" width="187" height="36" rx="8" fill="#10b981" />
+            <!-- Zone: Acceptable 36% to 43% -->
+            <rect x="227" y="50" width="60" height="36" fill="#3b82f6" />
+            <!-- Zone: Warning 43% to 50% -->
+            <rect x="287" y="50" width="70" height="36" fill="#f59e0b" />
+            <!-- Zone: Danger > 50% -->
+            <rect x="357" y="50" width="203" height="36" rx="0 8 8 0" fill="#ef4444" />
+
+            <!-- Benchmark pointers -->
+            <line x1="185" y1="35" x2="185" y2="95" stroke="var(--text-primary)" stroke-width="2" stroke-dasharray="3 3" />
+            <text x="185" y="25" fill="var(--text-primary)" font-weight="700" font-size="11" text-anchor="middle">28% (Front-End)</text>
+
+            <line x1="227" y1="35" x2="227" y2="95" stroke="var(--text-primary)" stroke-width="2" stroke-dasharray="3 3" />
+            <text x="227" y="110" fill="var(--text-primary)" font-weight="700" font-size="11" text-anchor="middle">36% (Ideal)</text>
+
+            <line x1="287" y1="35" x2="287" y2="95" stroke="var(--text-primary)" stroke-width="2" stroke-dasharray="3 3" />
+            <text x="287" y="25" fill="#f59e0b" font-weight="700" font-size="11" text-anchor="middle">43% (QM Limit)</text>
+
+            <line x1="357" y1="35" x2="357" y2="95" stroke="var(--text-primary)" stroke-width="2" stroke-dasharray="3 3" />
+            <text x="357" y="110" fill="#ef4444" font-weight="700" font-size="11" text-anchor="middle">50% (FHA Max)</text>
+
+            <!-- Bottom labels -->
+            <text x="133" y="73" fill="#ffffff" font-weight="700" font-size="11" text-anchor="middle">≤ 36% Prime</text>
+            <text x="257" y="73" fill="#ffffff" font-weight="700" font-size="10" text-anchor="middle">43% QM</text>
+            <text x="322" y="73" fill="#ffffff" font-weight="700" font-size="10" text-anchor="middle">FHA/VA</text>
+            <text x="458" y="73" fill="#ffffff" font-weight="700" font-size="11" text-anchor="middle">Critical (>50%)</text>
+
+            <!-- Explanatory legend -->
+            <rect x="50" y="150" width="12" height="12" rx="2" fill="#10b981" />
+            <text x="68" y="161" fill="var(--text-secondary)" font-size="11">0-36%: Optimum Approval</text>
+
+            <rect x="220" y="150" width="12" height="12" rx="2" fill="#3b82f6" />
+            <text x="238" y="161" fill="var(--text-secondary)" font-size="11">36-43%: Standard Conventional</text>
+
+            <rect x="420" y="150" width="12" height="12" rx="2" fill="#f59e0b" />
+            <text x="438" y="161" fill="var(--text-secondary)" font-size="11">43-50%: FHA / Non-QM Portfolio</text>
+
+            <rect x="220" y="180" width="12" height="12" rx="2" fill="#ef4444" />
+            <text x="238" y="191" fill="var(--text-secondary)" font-size="11">>50%: High Risk / Decline Threshold</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Lender Risk Tiers:</b> Conventional mortgage underwriting targets a 28% front-end housing ratio and a 36% to 43% back-end total debt ratio for automated underwriting approval.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        The <b>Debt-to-Income (DTI) ratio</b> is a primary risk metric utilized by mortgage underwriters, auto lenders, and consumer credit institutions to evaluate a borrower's capacity to manage recurring monthly debt obligations against their gross earnings.
+      </p>
+
+      <h3 class="content-subheading">1. Front-End vs. Back-End DTI Ratios</h3>
+      <p>
+        Lenders categorize DTI into two distinct mathematical measurements:
+      </p>
+      <div class="math-formula-box">
+        \\textbf{Front-End DTI (Housing Ratio):} \\quad \\text{Front-End} = \\left( \\frac{\\text{Housing Expenses (PITI + HOA)}}{\\text{Gross Monthly Income}} \\right) \\times 100\\%
+      </div>
+      <p>
+        <b>Housing expenses</b> encompass Principal, Interest, Property Taxes, Homeowners Insurance, and mandatory Homeowners Association (HOA) dues (commonly referred to as PITI). Conventional underwriting guidelines recommend a front-end ratio of <b>28% or lower</b>.
+      </p>
+      <div class="math-formula-box">
+        \\textbf{Back-End DTI (Total Debt Ratio):} \\quad \\text{Back-End} = \\left( \\frac{\\text{All Monthly Recurring Debt Payments}}{\\text{Gross Monthly Income}} \\right) \\times 100\\%
+      </div>
+      <p>
+        <b>Total recurring debt</b> includes the complete housing cost plus auto loans, student loans, minimum credit card payments, personal installment loans, and court-ordered alimony or child support. The Consumer Financial Protection Bureau (CFPB) sets <b>43%</b> as the standard ceiling for Qualified Mortgages (QM).
+      </p>
+
+      <h3 class="content-subheading">2. Practical Worked Example: Calculating Household DTI</h3>
+      <p>
+        Consider a household earning <b>$7,500</b> in combined gross monthly wages with the following recurring obligations:
+      </p>
+      <ul class="content-list">
+        <li><b>Mortgage Principal & Interest:</b> $1,650</li>
+        <li><b>Property Taxes & Hazard Insurance:</b> $350</li>
+        <li><b>Total Housing Expense:</b> $\$1,650 + \\$350 = \\mathbf{\\$2,000}$</li>
+        <li><b>Auto Loan Payment:</b> $420</li>
+        <li><b>Student Loan Minimum:</b> $230</li>
+        <li><b>Credit Card Minimum Payments:</b> $150</li>
+        <li><b>Total Non-Housing Debt:</b> $\$420 + \\$230 + \\$150 = \\mathbf{\\$800}$</li>
+        <li><b>Total Monthly Debt Obligations:</b> $\$2,000 + \\$800 = \\mathbf{\\$2,800}$</li>
+      </ul>
+      <ol class="content-ordered-list">
+        <li><b>Front-End Ratio:</b> $(\\$2,000 / \\$7,500) \\times 100\\% = \\mathbf{26.67\\%}$ (Meets the 28% conventional guideline).</li>
+        <li><b>Back-End Ratio:</b> $(\\$2,800 / \\$7,500) \\times 100\\% = \\mathbf{37.33\\%}$ (Below the 43% Qualified Mortgage ceiling).</li>
+        <li><b>Borrowing Buffer:</b> Under the 43% ceiling, maximum allowed monthly debt is $\$7,500 \\times 0.43 = \\$3,225$. The borrower retains $\$3,225 - \\$2,800 = \\mathbf{\\$425/\\text{month}}$ in incremental debt capacity.</li>
+      </ol>
+
+      <h3 class="content-subheading">3. Loan Program Qualification Matrix</h3>
+      <div class="content-table-wrapper">
+        <table class="content-data-table">
+          <thead>
+            <tr>
+              <th>Mortgage Loan Program</th>
+              <th>Standard Front-End Max</th>
+              <th>Standard Back-End Max</th>
+              <th>Maximum Allowed with Compensating Factors</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Conventional (Fannie Mae / Freddie Mac)</b></td>
+              <td>28%</td>
+              <td>36%</td>
+              <td>Up to 45% – 50% via Desktop Underwriter (DU) with high credit and reserves</td>
+            </tr>
+            <tr>
+              <td><b>FHA Loan (Federal Housing Administration)</b></td>
+              <td>31%</td>
+              <td>43%</td>
+              <td>Up to 46.9% front-end / 56.9% back-end with automated AUS approval</td>
+            </tr>
+            <tr>
+              <td><b>VA Loan (Veterans Affairs)</b></td>
+              <td>None specified</td>
+              <td>41% benchmark</td>
+              <td>Over 50% permitted if borrower meets regional residual income thresholds</td>
+            </tr>
+            <tr>
+              <td><b>USDA Rural Housing</b></td>
+              <td>29%</td>
+              <td>41%</td>
+              <td>Up to 32% / 44% with manual underwriting waivers</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    `,
+    faqs: [
+      {
+        q: "What expenses are excluded from my DTI calculation?",
+        a: "DTI only includes recurring debt obligations that appear on your credit report (loans, credit card minimums) and housing expenses. It excludes utility bills (electric, water, internet), groceries, health insurance premiums deducted from paychecks, car insurance, and discretionary entertainment."
+      },
+      {
+        q: "Can I qualify for a mortgage with a DTI higher than 43%?",
+        a: "Yes. While 43% is the typical Qualified Mortgage (QM) benchmark, FHA loans routinely approve borrowers up to 46.9% front-end and 56.9% back-end through Automated Underwriting Systems (AUS) when backed by strong credit scores, cash reserves, or significant down payments."
+      },
+      {
+        q: "How does paying off a credit card immediately impact my DTI?",
+        a: "Paying off a credit card removes its required minimum monthly payment from your non-housing debt total. For example, paying off a card with a $150 minimum payment on a $6,000 monthly income immediately lowers your back-end DTI by 2.5 percentage points."
+      },
+      {
+        q: "Why do lenders use gross income instead of net take-home pay?",
+        a: "Gross income provides an objective, standardized national baseline that is unaffected by elective individual payroll deductions such as 401(k) retirement contributions, flexible spending accounts (FSA), and individual tax withholding allowances."
+      }
+    ]
+  },
+
+  /* ==========================================================================
+     CD (Certificate of Deposit) / Fixed Deposit (FDR) Calculator
+     ========================================================================== */
+  "cd-calculator": {
+    infographicHtml: `
+      <div class="content-infographic-card">
+        <h4 class="infographic-title">📈 Guaranteed CD Yield Growth Curve Across Term Lengths</h4>
+        <div class="infographic-svg-wrapper">
+          <svg viewBox="0 0 600 220" width="100%" height="220" xmlns="http://www.w3.org/2000/svg" style="background: var(--bg-card); border-radius: 8px;">
+            <!-- Grid Lines -->
+            <line x1="60" y1="30" x2="560" y2="30" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4 4" />
+            <line x1="60" y1="80" x2="560" y2="80" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4 4" />
+            <line x1="60" y1="130" x2="560" y2="130" stroke="var(--border-color)" stroke-width="1" stroke-dasharray="4 4" />
+            <line x1="60" y1="180" x2="560" y2="180" stroke="var(--border-color)" stroke-width="2" />
+            <line x1="60" y1="30" x2="60" y2="180" stroke="var(--border-color)" stroke-width="2" />
+
+            <!-- Curve: $10,000 CD at 5.0% APY compounded daily -->
+            <path d="M 60 180 Q 200 155, 310 125 T 560 55" fill="none" stroke="#10b981" stroke-width="3.5" />
+            <area d="M 60 180 Q 200 155, 310 125 T 560 55 L 560 180 Z" fill="rgba(16, 185, 129, 0.12)" />
+
+            <!-- Milestone circles -->
+            <circle cx="60" cy="180" r="5" fill="#10b981" />
+            <circle cx="160" cy="158" r="5" fill="#10b981" />
+            <circle cx="260" cy="138" r="5" fill="#10b981" />
+            <circle cx="360" cy="113" r="5" fill="#10b981" />
+            <circle cx="560" cy="55" r="5" fill="#10b981" />
+
+            <!-- Milestone Text -->
+            <text x="60" y="200" fill="var(--text-muted)" font-size="11" text-anchor="middle">Open ($10k)</text>
+            <text x="160" y="200" fill="var(--text-muted)" font-size="11" text-anchor="middle">1-Yr ($10.5k)</text>
+            <text x="260" y="200" fill="var(--text-muted)" font-size="11" text-anchor="middle">2-Yr ($11.0k)</text>
+            <text x="360" y="200" fill="var(--text-muted)" font-size="11" text-anchor="middle">3-Yr ($11.6k)</text>
+            <text x="560" y="200" fill="var(--text-muted)" font-size="11" text-anchor="middle">5-Yr ($12.8k)</text>
+
+            <text x="540" y="42" fill="#10b981" font-weight="700" font-size="12" text-anchor="end">+$2,763 Total Interest</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Predictable Compounding:</b> Unlike volatile equities, a Certificate of Deposit locks in an exact APY yield, guaranteeing principal preservation and compounding returns backed by federal deposit insurance.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A <b>Certificate of Deposit (CD)</b>, known internationally as a <b>Fixed Deposit Receipt (FDR)</b> or <b>Term Deposit</b>, is a low-risk financial instrument issued by commercial banks and credit unions that pays a guaranteed fixed interest rate in exchange for locking up capital for an agreed-upon term.
+      </p>
+
+      <h3 class="content-subheading">1. Mathematical Compounding Formulas (APR vs. APY)</h3>
+      <p>
+        When interest is quoted as a nominal Annual Percentage Rate (APR) with periodic compounding ($n$ times per year), the maturity value $A$ is calculated as:
+      </p>
+      <div class="math-formula-box">
+        A = P \\left(1 + \\frac{r}{n}\\right)^{nt}
+      </div>
+      <p>
+        Where $P$ is the principal deposit, $r$ is the decimal annual rate, $n$ is compounding frequency per year (365 for daily, 12 for monthly), and $t$ is duration in years. The effective Annual Percentage Yield (APY) reflects this compounding boost:
+      </p>
+      <div class="math-formula-box">
+        \\text{APY} = \\left(1 + \\frac{r}{n}\\right)^n - 1
+      </div>
+      <p>
+        When banks directly quote the APY, maturity value simplifies directly to: $A = P(1 + \\text{APY})^t$.
+      </p>
+
+      <h3 class="content-subheading">2. Practical Worked Example: $20,000 in a 3-Year CD at 4.85% APY</h3>
+      <p>
+        Suppose an investor places <b>$20,000</b> into a <b>3-Year (36-month) CD</b> offering <b>4.85% APY</b> with daily compounding:
+      </p>
+      <ol class="content-ordered-list">
+        <li><b>Maturity Balance:</b> $A = \\$20,000 \\times (1 + 0.0485)^3 = \\$20,000 \\times 1.152646 = \\mathbf{\\$23,052.92}$.</li>
+        <li><b>Total Guaranteed Interest:</b> $\$23,052.92 - \\$20,000 = \\mathbf{\\$3,052.92}$ (+15.26% total return).</li>
+        <li><b>Average Monthly Passive Income:</b> $\$3,052.92 \\div 36 = \\mathbf{\\$84.80}$ per month.</li>
+        <li><b>Early Withdrawal Penalty Simulation:</b> If redeemed after 18 months under a 6-month interest penalty clause:
+          <ul class="content-list">
+            <li>Accrued interest at Month 18: $\\$1,489.15$</li>
+            <li>Penalty (6 months interest): $6 \\times \\$84.80 = \\$508.80$</li>
+            <li>Net Payout Received: $\$20,000 + (\\$1,489.15 - \\$508.80) = \\mathbf{\\$20,980.35}$.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h3 class="content-subheading">3. Cash Equivalents Comparison: CD vs. HYSA vs. Treasury Bills</h3>
+      <div class="content-table-wrapper">
+        <table class="content-data-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Certificate of Deposit (CD)</th>
+              <th>High-Yield Savings (HYSA)</th>
+              <th>U.S. Treasury Bills (T-Bills)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Rate Guarantee</b></td>
+              <td>Fixed for entire term (Locked)</td>
+              <td>Variable (Fluctuates with Fed rate)</td>
+              <td>Fixed discount yield to maturity</td>
+            </tr>
+            <tr>
+              <td><b>Liquidity & Access</b></td>
+              <td>Locked until maturity (Early penalty)</td>
+              <td>Instant (Up to 6 withdrawals/mo)</td>
+              <td>Tradable on secondary bond market</td>
+            </tr>
+            <tr>
+              <td><b>Insurance & Backing</b></td>
+              <td>FDIC / NCUA up to $250,000</td>
+              <td>FDIC / NCUA up to $250,000</td>
+              <td>Backed by full faith of U.S. Govt</td>
+            </tr>
+            <tr>
+              <td><b>State & Local Taxation</b></td>
+              <td>Subject to Federal + State tax</td>
+              <td>Subject to Federal + State tax</td>
+              <td><b>100% exempt from state & local tax</b></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    `,
+    faqs: [
+      {
+        q: "What is a CD Ladder strategy?",
+        a: "A CD ladder divides your savings into equal tranches invested across varying maturities (e.g., 6 months, 1 year, 2 years, 3 years). As each CD matures, you roll it into a long-term CD at the highest prevailing rate, providing continuous liquidity every few months without sacrificing yield."
+      },
+      {
+        q: "Can early withdrawal penalties eat into my initial principal?",
+        a: "Yes. If you withdraw funds very shortly after opening the CD (e.g., within the first 30 days) and have not yet accrued enough interest to cover the contractual penalty (such as 90 or 180 days of interest), the bank will deduct the remaining penalty from your principal balance."
+      },
+      {
+        q: "What happens when a CD reaches its maturity date?",
+        a: "Banks provide a 7-to-10-day grace period upon maturity. During this window, you can withdraw your principal and accrued interest, add or withdraw funds, or transfer into another product. If no action is taken, most institutions automatically roll the balance into a new CD of the same term at current market rates."
+      },
+      {
+        q: "How is CD interest reported for income tax purposes?",
+        a: "Interest earned on standard CDs is taxable in the calendar year it accrues, even if it remains locked inside the CD until a future maturity year. Your bank issues an IRS Form 1099-INT annually reporting all interest earned."
+      }
+    ]
+  },
+
+  /* ==========================================================================
+     Early Loan Payoff / Extra Payment Calculator
+     ========================================================================== */
+  "early-loan-payoff-calculator": {
+    infographicHtml: `
+      <div class="content-infographic-card">
+        <h4 class="infographic-title">⚡ Standard vs. Accelerated Loan Amortization Trajectory</h4>
+        <div class="infographic-svg-wrapper">
+          <svg viewBox="0 0 600 220" width="100%" height="220" xmlns="http://www.w3.org/2000/svg" style="background: var(--bg-card); border-radius: 8px;">
+            <!-- Axes -->
+            <line x1="60" y1="20" x2="60" y2="180" stroke="var(--border-color)" stroke-width="2" />
+            <line x1="60" y1="180" x2="560" y2="180" stroke="var(--border-color)" stroke-width="2" />
+
+            <!-- Standard Amortization Curve (30 Yrs) -->
+            <path d="M 60 40 Q 280 100, 540 180" fill="none" stroke="#ef4444" stroke-width="3" />
+            <!-- Accelerated Amortization Curve (23.5 Yrs) -->
+            <path d="M 60 40 Q 220 105, 430 180" fill="none" stroke="#10b981" stroke-width="3.5" />
+
+            <!-- Shaded wedge: Saved Interest Area -->
+            <path d="M 60 40 Q 280 100, 540 180 L 430 180 Q 220 105, 60 40 Z" fill="rgba(16, 185, 129, 0.15)" />
+
+            <!-- Labels -->
+            <text x="65" y="35" fill="var(--text-primary)" font-weight="700" font-size="12">$300,000 Balance</text>
+            <text x="350" y="90" fill="#10b981" font-weight="700" font-size="12">Saved Interest Wedge ($100k+)</text>
+            <text x="430" y="200" fill="#10b981" font-weight="700" font-size="11" text-anchor="middle">Year 23.5 (Accelerated)</text>
+            <text x="540" y="200" fill="#ef4444" font-weight="700" font-size="11" text-anchor="middle">Year 30 (Standard)</text>
+
+            <line x1="430" y1="170" x2="430" y2="190" stroke="#10b981" stroke-width="2" />
+            <line x1="540" y1="170" x2="540" y2="190" stroke="#ef4444" stroke-width="2" />
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Exponential Interest Reduction:</b> Extra principal payments bypass interest allocation entirely, flattening the remaining balance curve and shaving 6+ years off your mortgage timeline.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        During the early stages of a traditional installment loan or fixed-rate mortgage, the overwhelming majority of your monthly payment is absorbed by interest charges. By submitting <b>extra principal payments</b>, you directly lower the outstanding loan balance, triggering an immediate and permanent reduction in compound interest accrual for the remaining life of the loan.
+      </p>
+
+      <h3 class="content-subheading">1. The Mathematics of Accelerated Amortization</h3>
+      <p>
+        Standard monthly loan payments are governed by the classical annuity amortization formula:
+      </p>
+      <div class="math-formula-box">
+        PMT = P \\times \\frac{i(1+i)^N}{(1+i)^N - 1} \\quad \\text{where } i = \\frac{r}{12}
+      </div>
+      <p>
+        In Month $k$, interest charges equal $\\text{Balance}_{k-1} \\times i$, and standard principal reduction equals $PMT - \\text{Interest}$. When an extra payment $E$ is added, <b>100% of $E$ reduces principal</b>:
+      </p>
+      <div class="math-formula-box">
+        \\text{New Balance}_k = \\text{Balance}_{k-1} - (PMT - \\text{Interest}_k) - E
+      </div>
+      <p>
+        Because subsequent interest is computed strictly on $\\text{New Balance}_k$, every extra payment creates a compounding cascade of avoided interest charges.
+      </p>
+
+      <h3 class="content-subheading">2. Practical Worked Example: $300,000 Mortgage at 6.5% (+ $200/Month)</h3>
+      <p>
+        Analyzing a <b>$300,000</b> 30-year fixed mortgage at <b>6.50% interest</b>:
+      </p>
+      <ol class="content-ordered-list">
+        <li><b>Standard Baseline:</b> Required monthly payment is <b>$1,896.20</b>. Total payments over 360 months equal <b>$682,633</b> (including <b>$382,633 in total interest</b>—more than the original loan amount!).</li>
+        <li><b>Adding $200 Extra Monthly ($2,096.20/mo):</b>
+          <ul class="content-list">
+            <li><b>New Payoff Duration:</b> Paid in full in <b>24 years and 8 months</b> (296 months).</li>
+            <li><b>Time Saved:</b> <b>5 Years and 4 Months (64 months)</b> eliminated from your debt horizon.</li>
+            <li><b>New Total Interest Paid:</b> $299,942.</li>
+            <li><b>Direct Interest Savings:</b> $\$382,633 - \\$299,942 = \\mathbf{\\$82,691}$ in pure cash saved.</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h3 class="content-subheading">3. Comparison of Prepayment Strategies</h3>
+      <div class="content-table-wrapper">
+        <table class="content-data-table">
+          <thead>
+            <tr>
+              <th>Prepayment Strategy</th>
+              <th>Implementation Mechanism</th>
+              <th>Pros & Benefits</th>
+              <th>Best Suited For</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Fixed Monthly Extra</b></td>
+              <td>Add $100–$500 to every scheduled monthly mortgage check</td>
+              <td>Builds automatic disciplined budgeting habit; steady compounding savings</td>
+              <td>Salaried households with predictable cash flow</td>
+            </tr>
+            <tr>
+              <td><b>Bi-Weekly Payments</b></td>
+              <td>Pay half of your monthly payment every 2 weeks (26 half-payments = 13 full payments/yr)</td>
+              <td>Effortlessly sneaks one extra full monthly payment each calendar year</td>
+              <td>Employees paid on a bi-weekly payroll schedule</td>
+            </tr>
+            <tr>
+              <td><b>Lump-Sum Paydowns</b></td>
+              <td>Apply tax refunds, annual performance bonuses, or inheritance windfalls</td>
+              <td>Massive instant interest reduction without ongoing monthly budget pressure</td>
+              <td>Commission-based earners and bonus recipients</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    `,
+    faqs: [
+      {
+        q: "How do I ensure my extra payment goes toward principal rather than future interest?",
+        a: "When submitting extra funds online or by check, always designate the additional amount specifically as a 'Principal Only Prepayment'. If not explicitly specified, some loan servicers may hold the funds in escrow or apply them as an advance against your next month's payment."
+      },
+      {
+        q: "Do mortgages or car loans have prepayment penalties?",
+        a: "Under the Dodd-Frank Act, virtually all modern primary residential mortgages (Fannie Mae, Freddie Mac, FHA, VA) prohibit prepayment penalties. Most auto loans and personal loans also permit penalty-free early payoff. Always review your loan promissory note to verify."
+      },
+      {
+        q: "Should I pay off my mortgage early or invest the money in the stock market?",
+        a: "This depends on your interest rate versus expected market returns. Paying off a 6.5% mortgage provides a guaranteed, risk-free, tax-free 6.5% return on capital. If your mortgage rate is under 3.5%, investing in broad index funds (historically yielding 8–10% nominal) may yield higher long-term wealth."
+      },
+      {
+        q: "Does making extra payments reduce my required monthly payment next month?",
+        a: "No. Extra payments shorten the loan term and reduce total interest, but your contractual monthly payment remains identical unless you formally request a 'loan recast' from your lender to recalculate payments over the original remaining duration."
+      }
+    ]
+  },
+
+  /* ==========================================================================
+     APR to APY Converter
+     ========================================================================== */
+  "apr-to-apy-converter": {
+    infographicHtml: `
+      <div class="content-infographic-card">
+        <h4 class="infographic-title">🔄 The Compounding Boost: How APR Expands Into APY</h4>
+        <div class="infographic-svg-wrapper">
+          <svg viewBox="0 0 600 220" width="100%" height="220" xmlns="http://www.w3.org/2000/svg" style="background: var(--bg-card); border-radius: 8px;">
+            <!-- Step-up bars showing compounding frequency expansion on 6.00% APR -->
+            <rect x="50" y="140" width="80" height="40" rx="4" fill="#64748b" />
+            <text x="90" y="130" fill="var(--text-primary)" font-size="11" font-weight="700" text-anchor="middle">6.000%</text>
+            <text x="90" y="165" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">Annual (n=1)</text>
+
+            <rect x="150" y="125" width="80" height="55" rx="4" fill="#3b82f6" />
+            <text x="190" y="115" fill="var(--text-primary)" font-size="11" font-weight="700" text-anchor="middle">6.090%</text>
+            <text x="190" y="157" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">Semi-Ann (n=2)</text>
+
+            <rect x="250" y="118" width="80" height="62" rx="4" fill="#3b82f6" />
+            <text x="290" y="108" fill="var(--text-primary)" font-size="11" font-weight="700" text-anchor="middle">6.136%</text>
+            <text x="290" y="154" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">Quarterly (n=4)</text>
+
+            <rect x="350" y="112" width="80" height="68" rx="4" fill="#10b981" />
+            <text x="390" y="102" fill="var(--text-primary)" font-size="11" font-weight="700" text-anchor="middle">6.168%</text>
+            <text x="390" y="151" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">Monthly (n=12)</text>
+
+            <rect x="450" y="108" width="85" height="72" rx="4" fill="#10b981" />
+            <text x="492" y="98" fill="#10b981" font-size="12" font-weight="800" text-anchor="middle">6.183% APY</text>
+            <text x="492" y="149" fill="#ffffff" font-size="10" font-weight="700" text-anchor="middle">Daily (n=365)</text>
+
+            <line x1="40" y1="180" x2="560" y2="180" stroke="var(--border-color)" stroke-width="2" />
+            <text x="300" y="202" fill="var(--text-muted)" font-size="11" text-anchor="middle">Higher Compounding Frequency → Greater Effective Annual Yield (APY)</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Frequency Multiplier:</b> A stated 6.00% nominal APR expands to 6.183% APY under daily compounding, generating higher passive yields for depositors and higher borrowing costs for debt holders.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        In personal finance and banking, interest rates are quoted under two distinct metrics: <b>Annual Percentage Rate (APR)</b> and <b>Annual Percentage Yield (APY)</b>. The crucial distinction lies in <b>compound interest</b>: APR reflects the simple nominal rate without factoring in compounding, whereas APY reveals the true effective annual interest earned or paid once intra-year compounding is incorporated.
+      </p>
+
+      <h3 class="content-subheading">1. Algebraic Conversion Formulas</h3>
+      <p>
+        To convert a stated nominal APR to an effective APY compounded $n$ times per year:
+      </p>
+      <div class="math-formula-box">
+        \\text{APY} = \\left( 1 + \\frac{\\text{APR}}{n} \\right)^n - 1
+      </div>
+      <p>
+        Under mathematical continuous compounding ($n \\to \\infty$), the formula converges to Euler's constant $e$:
+      </p>
+      <div class="math-formula-box">
+        \\text{Continuous APY} = e^{\\text{APR}} - 1
+      </div>
+      <p>
+        Conversely, to convert an effective APY back to its underlying nominal APR:
+      </p>
+      <div class="math-formula-box">
+        \\text{APR} = n \\times \\left[ (1 + \\text{APY})^{1/n} - 1 \\right] \\quad \\text{or} \\quad \\text{APR} = \\ln(1 + \\text{APY}) \\text{ (continuous)}
+      </div>
+
+      <h3 class="content-subheading">2. Practical Worked Example: Credit Card APR vs. Real APY</h3>
+      <p>
+        Most credit card issuers compound interest <b>daily (n = 365)</b>. If your credit card carries a stated <b>24.99% APR</b>:
+      </p>
+      <ol class="content-ordered-list">
+        <li><b>Decimal Rate:</b> $\\text{APR} = 0.2499$.</li>
+        <li><b>Daily Periodic Rate:</b> $0.2499 \\div 365 = 0.000684657$ (0.0685% per day).</li>
+        <li><b>Formula Substitution:</b>
+          $$\\text{APY} = \\left(1 + \\frac{0.2499}{365}\\right)^{365} - 1 = (1.000684657)^{365} - 1 = 1.2835 - 1 = \\mathbf{28.35\\%}$$
+        </li>
+        <li><b>The Consumer Takeaway:</b> Revolving a balance for one year at 24.99% APR actually costs you <b>28.35% in effective interest charges</b>—an additional 3.36% in compounding penalties.</li>
+      </ol>
+
+      <h3 class="content-subheading">3. Regulatory Framework: TILA vs. TISA</h3>
+      <div class="content-table-wrapper">
+        <table class="content-data-table">
+          <thead>
+            <tr>
+              <th>Regulatory Statute</th>
+              <th>Governing Federal Law</th>
+              <th>Mandated Rate Disclosure</th>
+              <th>Marketing Objective</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Truth in Lending Act (TILA)</b></td>
+              <td>Applies to credit cards, mortgages, auto loans, personal debt</td>
+              <td><b>Must quote APR prominently</b></td>
+              <td>Standardizes debt costs across lenders by preventing hidden fee manipulation</td>
+            </tr>
+            <tr>
+              <td><b>Truth in Savings Act (TISA)</b></td>
+              <td>Applies to bank deposit accounts, CDs, money market, savings</td>
+              <td><b>Must quote APY prominently</b></td>
+              <td>Ensures savers see the full benefit of intra-year compounding on their savings</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    `,
+    faqs: [
+      {
+        q: "Why is APY always equal to or higher than APR?",
+        a: "APY incorporates interest earned on previously accumulated interest (compounding). When interest compounds more than once per year (n > 1), APY will always mathematically exceed APR. APY only equals APR when interest compounds exactly once per year (n = 1)."
+      },
+      {
+        q: "Why do banks advertise APY for savings accounts but APR for loans?",
+        a: "Financial institutions highlight the figure that looks most advantageous to the consumer. For savings accounts and CDs, APY is higher, making investment yields look more attractive. For loans and mortgages, APR is lower, making borrowing costs appear cheaper."
+      },
+      {
+        q: "What is the 360-day vs. 365-day compounding rule?",
+        a: "Many commercial banks and business lenders historically use a 360-day year (twelve 30-day months, known as the commercial or bank year) to calculate daily interest. A 360-day compounding schedule produces a slightly higher effective APY than a standard 365-day calendar year."
+      },
+      {
+        q: "How does continuous compounding work?",
+        a: "Continuous compounding represents the mathematical limit where interest accrues and compounds at every instantaneous infinitesimal fraction of a second. It is calculated using the natural exponent e (e^r - 1) and represents the absolute theoretical maximum APY achievable for a given rate."
+      }
+    ]
   }
 };
 
