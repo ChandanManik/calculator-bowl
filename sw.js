@@ -4,10 +4,13 @@
  * Network-First for Navigation
  */
 
-const CACHE_NAME = 'calculatorbowl-v1.0.0';
+const CACHE_NAME = 'calculatorbowl-v1.1.0';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
+  '/favicon.ico',
+  '/favicon-32x32.png',
+  '/icon-192.png',
   '/css/style.css',
   '/js/calculator-content.js',
   '/js/clusters.js',
