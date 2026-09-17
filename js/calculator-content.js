@@ -4902,5 +4902,98 @@ financial: {
         a: "According to industry broadband reports, an average US and European broadband household consumes between 500 GB and 650 GB of data per month, with power streaming households exceeding 1.2 TB."
       }
     ]
+  },
+  "rule-of-72": {
+    articleTitle: "The Rule of 72: Estimating Investment Doubling Time",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">📈 Rule of 72 Curve</span>
+          <h4>How the Rule of 72 Estimates Growth</h4>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Dividing 72 by your annual rate of return gives you a remarkably close estimate of how many years it will take to double your money.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        The <b>Rule of 72</b> is a simple, popular heuristic used in finance to quickly estimate the amount of time it takes to double an investment, given a fixed annual rate of return. While it is an approximation, it is incredibly accurate for typical interest rates (between 4% and 15%).
+      </p>
+
+      <h3 class="content-subheading">1. The Mental Math Formula</h3>
+      <p>
+        Instead of using complex logarithmic functions, you can estimate the doubling time with simple division:
+      </p>
+      <div class="math-formula-box">
+        Years to Double ≈ 72 ÷ Annual Interest Rate
+      </div>
+
+      <h3 class="content-subheading">2. The Exact Logarithmic Formula</h3>
+      <p>
+        To find the exact time it takes for an investment to double, we use the formula for compound interest and solve for time (t):
+      </p>
+      <div class="math-formula-box">
+        t = ln(2) ÷ ln(1 + r)
+      </div>
+      <p>
+        Where <b>ln</b> is the natural logarithm and <b>r</b> is the decimal interest rate.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "Why use 72 instead of 69 or 70?",
+        a: "The natural log of 2 is approximately 0.693, which translates to a Rule of 69.3 for continuous compounding. However, 72 is preferred for mental math because it has many divisors (1, 2, 3, 4, 6, 8, 9, 12), making it much easier to divide without a calculator."
+      },
+      {
+        q: "Does the Rule of 72 account for inflation?",
+        a: "No, the standard Rule of 72 calculates nominal doubling time. If you want to calculate how long it takes to double your real purchasing power, you must subtract the inflation rate from your interest rate before dividing into 72."
+      }
+    ]
+  },
+  "break-even-calculator": {
+    articleTitle: "Break-Even Analysis: Understanding Your Profitability Threshold",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">⚖️ Business Economics</span>
+          <h4>The Break-Even Point</h4>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> The Break-Even Point is the exact moment where Total Revenue equals Total Costs (Fixed + Variable). Any units sold past this point generate pure profit (contribution margin).
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A <b>Break-Even Analysis</b> is a foundational concept in corporate finance, managerial accounting, and business strategy. It determines the specific sales volume your business must reach to cover all costs before it begins to generate a profit.
+      </p>
+
+      <h3 class="content-subheading">1. Core Components</h3>
+      <ul class="content-list">
+        <li><b>Fixed Costs:</b> Expenses that do not change with production volume (e.g., rent, insurance, salaries).</li>
+        <li><b>Variable Costs:</b> Expenses that fluctuate directly with the number of units produced (e.g., raw materials, direct labor).</li>
+        <li><b>Selling Price:</b> The revenue generated per unit sold to the customer.</li>
+        <li><b>Contribution Margin:</b> The difference between the Selling Price and Variable Cost. This is the amount each unit contributes towards paying off fixed costs.</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Break-Even Formulas</h3>
+      <div class="math-formula-box">
+        Break-Even Point (Units) = Fixed Costs ÷ (Selling Price - Variable Cost per Unit)
+      </div>
+      <div class="math-formula-box">
+        Break-Even Point (Revenue) = Break-Even Units × Selling Price
+      </div>
+    `,
+    faqs: [
+      {
+        q: "What does a high Break-Even Point mean?",
+        a: "A high break-even point indicates that a business has significant fixed costs or low contribution margins, meaning it must sell a large volume of products just to survive. This generally implies higher financial risk."
+      },
+      {
+        q: "How can I lower my Break-Even Point?",
+        a: "You can lower your break-even point by: 1) Reducing fixed costs, 2) Negotiating cheaper variable costs (materials/shipping), or 3) Increasing your selling price (if the market supports it)."
+      }
+    ]
   }
 };
