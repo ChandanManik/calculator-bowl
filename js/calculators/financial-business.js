@@ -888,3 +888,133 @@ function renderDepreciationCalculator(container, calcDef) {
 
   calculate();
 }
+
+/* ==========================================================================
+   6. Break-Even Analysis Calculator
+   ========================================================================== */
+function renderBreakEvenCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="calc-tool-card">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label" for="beFixedCosts">
+            Total Fixed Costs
+            <span class="form-label-hint">Rent, salaries, etc.</span>
+          </label>
+          <div class="input-with-addon">
+            <span class="input-addon">$</span>
+            <input type="number" id="beFixedCosts" class="form-control" value="10000" min="0" step="100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="beVariableCost">
+            Variable Cost per Unit
+            <span class="form-label-hint">Cost to make 1 unit</span>
+          </label>
+          <div class="input-with-addon">
+            <span class="input-addon">$</span>
+            <input type="number" id="beVariableCost" class="form-control" value="15" min="0" step="0.5">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="bePrice">
+            Selling Price per Unit
+            <span class="form-label-hint">Customer price</span>
+          </label>
+          <div class="input-with-addon">
+            <span class="input-addon">$</span>
+            <input type="number" id="bePrice" class="form-control" value="40" min="0" step="0.5">
+          </div>
+        </div>
+      </div>
+      <div class="calc-actions">
+        <button type="button" id="btnCalcBEP" class="btn btn-primary">
+          <span>⚡ Calculate Break-Even</span>
+        </button>
+        <button type="button" id="btnResetBEP" class="btn btn-secondary">
+          <span>↺ Reset</span>
+        </button>
+      </div>
+      <div id="beResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+    </div>
+  `;
+
+  const btnCalc = container.querySelector("#btnCalcBEP");
+  const btnReset = container.querySelector("#btnResetBEP");
+  const resultDiv = container.querySelector("#beResultContainer");
+
+  function calculate() {
+    const fixedCost = parseFloat(container.querySelector("#beFixedCosts").value) || 0;
+    const variableCost = parseFloat(container.querySelector("#beVariableCost").value) || 0;
+    const price = parseFloat(container.querySelector("#bePrice").value) || 0;
+
+    if (price <= variableCost) {
+      alert("Selling price must be strictly greater than the variable cost to ever break even.");
+      return;
+    }
+
+    const contributionMargin = price - variableCost;
+    const contributionMarginRatio = contributionMargin / price;
+    const bepUnits = fixedCost / contributionMargin;
+    const bepRevenue = bepUnits * price;
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Break-Even Point (Units)</span>
+        <div class="result-hero-value">
+          ${Math.ceil(bepUnits).toLocaleString()}
+          <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 500;">units</span>
+        </div>
+      </div>
+
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Break-Even Revenue</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">$${bepRevenue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Contribution Margin / Unit</div>
+          <div class="result-stat-val">$${contributionMargin.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Contribution Margin Ratio</div>
+          <div class="result-stat-val">${(contributionMarginRatio * 100).toFixed(2)}%</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header">
+          <h3 class="steps-title">📐 Mathematical Formulas</h3>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Contribution Margin</span>
+          <div class="math-formula-box">CM = Selling Price - Variable Cost</div>
+          <p class="step-content">CM = $${price.toFixed(2)} - $${variableCost.toFixed(2)} = <b>$${contributionMargin.toFixed(2)}</b></p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Break-Even Point (Units)</span>
+          <div class="math-formula-box">BEP Units = Fixed Costs / Contribution Margin</div>
+          <p class="step-content">BEP Units = $${fixedCost.toLocaleString()} / $${contributionMargin.toFixed(2)} = <b>${bepUnits.toFixed(2)} units</b></p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Break-Even Point (Revenue)</span>
+          <div class="math-formula-box">BEP Revenue = BEP Units × Selling Price</div>
+          <p class="step-content">BEP Revenue = ${bepUnits.toFixed(2)} × $${price.toFixed(2)} = <b>$${bepRevenue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</b></p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  btnCalc.addEventListener("click", calculate);
+  btnReset.addEventListener("click", () => {
+    container.querySelector("#beFixedCosts").value = "10000";
+    container.querySelector("#beVariableCost").value = "15";
+    container.querySelector("#bePrice").value = "40";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

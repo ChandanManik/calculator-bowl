@@ -794,3 +794,104 @@ function renderInflationCalculator(container, calcDef) {
   // Auto-calculate on load
   calculate();
 }
+
+/* ==========================================================================
+   5. Rule of 72 Calculator
+   ========================================================================== */
+function renderRuleOf72Calculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="calc-tool-card">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label" for="rule72Rate">
+            Annual Interest Rate
+            <span class="form-label-hint">Rate of return</span>
+          </label>
+          <div class="input-with-addon">
+            <input type="number" id="rule72Rate" class="form-control" value="8" min="0.1" max="100" step="0.1">
+            <span class="input-addon suffix">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="calc-actions">
+        <button type="button" id="btnCalcRule72" class="btn btn-primary">
+          <span>⚡ Calculate Time to Double</span>
+        </button>
+        <button type="button" id="btnResetRule72" class="btn btn-secondary">
+          <span>↺ Reset</span>
+        </button>
+      </div>
+      <div id="rule72ResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+    </div>
+  `;
+
+  const btnCalc = container.querySelector("#btnCalcRule72");
+  const btnReset = container.querySelector("#btnResetRule72");
+  const resultDiv = container.querySelector("#rule72ResultContainer");
+
+  function calculate() {
+    const rate = parseFloat(container.querySelector("#rule72Rate").value) || 0;
+
+    if (rate <= 0) {
+      alert("Please enter a valid interest rate greater than 0.");
+      return;
+    }
+
+    // Rule of 72 estimate
+    const years72 = 72 / rate;
+
+    // Exact logarithmic formula: t = ln(2) / ln(1 + r)
+    const exactYears = Math.log(2) / Math.log(1 + (rate / 100));
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Estimated Time to Double (Rule of 72)</span>
+        <div class="result-hero-value">
+          ${years72.toFixed(2)}
+          <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 500;">years</span>
+        </div>
+      </div>
+
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Exact Time to Double</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${exactYears.toFixed(2)} years</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Difference</div>
+          <div class="result-stat-val">${Math.abs(years72 - exactYears).toFixed(3)} years</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header">
+          <h3 class="steps-title">📐 Mathematical Formulas</h3>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Rule of 72 Formula (Mental Math)</span>
+          <div class="math-formula-box">Years = 72 / Annual Interest Rate</div>
+          <p class="step-content">Years = 72 / ${rate} = <b>${years72.toFixed(2)} years</b></p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Exact Formula (Logarithmic)</span>
+          <div class="math-formula-box">Years = ln(2) / ln(1 + rate)</div>
+          <p class="step-content">
+            Years = ln(2) / ln(1 + ${rate/100})<br>
+            Years = 0.693 / ${Math.log(1 + rate/100).toFixed(4)} = <b>${exactYears.toFixed(2)} years</b>
+          </p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  btnCalc.addEventListener("click", calculate);
+  btnReset.addEventListener("click", () => {
+    container.querySelector("#rule72Rate").value = "8";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

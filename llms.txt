@@ -169,6 +169,20 @@
 - **Summary**: Convert nominal Annual Percentage Rate (APR) to effective Annual Percentage Yield (APY) and vice versa with compounding frequencies.
 - **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
 
+### [Rule of 72 Calculator](https://calculatorbowl.com/calculators/finance/investment/rule-of-72-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/investment/rule-of-72-calculator/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Investment & Wealth`
+- **Summary**: Calculate how long it takes for an investment to double at a given annual interest rate using the Rule of 72 mental math versus the exact logarithmic formula.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
+### [Break-Even Point Calculator](https://calculatorbowl.com/calculators/finance/business/break-even-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/business/break-even-calculator/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Business & Tax`
+- **Summary**: Calculate your business break-even point in units and sales revenue based on fixed costs, variable costs, and selling price.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
 ## 📁 Math & Statistics Calculators (Category Hub: [Math & Statistics Calculators](https://calculatorbowl.com/calculators/math/))
 
 *Description*: Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, quadratic equations, mean/median/mode, standard deviation, and exponents with step-by-step proofs.

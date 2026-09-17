@@ -875,6 +875,84 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/finance/interest/apr-to-apy-converter/",
         "subcatUrl": "/calculators/finance/interest/",
         "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "rule-of-72",
+        "name": "Rule of 72 Calculator",
+        "shortName": "Rule of 72",
+        "icon": "⏳",
+        "badge": "Investing",
+        "description": "Calculate how long it takes for an investment to double at a given annual interest rate using the Rule of 72 mental math versus the exact logarithmic formula.",
+        "seoTitle": "Rule of 72 Calculator - Time to Double Investment",
+        "seoDescription": "Calculate how many years it takes to double your money with the Rule of 72. Compare the mental math estimate with the exact logarithmic formula.",
+        "category": "finance",
+        "renderFunction": "renderRuleOf72Calculator",
+        "contextualGuide": {
+          "title": "Investment Growth Estimates",
+          "html": "\n            <p>\n              The Rule of 72 is a quick heuristic to estimate doubling time for compounding investments. For more precise multi-variable forecasting, use our comprehensive <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a>.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "compound-interest",
+              "label": "Compound Interest Planner",
+              "icon": "📈"
+            },
+            {
+              "id": "future-value",
+              "label": "Future Value Solver",
+              "icon": "🔮"
+            },
+            {
+              "id": "roi-calculator",
+              "label": "ROI Calculator",
+              "icon": "🎯"
+            }
+          ]
+        },
+        "subcategory": "investment",
+        "subcatTitle": "Investment & Wealth",
+        "slug": "rule-of-72-calculator",
+        "url": "/calculators/finance/investment/rule-of-72-calculator/",
+        "subcatUrl": "/calculators/finance/investment/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "break-even-calculator",
+        "name": "Break-Even Point Calculator",
+        "shortName": "Break-Even",
+        "icon": "⚖️",
+        "badge": "Business",
+        "description": "Calculate your business break-even point in units and sales revenue based on fixed costs, variable costs, and selling price.",
+        "seoTitle": "Break-Even Point Calculator - Units & Revenue Analysis",
+        "seoDescription": "Calculate the break-even point for your business in total units and sales revenue. Determine contribution margins from fixed and variable costs.",
+        "category": "finance",
+        "renderFunction": "renderBreakEvenCalculator",
+        "contextualGuide": {
+          "title": "Business Profitability Analysis",
+          "html": "\n            <p>\n              Break-even analysis determines the sales volume required to cover all fixed and variable costs. Explore more corporate valuation and pricing tools in our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a>.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "margin-markup",
+              "label": "Profit Margin & Markup",
+              "icon": "📊"
+            },
+            {
+              "id": "depreciation-calculator",
+              "label": "Asset Depreciation",
+              "icon": "📉"
+            },
+            {
+              "id": "sales-tax",
+              "label": "Sales Tax Calculator",
+              "icon": "🏷️"
+            }
+          ]
+        },
+        "subcategory": "business",
+        "subcatTitle": "Business & Tax",
+        "slug": "break-even-calculator",
+        "url": "/calculators/finance/business/break-even-calculator/",
+        "subcatUrl": "/calculators/finance/business/",
+        "categoryUrl": "/calculators/finance/"
       }
     ],
     "faqs": [
