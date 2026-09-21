@@ -4904,95 +4904,224 @@ financial: {
     ]
   },
   "rule-of-72": {
-    articleTitle: "The Rule of 72: Estimating Investment Doubling Time",
+    articleTitle: "The Rule of 72: A Complete Guide to Estimating Investment Doubling Time",
     diagramHtml: `
       <div class="content-infographic-card">
         <div class="infographic-header">
-          <span class="infographic-badge">📈 Rule of 72 Curve</span>
-          <h4>How the Rule of 72 Estimates Growth</h4>
+          <span class="infographic-badge">📈 Doubling Time vs. Interest Rate</span>
+          <h4>Rule of 72: Estimate vs. Exact Doubling Time</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 220" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="220" rx="12" fill="var(--bg-subtle)" />
+            <line x1="60" y1="20" x2="60" y2="180" stroke="var(--border-color)" stroke-width="2" />
+            <line x1="60" y1="180" x2="560" y2="180" stroke="var(--border-color)" stroke-width="2" />
+            <!-- Rule of 72 curve (hyperbola estimate) -->
+            <path d="M 80,170 Q 150,90 240,55 Q 340,35 560,22" fill="none" stroke="#6366f1" stroke-width="3" stroke-dasharray="6,3" />
+            <!-- Exact curve -->
+            <path d="M 80,168 Q 150,88 240,53 Q 340,33 560,20" fill="none" stroke="#10b981" stroke-width="3" />
+            <!-- Data points: 4%, 6%, 8%, 10%, 12% -->
+            <circle cx="120" cy="148" r="5" fill="#10b981" />
+            <circle cx="200" cy="100" r="5" fill="#10b981" />
+            <circle cx="290" cy="72" r="5" fill="#10b981" />
+            <circle cx="380" cy="55" r="5" fill="#10b981" />
+            <circle cx="470" cy="44" r="5" fill="#10b981" />
+            <!-- Labels -->
+            <text x="115" y="145" fill="var(--text-muted)" font-size="10">4%</text>
+            <text x="195" y="97" fill="var(--text-muted)" font-size="10">6%</text>
+            <text x="285" y="69" fill="var(--text-muted)" font-size="10">8%</text>
+            <text x="375" y="52" fill="var(--text-muted)" font-size="10">10%</text>
+            <text x="462" y="41" fill="var(--text-muted)" font-size="10">12%</text>
+            <!-- Legend -->
+            <line x1="70" y1="205" x2="95" y2="205" stroke="#6366f1" stroke-width="3" stroke-dasharray="5,3"/>
+            <text x="100" y="209" fill="#6366f1" font-size="11" font-weight="600">Rule of 72</text>
+            <line x1="200" y1="205" x2="225" y2="205" stroke="#10b981" stroke-width="3"/>
+            <text x="230" y="209" fill="#10b981" font-size="11" font-weight="600">Exact Formula</text>
+            <text x="15" y="105" fill="var(--text-muted)" font-size="10" transform="rotate(-90 15,105)">Years to Double</text>
+          </svg>
         </div>
         <p class="infographic-caption">
-          <b>Key Takeaway:</b> Dividing 72 by your annual rate of return gives you a remarkably close estimate of how many years it will take to double your money.
+          <b>Key Takeaway:</b> The Rule of 72 (dashed) almost perfectly tracks the exact logarithmic calculation (solid) across common interest rates of 4%–12%, proving its practical reliability for quick mental math.
         </p>
       </div>
     `,
     articleHtml: `
       <p>
-        The <b>Rule of 72</b> is a simple, popular heuristic used in finance to quickly estimate the amount of time it takes to double an investment, given a fixed annual rate of return. While it is an approximation, it is incredibly accurate for typical interest rates (between 4% and 15%).
+        The <b>Rule of 72</b> is one of the most celebrated shortcuts in personal finance and investment mathematics. By simply dividing 72 by a fixed annual rate of return, any investor can instantly estimate how many years it will take to double their money — no calculator or spreadsheet required. This heuristic has been cited in financial literature dating back to Luca Pacioli's 1494 treatise <i>Summa de Arithmetica</i>, making it one of the oldest surviving mathematical rules in practical use.
       </p>
 
-      <h3 class="content-subheading">1. The Mental Math Formula</h3>
+      <h3 class="content-subheading">1. The Rule of 72 Mental Math Formula</h3>
       <p>
-        Instead of using complex logarithmic functions, you can estimate the doubling time with simple division:
+        The formula is elegantly simple. Divide the constant <b>72</b> by the annual percentage return on your investment to estimate the number of years required for your money to double:
       </p>
       <div class="math-formula-box">
-        Years to Double ≈ 72 ÷ Annual Interest Rate
+        Years to Double ≈ 72 ÷ Annual Interest Rate (%)
       </div>
+      <p>
+        For example, if your index fund earns an average annual return of <b>9%</b>: Years = 72 / 9 = <b>8 years</b>. A savings account earning <b>4%</b> would take 72 / 4 = <b>18 years</b> to double.
+      </p>
 
       <h3 class="content-subheading">2. The Exact Logarithmic Formula</h3>
       <p>
-        To find the exact time it takes for an investment to double, we use the formula for compound interest and solve for time (t):
+        The mathematically precise time to double an investment is derived from the compound interest equation $A = P(1+r)^t$. Setting $A = 2P$ and solving for $t$ yields:
       </p>
       <div class="math-formula-box">
-        t = ln(2) ÷ ln(1 + r)
+        t = ln(2) ÷ ln(1 + r) = 0.6931 ÷ ln(1 + r)
       </div>
       <p>
-        Where <b>ln</b> is the natural logarithm and <b>r</b> is the decimal interest rate.
+        For a <b>9% annual rate</b>: t = ln(2) / ln(1.09) = 0.6931 / 0.08618 ≈ <b>8.04 years</b>. The Rule of 72 gives 8.00 — an error of just <b>0.04 years (less than 15 days)</b>.
+      </p>
+
+      <h3 class="content-subheading">3. Rule of 72 Reference Table (Estimate vs. Exact)</h3>
+      <div class="content-table-wrapper">
+        <table class="content-data-table">
+          <thead>
+            <tr>
+              <th>Annual Return</th>
+              <th>Rule of 72 (Years)</th>
+              <th>Exact Formula (Years)</th>
+              <th>Accuracy Error</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><b>2%</b></td><td>36.0</td><td>35.00</td><td>+1.00 yr</td></tr>
+            <tr><td><b>4%</b></td><td>18.0</td><td>17.67</td><td>+0.33 yr</td></tr>
+            <tr><td><b>6%</b></td><td>12.0</td><td>11.90</td><td>+0.10 yr</td></tr>
+            <tr><td><b>8%</b></td><td>9.0</td><td>9.01</td><td>-0.01 yr ✅</td></tr>
+            <tr><td><b>10%</b></td><td>7.2</td><td>7.27</td><td>-0.07 yr</td></tr>
+            <tr><td><b>12%</b></td><td>6.0</td><td>6.12</td><td>-0.12 yr</td></tr>
+            <tr><td><b>18%</b></td><td>4.0</td><td>4.19</td><td>-0.19 yr</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        <b>Strategic Insight:</b> The Rule of 72 is most accurate at interest rates between 6% and 10% — exactly the range of long-term historical equity market returns — making it an ideal tool for retirement planning estimates.
       </p>
     `,
     faqs: [
       {
         q: "Why use 72 instead of 69 or 70?",
-        a: "The natural log of 2 is approximately 0.693, which translates to a Rule of 69.3 for continuous compounding. However, 72 is preferred for mental math because it has many divisors (1, 2, 3, 4, 6, 8, 9, 12), making it much easier to divide without a calculator."
+        a: "The natural log of 2 is approximately 0.693, which translates to a Rule of 69.3 for continuous compounding. However, 72 is preferred for mental math because it has many integer divisors (1, 2, 3, 4, 6, 8, 9, 12, 18, 24, 36, 72), making it far easier to divide by common interest rates without a calculator. The added divisibility is worth the minor rounding error."
       },
       {
-        q: "Does the Rule of 72 account for inflation?",
-        a: "No, the standard Rule of 72 calculates nominal doubling time. If you want to calculate how long it takes to double your real purchasing power, you must subtract the inflation rate from your interest rate before dividing into 72."
+        q: "Does the Rule of 72 work in reverse (to find required rate)?",
+        a: "Yes. You can rearrange it to find the required rate: Required Rate = 72 ÷ Desired Years to Double. For example, if you want your money to double in 6 years, you need an annual return of 72 / 6 = 12%."
+      },
+      {
+        q: "Does the Rule of 72 account for inflation or taxes?",
+        a: "No, the standard Rule of 72 calculates nominal doubling time before inflation and taxes. To estimate real purchasing power doubling, subtract your expected inflation rate from your gross return first. For example, 9% return minus 3% inflation = 6% real return, meaning real wealth doubles in 72/6 = 12 years, not 8."
       }
     ]
   },
   "break-even-calculator": {
-    articleTitle: "Break-Even Analysis: Understanding Your Profitability Threshold",
+    articleTitle: "Break-Even Analysis: A Complete Guide to Business Profitability Thresholds",
     diagramHtml: `
       <div class="content-infographic-card">
         <div class="infographic-header">
-          <span class="infographic-badge">⚖️ Business Economics</span>
-          <h4>The Break-Even Point</h4>
+          <span class="infographic-badge">⚖️ Cost-Volume-Profit Chart</span>
+          <h4>Total Revenue vs. Total Costs: Finding the Break-Even Point</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 220" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="220" rx="12" fill="var(--bg-subtle)" />
+            <line x1="60" y1="20" x2="60" y2="185" stroke="var(--border-color)" stroke-width="2" />
+            <line x1="60" y1="185" x2="570" y2="185" stroke="var(--border-color)" stroke-width="2" />
+            <!-- Fixed Cost horizontal line -->
+            <line x1="60" y1="145" x2="570" y2="145" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,4" />
+            <text x="65" y="140" fill="#94a3b8" font-size="11" font-weight="600">Fixed Costs</text>
+            <!-- Total Cost line (starts at fixed cost, slopes up) -->
+            <line x1="60" y1="145" x2="570" y2="60" stroke="#f59e0b" stroke-width="3" />
+            <text x="480" y="55" fill="#f59e0b" font-weight="700" font-size="12">Total Costs</text>
+            <!-- Revenue line (starts at 0, slopes up steeper) -->
+            <line x1="60" y1="185" x2="570" y2="30" stroke="#10b981" stroke-width="3" />
+            <text x="480" y="25" fill="#10b981" font-weight="700" font-size="12">Total Revenue</text>
+            <!-- Break-even intersection point -->
+            <circle cx="290" cy="103" r="8" fill="#6366f1" stroke="white" stroke-width="2" />
+            <text x="298" y="98" fill="#6366f1" font-weight="800" font-size="12">Break-Even</text>
+            <!-- Profit Zone -->
+            <text x="380" y="140" fill="#10b981" font-size="11" font-weight="600">▲ Profit Zone</text>
+            <!-- Loss Zone -->
+            <text x="75" y="175" fill="#f87171" font-size="11" font-weight="600">▼ Loss Zone</text>
+            <!-- Axis labels -->
+            <text x="270" y="200" fill="var(--text-muted)" font-size="11">Units Sold →</text>
+            <text x="15" y="105" fill="var(--text-muted)" font-size="10" transform="rotate(-90 15,105)">Revenue / Cost ($)</text>
+          </svg>
         </div>
         <p class="infographic-caption">
-          <b>Key Takeaway:</b> The Break-Even Point is the exact moment where Total Revenue equals Total Costs (Fixed + Variable). Any units sold past this point generate pure profit (contribution margin).
+          <b>Key Takeaway:</b> The Break-Even Point (purple dot) is where Total Revenue (green) crosses Total Costs (yellow). To the left is the loss zone; to the right is the profit zone. Every unit sold beyond break-even generates pure contribution margin profit.
         </p>
       </div>
     `,
     articleHtml: `
       <p>
-        A <b>Break-Even Analysis</b> is a foundational concept in corporate finance, managerial accounting, and business strategy. It determines the specific sales volume your business must reach to cover all costs before it begins to generate a profit.
+        A <b>Break-Even Analysis</b> is a foundational pillar of corporate finance, managerial accounting, and business strategy. It calculates the precise number of units a business must sell — or the exact revenue it must generate — to cover all its fixed and variable operating costs before turning a profit. Every entrepreneur, product manager, and financial analyst uses this tool to validate business models, set pricing strategies, and evaluate operational risk.
       </p>
 
-      <h3 class="content-subheading">1. Core Components</h3>
+      <h3 class="content-subheading">1. The Three Core Components</h3>
       <ul class="content-list">
-        <li><b>Fixed Costs:</b> Expenses that do not change with production volume (e.g., rent, insurance, salaries).</li>
-        <li><b>Variable Costs:</b> Expenses that fluctuate directly with the number of units produced (e.g., raw materials, direct labor).</li>
-        <li><b>Selling Price:</b> The revenue generated per unit sold to the customer.</li>
-        <li><b>Contribution Margin:</b> The difference between the Selling Price and Variable Cost. This is the amount each unit contributes towards paying off fixed costs.</li>
+        <li><b>Fixed Costs (FC):</b> Business expenses that remain constant regardless of production volume — such as rent, insurance premiums, salaried employee wages, software subscriptions, and loan repayments.</li>
+        <li><b>Variable Costs (VC) per Unit:</b> Costs that scale directly with each unit produced or sold — including raw materials, direct labor, packaging, and shipping costs per item.</li>
+        <li><b>Selling Price (SP) per Unit:</b> The revenue your business collects per unit sold to the end customer.</li>
+        <li><b>Contribution Margin (CM):</b> The amount left over after covering variable costs — calculated as SP - VC. This contribution pays down fixed costs first, then generates profit.</li>
       </ul>
 
       <h3 class="content-subheading">2. Break-Even Formulas</h3>
       <div class="math-formula-box">
-        Break-Even Point (Units) = Fixed Costs ÷ (Selling Price - Variable Cost per Unit)
+        Contribution Margin (CM) = Selling Price - Variable Cost per Unit
       </div>
       <div class="math-formula-box">
-        Break-Even Point (Revenue) = Break-Even Units × Selling Price
+        Break-Even Point (Units) = Fixed Costs ÷ Contribution Margin
       </div>
+      <div class="math-formula-box">
+        Break-Even Revenue ($) = Break-Even Units × Selling Price
+      </div>
+
+      <h3 class="content-subheading">3. Practical Worked Example</h3>
+      <p>
+        Suppose you launch a handmade candle business with the following cost structure: <b>Fixed Costs = $8,000/month</b> (studio rent + branding), <b>Variable Cost = $6 per candle</b> (wax, wick, jar, label), and you sell each candle at <b>$22</b>.
+      </p>
+      <ol class="content-ordered-list">
+        <li>Calculate Contribution Margin: CM = $22 - $6 = <b>$16 per candle</b></li>
+        <li>Calculate Break-Even Units: BEP = $8,000 / $16 = <b>500 candles/month</b></li>
+        <li>Calculate Break-Even Revenue: $500 × $22 = <b>$11,000/month</b></li>
+        <li>Every candle sold beyond 500 units generates <b>$16 of pure profit</b> per unit.</li>
+      </ol>
+
+      <h3 class="content-subheading">4. Impact of Pricing Strategy on Break-Even</h3>
+      <div class="content-table-wrapper">
+        <table class="content-data-table">
+          <thead>
+            <tr>
+              <th>Selling Price</th>
+              <th>Contribution Margin</th>
+              <th>Break-Even Units</th>
+              <th>Break-Even Revenue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><b>$18</b></td><td>$12</td><td>667 units</td><td>$12,006</td></tr>
+            <tr><td><b>$22</b> (Base)</td><td>$16</td><td>500 units</td><td>$11,000</td></tr>
+            <tr><td><b>$26</b></td><td>$20</td><td>400 units</td><td>$10,400</td></tr>
+            <tr><td><b>$30</b></td><td>$24</td><td>334 units</td><td>$10,020</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        <b>Strategic Insight:</b> Raising your price by just $4 (from $22 to $26) reduces the break-even volume by 100 units — a 20% reduction in minimum required sales. This highlights why premium pricing is often more financially resilient than high-volume, low-margin strategies.
+      </p>
     `,
     faqs: [
       {
-        q: "What does a high Break-Even Point mean?",
-        a: "A high break-even point indicates that a business has significant fixed costs or low contribution margins, meaning it must sell a large volume of products just to survive. This generally implies higher financial risk."
+        q: "What does a high Break-Even Point mean for a business?",
+        a: "A high break-even point signals that a business carries heavy fixed costs or thin contribution margins, forcing it to sell a large volume just to avoid losses. This model typically carries higher operational risk. Businesses with low break-even points (like SaaS or digital products) tend to be more financially resilient during revenue downturns."
+      },
+      {
+        q: "How is break-even analysis used in startup planning?",
+        a: "For startups, break-even analysis is a critical validation tool. It shows investors the minimum monthly revenue the business must achieve to be self-sustaining, helps founders set realistic sales targets and hiring timelines, and quickly exposes whether a business model is viable at an achievable market price point."
       },
       {
         q: "How can I lower my Break-Even Point?",
-        a: "You can lower your break-even point by: 1) Reducing fixed costs, 2) Negotiating cheaper variable costs (materials/shipping), or 3) Increasing your selling price (if the market supports it)."
+        a: "You can lower your break-even point through three levers: 1) Reduce Fixed Costs by negotiating cheaper rent, switching to contract labor, or cutting overheads; 2) Reduce Variable Costs by sourcing cheaper materials, improving manufacturing efficiency, or buying in bulk; 3) Increase Selling Price if your market positioning and customer perception support a premium — this raises your contribution margin fastest."
       }
     ]
   }
