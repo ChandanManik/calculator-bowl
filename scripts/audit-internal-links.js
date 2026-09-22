@@ -26,7 +26,7 @@ const validRoutes = new Set([
 ]);
 
 // Add category and subcategory routes
-const primaryCategories = ['financial', 'math', 'conversions', 'datetime', 'network'];
+const primaryCategories = ['financial', 'math', 'conversions', 'datetime', 'network', 'health'];
 const allCalculators = [];
 
 for (const catKey of primaryCategories) {
