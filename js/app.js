@@ -479,7 +479,7 @@ function updateSEO(title, description, options = {}) {
    View 1: Home View (Topical Hubs & Search)
    ========================================================================== */
 function renderHomeView(container) {
-  const primaryKeys = ['financial', 'math', 'conversions', 'datetime', 'network'];
+  const primaryKeys = ['financial', 'math', 'conversions', 'datetime', 'network', 'health'];
   const categoryCardsHtml = primaryKeys.map(clusterKey => {
     const cluster = TOPICAL_CLUSTERS[clusterKey];
     if (!cluster) return '';
@@ -1310,6 +1310,7 @@ function renderSuggestionsView(container) {
               <option value="conversions">Scientific &amp; Unit Conversions</option>
               <option value="datetime">Date, Time &amp; Calendar Calculations</option>
               <option value="network">Technology &amp; Network Utilities</option>
+              <option value="health">Health &amp; Fitness</option>
               <option value="engineering">Engineering &amp; Construction</option>
             </select>
           </div>

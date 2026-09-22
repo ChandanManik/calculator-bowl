@@ -4,7 +4,7 @@
  * Network-First for Navigation
  */
 
-const CACHE_NAME = 'calculatorbowl-v1.2.1';
+const CACHE_NAME = 'calculatorbowl-v1.3.0';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
@@ -29,6 +29,7 @@ const PRECACHE_ASSETS = [
   '/js/calculators/datetime-weight.js',
   '/js/calculators/datetime-weather.js',
   '/js/calculators/tech-network.js',
+  '/js/calculators/health-fitness.js',
   '/js/i18n.js',
   '/js/app.js',
   '/manifest.json'

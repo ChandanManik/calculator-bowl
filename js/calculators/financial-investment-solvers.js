@@ -6,6 +6,7 @@
  * 2. ROI (Return on Investment) Calculator
  * 3. Present Value (PV) Calculator
  * 4. Inflation & Purchasing Power Calculator
+ * 5. SIP (Systematic Investment Plan) Calculator
  * ============================================================================
  */
 
@@ -890,6 +891,186 @@ function renderRuleOf72Calculator(container, calcDef) {
   btnCalc.addEventListener("click", calculate);
   btnReset.addEventListener("click", () => {
     container.querySelector("#rule72Rate").value = "8";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}
+
+/* ==========================================================================
+   5. SIP (Systematic Investment Plan) Calculator
+   ========================================================================== */
+function renderSipCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="calc-tool-card">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label" for="sipMonthly">
+            Monthly Investment
+            <span class="form-label-hint">Starting SIP amount</span>
+          </label>
+          <div class="input-with-addon">
+            <span class="input-addon">$</span>
+            <input type="number" id="sipMonthly" class="form-control" value="500" min="1" step="10">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="sipReturn">
+            Expected Annual Return
+            <span class="form-label-hint">Equity ~10-12%</span>
+          </label>
+          <div class="input-with-addon">
+            <input type="number" id="sipReturn" class="form-control" value="12" min="0.1" max="30" step="0.1">
+            <span class="input-addon suffix">%</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="sipYears">
+            Investment Period
+            <span class="form-label-hint">Years</span>
+          </label>
+          <div class="input-with-addon">
+            <input type="number" id="sipYears" class="form-control" value="10" min="1" max="50" step="1">
+            <span class="input-addon suffix">Yrs</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="sipStepUp">
+            Annual Step-Up
+            <span class="form-label-hint">Yearly SIP increase</span>
+          </label>
+          <div class="input-with-addon">
+            <input type="number" id="sipStepUp" class="form-control" value="0" min="0" max="50" step="1">
+            <span class="input-addon suffix">%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-actions">
+        <button type="button" id="btnCalcSip" class="btn btn-primary">
+          <span>⚡ Calculate SIP Growth</span>
+        </button>
+        <button type="button" id="btnResetSip" class="btn btn-secondary">
+          <span>↺ Reset</span>
+        </button>
+      </div>
+
+      <div id="sipResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+    </div>
+  `;
+
+  const btnCalc = container.querySelector("#btnCalcSip");
+  const btnReset = container.querySelector("#btnResetSip");
+  const resultDiv = container.querySelector("#sipResultContainer");
+
+  function fmt(n) {
+    return "$" + n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+  }
+
+  function calculate() {
+    const monthly = parseFloat(container.querySelector("#sipMonthly").value) || 0;
+    const annualRate = parseFloat(container.querySelector("#sipReturn").value) || 0;
+    const years = parseInt(container.querySelector("#sipYears").value) || 0;
+    const stepUp = parseFloat(container.querySelector("#sipStepUp").value) || 0;
+
+    if (monthly <= 0 || annualRate <= 0 || years <= 0) {
+      alert("Please enter a monthly amount, return rate, and period greater than 0.");
+      return;
+    }
+
+    const r = annualRate / 100 / 12;
+    const months = years * 12;
+    let balance = 0;
+    let invested = 0;
+    let rowsHtml = "";
+
+    // Month-by-month simulation: deposit at start of month (annuity-due),
+    // monthly SIP amount steps up once every 12 months.
+    for (let y = 1; y <= years; y++) {
+      const yearDeposit = monthly * Math.pow(1 + stepUp / 100, y - 1);
+      let yearInvested = 0;
+      for (let m = 1; m <= 12; m++) {
+        balance = (balance + yearDeposit) * (1 + r);
+        invested += yearDeposit;
+        yearInvested += yearDeposit;
+      }
+      rowsHtml += `
+        <tr>
+          <td><b>Year ${y}</b></td>
+          <td>${fmt(yearInvested)}</td>
+          <td>${fmt(balance)}</td>
+        </tr>`;
+    }
+
+    const gains = balance - invested;
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Estimated Maturity Value</span>
+        <div class="result-hero-value">${fmt(balance)}</div>
+      </div>
+
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Total Invested</div>
+          <div class="result-stat-val">${fmt(invested)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Estimated Gains</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${fmt(gains)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Monthly Rate</div>
+          <div class="result-stat-val">${(r * 100).toFixed(4)}%</div>
+        </div>
+      </div>
+
+      <div class="content-table-wrapper" style="margin-top: 1.5rem;">
+        <table class="content-data-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Invested (Year)</th>
+              <th>Value (End of Year)</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header">
+          <h3 class="steps-title">📐 Mathematical Formulas</h3>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Monthly Rate & Period</span>
+          <div class="math-formula-box">r = Annual Rate / 12, n = Years × 12</div>
+          <p class="step-content">r = ${annualRate}% / 12 = <b>${(r * 100).toFixed(4)}%</b> per month, n = ${years} × 12 = <b>${months} months</b></p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">SIP Future Value (Annuity-Due)</span>
+          <div class="math-formula-box">FV = M × [((1 + r)^n − 1) / r] × (1 + r)</div>
+          <p class="step-content">
+            Each monthly deposit of <b>${fmt(monthly)}</b> compounds for its remaining months${stepUp > 0 ? `, with deposits growing <b>${stepUp}%</b> every year` : ""}.
+            Total invested <b>${fmt(invested)}</b> grows to <b>${fmt(balance)}</b>, earning <b>${fmt(gains)}</b> in gains.
+          </p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  btnCalc.addEventListener("click", calculate);
+  btnReset.addEventListener("click", () => {
+    container.querySelector("#sipMonthly").value = "500";
+    container.querySelector("#sipReturn").value = "12";
+    container.querySelector("#sipYears").value = "10";
+    container.querySelector("#sipStepUp").value = "0";
     resultDiv.style.display = "none";
   });
 

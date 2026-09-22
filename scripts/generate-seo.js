@@ -39,7 +39,7 @@ xml += `  <!-- Homepage -->\n  <url>\n    <loc>${baseUrl}/</loc>\n    <lastmod>$
 xml += `  <!-- Master A-Z Calculators Directory -->\n  <url>\n    <loc>${baseUrl}/calculators/</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.95</priority>\n  </url>\n\n`;
 
 // Category & Subcategory Hubs
-const primaryCategories = ['financial', 'math', 'conversions', 'datetime', 'network'];
+const primaryCategories = ['financial', 'math', 'conversions', 'datetime', 'network', 'health'];
 const subcatSeen = new Set();
 
 xml += `  <!-- Top-Level Category Hubs -->\n`;
@@ -108,7 +108,7 @@ llms += `- **Pattern**: \`${baseUrl}/calculators/[category]/[subcategory]/[calcu
 llms += `- **Directory**: [Master A-Z Directory](${baseUrl}/calculators/)\n`;
 llms += `- **Client-Side Processing**: Instant zero-latency mathematical and financial calculations.\n`;
 llms += `- **Step-by-Step Breakdowns**: Detailed mathematical solutions showing formulas, variable substitutions, and simplification steps.\n`;
-llms += `- **Topical Siloing**: 37 precision tools structured across 5 topical pillars.\n\n---\n\n`;
+llms += `- **Topical Siloing**: ${totalCalcs} precision tools structured across ${primaryCategories.length} topical pillars.\n\n---\n\n`;
 
 for (const catKey of primaryCategories) {
   const cluster = TOPICAL_CLUSTERS[catKey];

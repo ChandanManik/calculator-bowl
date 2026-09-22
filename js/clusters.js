@@ -13,7 +13,7 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Financial",
     "icon": "💰",
     "colorClass": "financial",
-    "badge": "22 Calculators",
+    "badge": "25 Calculators",
     "description": "Plan your retirement savings, 401(k), ROI, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
     "seoTitle": "Financial, Loan & Investment Calculators | CalculatorBowl",
     "seoDescription": "Accurate financial calculators for loans, mortgages, gold valuation, bitcoin and cryptocurrency conversions, compound interest, simple interest, sales tax, and investment planning.",
@@ -952,6 +952,45 @@ const TOPICAL_CLUSTERS = {
         "slug": "break-even-calculator",
         "url": "/calculators/finance/business/break-even-calculator/",
         "subcatUrl": "/calculators/finance/business/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "sip-calculator",
+        "name": "SIP (Systematic Investment Plan) Calculator",
+        "shortName": "SIP Calculator",
+        "icon": "💹",
+        "badge": "Investing",
+        "description": "Calculate the future value of monthly SIP investments with annual step-up, total invested amount, and estimated wealth gains.",
+        "seoTitle": "SIP Calculator - Monthly Investment Growth & Step-Up Planner",
+        "seoDescription": "Calculate SIP maturity value, total invested amount, and estimated gains for monthly investments with annual step-up increases and compound returns.",
+        "category": "finance",
+        "renderFunction": "renderSipCalculator",
+        "contextualGuide": {
+          "title": "SIP & Wealth Growth Cross-References",
+          "html": "\n            <p>\n              A Systematic Investment Plan builds wealth through disciplined monthly contributions and the power of compounding. For lump-sum projections, visit our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a>.\n            </p>\n            <p>\n              Compare SIP growth against lump-sum compounding or plan your retirement nest egg with the companion tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "compound-interest",
+              "label": "Compound Interest Planner",
+              "icon": "📈"
+            },
+            {
+              "id": "future-value",
+              "label": "Future Value (FV) Solver",
+              "icon": "🔮"
+            },
+            {
+              "id": "retirement-calculator",
+              "label": "Retirement Nest Egg Planner",
+              "icon": "🏖️"
+            }
+          ]
+        },
+        "subcategory": "investment",
+        "subcatTitle": "Investment & Wealth",
+        "slug": "sip-calculator",
+        "url": "/calculators/finance/investment/sip-calculator/",
+        "subcatUrl": "/calculators/finance/investment/",
         "categoryUrl": "/calculators/finance/"
       }
     ],
@@ -1972,6 +2011,70 @@ const TOPICAL_CLUSTERS = {
     ],
     "canonicalId": "tech-network",
     "url": "/calculators/tech-network/"
+  },
+  "health": {
+    "id": "health",
+    "title": "Health & Fitness Calculators",
+    "shortTitle": "Health",
+    "icon": "💪",
+    "colorClass": "health",
+    "badge": "1 Calculator",
+    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), and weight-goal targets with step-by-step health and fitness breakdowns.",
+    "seoTitle": "Health & Fitness Calculators - BMI, BMR & Calorie Needs | CalculatorBowl",
+    "seoDescription": "Free health calculators for BMI body mass index, BMR basal metabolic rate, and daily calorie requirements for weight loss, maintenance, and muscle gain.",
+    "calculators": [
+      {
+        "id": "bmi-bmr-calculator",
+        "name": "BMI & BMR Calorie Calculator",
+        "shortName": "BMI & Calorie Calc",
+        "icon": "⚖️",
+        "badge": "Health",
+        "description": "Calculate BMI with WHO categories, BMR (Mifflin-St Jeor), daily calorie needs (TDEE), and weight-goal targets.",
+        "seoTitle": "BMI Calculator with BMR & Daily Calorie Needs (TDEE)",
+        "seoDescription": "Calculate your BMI, BMR basal metabolic rate, and daily calorie needs for weight loss, maintenance, or muscle gain with step-by-step formulas.",
+        "category": "health",
+        "renderFunction": "renderBmiBmrCalculator",
+        "contextualGuide": {
+          "title": "Health & Body Metric Cross-References",
+          "html": "\n            <p>\n              Knowing your BMI and daily calorie expenditure is the foundation of any diet or training plan. Explore our <a href=\"/calculators/health/\" class=\"in-text-link\">💪 Health Hub</a> for body-metric tools.\n            </p>\n            <p>\n              Convert body weight units or calculate your exact chronological age with the companion tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "weight-converter",
+              "label": "Weight Unit Converter",
+              "icon": "⚖️"
+            },
+            {
+              "id": "age-calculator",
+              "label": "Exact Age Calculator",
+              "icon": "🎂"
+            },
+            {
+              "id": "percentage-calculator",
+              "label": "Body-Fat % Math",
+              "icon": "📊"
+            }
+          ]
+        },
+        "subcategory": "fitness",
+        "subcatTitle": "Fitness & Body Metrics",
+        "slug": "bmi-bmr-calculator",
+        "url": "/calculators/health/fitness/bmi-bmr-calculator/",
+        "subcatUrl": "/calculators/health/fitness/",
+        "categoryUrl": "/calculators/health/"
+      }
+    ],
+    "faqs": [
+      {
+        "q": "What is the difference between BMI and BMR?",
+        "a": "BMI (Body Mass Index) measures weight relative to height (kg/m²) to classify underweight, healthy, overweight, or obese ranges. BMR (Basal Metabolic Rate) estimates the calories your body burns at complete rest to maintain vital functions."
+      },
+      {
+        "q": "How many calories should I eat to lose weight safely?",
+        "a": "A daily deficit of 500 calories below your TDEE typically produces about 0.5 kg (1 lb) of fat loss per week. Avoid going below 1,200 calories (women) or 1,500 calories (men) without medical supervision."
+      }
+    ],
+    "canonicalId": "health",
+    "url": "/calculators/health/"
   }
 };
 
@@ -1990,7 +2093,7 @@ const SLUG_MAP = {};
 
 // Build instant O(1) fast lookup index
 (function buildIndex() {
-  for (const clusterKey of ['financial', 'math', 'conversions', 'datetime', 'network']) {
+  for (const clusterKey of ['financial', 'math', 'conversions', 'datetime', 'network', 'health']) {
     const cluster = TOPICAL_CLUSTERS[clusterKey];
     if (!cluster || !cluster.calculators) continue;
     for (const c of cluster.calculators) {
@@ -2011,7 +2114,7 @@ const SLUG_MAP = {};
 
 function getAllCalculators() {
   const all = [];
-  for (const clusterKey of ['financial', 'math', 'conversions', 'datetime', 'network']) {
+  for (const clusterKey of ['financial', 'math', 'conversions', 'datetime', 'network', 'health']) {
     const cluster = TOPICAL_CLUSTERS[clusterKey];
     if (cluster && cluster.calculators) {
       cluster.calculators.forEach(c => {

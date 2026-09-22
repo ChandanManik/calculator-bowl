@@ -4487,6 +4487,158 @@ const CALCULATOR_RICH_CONTENT = {
         a: "Continuous compounding represents the mathematical limit where interest accrues and compounds at every instantaneous infinitesimal fraction of a second. It is calculated using the natural exponent e (e^r - 1) and represents the absolute theoretical maximum APY achievable for a given rate."
       }
     ]
+  },
+
+  // SIP (Systematic Investment Plan) Calculator
+  "sip-calculator": {
+    articleTitle: "SIP Investing Guide: Monthly Contributions, Step-Ups & Compounding",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">💹 SIP Growth Engine</span>
+          <h4>How Monthly SIPs Compound Into Long-Term Wealth</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 220" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="220" rx="12" fill="var(--bg-subtle)" />
+            <line x1="60" y1="20" x2="60" y2="180" stroke="var(--border-color)" stroke-width="2" />
+            <line x1="60" y1="180" x2="560" y2="180" stroke="var(--border-color)" stroke-width="2" />
+            <path d="M 60,165 Q 300,150 560,40" fill="none" stroke="#10b981" stroke-width="4" />
+            <circle cx="560" cy="40" r="5" fill="#10b981" />
+            <line x1="60" y1="165" x2="560" y2="130" stroke="#94a3b8" stroke-width="3" stroke-dasharray="6,4" />
+            <text x="370" y="60" fill="#10b981" font-weight="800" font-size="13">SIP Maturity Value</text>
+            <text x="370" y="125" fill="#64748b" font-weight="600" font-size="12">Total Invested (Linear)</text>
+            <text x="60" y="200" fill="var(--text-muted)" font-size="11">Year 0</text>
+            <text x="280" y="200" fill="var(--text-muted)" font-size="11">Year 5</text>
+            <text x="520" y="200" fill="var(--text-muted)" font-size="11">Year 10</text>
+            <text x="15" y="105" fill="var(--text-muted)" font-size="11" transform="rotate(-90 15,105)">Value ($)</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Fixed monthly SIP deposits grow linearly, but reinvested compound returns bend the maturity curve upward — time in the market matters more than timing it.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A <b>Systematic Investment Plan (SIP)</b> is a disciplined method of investing a fixed amount every month into mutual funds or market-linked assets. Instead of timing the market with a lump sum, SIPs spread purchases across market cycles, averaging your cost per unit through <b>rupee-cost averaging</b>.
+      </p>
+
+      <h3 class="content-subheading">1. The SIP Future Value Formula</h3>
+      <p>
+        Monthly SIPs are an <b>annuity-due</b> (deposits at the start of each month), so every installment compounds for its remaining months:
+      </p>
+      <div class="math-formula-box">
+        FV = M × [((1 + r)^n − 1) / r] × (1 + r)
+      </div>
+      <ul class="content-list">
+        <li><b>M (Monthly Deposit):</b> Fixed SIP installment (e.g., $500).</li>
+        <li><b>r (Monthly Rate):</b> Annual expected return divided by 12 (e.g., 12% / 12 = 1% = 0.01).</li>
+        <li><b>n (Total Months):</b> Years multiplied by 12 (e.g., 10 years = 120 months).</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Worked Example ($500/month @ 12% for 10 Years)</h3>
+      <ol class="content-ordered-list">
+        <li>Monthly rate: r = 0.12 / 12 = 0.01, months: n = 120</li>
+        <li>Growth factor: (1.01)^120 ≈ 3.3004</li>
+        <li>FV = 500 × [(3.3004 − 1) / 0.01] × 1.01 = <b>$116,169</b></li>
+        <li>Total invested: $60,000 — estimated gains: <b>$56,169</b> (nearly half the maturity value).</li>
+      </ol>
+
+      <h3 class="content-subheading">3. Why Add an Annual Step-Up?</h3>
+      <p>
+        Increasing your SIP by <b>10% every year</b> (as your salary grows) on the same $500 starting plan raises the 10-year maturity from ~$116,170 to roughly <b>$168,700</b>. Step-ups align contributions with rising income and dramatically widen the compounding base in later years.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "Is SIP better than lump-sum investing?",
+        a: "Neither is universally better. Lump sums win in steadily rising markets because more capital compounds longer, while SIPs reduce timing risk and enforce discipline. For salaried earners without a large corpus, SIP is the practical default."
+      },
+      {
+        q: "What annual return should I assume for equity SIPs?",
+        a: "Long-term diversified equity funds have historically delivered 10-12% annualized over 10+ year horizons. Use 10% for conservative planning and 12% for optimistic scenarios, then stress-test both."
+      },
+      {
+        q: "Does this calculator account for taxes and expense ratios?",
+        a: "No. Enter your expected post-cost return (e.g., reduce gross expectation by the fund expense ratio and expected tax drag) to keep projections realistic."
+      }
+    ]
+  },
+
+  // BMI & BMR Calorie Calculator
+  "bmi-bmr-calculator": {
+    articleTitle: "BMI, BMR & TDEE Guide: WHO Categories and Mifflin-St Jeor Calories",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">⚖️ WHO BMI Scale</span>
+          <h4>Body Mass Index Categories at a Glance</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 160" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="160" rx="12" fill="var(--bg-subtle)" />
+            <rect x="50" y="40" width="110" height="45" rx="6" fill="#38bdf8" />
+            <rect x="165" y="40" width="165" height="45" rx="6" fill="#10b981" />
+            <rect x="335" y="40" width="125" height="45" rx="6" fill="#f59e0b" />
+            <rect x="465" y="40" width="85" height="45" rx="6" fill="#f43f5e" />
+            <text x="70" y="68" fill="#fff" font-weight="700" font-size="12">Under 18.5</text>
+            <text x="200" y="68" fill="#fff" font-weight="700" font-size="12">18.5 – 24.9</text>
+            <text x="360" y="68" fill="#fff" font-weight="700" font-size="12">25 – 29.9</text>
+            <text x="480" y="68" fill="#fff" font-weight="700" font-size="12">30+</text>
+            <text x="70" y="115" fill="var(--text-primary)" font-weight="600" font-size="12">Underweight</text>
+            <text x="200" y="115" fill="var(--text-primary)" font-weight="600" font-size="12">Healthy</text>
+            <text x="360" y="115" fill="var(--text-primary)" font-weight="600" font-size="12">Overweight</text>
+            <text x="480" y="115" fill="var(--text-primary)" font-weight="600" font-size="12">Obese</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> BMI 18.5–24.9 is the WHO healthy range, but athletes with high muscle mass should pair BMI with waist measurements and body-fat estimates.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Body Mass Index (BMI)</b> screens weight status using height and weight, while <b>Basal Metabolic Rate (BMR)</b> estimates the calories your body burns at rest. Together with activity multipliers (<b>TDEE</b>), they define your daily calorie budget for losing, maintaining, or gaining weight.
+      </p>
+
+      <h3 class="content-subheading">1. BMI Formula & WHO Categories</h3>
+      <div class="math-formula-box">
+        BMI = weight (kg) / height (m)²
+      </div>
+      <p>
+        Example: 70 kg at 1.75 m → 70 / 3.0625 = <b>22.9 (Healthy)</b>. Categories: below 18.5 Underweight, 18.5–24.9 Healthy, 25–29.9 Overweight, 30+ Obese.
+      </p>
+
+      <h3 class="content-subheading">2. BMR — Mifflin-St Jeor Equation</h3>
+      <div class="math-formula-box">
+        Men: 10W + 6.25H − 5A + 5 | Women: 10W + 6.25H − 5A − 161
+      </div>
+      <p>
+        A 30-year-old man (70 kg, 175 cm): 700 + 1093.75 − 150 + 5 = <b>1,649 kcal/day</b> at rest. Multiply by activity (Sedentary 1.2 → Very Active 1.9) to get TDEE.
+      </p>
+
+      <h3 class="content-subheading">3. Setting Calorie Targets</h3>
+      <ul class="content-list">
+        <li><b>Fat loss:</b> TDEE − 500 kcal/day (≈0.5 kg/week). Never drop below 1,500 (men) or 1,200 (women) without medical supervision.</li>
+        <li><b>Maintenance:</b> Eat at TDEE and track weight trends over 2–3 weeks.</li>
+        <li><b>Muscle gain:</b> TDEE + 250–350 kcal/day with progressive resistance training and 1.6–2.2 g protein per kg bodyweight.</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "Why is my BMI high even though I look fit?",
+        a: "BMI cannot distinguish muscle from fat. Strength athletes and muscular builds often score 25+ while carrying low body fat. Cross-check with waist circumference (below 94 cm men / 80 cm women) or body-fat percentage."
+      },
+      {
+        q: "Mifflin-St Jeor vs. Harris-Benedict — which BMR formula is better?",
+        a: "Mifflin-St Jeor (1990) is validated as more accurate for modern body compositions and is the default in most clinical settings. Harris-Benedict (1919, revised 1984) typically overestimates by 5-10%."
+      },
+      {
+        q: "How fast should I adjust calories if weight stalls?",
+        a: "Hold any target for 2-3 weeks, then adjust by 150-200 kcal. Daily weight fluctuates with water and glycogen, so judge trends using weekly averages, not single weigh-ins."
+      }
+    ]
   }
 };
 

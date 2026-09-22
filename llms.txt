@@ -7,7 +7,7 @@
 - **Directory**: [Master A-Z Directory](https://calculatorbowl.com/calculators/)
 - **Client-Side Processing**: Instant zero-latency mathematical and financial calculations.
 - **Step-by-Step Breakdowns**: Detailed mathematical solutions showing formulas, variable substitutions, and simplification steps.
-- **Topical Siloing**: 37 precision tools structured across 5 topical pillars.
+- **Topical Siloing**: 49 precision tools structured across 6 topical pillars.
 
 ---
 
@@ -181,6 +181,13 @@
 - **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
 - **Subcategory**: `Business & Tax`
 - **Summary**: Calculate your business break-even point in units and sales revenue based on fixed costs, variable costs, and selling price.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
+### [SIP (Systematic Investment Plan) Calculator](https://calculatorbowl.com/calculators/finance/investment/sip-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/investment/sip-calculator/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Investment & Wealth`
+- **Summary**: Calculate the future value of monthly SIP investments with annual step-up, total invested amount, and estimated wealth gains.
 - **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
 
 ## 📁 Math & Statistics Calculators (Category Hub: [Math & Statistics Calculators](https://calculatorbowl.com/calculators/math/))
@@ -359,4 +366,14 @@
 - **Subcategory**: `Data Usage`
 - **Summary**: Calculate daily and monthly internet data consumption for YouTube, Netflix (4K/1080p), Spotify, Zoom, and monitor ISP monthly caps.
 - **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/)
+
+## 📁 Health & Fitness Calculators (Category Hub: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/))
+
+*Description*: Calculate BMI, BMR, daily calorie needs (TDEE), and weight-goal targets with step-by-step health and fitness breakdowns.
+
+### [BMI & BMR Calorie Calculator](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/`
+- **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
+- **Subcategory**: `Fitness & Body Metrics`
+- **Summary**: Calculate BMI with WHO categories, BMR (Mifflin-St Jeor), daily calorie needs (TDEE), and weight-goal targets.
 

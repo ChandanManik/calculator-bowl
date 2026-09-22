@@ -27,6 +27,7 @@ const jsFiles = [
   'js/calculators/datetime-weight.js',
   'js/calculators/datetime-weather.js',
   'js/calculators/tech-network.js',
+  'js/calculators/health-fitness.js',
   'js/app.js'
 ];
 
@@ -103,6 +104,7 @@ const loadOrder = [
   'js/calculators/datetime-weight.js',
   'js/calculators/datetime-weather.js',
   'js/calculators/tech-network.js',
+  'js/calculators/health-fitness.js',
   'js/i18n.js'
 ];
 
