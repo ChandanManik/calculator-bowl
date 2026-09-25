@@ -4,6 +4,7 @@
  * Calculators:
  * 1. BMI & BMR Calorie Calculator (Mifflin-St Jeor + TDEE)
  * 2. Body Fat Percentage & Ideal Weight (US Navy + Devine)
+ * 3. Daily Water Intake Calculator (Weight + Activity + Climate)
  * ============================================================================
  */
 
@@ -484,5 +485,188 @@ function renderBodyFatCalculator(container, calcDef) {
   });
 
   hipGroup.style.display = genderSel.value === "female" ? "" : "none";
+  calculate();
+}
+
+/* ==========================================================================
+   Daily Water Intake Calculator
+   ========================================================================== */
+function renderWaterIntakeCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="wiWeight">
+          Body Weight
+          <span class="form-label-hint">Kilograms</span>
+        </label>
+        <div class="input-with-addon">
+          <input type="number" id="wiWeight" class="form-control" value="70" min="20" max="350" step="0.5">
+          <span class="input-addon suffix">kg</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="wiActivity">
+          Daily Activity Level
+          <span class="form-label-hint">Exercise / labor</span>
+        </label>
+        <select id="wiActivity" class="form-control">
+          <option value="0">Mostly sedentary (desk work)</option>
+          <option value="350" selected>Moderate (30-60 min exercise)</option>
+          <option value="700">High (60-120 min hard training)</option>
+          <option value="1000">Extreme (2+ hrs / manual labor)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="wiClimate">
+          Climate
+          <span class="form-label-hint">Temperature &amp; humidity</span>
+        </label>
+        <select id="wiClimate" class="form-control">
+          <option value="0" selected>Temperate / indoor AC</option>
+          <option value="350">Warm or dry air</option>
+          <option value="700">Hot, humid, or high altitude</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="wiSpecial">
+          Special Condition
+          <span class="form-label-hint">Pregnancy / illness</span>
+        </label>
+        <select id="wiSpecial" class="form-control">
+          <option value="0" selected>None</option>
+          <option value="300">Pregnant</option>
+          <option value="700">Breastfeeding</option>
+          <option value="500">Fever, vomiting, or diarrhea</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcWi" class="btn btn-primary">
+        <span>💧 Calculate Daily Water Needs</span>
+      </button>
+      <button type="button" id="btnResetWi" class="btn btn-secondary">
+        <span>↺ Reset</span>
+      </button>
+    </div>
+
+    <div id="wiResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const btnCalc = container.querySelector("#btnCalcWi");
+  const btnReset = container.querySelector("#btnResetWi");
+  const resultDiv = container.querySelector("#wiResultContainer");
+
+  function calculate() {
+    const weight = parseFloat(container.querySelector("#wiWeight").value) || 0;
+    const activity = parseFloat(container.querySelector("#wiActivity").value) || 0;
+    const climate = parseFloat(container.querySelector("#wiClimate").value) || 0;
+    const special = parseFloat(container.querySelector("#wiSpecial").value) || 0;
+
+    if (weight <= 0) {
+      alert("Please enter a valid body weight.");
+      return;
+    }
+
+    // Base: 33 mL per kg of body weight (Institute of Medicine reference)
+    const base = weight * 33;
+    const total = base + activity + climate + special;
+    const liters = total / 1000;
+    const ounces = total / 29.5735;
+    const cups = total / 240;
+    const glasses = total / 250;
+    const bottles = total / 500;
+
+    // Half-body-weight check: is the target below 30 mL/kg?
+    const minSafe = weight * 30;
+
+    // Hourly schedule across a 16 waking window
+    const perHour = total / 16;
+
+    // Pre/post workout bonus (500 mL per hour of intense training)
+    const hours = activity > 0 ? activity / 350 : 0;
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Daily Water Intake Target</span>
+        <div class="result-hero-value">${liters.toFixed(2)} <span style="font-size: 1.1rem; color: var(--text-secondary); font-weight: 600;">liters/day</span></div>
+        <span style="font-size: 0.95rem; color: var(--text-secondary);">
+          ≈ ${ounces.toFixed(0)} oz · ${cups.toFixed(1)} cups · ${glasses.toFixed(1)} × 250 mL glasses
+        </span>
+      </div>
+
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Base (33 mL × ${weight} kg)</div>
+          <div class="result-stat-val">${(base / 1000).toFixed(2)} L</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Activity Bonus</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">+${(activity / 1000).toFixed(2)} L</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Climate Bonus</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">+${(climate / 1000).toFixed(2)} L</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Special Condition</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">+${(special / 1000).toFixed(2)} L</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">500 mL Bottles</div>
+          <div class="result-stat-val">${bottles.toFixed(1)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Per Waking Hour (16h)</div>
+          <div class="result-stat-val">${perHour.toFixed(0)} mL</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Safe Minimum (30 mL/kg)</div>
+          <div class="result-stat-val">${minSafe.toFixed(0)} mL</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Status</div>
+          <div class="result-stat-val" style="color: ${total >= minSafe ? 'var(--accent-emerald)' : '#f59e0b'};">${total >= minSafe ? 'Above Minimum' : 'Below Minimum'}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header">
+          <h3 class="steps-title">📐 Calculation Breakdown</h3>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Base Need</span>
+          <div class="math-formula-box">base = 33 mL × body weight (kg)</div>
+          <p class="step-content">33 × ${weight} = <b>${base.toFixed(0)} mL</b> (Institute of Medicine reference for adults)</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Add Lifestyle Adjustments</span>
+          <div class="math-formula-box">total = base + activity + climate + special</div>
+          <p class="step-content">${base.toFixed(0)} + ${activity} + ${climate} + ${special} = <b>${total.toFixed(0)} mL/day</b>${hours > 0 ? ` — includes ${hours.toFixed(0)} hour(s) of training at ~500 mL/hr sweat loss` : ""}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Drink Schedule</span>
+          <div class="math-formula-box">per hour = total ÷ 16 waking hours</div>
+          <p class="step-content">Aim for <b>${perHour.toFixed(0)} mL every hour</b> while awake, plus ${hours > 0 ? `${(500).toFixed(0)} mL for each training hour ` : ""}— drinking steadily beats catching up at night.</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  btnCalc.addEventListener("click", calculate);
+  btnReset.addEventListener("click", () => {
+    container.querySelector("#wiWeight").value = "70";
+    container.querySelector("#wiActivity").value = "350";
+    container.querySelector("#wiClimate").value = "0";
+    container.querySelector("#wiSpecial").value = "0";
+    resultDiv.style.display = "none";
+  });
+
   calculate();
 }

@@ -7,7 +7,7 @@
 - **Directory**: [Master A-Z Directory](https://calculatorbowl.com/calculators/)
 - **Client-Side Processing**: Instant zero-latency mathematical and financial calculations.
 - **Step-by-Step Breakdowns**: Detailed mathematical solutions showing formulas, variable substitutions, and simplification steps.
-- **Topical Siloing**: 52 precision tools structured across 6 topical pillars.
+- **Topical Siloing**: 55 precision tools structured across 6 topical pillars.
 
 ---
 
@@ -301,7 +301,7 @@
 
 ## 📁 Unit Conversion Calculators (Category Hub: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/))
 
-*Description*: Convert temperature, length, distance, weight, mass, area, and volume across metric and imperial systems.
+*Description*: Convert temperature, length, distance, weight, mass, area, volume, and speed across metric and imperial systems.
 
 ### [Temperature Unit Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/`
@@ -329,6 +329,13 @@
 - **Category**: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/)
 - **Subcategory**: `Units & Measurements`
 - **Summary**: Convert square meters, square feet, acres, hectares, liters, gallons, cubic meters, and fluid ounces between metric and imperial systems.
+- **Related Tools in Category**: [Temperature Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/), [Length Converter](https://calculatorbowl.com/calculators/conversion/measurement/length-converter/), [Weight Converter](https://calculatorbowl.com/calculators/conversion/measurement/weight-converter/)
+
+### [Speed & Velocity Unit Converter](https://calculatorbowl.com/calculators/conversion/measurement/speed-converter/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/conversion/measurement/speed-converter/`
+- **Category**: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/)
+- **Subcategory**: `Units & Measurements`
+- **Summary**: Convert miles per hour, kilometers per hour, meters per second, feet per second, and knots for vehicles, aviation, running pace, and maritime speeds.
 - **Related Tools in Category**: [Temperature Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/), [Length Converter](https://calculatorbowl.com/calculators/conversion/measurement/length-converter/), [Weight Converter](https://calculatorbowl.com/calculators/conversion/measurement/weight-converter/)
 
 ## 📁 Date & Time Calculators (Category Hub: [Date & Time Calculators](https://calculatorbowl.com/calculators/date-time/))
@@ -372,30 +379,44 @@
 - **Category**: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/)
 - **Subcategory**: `Broadband & Speed`
 - **Summary**: Test real-time internet download speed, upload bandwidth, ping latency, jitter, and get gaming & 4K streaming ratings.
-- **Related Tools in Category**: [Streaming Data Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/)
+- **Related Tools in Category**: [Streaming Data Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/), [IP Subnet Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/)
 
 ### [Streaming & Data Usage Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/`
 - **Category**: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/)
 - **Subcategory**: `Data Usage`
 - **Summary**: Calculate daily and monthly internet data consumption for YouTube, Netflix (4K/1080p), Spotify, Zoom, and monitor ISP monthly caps.
-- **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/)
+- **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/), [IP Subnet Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/)
+
+### [IP Subnet & CIDR Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/`
+- **Category**: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/)
+- **Subcategory**: `IP Addressing`
+- **Summary**: Convert CIDR prefixes to subnet masks, find network address, broadcast address, first/last host, and total usable IPs for IPv4 and IPv6 ranges.
+- **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/), [Streaming Data Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/)
 
 ## 📁 Health & Fitness Calculators (Category Hub: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/))
 
-*Description*: Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, and weight-goal targets with step-by-step health breakdowns.
+*Description*: Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, and weight-goal targets with step-by-step health breakdowns.
 
 ### [BMI & BMR Calorie Calculator](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/`
 - **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
 - **Subcategory**: `Fitness & Body Metrics`
 - **Summary**: Calculate BMI with WHO categories, BMR (Mifflin-St Jeor), daily calorie needs (TDEE), and weight-goal targets.
-- **Related Tools in Category**: [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/)
+- **Related Tools in Category**: [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
 
 ### [Body Fat Percentage & Ideal Weight Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/`
 - **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
 - **Subcategory**: `Fitness & Body Metrics`
 - **Summary**: Estimate body fat percentage with the US Navy circumference method, classify it by sex and age, and find ideal body weight with the Devine formula.
-- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/)
+- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
+
+### [Daily Water Intake Calculator](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/`
+- **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
+- **Subcategory**: `Fitness & Body Metrics`
+- **Summary**: Calculate your daily water intake needs in liters, ounces, and cups based on body weight, activity level, climate, and pregnancy or breastfeeding status.
+- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/)
 

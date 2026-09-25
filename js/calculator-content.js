@@ -4894,6 +4894,245 @@ const CALCULATOR_RICH_CONTENT = {
         a: "Every 2–4 weeks, at the same time of day, before eating, using the same tape tension. Daily fluctuations are mostly water and glycogen — judge trends over months, not single readings."
       }
     ]
+  },
+
+  // IP Subnet & CIDR Calculator
+  "ip-subnet-calculator": {
+    articleTitle: "IP Subnetting Guide: CIDR, Subnet Masks, and Address Planning",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🧭 Subnet Anatomy</span>
+          <h4>Anatomy of a /24 IPv4 Address</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 175" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="175" rx="12" fill="var(--bg-subtle)" />
+            <rect x="45" y="55" width="270" height="50" rx="6" fill="#38bdf8" />
+            <rect x="320" y="55" width="235" height="50" rx="6" fill="#f59e0b" />
+            <text x="110" y="86" fill="#fff" font-weight="800" font-size="15">NETWORK (24 bits)</text>
+            <text x="355" y="86" fill="#fff" font-weight="800" font-size="15">HOST (8 bits)</text>
+            <text x="45" y="40" fill="var(--text-primary)" font-weight="700" font-size="13">192.168.1 . 10</text>
+            <text x="45" y="135" fill="#38bdf8" font-weight="600" font-size="12">mask 255.255.255.0</text>
+            <text x="330" y="135" fill="#f59e0b" font-weight="600" font-size="12">254 usable hosts</text>
+            <text x="45" y="160" fill="var(--text-muted)" font-size="12">network 192.168.1.0 · broadcast 192.168.1.255 · range .1 – .254</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> The prefix (/24) decides how many bits are network versus host — more prefix bits means a smaller network with fewer usable hosts.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>IP subnetting</b> divides a single IPv4 block into smaller isolated networks so each VLAN, office floor, or cloud VPC gets its own broadcast domain. Every subnet decision comes down to one number: the <b>CIDR prefix</b> (e.g. /24), which sets how many leading bits identify the network and how many trailing bits identify hosts.
+      </p>
+
+      <h3 class="content-subheading">1. The Four Core Calculations</h3>
+      <div class="math-formula-box">
+        mask = 2^32 − 2^(32−prefix) · network = IP AND mask · broadcast = network OR (NOT mask)
+      </div>
+      <ul class="content-list">
+        <li><b>Subnet mask:</b> /24 → 255.255.255.0 (24 ones, 8 zeros)</li>
+        <li><b>Network address:</b> bitwise AND of the IP and mask strips the host bits</li>
+        <li><b>Broadcast address:</b> OR with the wildcard flips all host bits to 1</li>
+        <li><b>Usable hosts:</b> 2^(32−prefix) − 2 (reserving network and broadcast)</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Worked Example: 192.168.1.10/24</h3>
+      <ol class="content-ordered-list">
+        <li>Mask: /24 → 255.255.255.0, wildcard 0.0.0.255</li>
+        <li>Network: 192.168.1.10 AND 255.255.255.0 = <b>192.168.1.0</b></li>
+        <li>Broadcast: 192.168.1.0 OR 0.0.0.255 = <b>192.168.1.255</b></li>
+        <li>Hosts: 2^8 − 2 = <b>254 usable</b> (192.168.1.1 → 192.168.1.254)</li>
+      </ol>
+
+      <h3 class="content-subheading">3. Private Ranges & Prefix Selection</h3>
+      <p>
+        RFC 1918 reserves <b>10.0.0.0/8</b>, <b>172.16.0.0/12</b>, and <b>192.168.0.0/16</b> for internal use — never routable on the public internet. Choose /30 for point-to-point links (2 hosts), /29 for 6-host segments, /24 for typical LANs, and /16 for larger sites. For IPv6, /64 is the mandatory standard for any end-host LAN because it enables SLAAC stateless autoconfiguration.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "What is the difference between a subnet mask and a CIDR prefix?",
+        a: "They express the same thing in different notations. CIDR /24 means 24 leading network bits, which equals the dotted subnet mask 255.255.255.0. Engineers prefer /prefix for brevity; routers and OS tools accept both."
+      },
+      {
+        q: "Why are two addresses always unusable in an IPv4 subnet?",
+        a: "The lowest address is the network identifier (all host bits 0) and the highest is the broadcast address (all host bits 1) — neither can be assigned to a host. Exceptions are /31 point-to-point links (RFC 3021) and /32 host routes."
+      },
+      {
+        q: "What is the difference between public and private IP addresses?",
+        a: "Public IPs are globally routed by ISPs; private addresses (10.x, 172.16-31.x, 192.168.x per RFC 1918) are only reachable inside a local network and share public IPs through NAT at the router."
+      },
+      {
+        q: "How many hosts fit in a /26 subnet?",
+        a: "A /26 leaves 6 host bits: 2^6 = 64 total addresses, minus the network and broadcast addresses = 62 usable hosts, spanning from x.x.x.1 to x.x.x.62."
+      }
+    ]
+  },
+
+  // Speed & Velocity Unit Converter
+  "speed-converter": {
+    articleTitle: "Speed Unit Conversion: MPH, KM/H, M/S, Knots and Mach Explained",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🏎️ Speed Scales</span>
+          <h4>Everyday Speeds Across Unit Systems</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 190" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="190" rx="12" fill="var(--bg-subtle)" />
+            <g font-size="13" font-weight="700">
+              <text x="45" y="50" fill="var(--text-primary)">Walking 5 km/h</text>
+              <rect x="210" y="35" width="60" height="18" rx="4" fill="#38bdf8" />
+              <text x="280" y="50" fill="#38bdf8">3.1 mph</text>
+              <text x="45" y="95" fill="var(--text-primary)">Highway 100 km/h</text>
+              <rect x="210" y="80" width="180" height="18" rx="4" fill="#10b981" />
+              <text x="400" y="95" fill="#10b981">62.1 mph</text>
+              <text x="45" y="140" fill="var(--text-primary)">Jet 900 km/h</text>
+              <rect x="210" y="125" width="300" height="18" rx="4" fill="#f59e0b" />
+              <text x="430" y="140" fill="#f59e0b">559 mph</text>
+              <text x="45" y="175" fill="var(--text-muted)" font-size="12">1 km/h = 0.2778 m/s = 0.6214 mph = 0.54 knots</text>
+            </g>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Every speed unit is just meters per second wearing a different hat — convert through m/s and no unit pair can trip you up.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Speed conversions show up constantly: European speed limits in km/h versus American mph, aviation altimeter settings in knots, physics lab data in m/s, and supersonic specs in Mach. The trick to never getting it wrong is routing every conversion through one <b>base unit: meters per second</b>.
+      </p>
+
+      <h3 class="content-subheading">1. Conversion Factors (Through m/s)</h3>
+      <div class="math-formula-box">
+        1 km/h = 0.27778 m/s · 1 mph = 0.44704 m/s · 1 knot = 0.51444 m/s · Mach = 340.29 m/s
+      </div>
+      <ul class="content-list">
+        <li><b>km/h → mph:</b> multiply by 0.621371 (100 km/h = 62.1 mph)</li>
+        <li><b>mph → km/h:</b> multiply by 1.609344 (60 mph = 96.6 km/h)</li>
+        <li><b>knots:</b> 1 nautical mile per hour = 1.852 km/h — used in aviation and shipping</li>
+        <li><b>Mach:</b> ratio to the speed of sound (~340 m/s at 15°C sea level)</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Worked Example: 120 km/h to mph</h3>
+      <ol class="content-ordered-list">
+        <li>To base: 120 ÷ 3.6 = <b>33.33 m/s</b></li>
+        <li>From base: 33.33 ÷ 0.44704 = <b>74.56 mph</b></li>
+        <li>Shortcut: 120 × 0.621371 = 74.56 — same answer in one step</li>
+      </ol>
+
+      <h3 class="content-subheading">3. Practical Reference Points</h3>
+      <p>
+        Highway 100 km/h = 62.1 mph; a Boeing 747 cruises near Mach 0.85 (≈988 km/h); the speed of sound at sea level is 1,225 km/h or 761 mph. Running pace converts inversely — at 10 km/h you cover a kilometer every 6 minutes (6:00 min/km, or 9:39 min/mi). Keep these anchors in memory and you can sanity-check any converted number instantly.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "How do you convert km/h to mph exactly?",
+        a: "Multiply by 0.6213711922 (or divide by 1.609344). Example: 90 × 0.621371 = 55.92 mph. The factor is exact because 1 mile is defined as 1.609344 kilometers."
+      },
+      {
+        q: "What is a knot and why do boats and planes use it?",
+        a: "One knot is one nautical mile per hour (1.852 km/h). Nautical miles map directly to latitude coordinates — one nautical mile equals one minute of latitude — making navigation charts far simpler than with statute miles."
+      },
+      {
+        q: "Why is Mach 1 not always the same speed?",
+        a: "The speed of sound depends on temperature: about 340.29 m/s (1,225 km/h) at 15°C sea level, but only ~295 m/s at −20°C at cruising altitude. Aviation Mach meters correct for temperature automatically."
+      },
+      {
+        q: "Which is faster, 100 km/h or 60 mph?",
+        a: "100 km/h = 62.14 mph, so it is faster. A quick rule: multiply mph by 1.6 to estimate km/h — 60 mph ≈ 96 km/h, confirming 100 km/h is the higher speed."
+      }
+    ]
+  },
+
+  // Daily Water Intake Calculator
+  "water-intake-calculator": {
+    articleTitle: "Daily Water Intake Guide: How Much Water You Should Actually Drink",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">💧 Hydration Curve</span>
+          <h4>Where Your Daily Water Goes</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 185" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="185" rx="12" fill="var(--bg-subtle)" />
+            <rect x="60" y="45" width="330" height="40" rx="6" fill="#38bdf8" />
+            <rect x="390" y="45" width="70" height="40" rx="6" fill="#10b981" />
+            <rect x="460" y="45" width="60" height="40" rx="6" fill="#f59e0b" />
+            <text x="75" y="71" fill="#fff" font-weight="700" font-size="13">Base 33 mL × weight</text>
+            <text x="398" y="71" fill="#fff" font-weight="700" font-size="12">Activity</text>
+            <text x="468" y="71" fill="#fff" font-weight="700" font-size="12">Climate</text>
+            <text x="60" y="115" fill="var(--text-primary)" font-weight="600" font-size="13">70 kg adult: 2.31 L base → 2.66–3.66 L adjusted</text>
+            <g font-size="12" fill="var(--text-muted)">
+              <text x="60" y="145">💧 250 mL glass: ~11 per day</text>
+              <text x="60" y="168">🚰 Per waking hour (16h): ~170 mL</text>
+              <text x="330" y="145">🏃 +500 mL per training hour</text>
+              <text x="330" y="168">🌡️ +350–700 mL in heat</text>
+            </g>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Body weight sets the baseline (33 mL/kg) — exercise, heat, and illness are add-ons on top of that foundation.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        "Drink eight glasses a day" ignores the fact that a 50 kg office worker and a 90 kg athlete need very different volumes. Reliable hydration targets start with <b>body weight</b>, then layer on <b>exercise sweat loss</b>, <b>climate</b>, and special conditions like pregnancy or fever.
+      </p>
+
+      <h3 class="content-subheading">1. The Base Formula</h3>
+      <div class="math-formula-box">
+        base (mL) = 33 × body weight (kg)
+      </div>
+      <ul class="content-list">
+        <li>70 kg adult → <b>2,310 mL/day</b> baseline</li>
+        <li>Convert: 1 L = 33.8 oz · 240 mL = 1 US cup · 250 mL = 1 glass</li>
+        <li>The Institute of Medicine reference is ~3.7 L/day for men and 2.7 L/day for women <i>total water</i> (food + drink combined)</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Adding Activity, Climate & Special Cases</h3>
+      <ol class="content-ordered-list">
+        <li><b>Exercise:</b> +350 mL (moderate), +700 mL (hard), +1,000 mL (extreme/manual labor) — roughly 400–800 mL per training hour</li>
+        <li><b>Climate:</b> +350 mL warm/dry, +700 mL hot, humid, or high altitude</li>
+        <li><b>Special:</b> pregnancy +300 mL, breastfeeding +700 mL, fever/vomiting +500 mL</li>
+        <li>70 kg person, moderate training, hot day: 2,310 + 350 + 700 = <b>3,360 mL</b></li>
+      </ol>
+
+      <h3 class="content-subheading">3. Drinking Schedule Beats Totals</h3>
+      <p>
+        Chugging 3 liters at once flushes it straight through the kidneys. Spread the target across your <b>16 waking hours</b> — about 170–210 mL every hour — and monitor two objective signals: urine pale straw color (not dark) and roughly 6–7 bathroom visits per day. Pre-hydrate 500 mL two hours before training, and weigh yourself before/after exercise: each kilogram lost equals about 1 liter of sweat to replace.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "How much water should I drink per day in liters?",
+        a: "Take your weight in kg × 33 mL for the baseline (70 kg → 2.31 L), then add 350–700 mL for exercise and another 350–700 mL for heat. Most active adults land between 2.5 and 4 liters daily."
+      },
+      {
+        q: "Does coffee and tea count toward water intake?",
+        a: "Yes. The mild diuretic effect of caffeine is far outweighed by the fluid volume — studies show caffeinated drinks still hydrate. Only extreme doses (>500 mg caffeine) meaningfully increase urine output."
+      },
+      {
+        q: "Can you drink too much water?",
+        a: "Yes — hyponatremia occurs when excess water dilutes blood sodium below 135 mmol/L. It is rare but dangerous, usually from drinking many liters during endurance events without electrolytes. Drink to thirst plus planned amounts during exercise."
+      },
+      {
+        q: "What are signs of dehydration?",
+        a: "Dark yellow urine, thirst, dry mouth, headache, fatigue, dizziness, and reduced urine output. A practical check: urine should be pale straw color; anything like apple juice suggests you need fluids."
+      },
+      {
+        q: "Do I need more water in winter or summer?",
+        a: "Summer heat obviously raises sweat loss (+350–700 mL), but winter is deceptive — cold air is dry, heating strips indoor humidity, and thirst signals blunt in the cold, so mild dehydration is common in winter too."
+      }
+    ]
   }
 };
 

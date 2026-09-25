@@ -3,6 +3,7 @@
  * CalculatorBowl - Network & Internet Utilities Suite
  * 1. Live Internet Speed, Ping & Jitter Test Engine with Speedometer Gauge
  * 2. Streaming & Data Usage Calculator
+ * 3. IP Subnet & CIDR Calculator (IPv4/IPv6)
  * 100% Client-Side, High-Precision, Zero Server Bandwidth Cost
  * ============================================================================
  */
@@ -1150,6 +1151,250 @@ function initStreamingCalculatorEngine(presets) {
       calculate();
     });
   }
+
+  calculate();
+}
+
+/* ==========================================================================
+   3. IP Subnet & CIDR Calculator (IPv4 / IPv6)
+   ========================================================================== */
+function renderIpSubnetCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="ipAddress">
+          IP Address or CIDR
+          <span class="form-label-hint">e.g. 192.168.1.10/24 or 10.0.0.0</span>
+        </label>
+        <input type="text" id="ipAddress" class="form-control" value="192.168.1.10/24" spellcheck="false" style="font-family: var(--font-mono, monospace);">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="ipPrefix">
+          CIDR Prefix
+          <span class="form-label-hint">IPv4: 0-32 · IPv6: 0-128</span>
+        </label>
+        <div class="input-with-addon">
+          <span class="input-addon">/</span>
+          <input type="number" id="ipPrefix" class="form-control" value="24" min="0" max="128" step="1">
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcIp" class="btn btn-primary">
+        <span>⚡ Calculate Subnet</span>
+      </button>
+      <button type="button" id="btnResetIp" class="btn btn-secondary">
+        <span>↺ Reset</span>
+      </button>
+    </div>
+
+    <div id="ipResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const btnCalc = container.querySelector("#btnCalcIp");
+  const btnReset = container.querySelector("#btnResetIp");
+  const resultDiv = container.querySelector("#ipResultContainer");
+  const ipInput = container.querySelector("#ipAddress");
+  const prefixInput = container.querySelector("#ipPrefix");
+
+  function ipToBinaryStr(ipStr) {
+    return ipStr.split(".").map(o => (parseInt(o, 10) >>> 0).toString(2).padStart(8, "0")).join(".");
+  }
+
+  function calculate() {
+    const raw = (ipInput.value || "").trim();
+    if (!raw) {
+      alert("Please enter an IP address (e.g. 192.168.1.10/24).");
+      return;
+    }
+
+    const [ipPart, cidrPart] = raw.split("/");
+    let prefix = parseInt(prefixInput.value, 10);
+    if (cidrPart !== undefined && cidrPart !== "") {
+      const cidr = parseInt(cidrPart, 10);
+      if (!isNaN(cidr)) {
+        prefix = cidr;
+        prefixInput.value = String(cidr);
+      }
+    }
+
+    const isV6 = ipPart.includes(":");
+    const maxPrefix = isV6 ? 128 : 32;
+    if (isNaN(prefix) || prefix < 0 || prefix > maxPrefix) {
+      alert(`Please enter a CIDR prefix between 0 and ${maxPrefix}.`);
+      return;
+    }
+
+    let resultHtml = "";
+
+    if (!isV6) {
+      // ---------- IPv4 ----------
+      const octets = ipPart.split(".").map(o => parseInt(o, 10));
+      if (octets.length !== 4 || octets.some(o => isNaN(o) || o < 0 || o > 255)) {
+        alert("Invalid IPv4 address. Use dotted format like 192.168.1.10");
+        return;
+      }
+
+      const ipNum = ((octets[0] << 24) >>> 0) + (octets[1] << 16) + (octets[2] << 8) + octets[3];
+      const maskNum = prefix === 0 ? 0 : ((0xFFFFFFFF << (32 - prefix)) >>> 0);
+      const network = (ipNum & maskNum) >>> 0;
+      const broadcast = (network | (~maskNum >>> 0)) >>> 0;
+      const firstHost = prefix >= 31 ? network : network + 1;
+      const lastHost = prefix >= 31 ? broadcast : broadcast - 1;
+      const totalIps = Math.pow(2, 32 - prefix);
+      const usable = prefix >= 31 ? totalIps : totalIps - 2;
+
+      const toDotted = n => [24, 16, 8, 0].map(s => (n >>> s) & 255).join(".");
+      const maskDotted = toDotted(maskNum);
+      const wildcard = toDotted((~maskNum) >>> 0);
+
+      // Address class (IPv4 classful, informational)
+      const cls = octets[0] <= 127 ? "A" : octets[0] <= 191 ? "B" : octets[0] <= 223 ? "C" : octets[0] <= 239 ? "D (Multicast)" : "E (Reserved)";
+      const isPrivate = octets[0] === 10 ||
+        (octets[0] === 172 && octets[1] >= 16 && octets[1] <= 31) ||
+        (octets[0] === 192 && octets[1] === 168) ||
+        octets[0] === 127 || (octets[0] === 169 && octets[1] === 254);
+
+      resultHtml = `
+        <div class="result-hero-box">
+          <span class="result-hero-label">Network Address</span>
+          <div class="result-hero-value" style="font-size: 1.6rem;">${toDotted(network)}/${prefix}</div>
+          <span style="font-size: 0.95rem; color: var(--text-secondary);">
+            ${isPrivate ? "🏠 Private (RFC 1918 / special-use)" : "🌐 Public address space"}
+          </span>
+        </div>
+
+        <div class="result-stat-grid">
+          <div class="result-stat-card">
+            <div class="result-stat-label">Subnet Mask</div>
+            <div class="result-stat-val">${maskDotted}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">Wildcard Mask</div>
+            <div class="result-stat-val">${wildcard}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">First Usable Host</div>
+            <div class="result-stat-val" style="color: var(--accent-emerald);">${toDotted(firstHost)}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">Last Usable Host</div>
+            <div class="result-stat-val" style="color: var(--accent-emerald);">${toDotted(lastHost)}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">Broadcast Address</div>
+            <div class="result-stat-val">${toDotted(broadcast)}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">Total / Usable IPs</div>
+            <div class="result-stat-val">${totalIps.toLocaleString()} / ${usable.toLocaleString()}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">Address Class</div>
+            <div class="result-stat-val">Class ${cls}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">CIDR Notation</div>
+            <div class="result-stat-val">/${prefix}</div>
+          </div>
+        </div>
+
+        <div class="steps-wrapper" style="margin-top: 2rem;">
+          <div class="steps-header">
+            <h3 class="steps-title">📐 Calculation Breakdown</h3>
+          </div>
+          <div class="step-card">
+            <span class="step-num-badge">Step 1 — Subnet Mask</span>
+            <div class="math-formula-box">mask = (2^32 − 2^(32−prefix)) with ${prefix} leading 1s</div>
+            <p class="step-content">/${prefix} → binary <code style="word-break: break-all;">${ipToBinaryStr(maskDotted)}</code> → dotted <b>${maskDotted}</b></p>
+          </div>
+          <div class="step-card">
+            <span class="step-num-badge">Step 2 — Network Address (Bitwise AND)</span>
+            <div class="math-formula-box">network = IP AND mask</div>
+            <p class="step-content"><code style="word-break: break-all;">${ipToBinaryStr(toDotted(ipNum))}</code> AND <code style="word-break: break-all;">${ipToBinaryStr(maskDotted)}</code> = <b>${toDotted(network)}</b></p>
+          </div>
+          <div class="step-card">
+            <span class="step-num-badge">Step 3 — Broadcast (Bitwise OR with Wildcard)</span>
+            <div class="math-formula-box">broadcast = network OR (NOT mask)</div>
+            <p class="step-content">Flipping the host bits gives <b>${toDotted(broadcast)}</b>; hosts run ${toDotted(firstHost)} → ${toDotted(lastHost)} (${usable.toLocaleString()} usable of ${totalIps.toLocaleString()} addresses).</p>
+          </div>
+        </div>
+      `;
+    } else {
+      // ---------- IPv6 ----------
+      const groups = ipPart.split(":").filter(g => g !== "");
+      if (groups.length === 0 || groups.some(g => !/^[0-9a-f]{1,4}$/i.test(g))) {
+        alert("Invalid IPv6 address. Use groups like 2001:db8:1::1");
+        return;
+      }
+
+      const bits = groups.reduce((acc, g) => (acc << 4) + parseInt(g, 16), 0);
+      const totalIps = Math.pow(2, 128 - prefix);
+      // Integer 2^n formatting for large powers
+      const fmtBig = n => {
+        if (n < 1e15) return Math.round(n).toLocaleString();
+        const exp = Math.round(Math.log2(n));
+        return `2^${exp}`;
+      };
+
+      resultHtml = `
+        <div class="result-hero-box">
+          <span class="result-hero-label">IPv6 Network</span>
+          <div class="result-hero-value" style="font-size: 1.5rem;">${ipPart}/${prefix}</div>
+          <span style="font-size: 0.95rem; color: var(--text-secondary);">
+            ${prefix === 64 ? "🏠 Standard end-host /64 LAN prefix" : "Global / provider-assigned prefix"}
+          </span>
+        </div>
+
+        <div class="result-stat-grid">
+          <div class="result-stat-card">
+            <div class="result-stat-label">Interface ID Bits</div>
+            <div class="result-stat-val">${128 - prefix} bits</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">Network Prefix</div>
+            <div class="result-stat-val">/${prefix}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">Total Addresses</div>
+            <div class="result-stat-val" style="color: var(--accent-emerald);">${fmtBig(totalIps)}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">SLAAC / Privacy Addrs</div>
+            <div class="result-stat-val">${prefix <= 64 ? "Supported" : "Not standard"}</div>
+          </div>
+        </div>
+
+        <div class="steps-wrapper" style="margin-top: 2rem;">
+          <div class="steps-header">
+            <h3 class="steps-title">📐 Calculation Breakdown</h3>
+          </div>
+          <div class="step-card">
+            <span class="step-num-badge">IPv6 Sizing</span>
+            <div class="math-formula-box">total addresses = 2^(128 − prefix)</div>
+            <p class="step-content">
+              128 − ${prefix} = ${128 - prefix} host bits → <b>2<sup>${128 - prefix}</sup> = ${fmtBig(totalIps)} addresses</b>.
+              A /64 is the smallest standard LAN prefix — it alone allows 2<sup>64</sup> addresses for SLAAC stateless autoconfiguration.
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    resultDiv.innerHTML = resultHtml;
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  btnCalc.addEventListener("click", calculate);
+  btnReset.addEventListener("click", () => {
+    ipInput.value = "192.168.1.10/24";
+    prefixInput.value = "24";
+    resultDiv.style.display = "none";
+  });
+  ipInput.addEventListener("keydown", e => { if (e.key === "Enter") calculate(); });
 
   calculate();
 }

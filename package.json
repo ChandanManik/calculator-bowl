@@ -9,6 +9,8 @@
     "seo": "node scripts/generate-seo.js",
     "build:seo": "node scripts/generate-seo.js",
     "test": "node scripts/test-all-calculators.js",
+    "gate": "node scripts/pre-deploy-seo-gate.js",
+    "predeploy": "node scripts/test-all-calculators.js && node scripts/pre-deploy-seo-gate.js",
     "deploy": "node scripts/deploy.js"
   },
   "keywords": [

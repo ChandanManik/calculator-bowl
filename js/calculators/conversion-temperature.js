@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * Conversion Calculators: Temperature, Length, and Area/Volume Converters
+ * Conversion Calculators: Temperature, Length, Area/Volume & Speed Converters
  * ============================================================================
  */
 
@@ -333,9 +333,9 @@ function renderAreaVolumeCalculator(container, calcDef) {
     resultDiv.innerHTML = `
       <div class="result-hero-box">
         <span class="result-hero-label">Converted ${type === "area" ? "Area" : "Volume"}</span>
-        <div class="result-hero-value">${Number(Number(converted.toFixed(6)).toFixed(6)).toLocaleString()} <span style="font-size: 1.1rem; color: var(--text-secondary); font-weight: 600;">${to.key}</span></div>
+        <div class="result-hero-value">${Number(converted.toFixed(6)).toLocaleString("en-US", { maximumFractionDigits: 4 })} <span style="font-size: 1.1rem; color: var(--text-secondary); font-weight: 600;">${to.key}</span></div>
         <span style="font-size: 0.95rem; color: var(--text-secondary);">
-          ${val} ${from.key} = <b>${Number(Number(converted.toFixed(6)).toFixed(6)).toLocaleString()} ${to.key}</b>
+          ${val} ${from.key} = <b>${Number(converted.toFixed(6)).toLocaleString("en-US", { maximumFractionDigits: 4 })} ${to.key}</b>
         </span>
       </div>
 
@@ -352,7 +352,7 @@ function renderAreaVolumeCalculator(container, calcDef) {
           <span class="step-num-badge">Conversion Formula</span>
           <div class="math-formula-box">value × (from factor ÷ to factor) = result</div>
           <p class="step-content">
-            ${val} × (${from.f} ÷ ${to.f}) = <b>${Number(Number(converted.toFixed(6)).toFixed(6)).toLocaleString()} ${to.key}</b>
+            ${val} × (${from.f} ÷ ${to.f}) = <b>${Number(converted.toFixed(6)).toLocaleString("en-US", { maximumFractionDigits: 4 })} ${to.key}</b>
           </p>
         </div>
       </div>
@@ -378,6 +378,145 @@ function renderAreaVolumeCalculator(container, calcDef) {
   toSel.addEventListener("change", calculate);
 
   populateUnits();
+  calculate();
+}
+
+/* ==========================================================================
+   Speed & Velocity Unit Converter
+   ========================================================================== */
+function renderSpeedCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="spdInputVal">
+          <span>Enter Speed</span>
+        </label>
+        <input type="number" id="spdInputVal" class="form-control" value="100" step="any" style="border: 1.5px solid var(--border-color); border-radius: var(--radius-md); background: var(--bg-input); font-size: 1.1rem; font-weight: 700;">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="spdFromUnit">
+          <span>From Unit</span>
+        </label>
+        <select id="spdFromUnit" class="form-control">
+          <option value="kmh" selected>Kilometers/hour (km/h)</option>
+          <option value="mph">Miles/hour (mph)</option>
+          <option value="ms">Meters/second (m/s)</option>
+          <option value="fts">Feet/second (ft/s)</option>
+          <option value="knot">Knots (kn)</option>
+          <option value="mach">Mach (sea level)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="spdToUnit">
+          <span>To Unit</span>
+        </label>
+        <select id="spdToUnit" class="form-control">
+          <option value="mph" selected>Miles/hour (mph)</option>
+          <option value="kmh">Kilometers/hour (km/h)</option>
+          <option value="ms">Meters/second (m/s)</option>
+          <option value="fts">Feet/second (ft/s)</option>
+          <option value="knot">Knots (kn)</option>
+          <option value="mach">Mach (sea level)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcSpd" class="btn btn-primary">
+        <span>⚡ Convert Speed</span>
+      </button>
+      <button type="button" id="btnSwapSpd" class="btn btn-secondary">
+        <span>⇄ Swap Units</span>
+      </button>
+    </div>
+
+    <div id="spdResultContainer" class="results-section animate-fade-in" style="display: none;"></div>
+  `;
+
+  const fromSel = container.querySelector("#spdFromUnit");
+  const toSel = container.querySelector("#spdToUnit");
+  const btnCalc = container.querySelector("#btnCalcSpd");
+  const btnSwap = container.querySelector("#btnSwapSpd");
+  const resultDiv = container.querySelector("#spdResultContainer");
+
+  // All factors relative to base unit: meters per second
+  const UNITS = {
+    kmh: { label: "Kilometers/hour (km/h)", short: "km/h", f: 1 / 3.6 },
+    mph: { label: "Miles/hour (mph)", short: "mph", f: 0.44704 },
+    ms: { label: "Meters/second (m/s)", short: "m/s", f: 1 },
+    fts: { label: "Feet/second (ft/s)", short: "ft/s", f: 0.3048 },
+    knot: { label: "Knots (kn)", short: "kn", f: 1852 / 3600 },
+    mach: { label: "Mach (sea level, 15°C)", short: "Mach", f: 340.29 }
+  };
+
+  function calculate() {
+    const val = parseFloat(container.querySelector("#spdInputVal").value);
+    const from = UNITS[fromSel.value];
+    const to = UNITS[toSel.value];
+
+    if (isNaN(val) || val < 0) {
+      alert("Please enter a valid non-negative speed.");
+      return;
+    }
+
+    const msVal = val * from.f;
+    const converted = msVal / to.f;
+
+    const related = Object.entries(UNITS)
+      .filter(([k]) => k !== toSel.value)
+      .slice(0, 5)
+      .map(([k, u]) => `
+        <div class="result-stat-card">
+          <div class="result-stat-label">${u.label}</div>
+          <div class="result-stat-val">${Number((msVal / u.f).toPrecision(6)).toLocaleString()}</div>
+        </div>
+      `).join("");
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Converted Speed</span>
+        <div class="result-hero-value">${Number(converted.toFixed(6)).toLocaleString("en-US", { maximumFractionDigits: 4 })} <span style="font-size: 1.1rem; color: var(--text-secondary); font-weight: 600;">${to.short}</span></div>
+        <span style="font-size: 0.95rem; color: var(--text-secondary);">
+          ${val} ${from.short} = <b>${Number(converted.toFixed(6)).toLocaleString("en-US", { maximumFractionDigits: 4 })} ${to.short}</b>
+        </span>
+      </div>
+
+      <div class="steps-wrapper">
+        <div class="steps-header">
+          <h4 class="steps-title"><span>📐</span> Speed Conversion Matrix</h4>
+        </div>
+
+        <div class="result-stat-grid">
+          ${related}
+        </div>
+
+        <div class="step-card" style="margin-top: 1.5rem;">
+          <span class="step-num-badge">Conversion Formula</span>
+          <div class="math-formula-box">speed × (from factor ÷ to factor) = result</div>
+          <p class="step-content">
+            ${val} × (${Number(from.f.toPrecision(6))} ÷ ${Number(to.f.toPrecision(6))}) = <b>${Number(converted.toFixed(6)).toLocaleString("en-US", { maximumFractionDigits: 4 })}</b>
+            <br><span style="color: var(--text-muted); font-size: 0.9rem;">Base: 1 km/h = 0.27778 m/s · 1 mph = 0.44704 m/s · 1 knot = 0.51444 m/s · Mach (15°C) = 340.29 m/s</span>
+          </p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+  }
+
+  btnSwap.addEventListener("click", () => {
+    const temp = fromSel.value;
+    fromSel.value = toSel.value;
+    toSel.value = temp;
+    calculate();
+  });
+
+  btnCalc.addEventListener("click", calculate);
+  fromSel.addEventListener("change", calculate);
+  toSel.addEventListener("change", calculate);
+
   calculate();
 }
 

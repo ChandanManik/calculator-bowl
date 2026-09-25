@@ -1631,10 +1631,10 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Conversions",
     "icon": "🔄",
     "colorClass": "conversions",
-    "badge": "4 Calculators",
-    "description": "Convert temperature, length, distance, weight, mass, area, and volume across metric and imperial systems.",
+    "badge": "5 Calculators",
+    "description": "Convert temperature, length, distance, weight, mass, area, volume, and speed across metric and imperial systems.",
     "seoTitle": "Unit Converters - Metric & Imperial Tools | CalculatorBowl",
-    "seoDescription": "Precision unit conversion calculators for temperature (°C, °F, K), length & distance (meters, feet, miles), weight & mass (kg, lbs, oz), area (sq ft, acres), and volume (liters, gallons).",
+    "seoDescription": "Precision unit conversion calculators for temperature (°C, °F, K), length & distance, weight & mass, area (sq ft, acres), volume (liters, gallons), and speed (mph, km/h, knots).",
     "calculators": [
       {
         "id": "temperature-converter",
@@ -1789,6 +1789,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Units & Measurements",
         "slug": "area-volume-converter",
         "url": "/calculators/conversion/measurement/area-volume-converter/",
+        "subcatUrl": "/calculators/conversion/measurement/",
+        "categoryUrl": "/calculators/conversion/"
+      },
+      {
+        "id": "speed-converter",
+        "name": "Speed & Velocity Unit Converter",
+        "shortName": "Speed Converter",
+        "icon": "🏎️",
+        "badge": "Units",
+        "description": "Convert miles per hour, kilometers per hour, meters per second, feet per second, and knots for vehicles, aviation, running pace, and maritime speeds.",
+        "seoTitle": "Speed Converter - MPH, KM/H, M/S, FPS & Knots",
+        "seoDescription": "Convert speed units instantly between mph, km/h, m/s, ft/s, knots, and mach with pace and running-speed equivalents.",
+        "category": "conversion",
+        "renderFunction": "renderSpeedCalculator",
+        "contextualGuide": {
+          "title": "Motion & Rate Conversion Tools",
+          "html": "\n            <p>\n              Speed conversions appear in driving limits, aviation charts, shipping logistics, and running pace splits. Explore our <a href=\"/calculators/conversion/\" class=\"in-text-link\">🔄 Unit Conversions Hub</a> for the full dimensional matrix.\n            </p>\n            <p>\n              Distance comes first — convert lengths before computing rate, or check travel timing with the date tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "length-converter",
+              "label": "Length & Distance Converter",
+              "icon": "📏"
+            },
+            {
+              "id": "time-calculator",
+              "label": "Time Duration & Difference",
+              "icon": "⏱️"
+            },
+            {
+              "id": "temperature-converter",
+              "label": "Temperature Converter",
+              "icon": "🌡️"
+            }
+          ]
+        },
+        "subcategory": "measurement",
+        "subcatTitle": "Units & Measurements",
+        "slug": "speed-converter",
+        "url": "/calculators/conversion/measurement/speed-converter/",
         "subcatUrl": "/calculators/conversion/measurement/",
         "categoryUrl": "/calculators/conversion/"
       }
@@ -1993,7 +2032,7 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Network",
     "icon": "🌐",
     "colorClass": "network",
-    "badge": "2 Live Tools",
+    "badge": "3 Tools",
     "description": "Measure live broadband internet download speed, upload bandwidth, latency ping, jitter, and calculate streaming data consumption across YouTube, Netflix, 4K video, and Zoom.",
     "seoTitle": "Internet Speed Test & Streaming Data Usage Calculators | CalculatorBowl",
     "seoDescription": "Free real-time internet speed test with live speedometer gauge, latency ping meter, and streaming data usage estimation tools.",
@@ -2075,6 +2114,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/tech-network/data/streaming-data-calculator/",
         "subcatUrl": "/calculators/tech-network/data/",
         "categoryUrl": "/calculators/tech-network/"
+      },
+      {
+        "id": "ip-subnet-calculator",
+        "name": "IP Subnet & CIDR Calculator",
+        "shortName": "IP Subnet Calculator",
+        "icon": "🧭",
+        "badge": "Networking",
+        "description": "Convert CIDR prefixes to subnet masks, find network address, broadcast address, first/last host, and total usable IPs for IPv4 and IPv6 ranges.",
+        "seoTitle": "IP Subnet Calculator - CIDR, Subnet Mask & Host Range",
+        "seoDescription": "Calculate IPv4 subnet mask, network address, broadcast address, first and last usable host, and number of hosts from any CIDR prefix or IP/mask.",
+        "category": "tech-network",
+        "renderFunction": "renderIpSubnetCalculator",
+        "contextualGuide": {
+          "title": "Network Addressing Cross-References",
+          "html": "\n            <p>\n              Subnetting splits a single IPv4 block into smaller networks so VLANs and office segments stay isolated and routable. Explore our <a href=\"/calculators/tech-network/\" class=\"in-text-link\">🌐 Tech &amp; Network Hub</a> for more networking utilities.\n            </p>\n            <p>\n              Plan bandwidth once addressing is settled — estimate monthly streaming consumption or test live throughput with the tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "internet-speed-test",
+              "label": "Live Internet Speed Test",
+              "icon": "🚀"
+            },
+            {
+              "id": "streaming-data-calculator",
+              "label": "Streaming Data Usage",
+              "icon": "📱"
+            },
+            {
+              "id": "percentage-calculator",
+              "label": "Percentage Allocation",
+              "icon": "📊"
+            }
+          ]
+        },
+        "subcategory": "ip-address",
+        "subcatTitle": "IP Addressing",
+        "slug": "ip-subnet-calculator",
+        "url": "/calculators/tech-network/ip-address/ip-subnet-calculator/",
+        "subcatUrl": "/calculators/tech-network/ip-address/",
+        "categoryUrl": "/calculators/tech-network/"
       }
     ],
     "faqs": [
@@ -2096,8 +2174,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Health",
     "icon": "💪",
     "colorClass": "health",
-    "badge": "2 Calculators",
-    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, and weight-goal targets with step-by-step health breakdowns.",
+    "badge": "3 Calculators",
+    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, and weight-goal targets with step-by-step health breakdowns.",
     "seoTitle": "Health & Fitness Calculators - BMI, BMR & Calorie Needs | CalculatorBowl",
     "seoDescription": "Free health calculators for BMI body mass index, BMR basal metabolic rate, and daily calorie requirements for weight loss, maintenance, and muscle gain.",
     "calculators": [
@@ -2176,6 +2254,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Fitness & Body Metrics",
         "slug": "body-fat-calculator",
         "url": "/calculators/health/fitness/body-fat-calculator/",
+        "subcatUrl": "/calculators/health/fitness/",
+        "categoryUrl": "/calculators/health/"
+      },
+      {
+        "id": "water-intake-calculator",
+        "name": "Daily Water Intake Calculator",
+        "shortName": "Water Intake Calc",
+        "icon": "💧",
+        "badge": "Hydration",
+        "description": "Calculate your daily water intake needs in liters, ounces, and cups based on body weight, activity level, climate, and pregnancy or breastfeeding status.",
+        "seoTitle": "Daily Water Intake Calculator - Liters, Ounces & Cups by Weight",
+        "seoDescription": "Find how much water you should drink daily in liters, ounces, and cups based on body weight, exercise, climate, and pregnancy with per-glass schedule.",
+        "category": "health",
+        "renderFunction": "renderWaterIntakeCalculator",
+        "contextualGuide": {
+          "title": "Hydration & Nutrition Cross-References",
+          "html": "\n            <p>\n              Hydration targets scale with body mass, sweat loss, and altitude — the same weight can need very different volumes depending on training load. Explore our <a href=\"/calculators/health/\" class=\"in-text-link\">💪 Health Hub</a> for more body-metric tools.\n            </p>\n            <p>\n              Pair fluid goals with calorie targets and body composition for a complete nutrition picture.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "bmi-bmr-calculator",
+              "label": "BMI & Calorie Calculator",
+              "icon": "⚖️"
+            },
+            {
+              "id": "body-fat-calculator",
+              "label": "Body Fat Percentage",
+              "icon": "🎯"
+            },
+            {
+              "id": "weight-converter",
+              "label": "Weight Unit Converter",
+              "icon": "📏"
+            }
+          ]
+        },
+        "subcategory": "fitness",
+        "subcatTitle": "Fitness & Body Metrics",
+        "slug": "water-intake-calculator",
+        "url": "/calculators/health/fitness/water-intake-calculator/",
         "subcatUrl": "/calculators/health/fitness/",
         "categoryUrl": "/calculators/health/"
       }
