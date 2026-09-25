@@ -3,6 +3,7 @@
  * Health & Fitness Calculators: Body Metrics Solvers
  * Calculators:
  * 1. BMI & BMR Calorie Calculator (Mifflin-St Jeor + TDEE)
+ * 2. Body Fat Percentage & Ideal Weight (US Navy + Devine)
  * ============================================================================
  */
 
@@ -256,5 +257,232 @@ function renderBmiBmrCalculator(container, calcDef) {
   });
 
   syncUnitVisibility();
+  calculate();
+}
+
+/* ==========================================================================
+   Body Fat Percentage & Ideal Weight Calculator (US Navy Method)
+   ========================================================================== */
+function renderBodyFatCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="bfGender">
+          Biological Sex
+          <span class="form-label-hint">Navy formula</span>
+        </label>
+        <select id="bfGender" class="form-control">
+          <option value="male" selected>Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="bfHeight">
+          Height
+          <span class="form-label-hint">Centimeters</span>
+        </label>
+        <div class="input-with-addon">
+          <input type="number" id="bfHeight" class="form-control" value="175" min="100" max="230" step="0.5">
+          <span class="input-addon suffix">cm</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="bfNeck">
+          Neck Circumference
+          <span class="form-label-hint">Below larynx</span>
+        </label>
+        <div class="input-with-addon">
+          <input type="number" id="bfNeck" class="form-control" value="38" min="15" max="80" step="0.5">
+          <span class="input-addon suffix">cm</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="bfWaist">
+          Waist Circumference
+          <span class="form-label-hint">At navel</span>
+        </label>
+        <div class="input-with-addon">
+          <input type="number" id="bfWaist" class="form-control" value="85" min="30" max="200" step="0.5">
+          <span class="input-addon suffix">cm</span>
+        </div>
+      </div>
+
+      <div class="form-group" id="bfHipGroup" style="display: none;">
+        <label class="form-label" for="bfHip">
+          Hip Circumference
+          <span class="form-label-hint">Females only</span>
+        </label>
+        <div class="input-with-addon">
+          <input type="number" id="bfHip" class="form-control" value="98" min="40" max="200" step="0.5">
+          <span class="input-addon suffix">cm</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcBf" class="btn btn-primary">
+        <span>⚡ Calculate Body Fat %</span>
+      </button>
+      <button type="button" id="btnResetBf" class="btn btn-secondary">
+        <span>↺ Reset</span>
+      </button>
+    </div>
+
+    <div id="bfResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const genderSel = container.querySelector("#bfGender");
+  const hipGroup = container.querySelector("#bfHipGroup");
+  const btnCalc = container.querySelector("#btnCalcBf");
+  const btnReset = container.querySelector("#btnResetBf");
+  const resultDiv = container.querySelector("#bfResultContainer");
+
+  function classify(gender, pct) {
+    if (gender === "male") {
+      if (pct < 6) return { label: "Essential Fat", color: "#38bdf8" };
+      if (pct < 14) return { label: "Athletic", color: "#10b981" };
+      if (pct < 18) return { label: "Fitness", color: "#22c55e" };
+      if (pct < 25) return { label: "Acceptable", color: "#f59e0b" };
+      return { label: "Obese Range", color: "#f43f5e" };
+    }
+    if (pct < 14) return { label: "Essential Fat", color: "#38bdf8" };
+    if (pct < 21) return { label: "Athletic", color: "#10b981" };
+    if (pct < 25) return { label: "Fitness", color: "#22c55e" };
+    if (pct < 32) return { label: "Acceptable", color: "#f59e0b" };
+    return { label: "Obese Range", color: "#f43f5e" };
+  }
+
+  function calculate() {
+    const gender = genderSel.value;
+    const height = parseFloat(container.querySelector("#bfHeight").value) || 0;
+    const neck = parseFloat(container.querySelector("#bfNeck").value) || 0;
+    const waist = parseFloat(container.querySelector("#bfWaist").value) || 0;
+    const hip = parseFloat(container.querySelector("#bfHip").value) || 0;
+
+    if (height <= 0 || neck <= 0 || waist <= 0) {
+      alert("Please enter valid height, neck, and waist measurements.");
+      return;
+    }
+
+    let bodyFat;
+    let formulaText;
+    if (gender === "male") {
+      if (waist <= neck) {
+        alert("Waist must be greater than neck circumference.");
+        return;
+      }
+    // US Navy male: 495 / (1.0324 − 0.19077·log10(waist − neck) + 0.15456·log10(height)) − 450
+      bodyFat = 495 / (1.0324 - 0.19077 * Math.log10(waist - neck) + 0.15456 * Math.log10(height)) - 450;
+      formulaText = `495 ÷ (1.0324 − 0.19077·log₁₀(${waist} − ${neck}) + 0.15456·log₁₀(${height})) − 450`;
+    } else {
+      if (hip <= 0) {
+        alert("Please enter a valid hip circumference.");
+        return;
+      }
+      if (waist + hip <= neck) {
+        alert("Waist + hip must be greater than neck circumference.");
+        return;
+      }
+    // US Navy female: 495 / (1.29579 − 0.35004·log10(waist + hip − neck) + 0.22100·log10(height)) − 450
+      bodyFat = 495 / (1.29579 - 0.35004 * Math.log10(waist + hip - neck) + 0.22100 * Math.log10(height)) - 450;
+      formulaText = `495 ÷ (1.29579 − 0.35004·log₁₀(${waist} + ${hip} − ${neck}) + 0.22100·log₁₀(${height})) − 450`;
+    }
+
+    if (!isFinite(bodyFat) || bodyFat < 1 || bodyFat > 65) {
+      alert("Measurements look inconsistent — please double-check them.");
+      return;
+    }
+
+    const cat = classify(gender, bodyFat);
+
+    // Devine ideal body weight (kg) from height in cm
+    const heightIn = height / 2.54;
+    const extraIn = Math.max(0, heightIn - 60);
+    const idealKg = (gender === "male" ? 50 : 45.5) + 2.3 * extraIn;
+
+    // Lean mass & fat mass require body weight — derive from ideal as reference only if unknown.
+    // Instead, show % gauge position on 5–45% scale.
+    const gaugePos = Math.min(100, Math.max(0, ((bodyFat - 5) / (45 - 5)) * 100));
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Estimated Body Fat</span>
+        <div class="result-hero-value">
+          ${bodyFat.toFixed(1)}%
+          <span style="font-size: 1rem; font-weight: 600; color: ${cat.color};">${cat.label}</span>
+        </div>
+        <div style="margin-top: 1rem; height: 12px; border-radius: 999px; background: linear-gradient(to right, #38bdf8 0%, #38bdf8 20%, #10b981 20%, #10b981 47.5%, #22c55e 47.5%, #22c55e 57.5%, #f59e0b 57.5%, #f59e0b 77.5%, #f43f5e 77.5%, #f43f5e 100%); position: relative;">
+          <div style="position: absolute; top: -4px; left: calc(${gaugePos.toFixed(1)}% - 2px); width: 4px; height: 20px; background: #fff; border: 1px solid var(--text-primary); border-radius: 2px;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 0.35rem;">
+          <span>5%</span><span>${gender === "male" ? "6" : "14"}</span><span>${gender === "male" ? "14" : "21"}</span><span>${gender === "male" ? "18" : "25"}</span><span>45%</span>
+        </div>
+      </div>
+
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Classification</div>
+          <div class="result-stat-val" style="color: ${cat.color};">${cat.label}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Ideal Weight (Devine)</div>
+          <div class="result-stat-val">${idealKg.toFixed(1)} kg</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Ideal in Pounds</div>
+          <div class="result-stat-val">${(idealKg * 2.20462).toFixed(1)} lbs</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Method</div>
+          <div class="result-stat-val">US Navy</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header">
+          <h3 class="steps-title">📐 Mathematical Formulas</h3>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">US Navy Circumference Method</span>
+          <div class="math-formula-box">${formulaText}</div>
+          <p class="step-content">
+            Log base 10 of the circumference differences converts your tape measurements into an estimated body-fat percentage:
+            <b>${bodyFat.toFixed(1)}% (${cat.label})</b>.
+          </p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Ideal Body Weight (Devine Formula)</span>
+          <div class="math-formula-box">${gender === "male" ? "50" : "45.5"} kg + 2.3 kg × (inches over 5′0″)</div>
+          <p class="step-content">
+            Height ${height} cm = ${heightIn.toFixed(1)} in → ${extraIn.toFixed(1)} in over 60 in →
+            ${gender === "male" ? "50" : "45.5"} + 2.3 × ${extraIn.toFixed(1)} = <b>${idealKg.toFixed(1)} kg (${(idealKg * 2.20462).toFixed(1)} lbs)</b>
+          </p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  genderSel.addEventListener("change", () => {
+    hipGroup.style.display = genderSel.value === "female" ? "" : "none";
+    calculate();
+  });
+  btnCalc.addEventListener("click", calculate);
+  btnReset.addEventListener("click", () => {
+    genderSel.value = "male";
+    container.querySelector("#bfHeight").value = "175";
+    container.querySelector("#bfNeck").value = "38";
+    container.querySelector("#bfWaist").value = "85";
+    container.querySelector("#bfHip").value = "98";
+    hipGroup.style.display = "none";
+    resultDiv.style.display = "none";
+  });
+
+  hipGroup.style.display = genderSel.value === "female" ? "" : "none";
   calculate();
 }

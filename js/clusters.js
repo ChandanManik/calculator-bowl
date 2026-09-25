@@ -1631,10 +1631,10 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Conversions",
     "icon": "🔄",
     "colorClass": "conversions",
-    "badge": "3 Calculators",
-    "description": "Convert temperature, length, distance, weight, and mass across metric and imperial systems.",
+    "badge": "4 Calculators",
+    "description": "Convert temperature, length, distance, weight, mass, area, and volume across metric and imperial systems.",
     "seoTitle": "Unit Converters - Metric & Imperial Tools | CalculatorBowl",
-    "seoDescription": "Precision unit conversion calculators for temperature (°C, °F, K), length & distance (meters, feet, miles), and weight & mass (kg, lbs, oz).",
+    "seoDescription": "Precision unit conversion calculators for temperature (°C, °F, K), length & distance (meters, feet, miles), weight & mass (kg, lbs, oz), area (sq ft, acres), and volume (liters, gallons).",
     "calculators": [
       {
         "id": "temperature-converter",
@@ -1752,6 +1752,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/conversion/measurement/weight-converter/",
         "subcatUrl": "/calculators/conversion/measurement/",
         "categoryUrl": "/calculators/conversion/"
+      },
+      {
+        "id": "area-volume-converter",
+        "name": "Area & Volume Unit Converter",
+        "shortName": "Area & Volume Converter",
+        "icon": "📐",
+        "badge": "Units",
+        "description": "Convert square meters, square feet, acres, hectares, liters, gallons, cubic meters, and fluid ounces between metric and imperial systems.",
+        "seoTitle": "Area & Volume Converter - Square Feet, Acres, Liters, Gallons",
+        "seoDescription": "Convert area units (m², ft², acres, hectares) and volume units (liters, gallons, m³, cups) instantly between metric and imperial systems.",
+        "category": "conversion",
+        "renderFunction": "renderAreaVolumeCalculator",
+        "contextualGuide": {
+          "title": "Dimensional & Spatial Conversion Tools",
+          "html": "\n            <p>\n              Area and volume conversions drive construction estimating, real estate square footage, shipping volume, and recipe scaling. Explore our <a href=\"/calculators/conversion/\" class=\"in-text-link\">🔄 Unit Conversions Hub</a> for the complete dimensional matrix.\n            </p>\n            <p>\n              Translate linear dimensions first with the length converter, then square or cube them for area and volume work.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "length-converter",
+              "label": "Length & Distance Converter",
+              "icon": "📏"
+            },
+            {
+              "id": "weight-converter",
+              "label": "Weight & Mass Converter",
+              "icon": "⚖️"
+            },
+            {
+              "id": "temperature-converter",
+              "label": "Temperature Converter",
+              "icon": "🌡️"
+            }
+          ]
+        },
+        "subcategory": "measurement",
+        "subcatTitle": "Units & Measurements",
+        "slug": "area-volume-converter",
+        "url": "/calculators/conversion/measurement/area-volume-converter/",
+        "subcatUrl": "/calculators/conversion/measurement/",
+        "categoryUrl": "/calculators/conversion/"
       }
     ],
     "faqs": [
@@ -1773,7 +1812,7 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Date & Time",
     "icon": "⏱️",
     "colorClass": "datetime",
-    "badge": "3 Calculators",
+    "badge": "4 Calculators",
     "description": "Calculate exact chronological age, next birthday countdown, elapsed time duration, and live weather forecast with interactive radar maps and sunrise/sunset times.",
     "seoTitle": "Date & Time Calculators - Age & Duration Solvers | CalculatorBowl",
     "seoDescription": "Free online date, time, and environmental calculators to determine exact chronological age, time durations, and live weather radar forecasts.",
@@ -1893,6 +1932,45 @@ const TOPICAL_CLUSTERS = {
         "slug": "weather-forecast-calculator",
         "url": "/calculators/date-time/environment/weather-forecast-calculator/",
         "subcatUrl": "/calculators/date-time/environment/",
+        "categoryUrl": "/calculators/date-time/"
+      },
+      {
+        "id": "business-days-calculator",
+        "name": "Business Days & Working Day Calculator",
+        "shortName": "Business Days Calc",
+        "icon": "📅",
+        "badge": "Scheduling",
+        "description": "Count business days between two dates, exclude weekends and holidays, or add/subtract working days from a start date for project and payroll planning.",
+        "seoTitle": "Business Days Calculator - Working Days Between Dates & Holidays",
+        "seoDescription": "Calculate the number of business days between two dates, exclude weekends and custom holidays, or add or subtract working days from any start date.",
+        "category": "date-time",
+        "renderFunction": "renderBusinessDaysCalculator",
+        "contextualGuide": {
+          "title": "Scheduling & Deadline Cross-References",
+          "html": "\n            <p>\n              Net-30 invoice terms, sprint planning, and payroll cycles all count in working days rather than calendar days. Explore our <a href=\"/calculators/date-time/\" class=\"in-text-link\">⏱️ Date & Time Hub</a> for more scheduling utilities.\n            </p>\n            <p>\n              Measure elapsed clock time between two timestamps or find your exact chronological age with the tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "time-calculator",
+              "label": "Time Duration & Difference",
+              "icon": "⏱️"
+            },
+            {
+              "id": "age-calculator",
+              "label": "Age & Birthday Calculator",
+              "icon": "🎂"
+            },
+            {
+              "id": "percentage-calculator",
+              "label": "Percentage Calculation",
+              "icon": "📊"
+            }
+          ]
+        },
+        "subcategory": "calendar",
+        "subcatTitle": "Calendar & Dates",
+        "slug": "business-days-calculator",
+        "url": "/calculators/date-time/calendar/business-days-calculator/",
+        "subcatUrl": "/calculators/date-time/calendar/",
         "categoryUrl": "/calculators/date-time/"
       }
     ],
@@ -2018,8 +2096,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Health",
     "icon": "💪",
     "colorClass": "health",
-    "badge": "1 Calculator",
-    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), and weight-goal targets with step-by-step health and fitness breakdowns.",
+    "badge": "2 Calculators",
+    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, and weight-goal targets with step-by-step health breakdowns.",
     "seoTitle": "Health & Fitness Calculators - BMI, BMR & Calorie Needs | CalculatorBowl",
     "seoDescription": "Free health calculators for BMI body mass index, BMR basal metabolic rate, and daily calorie requirements for weight loss, maintenance, and muscle gain.",
     "calculators": [
@@ -2059,6 +2137,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Fitness & Body Metrics",
         "slug": "bmi-bmr-calculator",
         "url": "/calculators/health/fitness/bmi-bmr-calculator/",
+        "subcatUrl": "/calculators/health/fitness/",
+        "categoryUrl": "/calculators/health/"
+      },
+      {
+        "id": "body-fat-calculator",
+        "name": "Body Fat Percentage & Ideal Weight Calculator",
+        "shortName": "Body Fat Calculator",
+        "icon": "🎯",
+        "badge": "Navy Method",
+        "description": "Estimate body fat percentage with the US Navy circumference method, classify it by sex and age, and find ideal body weight with the Devine formula.",
+        "seoTitle": "Body Fat Percentage Calculator - US Navy Method & Ideal Weight",
+        "seoDescription": "Calculate body fat percentage using the US Navy neck, waist, and hip circumference method with WHO classification, plus ideal body weight (Devine formula).",
+        "category": "health",
+        "renderFunction": "renderBodyFatCalculator",
+        "contextualGuide": {
+          "title": "Body Composition Cross-References",
+          "html": "\n            <p>\n              BMI cannot separate fat from muscle, so the US Navy circumference method gives a practical body-fat estimate from three tape measurements. Explore our <a href=\"/calculators/health/\" class=\"in-text-link\">💪 Health Hub</a> for more body-metric tools.\n            </p>\n            <p>\n              Pair your body-fat result with BMI screening and daily calorie targets for a complete fitness picture.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "bmi-bmr-calculator",
+              "label": "BMI & Calorie Calculator",
+              "icon": "⚖️"
+            },
+            {
+              "id": "weight-converter",
+              "label": "Weight Unit Converter",
+              "icon": "📏"
+            },
+            {
+              "id": "percentage-calculator",
+              "label": "Percentage Math Helper",
+              "icon": "📊"
+            }
+          ]
+        },
+        "subcategory": "fitness",
+        "subcatTitle": "Fitness & Body Metrics",
+        "slug": "body-fat-calculator",
+        "url": "/calculators/health/fitness/body-fat-calculator/",
         "subcatUrl": "/calculators/health/fitness/",
         "categoryUrl": "/calculators/health/"
       }

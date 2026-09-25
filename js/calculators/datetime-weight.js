@@ -1,14 +1,23 @@
 /**
  * ============================================================================
  * Date, Time & Physical Measurement Suite: Age Calculator, Time Duration,
- * and Weight / Mass Unit Converter
+ * Weight / Mass Unit Converter, and Business Days Calculator
  * ============================================================================
  */
+
+// Local-timezone-safe ISO date (YYYY-MM-DD). toISOString() is UTC and shifts
+// dates backwards for users east of UTC (e.g. Asia/Dhaka, Asia/Kolkata).
+function toLocalIso(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
 
 // 1. Age Calculator (Exact Years, Months, Days & Next Birthday)
 function renderAgeCalculator(container, calcDef) {
   const today = new Date();
-  const todayStr = today.toISOString().split('T')[0];
+  const todayStr = toLocalIso(today);
 
   container.innerHTML = `
     <div class="form-grid">
@@ -391,5 +400,255 @@ function renderWeightConverter(container, calcDef) {
   });
 
   btnCalc.addEventListener("click", calculate);
+  calculate();
+}
+
+/* ==========================================================================
+   Business Days & Working Day Calculator
+   ========================================================================== */
+function renderBusinessDaysCalculator(container, calcDef) {
+  const today = new Date();
+  const iso = toLocalIso;
+  const in30 = new Date(today.getTime() + 30 * 86400000);
+
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="bdMode">
+          <span>Calculation Mode</span>
+        </label>
+        <select id="bdMode" class="form-control">
+          <option value="count" selected>Count working days between two dates</option>
+          <option value="add">Add / subtract working days from a date</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="bdStartGroup">
+        <label class="form-label" for="bdStart">
+          <span id="bdStartLabel">Start Date</span>
+        </label>
+        <input type="date" id="bdStart" class="form-control" value="${iso(today)}">
+      </div>
+
+      <div class="form-group" id="bdEndGroup">
+        <label class="form-label" for="bdEnd">
+          <span>End Date</span>
+        </label>
+        <input type="date" id="bdEnd" class="form-control" value="${iso(in30)}">
+      </div>
+
+      <div class="form-group" id="bdDaysGroup" style="display: none;">
+        <label class="form-label" for="bdDays">
+          <span>Working Days to Add / Subtract</span>
+          <span class="form-label-hint">Negative = go backwards</span>
+        </label>
+        <input type="number" id="bdDays" class="form-control" value="10" step="1">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="bdHolidays">
+          <span>Holiday Dates (optional)</span>
+          <span class="form-label-hint">One per line: YYYY-MM-DD</span>
+        </label>
+        <textarea id="bdHolidays" class="form-control" rows="3" placeholder="2026-12-25&#10;2027-01-01"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="bdInclusive">
+          <span>Counting Options</span>
+        </label>
+        <select id="bdInclusive" class="form-control">
+          <option value="exclude" selected>Exclude start date, include end date</option>
+          <option value="include">Include both start and end dates</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcBd" class="btn btn-primary">
+        <span>⚡ Calculate Business Days</span>
+      </button>
+      <button type="button" id="btnResetBd" class="btn btn-secondary">
+        <span>↺ Reset</span>
+      </button>
+    </div>
+
+    <div id="bdResultContainer" class="results-section animate-fade-in" style="display: none;"></div>
+  `;
+
+  const modeSel = container.querySelector("#bdMode");
+  const startGroup = container.querySelector("#bdStartGroup");
+  const endGroup = container.querySelector("#bdEndGroup");
+  const daysGroup = container.querySelector("#bdDaysGroup");
+  const startLabel = container.querySelector("#bdStartLabel");
+  const btnCalc = container.querySelector("#btnCalcBd");
+  const btnReset = container.querySelector("#btnResetBd");
+  const resultDiv = container.querySelector("#bdResultContainer");
+
+  function syncMode() {
+    const isAdd = modeSel.value === "add";
+    endGroup.style.display = isAdd ? "none" : "";
+    daysGroup.style.display = isAdd ? "" : "none";
+    startLabel.textContent = isAdd ? "Starting Date" : "Start Date";
+  }
+
+  function getHolidaySet() {
+    const raw = container.querySelector("#bdHolidays").value || "";
+    const set = new Set();
+    raw.split(/[\n,;]+/).forEach(s => {
+      const t = s.trim();
+      if (/^\d{4}-\d{2}-\d{2}$/.test(t)) set.add(t);
+    });
+    return set;
+  }
+
+  const isWorkday = (d, holidays) => {
+    const day = d.getDay();
+    return day !== 0 && day !== 6 && !holidays.has(iso(d));
+  };
+
+  function countBetween(startStr, endStr, holidays, inclusive) {
+    let start = new Date(startStr + "T00:00:00");
+    let end = new Date(endStr + "T00:00:00");
+    let flipped = false;
+    if (start > end) {
+      [start, end] = [end, start];
+      flipped = true;
+    }
+
+    let count = 0;
+    const cursor = new Date(start);
+    if (!inclusive) cursor.setDate(cursor.getDate() + 1);
+    while (cursor <= end) {
+      if (isWorkday(cursor, holidays)) count++;
+      cursor.setDate(cursor.getDate() + 1);
+    }
+    return { count, flipped };
+  }
+
+  function addWorkdays(startStr, n, holidays) {
+    const cursor = new Date(startStr + "T00:00:00");
+    const dir = n >= 0 ? 1 : -1;
+    let remaining = Math.abs(n);
+    while (remaining > 0) {
+      cursor.setDate(cursor.getDate() + dir);
+      if (isWorkday(cursor, holidays)) remaining--;
+    }
+    return cursor;
+  }
+
+  function calculate() {
+    const mode = modeSel.value;
+    const holidays = getHolidaySet();
+    const startStr = container.querySelector("#bdStart").value;
+
+    if (!startStr) {
+      alert("Please enter a valid start date.");
+      return;
+    }
+
+    if (mode === "count") {
+      const endStr = container.querySelector("#bdEnd").value;
+      if (!endStr) {
+        alert("Please enter a valid end date.");
+        return;
+      }
+      const inclusive = container.querySelector("#bdInclusive").value === "include";
+      const { count, flipped } = countBetween(startStr, endStr, holidays, inclusive);
+
+      const startDate = new Date(startStr + "T00:00:00");
+      const endDate = new Date(endStr + "T00:00:00");
+      const calendarDays = Math.round(Math.abs(endDate - startDate) / 86400000);
+
+      resultDiv.innerHTML = `
+        <div class="result-hero-box">
+          <span class="result-hero-label">Business Days</span>
+          <div class="result-hero-value">${count} <span style="font-size: 1.1rem; color: var(--text-secondary); font-weight: 600;">working days</span></div>
+          <span style="font-size: 0.95rem; color: var(--text-secondary);">
+            ${flipped ? "(end date was earlier than start — counted in reverse)" : ""}
+            ${holidays.size ? ` · ${holidays.size} holiday${holidays.size > 1 ? "s" : ""} excluded` : ""}
+          </span>
+        </div>
+
+        <div class="result-stat-grid">
+          <div class="result-stat-card">
+            <div class="result-stat-label">Total Calendar Days</div>
+            <div class="result-stat-val">${calendarDays}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">Business Days</div>
+            <div class="result-stat-val" style="color: var(--accent-emerald);">${count}</div>
+          </div>
+          <div class="result-stat-card">
+            <div class="result-stat-label">Weekend / Holiday Off</div>
+            <div class="result-stat-val">${calendarDays - count}</div>
+          </div>
+        </div>
+
+        <div class="steps-wrapper" style="margin-top: 2rem;">
+          <div class="steps-header">
+            <h3 class="steps-title">📐 Calculation Breakdown</h3>
+          </div>
+          <div class="step-card">
+            <span class="step-num-badge">Step 1 — Calendar Span</span>
+            <div class="math-formula-box">calendar days = |end − start| ÷ 86,400,000 ms</div>
+            <p class="step-content">${startStr} → ${endStr} = <b>${calendarDays} calendar days</b></p>
+          </div>
+          <div class="step-card">
+            <span class="step-num-badge">Step 2 — Exclude Non-Working Days</span>
+            <div class="math-formula-box">business days = calendar days − Sat/Sun − holidays</div>
+            <p class="step-content">Each day is checked: Monday–Friday that is not a listed holiday counts. Result = <b>${count} business days</b>.</p>
+          </div>
+        </div>
+      `;
+    } else {
+      const n = parseInt(container.querySelector("#bdDays").value, 10);
+      if (isNaN(n) || n === 0) {
+        alert("Please enter a non-zero number of working days.");
+        return;
+      }
+      const resultDate = addWorkdays(startStr, n, holidays);
+      const daysName = resultDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+
+      resultDiv.innerHTML = `
+        <div class="result-hero-box">
+          <span class="result-hero-label">${n >= 0 ? `${n} Working Days After` : `${Math.abs(n)} Working Days Before`}</span>
+          <div class="result-hero-value" style="font-size: 1.6rem;">${daysName}</div>
+          <span style="font-size: 0.95rem; color: var(--text-secondary);">
+            ${holidays.size ? `${holidays.size} holiday${holidays.size > 1 ? "s" : ""} skipped · ` : ""}weekends skipped
+          </span>
+        </div>
+
+        <div class="steps-wrapper" style="margin-top: 2rem;">
+          <div class="steps-header">
+            <h3 class="steps-title">📐 Calculation Breakdown</h3>
+          </div>
+          <div class="step-card">
+            <span class="step-num-badge">Working Day Walk</span>
+            <div class="math-formula-box">result = advance 1 day at a time, count Mon–Fri only</div>
+            <p class="step-content">Starting from <b>${startStr}</b>, the calculator walks ${n >= 0 ? "forward" : "backward"}, skipping every Saturday, Sunday${holidays.size ? " and listed holiday" : ""}, until <b>${Math.abs(n)}</b> working days are accumulated.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  modeSel.addEventListener("change", syncMode);
+  btnCalc.addEventListener("click", calculate);
+  btnReset.addEventListener("click", () => {
+    modeSel.value = "count";
+    container.querySelector("#bdStart").value = iso(new Date());
+    container.querySelector("#bdEnd").value = iso(new Date(Date.now() + 30 * 86400000));
+    container.querySelector("#bdDays").value = "10";
+    container.querySelector("#bdHolidays").value = "";
+    container.querySelector("#bdInclusive").value = "exclude";
+    syncMode();
+    resultDiv.style.display = "none";
+  });
+
+  syncMode();
   calculate();
 }

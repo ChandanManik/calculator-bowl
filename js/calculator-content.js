@@ -4639,6 +4639,261 @@ const CALCULATOR_RICH_CONTENT = {
         a: "Hold any target for 2-3 weeks, then adjust by 150-200 kcal. Daily weight fluctuates with water and glycogen, so judge trends using weekly averages, not single weigh-ins."
       }
     ]
+  },
+
+  // Area & Volume Unit Converter
+  "area-volume-converter": {
+    articleTitle: "Area & Volume Conversion Guide: Square Feet, Acres, Liters & Gallons",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">📐 Dimensional Math</span>
+          <h4>Linear → Square → Cubic: How Units Scale</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 200" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="200" rx="12" fill="var(--bg-subtle)" />
+            <rect x="55" y="70" width="70" height="70" fill="none" stroke="#38bdf8" stroke-width="3" />
+            <text x="62" y="160" fill="var(--text-primary)" font-weight="600" font-size="13">1D: meters</text>
+            <text x="62" y="55" fill="#38bdf8" font-weight="700" font-size="13">×1 scale</text>
+            <path d="M 150 105 L 195 105" stroke="#94a3b8" stroke-width="3" marker-end="url(#ar)" />
+            <rect x="215" y="70" width="70" height="70" fill="none" stroke="#10b981" stroke-width="3" />
+            <line x1="215" y1="70" x2="285" y2="140" stroke="#10b981" stroke-width="2" stroke-dasharray="5,4" />
+            <text x="218" y="160" fill="var(--text-primary)" font-weight="600" font-size="13">2D: m²</text>
+            <text x="218" y="55" fill="#10b981" font-weight="700" font-size="13">×100 scale</text>
+            <path d="M 310 105 L 355 105" stroke="#94a3b8" stroke-width="3" marker-end="url(#ar)" />
+            <path d="M 375 70 L 445 70 L 445 140 L 375 140 Z" fill="none" stroke="#f59e0b" stroke-width="3" />
+            <path d="M 375 70 L 405 45 L 475 45 L 445 70" fill="none" stroke="#f59e0b" stroke-width="3" />
+            <path d="M 445 140 L 475 115 L 475 45" fill="none" stroke="#f59e0b" stroke-width="3" />
+            <text x="378" y="160" fill="var(--text-primary)" font-weight="600" font-size="13">3D: m³ / liters</text>
+            <text x="378" y="30" fill="#f59e0b" font-weight="700" font-size="13">×1000 scale</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Area factors are the square of length factors, volume factors are the cube — 1 m = 3.28 ft, but 1 m² = 10.76 ft² and 1 m³ = 35.31 ft³.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Area and volume conversions are the backbone of construction estimating, real estate square-footage pricing, shipping volume calculations, and recipe scaling. Getting the wrong factor off by a single power of ten can turn a $5,000 materials quote into a $50,000 error — so the math must be exact.
+      </p>
+
+      <h3 class="content-subheading">1. Area Conversion: Square the Length Factor</h3>
+      <p>
+        Every area unit converts through square meters (m²). Because area is two-dimensional, any length conversion factor must be squared:
+      </p>
+      <div class="math-formula-box">
+        1 ft = 0.3048 m → 1 ft² = 0.3048² = 0.09290304 m²
+      </div>
+      <ul class="content-list">
+        <li><b>1 hectare</b> = 10,000 m² = 2.471 acres</li>
+        <li><b>1 acre</b> = 4,046.86 m² = 43,560 ft²</li>
+        <li><b>1 mi²</b> = 258.999 hectares = 640 acres</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Volume Conversion: Cube the Length Factor</h3>
+      <p>
+        Volume conversions route through liters (L) or cubic meters (m³). Cubing the linear factor is why liquid and cubic conversions grow so fast:
+      </p>
+      <div class="math-formula-box">
+        1 US gal = 3.78541 L | 1 m³ = 1,000 L = 35.3147 ft³
+      </div>
+      <ol class="content-ordered-list">
+        <li>Real estate: a 1,200 ft² room at 8 ft ceilings = 9,600 ft³ ≈ 271.8 m³</li>
+        <li>Shipping: freight is billed on volumetric weight — 1 m³ ≈ 167 kg chargeable for air freight</li>
+        <li>Cooking: 1 US cup = 236.588 mL; 1 imperial cup = 284.13 mL — a 20% difference that breaks recipes</li>
+      </ol>
+
+      <h3 class="content-subheading">3. Common Conversion Pitfalls</h3>
+      <p>
+        The three most expensive mistakes are: confusing US gallons (3.785 L) with imperial gallons (4.546 L), mixing square feet with linear feet in flooring orders, and forgetting that <b>1 m³ = 1,000 liters</b> when filling tanks. Our converter keeps area and volume in separate unit lists so a dimensional mismatch is impossible — pick the measurement type first, then convert.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "Why do I have to square the conversion factor for area?",
+        a: "Area is length × length, so both dimensions scale. If 1 m = 3.28084 ft, then 1 m² = 3.28084 × 3.28084 = 10.7639 ft². Applying the linear factor directly to area is the single most common conversion error."
+      },
+      {
+        q: "What is the difference between a US gallon and an imperial gallon?",
+        a: "A US gallon equals 3.78541 liters while an imperial (UK) gallon equals 4.54609 liters — the imperial gallon is about 20% larger. Fuel economy and recipe conversions must specify which system is used."
+      },
+      {
+        q: "How many square feet are in one acre?",
+        a: "One acre equals 43,560 square feet (4,046.86 m²). An acre is traditionally defined as one furlong by one chain — 660 ft × 66 ft."
+      },
+      {
+        q: "How do I convert cubic meters to liters?",
+        a: "Multiply by 1,000. One cubic meter is exactly 1,000 liters because a liter is defined as one cubic decimeter (dm³), and 1 m³ = 10³ dm³ = 1,000 L."
+      }
+    ]
+  },
+
+  // Business Days Calculator
+  "business-days-calculator": {
+    articleTitle: "Business Days Calculator: Working Days, Deadlines & Holiday Exclusions",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">📅 Deadline Math</span>
+          <h4>How Weekends Shrink a 30-Day Window</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 170" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="170" rx="12" fill="var(--bg-subtle)" />
+            <g font-size="12" font-weight="700">
+              <rect x="40" y="45" width="48" height="40" rx="6" fill="#10b981" /><text x="52" y="70" fill="#fff">M</text>
+              <rect x="96" y="45" width="48" height="40" rx="6" fill="#10b981" /><text x="110" y="70" fill="#fff">T</text>
+              <rect x="152" y="45" width="48" height="40" rx="6" fill="#10b981" /><text x="164" y="70" fill="#fff">W</text>
+              <rect x="208" y="45" width="48" height="40" rx="6" fill="#10b981" /><text x="222" y="70" fill="#fff">T</text>
+              <rect x="264" y="45" width="48" height="40" rx="6" fill="#10b981" /><text x="278" y="70" fill="#fff">F</text>
+              <rect x="320" y="45" width="48" height="40" rx="6" fill="#f43f5e" opacity="0.75" /><text x="334" y="70" fill="#fff">S</text>
+              <rect x="376" y="45" width="48" height="40" rx="6" fill="#f43f5e" opacity="0.75" /><text x="392" y="70" fill="#fff">S</text>
+            </g>
+            <text x="40" y="115" fill="#10b981" font-weight="700" font-size="13">5 business days</text>
+            <text x="240" y="115" fill="#f43f5e" font-weight="700" font-size="13">2 weekend days skipped</text>
+            <text x="40" y="145" fill="var(--text-muted)" font-size="12">7 calendar days = 5 working days (a 29% reduction)</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> A "30-day" payment term is really ~21–22 working days — always confirm whether a contract counts calendar or business days.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A <b>Business Days Calculator</b> counts only Monday–Friday dates while skipping weekends and (optionally) a custom holiday list. Net-30 invoices, project SLAs, payroll cycles, and court filing deadlines almost always count in working days, but most people count calendar days and miss their deadline.
+      </p>
+
+      <h3 class="content-subheading">1. Counting Working Days Between Two Dates</h3>
+      <p>
+        The algorithm walks one calendar day at a time from start to end, incrementing a counter only when the day is neither a Saturday nor a Sunday nor a listed holiday:
+      </p>
+      <div class="math-formula-box">
+        business days = Σ (day ∈ [start, end] where weekday(day) ∉ {Sat, Sun} ∧ day ∉ holidays)
+      </div>
+      <ul class="content-list">
+        <li><b>Default mode</b> excludes the start date but includes the end date — standard for deadline math.</li>
+        <li><b>Inclusive mode</b> counts both endpoints — used for shift counts and attendance.</li>
+        <li>Holidays are parsed from a pasteable YYYY-MM-DD list, so multi-country calendars are supported.</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Worked Example: Net-30 Invoice</h3>
+      <ol class="content-ordered-list">
+        <li>Invoice issued Friday, October 2 → payment due 30 working days later</li>
+        <li>30 working days ÷ 5 per week = 6 full weeks of weekdays</li>
+        <li>Skip every Saturday and Sunday (12 weekend days) plus any listed holidays</li>
+        <li>Result: the real deadline lands roughly <b>42–44 calendar days</b> after issue — not 30</li>
+      </ol>
+
+      <h3 class="content-subheading">3. Add or Subtract Working Days</h3>
+      <p>
+        In "add" mode, the calculator walks forward (or backward for negative inputs) one day at a time, decrementing a remaining-work-day counter only on valid weekdays. This is how you find "10 business days from today" without manually flipping a wall calendar — including correct handling of month and year boundaries and leap years.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "Do business-day counts include the start date?",
+        a: "It depends on the convention. The default mode excludes the start date and includes the end date (standard for deadline math), while inclusive mode counts both endpoints. The calculator lets you toggle between the two."
+      },
+      {
+        q: "How many working days are in a year?",
+        a: "A standard year has 261 weekdays (52 weeks × 5 days + 1) and a leap year has 262. Subtract your country's public holidays (typically 8–13 in the US, 8 in the UK) for actual working days — usually 250–255."
+      },
+      {
+        q: "How do I count business days excluding a custom holiday list?",
+        a: "Paste each holiday as YYYY-MM-DD on its own line in the Holidays field. The calculator treats any matching date as non-working regardless of weekday, so holidays falling on weekends are safely ignored."
+      },
+      {
+        q: "What does 'add 10 business days from today' mean for delivery?",
+        a: "It skips every weekend and listed holiday, so 10 business days is typically 12–14 calendar days. For shipping estimates, add 1–2 extra days of buffer since carriers may not dispatch on all working days."
+      }
+    ]
+  },
+
+  // Body Fat Percentage & Ideal Weight Calculator
+  "body-fat-calculator": {
+    articleTitle: "Body Fat Percentage Guide: US Navy Method, Classifications & Ideal Weight",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🎯 Body Composition</span>
+          <h4>Where BMI Stops, Body Fat Starts</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 200" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="200" rx="12" fill="var(--bg-subtle)" />
+            <text x="55" y="40" fill="var(--text-primary)" font-weight="700" font-size="14">Same BMI (26) — Different Composition</text>
+            <rect x="60" y="60" width="90" height="110" rx="8" fill="#10b981" />
+            <rect x="60" y="60" width="90" height="30" rx="8" fill="#38bdf8" />
+            <text x="70" y="190" fill="var(--text-primary)" font-size="12" font-weight="600">Athlete: 14% BF</text>
+            <rect x="260" y="60" width="90" height="110" rx="8" fill="#10b981" />
+            <rect x="260" y="60" width="90" height="55" rx="8" fill="#f59e0b" />
+            <text x="262" y="190" fill="var(--text-primary)" font-size="12" font-weight="600">Average: 26% BF</text>
+            <text x="420" y="85" fill="#38bdf8" font-weight="700" font-size="13">■ Fat mass</text>
+            <text x="420" y="115" fill="#10b981" font-weight="700" font-size="13">■ Lean mass</text>
+            <text x="420" y="150" fill="var(--text-muted)" font-size="12">Tape-measure method</text>
+            <text x="420" y="170" fill="var(--text-muted)" font-size="12">separates the two</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> BMI counts total mass; the US Navy circumference method estimates how much of that mass is fat using just neck, waist, and (for women) hip measurements.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Body fat percentage</b> measures what portion of your total body weight is adipose tissue — unlike BMI, it distinguishes a muscular 90 kg athlete from a sedentary 90 kg office worker. The <b>US Navy circumference method</b> estimates it from three simple tape measurements, making it the most practical field test without calipers or water displacement.
+      </p>
+
+      <h3 class="content-subheading">1. The US Navy Formula</h3>
+      <p>
+        The Navy method uses a log₁₀ regression derived from thousands of DEXA scans:
+      </p>
+      <div class="math-formula-box">
+        Men: 495 ÷ (1.0324 − 0.19077·log₁₀(waist − neck) + 0.15456·log₁₀(height)) − 450
+      </div>
+      <div class="math-formula-box">
+        Women: 495 ÷ (1.29579 − 0.35004·log₁₀(waist + hip − neck) + 0.22100·log₁₀(height)) − 450
+      </div>
+      <ul class="content-list">
+        <li><b>Neck:</b> measured below the larynx, shoulders relaxed</li>
+        <li><b>Waist:</b> at the navel (men) or natural waist (women), relaxed breath</li>
+        <li><b>Hip:</b> widest point — required for women only</li>
+        <li>All measurements in centimeters; accuracy ≈ ±3% vs. DEXA</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Classification Ranges (ACE Guidelines)</h3>
+      <ol class="content-ordered-list">
+        <li><b>Men:</b> &lt;6% essential · 6–13% athletic · 14–17% fitness · 18–24% acceptable · 25%+ obese range</li>
+        <li><b>Women:</b> &lt;14% essential · 14–20% athletic · 21–24% fitness · 25–31% acceptable · 32%+ obese range</li>
+        <li>Women need 2–3% more essential fat for hormonal and reproductive health — do not chase male numbers</li>
+      </ol>
+
+      <h3 class="content-subheading">3. Ideal Body Weight (Devine Formula)</h3>
+      <p>
+        Alongside body fat, the calculator returns Devine ideal weight: <b>50 kg for men, 45.5 kg for women, plus 2.3 kg per inch over 5′0″</b>. For a 175 cm man: 68.9 in − 60 = 8.9 in → 50 + 2.3 × 8.9 ≈ <b>70.4 kg</b>. Treat it as a medical reference point, not a target — frame size and muscle mass shift it by 5–10 kg.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "How accurate is the US Navy body fat method?",
+        a: "It correlates within ±3% of DEXA scans for most people when measurements are taken correctly. It is less reliable for very muscular, obese, or elderly individuals, where calipers or DEXA are preferable."
+      },
+      {
+        q: "What is a healthy body fat percentage?",
+        a: "For adults, 10–20% (men) and 18–30% (women) is generally healthy. Athletes run 6–13% (men) and 14–20% (women). Sustained essential-fat levels below 6% (men) or 14% (women) impair immune and hormonal function."
+      },
+      {
+        q: "Why is my body fat high even though my BMI is normal?",
+        a: "This is 'normal-weight obesity' — sufficient fat mass with low muscle. BMI has no body-composition component, so a sedentary person with visceral fat can score a normal BMI yet exceed 25% body fat. Strength training and protein intake address it."
+      },
+      {
+        q: "How often should I measure body fat to track progress?",
+        a: "Every 2–4 weeks, at the same time of day, before eating, using the same tape tension. Daily fluctuations are mostly water and glycogen — judge trends over months, not single readings."
+      }
+    ]
   }
 };
 
