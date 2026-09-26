@@ -5133,6 +5133,261 @@ const CALCULATOR_RICH_CONTENT = {
         a: "Summer heat obviously raises sweat loss (+350–700 mL), but winter is deceptive — cold air is dry, heating strips indoor humidity, and thirst signals blunt in the cold, so mild dehydration is common in winter too."
       }
     ]
+  },
+
+  // Time Zone Converter
+  "time-zone-converter": {
+    articleTitle: "Time Zone Conversion: UTC Offsets, DST, and Cross-Zone Scheduling",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🌐 Zone Span</span>
+          <h4>The Same Instant Across Zones</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 200" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="200" rx="12" fill="var(--bg-subtle)" />
+            <g font-size="13" font-weight="700">
+              <text x="40" y="45" fill="var(--text-muted)">12:00 UTC anchor</text>
+              <rect x="40" y="60" width="110" height="34" rx="6" fill="#64748b" />
+              <text x="55" y="82" fill="#fff">UTC+0 London</text>
+              <rect x="170" y="60" width="130" height="34" rx="6" fill="#38bdf8" />
+              <text x="184" y="82" fill="#fff">17:00 Dhaka +6</text>
+              <rect x="320" y="60" width="140" height="34" rx="6" fill="#10b981" />
+              <text x="334" y="82" fill="#fff">18:00 Delhi +5:30</text>
+              <rect x="480" y="60" width="90" height="34" rx="6" fill="#f59e0b" />
+              <text x="493" y="82" fill="#fff">07:00 −5</text>
+              <text x="40" y="135" fill="var(--text-primary)">DST shifts are local — NY flips between −5 (EST) and −4 (EDT) each March/November.</text>
+              <text x="40" y="165" fill="var(--text-muted)">Nepal is +5:45 · Chatham Islands +12:45 — offsets are not always whole hours.</text>
+            </g>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Convert through UTC: source wall time minus its offset gives the instant, then add the target offset. Never subtract one wall clock from another.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Time zone conversion</b> sounds like simple addition, but wall-clock subtraction breaks the moment daylight saving shifts one side of the equation. The reliable method is a two-step anchor: project your source time onto <b>UTC</b>, then project that instant into the target zone using its offset at that exact moment.
+      </p>
+
+      <h3 class="content-subheading">1. The Anchor Method</h3>
+      <div class="math-formula-box">
+        UTC = source wall time − source offset · target = UTC + target offset
+      </div>
+      <ul class="content-list">
+        <li><b>Step 1:</b> A meeting at 09:00 in Dhaka (UTC+6) anchors to <b>03:00 UTC</b></li>
+        <li><b>Step 2:</b> 03:00 UTC in New York (UTC−5 in winter) = <b>22:00 previous day</b></li>
+        <li>Offsets carry the sign toward east — Kathmandu is UTC+5:45, not +5.75 of an hour</li>
+        <li>Never subtract wall times directly: crossing a DST boundary makes the naive difference wrong by an hour</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Daylight Saving Complications</h3>
+      <p>
+        Zones that observe DST (most of North America, Europe, Australia) change their offset twice a year — spring forward, fall back. That means the <b>same source time</b> converts to different targets in July versus January. New York is UTC−5 in January and UTC−4 in July, so a 09:00 Dhaka meeting lands at 22:00 or 23:00 in New York depending on the season. The calculator evaluates the offset at your chosen date rather than assuming a fixed one, and half a dozen zones (Arizona, most of Asia, Africa) never shift at all.
+      </p>
+
+      <h3 class="content-subheading">3. Scheduling Across the Line</h3>
+      <ol class="content-ordered-list">
+        <li>Convert both participants' working hours to UTC and look for overlap — this beats pairwise guesses in three-plus-zone calls</li>
+        <li>Watch day shifts: a −5 to +6 jump moves the date forward; confirm which calendar day both sides are agreeing to</li>
+        <li>Around March and November DST flips, the overlap window moves by an hour for US/Europe calls — re-check invite times the week of the change</li>
+        <li>Use ISO-8601 with offsets (2026-10-05T09:00+06:00) in any automated systems to remove ambiguity entirely</li>
+      </ol>
+    `,
+    faqs: [
+      {
+        q: "How do I convert a time between two time zones?",
+        a: "Subtract the source zone's UTC offset from its wall time to get UTC, then add the target zone's offset. Example: 09:00 UTC+6 = 03:00 UTC = 22:00 UTC−5 (previous day). Our calculator performs this anchor step automatically and re-checks the offset for DST."
+      },
+      {
+        q: "What is the difference between GMT and UTC?",
+        a: "Practically none for everyday scheduling — UTC replaced GMT as the reference and both read 00:00 at the prime meridian. The difference is that UTC is an atomic-clock standard while GMT is tied to Earth's rotation; UK civil time (BST) shifts even though UTC never does."
+      },
+      {
+        q: "Why did the meeting time shift by an hour after the clocks changed?",
+        a: "One country entered or left daylight saving while the other did not, changing their offset difference by an hour. US DST begins the second Sunday in March and ends the first Sunday in November; EU changes the last Sunday in March and October — so the gap between US and Europe differs for parts of the year."
+      },
+      {
+        q: "Are there time zones with half-hour or 45-minute offsets?",
+        a: "Yes — India, Pakistan, and Bangladesh are UTC+5:30, Nepal is UTC+5:45, and Australia's Adelaide is UTC+9:30. On the other side, Chatham Islands runs +12:45. Never assume an offset is a whole number of hours."
+      },
+      {
+        q: "Which time zone should I schedule a global team in?",
+        a: "UTC is the neutral anchor because no country observes DST on it. Rotate inconvenient slots fairly across teammates, or find the overlap of everyone's 09:00–17:00 window expressed in UTC — a five-zone team usually gets a workable 1–2 hour band."
+      }
+    ]
+  },
+
+  // Screen Size & PPI Calculator
+  "screen-size-calculator": {
+    articleTitle: "Screen Dimensions Explained: Diagonal, Aspect Ratio, and PPI",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🖥️ Panel Geometry</span>
+          <h4>From Diagonal to Width & Height</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 210" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="210" rx="12" fill="var(--bg-subtle)" />
+            <rect x="55" y="40" width="330" height="186" rx="8" fill="none" stroke="#38bdf8" stroke-width="3" transform="translate(0,-40)" />
+            <line x1="55" y1="40" x2="385" y2="186" stroke="#f59e0b" stroke-width="3" stroke-dasharray="8 5" />
+            <text x="175" y="118" fill="#f59e0b" font-weight="700" font-size="14" transform="rotate(23.8 175 118)">27″ diagonal</text>
+            <text x="180" y="175" fill="#38bdf8" font-weight="700" font-size="13">width = D×W/√(W²+H²)</text>
+            <text x="410" y="70" fill="var(--text-primary)" font-weight="700" font-size="13">16:9</text>
+            <text x="410" y="95" fill="var(--text-muted)" font-size="12">27″ → 23.5″×13.2″</text>
+            <text x="410" y="125" fill="var(--text-muted)" font-size="12">2560×1440</text>
+            <text x="410" y="150" fill="#10b981" font-weight="700" font-size="13">≈109 PPI</text>
+            <text x="410" y="178" fill="var(--text-muted)" font-size="12">pixel pitch 0.233 mm</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> The diagonal only sets scale — aspect ratio splits it into width and height, while resolution determines pixel density (PPI).
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Marketing labels every panel by its <b>diagonal</b>, but that number alone won't tell you whether a monitor fits your desk or a TV fits your wall. Real dimensions come from splitting the diagonal with the <b>aspect ratio</b>, and perceived sharpness comes from dividing pixel counts by that diagonal — the pixel density, or <b>PPI</b>.
+      </p>
+
+      <h3 class="content-subheading">1. Diagonal to Width and Height</h3>
+      <div class="math-formula-box">
+        width = D × W ÷ √(W² + H²) · height = D × H ÷ √(W² + H²)
+      </div>
+      <ul class="content-list">
+        <li>For 16:9, √(16² + 9²) = 18.358 — a <b>27″</b> panel is <b>23.5″ wide × 13.2″ tall</b></li>
+        <li>A 32″ 16:9 TV is ~28.1″ × 15.8″ — nearly 200 sq in of glass versus 161 sq in for 27″</li>
+        <li>Ultrawide 21:9 at the same diagonal is much shorter: a 34″ ultrawide is only ~13″ tall but 31.4″ wide</li>
+        <li>Height is why a 32″ TV feels bigger than a 27″ monitor even though both are "16:9"</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Pixel Density (PPI) and Sharpness</h3>
+      <div class="math-formula-box">
+        PPI = √(resolution width² + resolution height²) ÷ diagonal
+      </div>
+      <p>
+        A 27″ QHD panel works out to ≈109 PPI, the same 109 PPI you get from a 24″ 1080p screen — identical sharpness at different sizes. 4K on 27″ jumps to ≈163 PPI, where the OS needs scaling to keep text readable. Pixel pitch follows directly: 25.4 mm ÷ PPI, so 109 PPI = 0.233 mm between pixel centers. Sitting closer than about one metre makes individual pixels visible on a 109 PPI screen.
+      </p>
+
+      <h3 class="content-subheading">3. Choosing by Use Case</h3>
+      <ol class="content-ordered-list">
+        <li><b>Office / coding:</b> 24–27″ at 109–163 PPI; 1440p on 27″ sweet-spots sharpness without heavy scaling</li>
+        <li><b>Photo &amp; video work:</b> ≥160 PPI with an ultrawide 21:9 or 16:10 ratio for timeline and toolbar space</li>
+        <li><b>TV viewing:</b> multiply seating distance by 0.55 for 1080p, 0.40 for 4K — a 55″ 4K TV is comfortable at ~2.0 m (6.5 ft)</li>
+        <li><b>Gaming:</b> resolution ÷ refresh — check your GPU can drive the pixel budget before prioritizing size</li>
+      </ol>
+    `,
+    faqs: [
+      {
+        q: "How do I calculate screen width and height from the diagonal?",
+        a: "Split the diagonal using the aspect ratio: width = diagonal × W ÷ √(W² + H²), height = diagonal × H ÷ √(W² + H²). For 16:9 divide by 18.358 — a 27″ screen gives 23.5″ × 13.2″."
+      },
+      {
+        q: "What is PPI and what is a good value?",
+        a: "PPI (pixels per inch) is diagonal pixels divided by diagonal inches. ~109 PPI (24″ 1080p) is standard, ~140–163 PPI (27″ 1440p/4K) looks crisp, and Apple-class Retina displays sit above 220 PPI where individual pixels stop resolving at normal viewing distance."
+      },
+      {
+        q: "Is a bigger screen always better?",
+        a: "No — what matters is pixels per degree of vision. A 32″ 1080p screen (69 PPI) looks blurrier than a 24″ 1080p (92 PPI), and oversized panels need more desk depth. Match resolution to size so PPI stays above ~95 for monitor use."
+      },
+      {
+        q: "Why does my resolution not match my monitor's aspect ratio?",
+        a: "The GPU is sending a signal with a different ratio than the panel's native one — this causes stretching or black bars. Set the output to the panel's native resolution (e.g. 2560×1440 on a 16:9 QHD monitor) for a pixel-perfect match."
+      },
+      {
+        q: "How far should I sit from a 4K TV?",
+        a: "A common rule: seating distance ≈ 0.4 × diagonal for 4K (55″ ≈ 1.9–2.0 m / 6.5 ft) and 0.55 × diagonal for 1080p. Beyond ~1.5 m you can no longer distinguish 4K from 1080p at typical TV sizes."
+      }
+    ]
+  },
+
+  // Macro Calculator
+  "macro-calculator": {
+    articleTitle: "Macronutrient Splitting: Protein, Carbohydrate and Fat Targets from Calories",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🥗 Macro Plate</span>
+          <h4>2,200 kcal Split Three Ways</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 205" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="205" rx="12" fill="var(--bg-subtle)" />
+            <rect x="55" y="45" width="240" height="46" rx="6" fill="#10b981" />
+            <rect x="300" y="45" width="180" height="46" rx="6" fill="#38bdf8" />
+            <rect x="485" y="45" width="65" height="46" rx="6" fill="#f59e0b" />
+            <text x="70" y="74" fill="#fff" font-weight="800" font-size="14">Protein 165 g · 30%</text>
+            <text x="313" y="74" fill="#fff" font-weight="800" font-size="14">Carbs 193 g</text>
+            <text x="494" y="74" fill="#fff" font-weight="800" font-size="12">Fat 73g</text>
+            <g font-size="12.5" fill="var(--text-muted)">
+              <text x="55" y="125">P: 165 g × 4 kcal = 660 kcal (30%)</text>
+              <text x="55" y="152">C: 193 g × 4 kcal = 770 kcal (35%)</text>
+              <text x="55" y="179">F: 73 g × 9 kcal = 670 kcal (30%) → 2,200 total</text>
+              <text x="345" y="125">Cut: P 40 / F 30</text>
+              <text x="345" y="152">Maintain: P 30 / F 30</text>
+              <text x="345" y="179">Bulk: P 30 / F 25</text>
+            </g>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Protein and fat are locked in grams first (4 and 9 kcal per gram); carbohydrates absorb whatever calories remain.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Calories set the destination; <b>macros</b> decide the route. Splitting a daily calorie target into <b>protein</b>, <b>carbohydrate</b>, and <b>fat</b> grams turns an abstract TDEE number into meals you can actually weigh and cook — protein protects muscle, carbs fuel training, and fats sustain hormones.
+      </p>
+
+      <h3 class="content-subheading">1. Gram Conversion Essentials</h3>
+      <div class="math-formula-box">
+        grams = (calories × percentage) ÷ 4 (protein &amp; carbs) · ÷ 9 (fat)
+      </div>
+      <ul class="content-list">
+        <li>Protein and carbs carry <b>4 kcal/g</b>; fat is energy-dense at <b>9 kcal/g</b> (alcohol adds a fourth 7 kcal/g)</li>
+        <li>A 2,200 kcal day at 30% protein = 660 kcal ÷ 4 = <b>165 g protein</b></li>
+        <li>Remaining calories after protein and fat fill carbs: 2,200 − 660 − 660 = 880 → <b>220 g carbs</b></li>
+        <li>Percentages must total 100% — otherwise the grams won't reproduce your calorie target</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Goal-Based Splits</h3>
+      <ol class="content-ordered-list">
+        <li><b>Cut:</b> 40/30/30 — elevated protein (1.6–2.2 g/kg) defends lean mass while in a deficit</li>
+        <li><b>Maintain:</b> 30/30/40 (or 30/30/30 with fat flexible) — balanced for recomposition</li>
+        <li><b>Bulk:</b> 30/25/45 — extra carbs replenish glycogen for higher training volume</li>
+        <li>Ratio method alternative: fix protein at 1.6–2.2 g/kg of body weight, fat at 0.6–1 g/kg, let carbs take the rest</li>
+      </ol>
+
+      <h3 class="content-subheading">3. Putting Macros on a Plate</h3>
+      <p>
+        Divide the daily totals across 3–5 eating occasions so muscle protein synthesis stays stimulated: at 4 meals, 165 g protein becomes <b>~41 g per meal</b>. Distribute carbs around training — the largest portion in the pre- and post-workout meals — and keep fats away from that window since they slow digestion. Track for two weeks, compare the scale and performance trend rather than a single day, then adjust calories by 100–200 kcal while holding protein constant.
+      </p>
+    `,
+    faqs: [
+      {
+        q: "How do I calculate my macros from calories?",
+        a: "Pick a split (e.g. 30/35/35), multiply calories by each percentage, then divide protein and carbs by 4 and fat by 9. Example: 2,000 kcal at 30/35/35 → 150 g protein, 175 g carbs, 78 g fat."
+      },
+      {
+        q: "How much protein do I need per day?",
+        a: "For most lifters and active people, 1.6–2.2 g per kg of body weight preserves and builds muscle; during a cut aim for the higher end (up to 2.4 g/kg). Sedentary individuals do fine at 0.8 g/kg, the RDA baseline."
+      },
+      {
+        q: "Should carbs or fat be higher on a low-carb diet?",
+        a: "If carbs drop below ~100 g, raise fat to fill the gap — fats provide the essential fatty acids and calorie density a low-carb plan needs. Protein stays high either way; shifting it instead offers no further benefit."
+      },
+      {
+        q: "Do macro percentages matter if total calories are the same?",
+        a: "For weight change, no — the calorie deficit or surplus rules. For body composition and performance, yes: adequate protein protects muscle, and carb timing around training affects power output, so athletes tune the split deliberately."
+      },
+      {
+        q: "How do I adjust macros when I hit a plateau?",
+        a: "Change calories first (−150 to −250 on a stall), keep protein at target, and pull the reduction mostly from carbs and fats proportionally. Re-check after 2 weeks — daily scale noise can hide a genuine 0.5 kg/week trend."
+      }
+    ]
   }
 };
 

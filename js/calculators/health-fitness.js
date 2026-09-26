@@ -5,6 +5,7 @@
  * 1. BMI & BMR Calorie Calculator (Mifflin-St Jeor + TDEE)
  * 2. Body Fat Percentage & Ideal Weight (US Navy + Devine)
  * 3. Daily Water Intake Calculator (Weight + Activity + Climate)
+ * 4. Macro Calculator (Protein, Carbs & Fat split)
  * ============================================================================
  */
 
@@ -668,5 +669,224 @@ function renderWaterIntakeCalculator(container, calcDef) {
     resultDiv.style.display = "none";
   });
 
+  calculate();
+}
+
+/* ==========================================================================
+   Macro Calculator — Protein, Carbs & Fat split
+   ========================================================================== */
+function renderMacroCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="mcCalories">Daily Calorie Target <span class="form-label-hint">From TDEE or goal</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="mcCalories" class="form-control" value="2200" min="500" max="10000" step="10">
+          <span class="input-addon suffix">kcal</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="mcWeight">Body Weight <span class="form-label-hint">For ratio-based protein</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="mcWeight" class="form-control" value="70" min="20" max="350" step="0.5">
+          <span class="input-addon suffix">kg</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="mcMethod">Split Method</label>
+        <select id="mcMethod" class="form-control">
+          <option value="goal" selected>Goal-based (cut / maintain / bulk)</option>
+          <option value="ratio">Body-weight ratio (per kg)</option>
+          <option value="percent">Custom percentage split</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="mcGoalGroup">
+        <label class="form-label" for="mcGoal">Goal</label>
+        <select id="mcGoal" class="form-control">
+          <option value="cut">Cut / Fat loss (high protein)</option>
+          <option value="maintain" selected>Maintain / Recomp</option>
+          <option value="bulk">Bulk / Muscle gain</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="mcRatioGroup" style="display: none;">
+        <label class="form-label" for="mcProtKg">Protein per kg</label>
+        <div class="input-with-addon">
+          <input type="number" id="mcProtKg" class="form-control" value="1.8" min="0.5" max="4" step="0.1">
+          <span class="input-addon suffix">g/kg</span>
+        </div>
+      </div>
+
+      <div class="form-group" id="mcPercentGroup" style="display: none;">
+        <label class="form-label" for="mcProtPct">Protein % <span class="form-label-hint">Carbs & fat fill the rest</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="mcProtPct" class="form-control" value="30" min="5" max="80" step="1">
+          <span class="input-addon suffix">%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcMc" class="btn btn-primary"><span>🥗 Calculate Macros</span></button>
+      <button type="button" id="btnResetMc" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="mcResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const caloriesInput = container.querySelector("#mcCalories");
+  const weightInput = container.querySelector("#mcWeight");
+  const methodSel = container.querySelector("#mcMethod");
+  const goalSel = container.querySelector("#mcGoal");
+  const protKgInput = container.querySelector("#mcProtKg");
+  const protPctInput = container.querySelector("#mcProtPct");
+  const goalGroup = container.querySelector("#mcGoalGroup");
+  const ratioGroup = container.querySelector("#mcRatioGroup");
+  const percentGroup = container.querySelector("#mcPercentGroup");
+  const resultDiv = container.querySelector("#mcResultContainer");
+
+  const METHOD_LABELS = { goal: "Goal-based", ratio: "Body-weight ratio", percent: "Custom percentage" };
+
+  // Goal presets: [protein kcal %, fat kcal %, carbs kcal %]
+  const GOAL_SPLITS = {
+    cut:      { label: "Cut / Fat loss",    p: 40, f: 30, note: "Higher protein preserves muscle in an energy deficit." },
+    maintain: { label: "Maintain / Recomp", p: 30, f: 30, note: "Balanced split for maintenance and recomposition." },
+    bulk:     { label: "Bulk / Gain",       p: 30, f: 25, note: "Extra carbs fuel hard training volume while bulking." }
+  };
+
+  function syncMethod() {
+    const m = methodSel.value;
+    goalGroup.style.display = m === "goal" ? "" : "none";
+    ratioGroup.style.display = m === "ratio" ? "" : "none";
+    percentGroup.style.display = m === "percent" ? "" : "none";
+  }
+
+  function calculate() {
+    const kcal = parseFloat(caloriesInput.value);
+    const weight = parseFloat(weightInput.value);
+    const method = methodSel.value;
+
+    if (isNaN(kcal) || kcal < 500) { alert("Please enter a valid calorie target (≥500 kcal)."); return; }
+
+    let pPct, fPct, note, pGrams = null;
+    if (method === "goal") {
+      const g = GOAL_SPLITS[goalSel.value];
+      pPct = g.p; fPct = g.f; note = g.note;
+    } else if (method === "ratio") {
+      if (isNaN(weight) || weight <= 0) { alert("Please enter a valid body weight."); return; }
+      const perKg = parseFloat(protKgInput.value) || 1.8;
+      pGrams = weight * perKg;
+      pPct = (pGrams * 4) / kcal * 100;
+      fPct = 30;
+      note = `Protein fixed at ${perKg} g/kg × ${weight} kg = ${pGrams.toFixed(0)} g, fat set to 30% of calories.`;
+      if (pPct + fPct > 95) fPct = Math.max(15, 95 - pPct);
+    } else {
+      pPct = parseFloat(protPctInput.value);
+      if (isNaN(pPct) || pPct < 5 || pPct > 80) { alert("Protein must be 5–80%."); return; }
+      fPct = pPct >= 40 ? 25 : 30;
+      note = `Custom split — carbs and fat share the remaining ${(100 - pPct).toFixed(0)}%.`;
+    }
+
+    const pKcal = kcal * pPct / 100;
+    const fKcal = kcal * fPct / 100;
+    const cKcal = Math.max(0, kcal - pKcal - fKcal);
+
+    const proteinG = pGrams !== null ? pGrams : pKcal / 4;
+    const carbsG = cKcal / 4;
+    const fatG = fKcal / 9;
+    const cPct = cKcal / kcal * 100;
+    const fPctFinal = fKcal / kcal * 100;
+    const pPctFinal = pKcal / kcal * 100;
+
+    const meals = 4;
+    const inCm = weight > 0 ? (proteinG / weight) : 0;
+
+    const macroCard = (label, grams, pct, kcalPerG, color) => `
+      <div class="result-stat-card">
+        <div class="result-stat-label">${label}</div>
+        <div class="result-stat-val" style="color: ${color};">${Math.round(grams)} g</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);">${pct.toFixed(0)}% · ${Math.round(kcalPerG)} kcal</div>
+      </div>`;
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Daily Macro Targets (${Math.round(kcal)} kcal)</span>
+        <div class="result-hero-value" style="font-size: 1.5rem;">
+          ${Math.round(proteinG)}P · ${Math.round(carbsG)}C · ${Math.round(fatG)}F
+        </div>
+        <span style="font-size: 0.95rem; color: var(--text-secondary);">
+          ${pPctFinal.toFixed(0)}% protein / ${cPct.toFixed(0)}% carbs / ${fPctFinal.toFixed(0)}% fat
+        </span>
+      </div>
+
+      <div class="result-stat-grid">
+        ${macroCard("Protein", proteinG, pPctFinal, pKcal, "var(--accent-emerald)")}
+        ${macroCard("Carbohydrates", carbsG, cPct, cKcal, "#38bdf8")}
+        ${macroCard("Fat", fatG, fPctFinal, fKcal, "#f59e0b")}
+        <div class="result-stat-card">
+          <div class="result-stat-label">Per Meal (${meals} meals)</div>
+          <div class="result-stat-val">${Math.round(proteinG / meals)}P ${Math.round(carbsG / meals)}C ${Math.round(fatG / meals)}F</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Protein per kg</div>
+          <div class="result-stat-val">${inCm.toFixed(2)} g/kg</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Calories Check</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${Math.round(proteinG * 4 + carbsG * 4 + fatG * 9)} kcal</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Water Co-Target</div>
+          <div class="result-stat-val">${(weight * 0.033).toFixed(2)} L+</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Split Method</div>
+          <div class="result-stat-val" style="font-size:0.9rem;">${METHOD_LABELS[methodSel.value] || methodSel.value}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📐 Calculation Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Split Calories</span>
+          <div class="math-formula-box">grams = (kcal × pct) ÷ calories per gram (P/C = 4, F = 9)</div>
+          <p class="step-content">${note}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Convert to Grams</span>
+          <div class="math-formula-box">P = ${Math.round(pKcal)} ÷ 4 · C = ${Math.round(cKcal)} ÷ 4 · F = ${Math.round(fKcal)} ÷ 9</div>
+          <p class="step-content">Protein <b>${Math.round(proteinG)} g</b>, Carbs <b>${Math.round(carbsG)} g</b>, Fat <b>${Math.round(fatG)} g</b> — cross-check: ${(Math.round(proteinG) * 4 + Math.round(carbsG) * 4 + Math.round(fatG) * 9).toLocaleString()} kcal ≈ target.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Plate it</span>
+          <div class="math-formula-box">per meal = daily grams ÷ ${meals}</div>
+          <p class="step-content">Across ${meals} meals: <b>${Math.round(proteinG / meals)} g protein, ${Math.round(carbsG / meals)} g carbs, ${Math.round(fatG / meals)} g fat</b> per sitting (${Math.round(kcal / meals)} kcal).</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  methodSel.addEventListener("change", () => { syncMethod(); calculate(); });
+  goalSel.addEventListener("change", calculate);
+  [caloriesInput, weightInput, protKgInput, protPctInput].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcMc").addEventListener("click", calculate);
+  container.querySelector("#btnResetMc").addEventListener("click", () => {
+    caloriesInput.value = "2200";
+    weightInput.value = "70";
+    methodSel.value = "goal";
+    goalSel.value = "maintain";
+    protKgInput.value = "1.8";
+    protPctInput.value = "30";
+    syncMethod();
+    resultDiv.style.display = "none";
+  });
+
+  syncMethod();
   calculate();
 }

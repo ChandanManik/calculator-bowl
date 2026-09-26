@@ -4,6 +4,7 @@
  * 1. Live Internet Speed, Ping & Jitter Test Engine with Speedometer Gauge
  * 2. Streaming & Data Usage Calculator
  * 3. IP Subnet & CIDR Calculator (IPv4/IPv6)
+ * 4. Screen Size, Resolution & PPI Calculator
  * 100% Client-Side, High-Precision, Zero Server Bandwidth Cost
  * ============================================================================
  */
@@ -1395,6 +1396,214 @@ function renderIpSubnetCalculator(container, calcDef) {
     resultDiv.style.display = "none";
   });
   ipInput.addEventListener("keydown", e => { if (e.key === "Enter") calculate(); });
+
+  calculate();
+}
+
+/* ==========================================================================
+   Screen Size, Resolution & PPI Calculator
+   ========================================================================== */
+function renderScreenSizeCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="ssDiagonal">Screen Diagonal <span class="form-label-hint">Measured corner to corner</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="ssDiagonal" class="form-control" value="27" min="1" max="300" step="0.1">
+          <span class="input-addon suffix">inches</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="ssRatio">Aspect Ratio</label>
+        <select id="ssRatio" class="form-control">
+          <option value="16:9" selected>16:9 (widescreen / most monitors)</option>
+          <option value="16:10">16:10 (productivity laptops)</option>
+          <option value="21:9">21:9 (ultrawide)</option>
+          <option value="32:9">32:9 (super ultrawide)</option>
+          <option value="4:3">4:3 (classic)</option>
+          <option value="3:2">3:2 (surface-style)</option>
+          <option value="5:4">5:4 (SXGA)</option>
+          <option value="1:1">1:1 (square)</option>
+          <option value="custom">Custom W:H</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="ssCustomGroup" style="display: none;">
+        <label class="form-label" for="ssCustomRatio">Custom Ratio (W:H)</label>
+        <input type="text" id="ssCustomRatio" class="form-control" value="17:10" placeholder="e.g. 17:10">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="ssResW">Resolution Width <span class="form-label-hint">Pixels</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="ssResW" class="form-control" value="2560" min="1" max="30000" step="1">
+          <span class="input-addon suffix">px</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="ssResH">Resolution Height <span class="form-label-hint">Pixels</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="ssResH" class="form-control" value="1440" min="1" max="30000" step="1">
+          <span class="input-addon suffix">px</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcSs" class="btn btn-primary"><span>🖥️ Calculate Dimensions</span></button>
+      <button type="button" id="btnResetSs" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="ssResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const diagonalInput = container.querySelector("#ssDiagonal");
+  const ratioSel = container.querySelector("#ssRatio");
+  const customGroup = container.querySelector("#ssCustomGroup");
+  const customInput = container.querySelector("#ssCustomRatio");
+  const resWInput = container.querySelector("#ssResW");
+  const resHInput = container.querySelector("#ssResH");
+  const resultDiv = container.querySelector("#ssResultContainer");
+
+  function getRatio() {
+    if (ratioSel.value === "custom") {
+      const m = (customInput.value || "").split(/[:x×/]/i).map(Number);
+      if (m.length === 2 && m[0] > 0 && m[1] > 0) return { w: m[0], h: m[1], label: `${m[0]}:${m[1]}` };
+      return null;
+    }
+    const [w, h] = ratioSel.value.split(":").map(Number);
+    return { w, h, label: ratioSel.value };
+  }
+
+  function calculate() {
+    const diag = parseFloat(diagonalInput.value);
+    const resW = parseFloat(resWInput.value);
+    const resH = parseFloat(resHInput.value);
+    const ratio = getRatio();
+
+    if (isNaN(diag) || diag <= 0) { alert("Please enter a valid diagonal size in inches."); return; }
+    if (!ratio) { alert("Please enter a valid aspect ratio like 16:9."); return; }
+    if (isNaN(resW) || isNaN(resH) || resW <= 0 || resH <= 0) { alert("Please enter a valid pixel resolution."); return; }
+
+    const { w: rw, h: rh, label } = ratio;
+    const hyp = Math.sqrt(rw * rw + rh * rh);
+    const widthIn = (diag * rw) / hyp;
+    const heightIn = (diag * rh) / hyp;
+    const areaSqIn = widthIn * heightIn;
+    const widthCm = widthIn * 2.54;
+    const heightCm = heightIn * 2.54;
+    const ppi = Math.sqrt(resW * resW + resH * resH) / diag;
+    const totalPx = resW * resH;
+
+    // Resolution name vs actual ratio consistency
+    const resRatio = resW / resH;
+    const specRatio = rw / rh;
+    const ratioMatch = Math.abs(resRatio - specRatio) / specRatio < 0.01;
+
+    const resName = (() => {
+      if (resW === 3840 && resH === 2160) return "4K UHD";
+      if (resW === 2560 && resH === 1440) return "QHD (1440p)";
+      if (resW === 1920 && resH === 1080) return "Full HD (1080p)";
+      if (resW === 1280 && resH === 720) return "HD (720p)";
+      if (resW === 5120 && resH === 2880) return "5K";
+      if (resW === 7680 && resH === 4320) return "8K UHD";
+      if (resW === 3440 && resH === 1440) return "UWQHD ultrawide";
+      if (resW === 2560 && resH === 1080) return "UWHD ultrawide";
+      return "Custom";
+    })();
+
+    // 4K pixel-budget comparison: scaling factor vs 1920×1080
+    const vsFhd = totalPx / (1920 * 1080);
+
+    // Viewing distance where PPI stops being distinguishable (~1 arcmin/px)
+    const minDistIn = totalPx > 0 ? (diag * 3437.75 / Math.sqrt(totalPx)) / 100 : 0;
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Actual Screen Dimensions (${label})</span>
+        <div class="result-hero-value" style="font-size: 1.5rem;">${widthIn.toFixed(1)}″ × ${heightIn.toFixed(1)}″</div>
+        <span style="font-size: 0.95rem; color: var(--text-secondary);">
+          ${widthCm.toFixed(1)} cm × ${heightCm.toFixed(1)} cm · ${areaSqIn.toFixed(0)} sq in (${(widthCm * heightCm / 645.16).toFixed(0)} sq in metric-converted)
+        </span>
+      </div>
+
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Width</div>
+          <div class="result-stat-val">${widthIn.toFixed(2)}″</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Height</div>
+          <div class="result-stat-val">${heightIn.toFixed(2)}″</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Pixel Density (PPI)</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${ppi.toFixed(1)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Total Pixels</div>
+          <div class="result-stat-val">${totalPx.toLocaleString()} <span style="font-size:0.8rem;color:var(--text-muted);">${resName}</span></div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">vs 1080p Pixel Budget</div>
+          <div class="result-stat-val">${vsFhd.toFixed(2)}×</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Pixel Pitch</div>
+          <div class="result-stat-val">${(25.4 / ppi).toFixed(3)} mm</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Resolution ↔ Ratio</div>
+          <div class="result-stat-val" style="color: ${ratioMatch ? 'var(--accent-emerald)' : '#f59e0b'};">${ratioMatch ? 'Match ✓' : `Mismatch (res is ${resRatio.toFixed(2)})`}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Sharp at ≈</div>
+          <div class="result-stat-val">${(minDistIn / 39.37).toFixed(1)} m</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📐 Calculation Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Split the Diagonal</span>
+          <div class="math-formula-box">width = D × W / √(W² + H²) · height = D × H / √(W² + H²)</div>
+          <p class="step-content">√(${rw}² + ${rh}²) = ${hyp.toFixed(3)} → width <b>${diag} × ${rw} ÷ ${hyp.toFixed(3)} = ${widthIn.toFixed(2)}″</b>, height <b>${diag} × ${rh} ÷ ${hyp.toFixed(3)} = ${heightIn.toFixed(2)}″</b></p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Pixel Density</span>
+          <div class="math-formula-box">PPI = √(resW² + resH²) ÷ diagonal</div>
+          <p class="step-content">√(${resW}² + ${resH}²) = ${Math.sqrt(totalPx).toFixed(0)} px diagonal ÷ ${diag}″ = <b>${ppi.toFixed(1)} PPI</b> (${(25.4 / ppi).toFixed(3)} mm between pixel centers)</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Area Check</span>
+          <div class="math-formula-box">area = width × height</div>
+          <p class="step-content">${widthIn.toFixed(2)}″ × ${heightIn.toFixed(2)}″ = <b>${areaSqIn.toFixed(0)} sq in (${(widthIn * heightIn * 0.00064516).toFixed(2)} m²)</b> — the true visible surface regardless of bezels.</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  ratioSel.addEventListener("change", () => {
+    customGroup.style.display = ratioSel.value === "custom" ? "" : "none";
+    calculate();
+  });
+  container.querySelector("#btnCalcSs").addEventListener("click", calculate);
+  container.querySelector("#btnResetSs").addEventListener("click", () => {
+    diagonalInput.value = "27";
+    ratioSel.value = "16:9";
+    customGroup.style.display = "none";
+    customInput.value = "17:10";
+    resWInput.value = "2560";
+    resHInput.value = "1440";
+    resultDiv.style.display = "none";
+  });
+  [diagonalInput, resWInput, resHInput, customInput].forEach(el =>
+    el.addEventListener("input", calculate));
 
   calculate();
 }

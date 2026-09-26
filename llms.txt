@@ -7,7 +7,7 @@
 - **Directory**: [Master A-Z Directory](https://calculatorbowl.com/calculators/)
 - **Client-Side Processing**: Instant zero-latency mathematical and financial calculations.
 - **Step-by-Step Breakdowns**: Detailed mathematical solutions showing formulas, variable substitutions, and simplification steps.
-- **Topical Siloing**: 55 precision tools structured across 6 topical pillars.
+- **Topical Siloing**: 58 precision tools structured across 6 topical pillars.
 
 ---
 
@@ -370,6 +370,13 @@
 - **Summary**: Count business days between two dates, exclude weekends and holidays, or add/subtract working days from a start date for project and payroll planning.
 - **Related Tools in Category**: [Age Calculator](https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/), [Time Calculator](https://calculatorbowl.com/calculators/date-time/calendar/time-duration-calculator/), [Weather & Radar](https://calculatorbowl.com/calculators/date-time/environment/weather-forecast-calculator/)
 
+### [Time Zone Converter](https://calculatorbowl.com/calculators/date-time/timezone/time-zone-converter/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/date-time/timezone/time-zone-converter/`
+- **Category**: [Date & Time Calculators](https://calculatorbowl.com/calculators/date-time/)
+- **Subcategory**: `Time Zones & World Clock`
+- **Summary**: Convert a date and time between any world time zones including DST, show UTC offsets, and compare world cities side by side with live clocks.
+- **Related Tools in Category**: [Age Calculator](https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/), [Time Calculator](https://calculatorbowl.com/calculators/date-time/calendar/time-duration-calculator/), [Weather & Radar](https://calculatorbowl.com/calculators/date-time/environment/weather-forecast-calculator/)
+
 ## 📁 Network & Internet Calculators (Category Hub: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/))
 
 *Description*: Measure live broadband internet download speed, upload bandwidth, latency ping, jitter, and calculate streaming data consumption across YouTube, Netflix, 4K video, and Zoom.
@@ -379,44 +386,58 @@
 - **Category**: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/)
 - **Subcategory**: `Broadband & Speed`
 - **Summary**: Test real-time internet download speed, upload bandwidth, ping latency, jitter, and get gaming & 4K streaming ratings.
-- **Related Tools in Category**: [Streaming Data Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/), [IP Subnet Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/)
+- **Related Tools in Category**: [Streaming Data Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/), [IP Subnet Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/), [Screen Size Calculator](https://calculatorbowl.com/calculators/tech-network/display/screen-size-calculator/)
 
 ### [Streaming & Data Usage Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/`
 - **Category**: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/)
 - **Subcategory**: `Data Usage`
 - **Summary**: Calculate daily and monthly internet data consumption for YouTube, Netflix (4K/1080p), Spotify, Zoom, and monitor ISP monthly caps.
-- **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/), [IP Subnet Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/)
+- **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/), [IP Subnet Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/), [Screen Size Calculator](https://calculatorbowl.com/calculators/tech-network/display/screen-size-calculator/)
 
 ### [IP Subnet & CIDR Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/`
 - **Category**: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/)
 - **Subcategory**: `IP Addressing`
 - **Summary**: Convert CIDR prefixes to subnet masks, find network address, broadcast address, first/last host, and total usable IPs for IPv4 and IPv6 ranges.
-- **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/), [Streaming Data Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/)
+- **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/), [Streaming Data Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/), [Screen Size Calculator](https://calculatorbowl.com/calculators/tech-network/display/screen-size-calculator/)
+
+### [Screen Size, Resolution & PPI Calculator](https://calculatorbowl.com/calculators/tech-network/display/screen-size-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/tech-network/display/screen-size-calculator/`
+- **Category**: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/)
+- **Subcategory**: `Displays & Hardware`
+- **Summary**: Calculate screen width and height from diagonal size and aspect ratio, find pixel density (PPI), and compare actual viewing area across monitors and TVs.
+- **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/), [Streaming Data Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/), [IP Subnet Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/)
 
 ## 📁 Health & Fitness Calculators (Category Hub: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/))
 
-*Description*: Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, and weight-goal targets with step-by-step health breakdowns.
+*Description*: Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, and macro splits (protein, carbs, fat) with step-by-step health breakdowns.
 
 ### [BMI & BMR Calorie Calculator](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/`
 - **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
 - **Subcategory**: `Fitness & Body Metrics`
 - **Summary**: Calculate BMI with WHO categories, BMR (Mifflin-St Jeor), daily calorie needs (TDEE), and weight-goal targets.
-- **Related Tools in Category**: [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
+- **Related Tools in Category**: [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/), [Macro Calculator](https://calculatorbowl.com/calculators/health/fitness/macro-calculator/)
 
 ### [Body Fat Percentage & Ideal Weight Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/`
 - **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
 - **Subcategory**: `Fitness & Body Metrics`
 - **Summary**: Estimate body fat percentage with the US Navy circumference method, classify it by sex and age, and find ideal body weight with the Devine formula.
-- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
+- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/), [Macro Calculator](https://calculatorbowl.com/calculators/health/fitness/macro-calculator/)
 
 ### [Daily Water Intake Calculator](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/`
 - **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
 - **Subcategory**: `Fitness & Body Metrics`
 - **Summary**: Calculate your daily water intake needs in liters, ounces, and cups based on body weight, activity level, climate, and pregnancy or breastfeeding status.
-- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/)
+- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Macro Calculator](https://calculatorbowl.com/calculators/health/fitness/macro-calculator/)
+
+### [Macro Calculator - Protein, Carbs & Fat Split](https://calculatorbowl.com/calculators/health/fitness/macro-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/macro-calculator/`
+- **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
+- **Subcategory**: `Fitness & Body Metrics`
+- **Summary**: Split daily calories into protein, carbohydrate, and fat grams using body-weight ratios or percent splits, with meal-by-meal targets for cut, maintain, and bulk goals.
+- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
 

@@ -1851,7 +1851,7 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Date & Time",
     "icon": "⏱️",
     "colorClass": "datetime",
-    "badge": "4 Calculators",
+    "badge": "5 Calculators",
     "description": "Calculate exact chronological age, next birthday countdown, elapsed time duration, and live weather forecast with interactive radar maps and sunrise/sunset times.",
     "seoTitle": "Date & Time Calculators - Age & Duration Solvers | CalculatorBowl",
     "seoDescription": "Free online date, time, and environmental calculators to determine exact chronological age, time durations, and live weather radar forecasts.",
@@ -2011,6 +2011,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/date-time/calendar/business-days-calculator/",
         "subcatUrl": "/calculators/date-time/calendar/",
         "categoryUrl": "/calculators/date-time/"
+      },
+      {
+        "id": "time-zone-converter",
+        "name": "Time Zone Converter",
+        "shortName": "Time Zone Converter",
+        "icon": "🌐",
+        "badge": "World Clock",
+        "description": "Convert a date and time between any world time zones including DST, show UTC offsets, and compare world cities side by side with live clocks.",
+        "seoTitle": "Time Zone Converter - World Clock, UTC Offset & DST",
+        "seoDescription": "Convert times between time zones worldwide with automatic daylight saving handling, UTC offsets, and a live world-city comparison clock.",
+        "category": "date-time",
+        "renderFunction": "renderTimeZoneCalculator",
+        "contextualGuide": {
+          "title": "Global Time & Scheduling Tools",
+          "html": "\n            <p>\n              Across-the-meeting scheduling, flight planning, and remote-team coordination all hinge on knowing the offset between zones — daylight saving shifts those offsets twice a year. Explore our <a href=\"/calculators/date-time/\" class=\"in-text-link\">⏱️ Date &amp; Time Hub</a> for more chronological utilities.\n            </p>\n            <p>\n              Count working days to a deadline or measure elapsed clock time with the companion tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "business-days-calculator",
+              "label": "Business Days Calculator",
+              "icon": "📅"
+            },
+            {
+              "id": "time-calculator",
+              "label": "Time Duration & Difference",
+              "icon": "⏱️"
+            },
+            {
+              "id": "age-calculator",
+              "label": "Age & Birthday Calculator",
+              "icon": "🎂"
+            }
+          ]
+        },
+        "subcategory": "timezone",
+        "subcatTitle": "Time Zones & World Clock",
+        "slug": "time-zone-converter",
+        "url": "/calculators/date-time/timezone/time-zone-converter/",
+        "subcatUrl": "/calculators/date-time/timezone/",
+        "categoryUrl": "/calculators/date-time/"
       }
     ],
     "faqs": [
@@ -2032,7 +2071,7 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Network",
     "icon": "🌐",
     "colorClass": "network",
-    "badge": "3 Tools",
+    "badge": "4 Tools",
     "description": "Measure live broadband internet download speed, upload bandwidth, latency ping, jitter, and calculate streaming data consumption across YouTube, Netflix, 4K video, and Zoom.",
     "seoTitle": "Internet Speed Test & Streaming Data Usage Calculators | CalculatorBowl",
     "seoDescription": "Free real-time internet speed test with live speedometer gauge, latency ping meter, and streaming data usage estimation tools.",
@@ -2153,6 +2192,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/tech-network/ip-address/ip-subnet-calculator/",
         "subcatUrl": "/calculators/tech-network/ip-address/",
         "categoryUrl": "/calculators/tech-network/"
+      },
+      {
+        "id": "screen-size-calculator",
+        "name": "Screen Size, Resolution & PPI Calculator",
+        "shortName": "Screen Size Calculator",
+        "icon": "🖥️",
+        "badge": "Display",
+        "description": "Calculate screen width and height from diagonal size and aspect ratio, find pixel density (PPI), and compare actual viewing area across monitors and TVs.",
+        "seoTitle": "Screen Size Calculator - Width, Height, PPI & Resolution",
+        "seoDescription": "Calculate monitor or TV screen width, height, pixel density (PPI), and viewing area from diagonal size, aspect ratio, and pixel resolution.",
+        "category": "tech-network",
+        "renderFunction": "renderScreenSizeCalculator",
+        "contextualGuide": {
+          "title": "Display & Bandwidth Cross-References",
+          "html": "\n            <p>\n              Bigger diagonal does not always mean more visible area — a 27&quot; 16:9 monitor and a 34&quot; ultrawide show different widths at similar heights. Explore our <a href=\"/calculators/tech-network/\" class=\"in-text-link\">🌐 Tech &amp; Network Hub</a> for more hardware utilities.\n            </p>\n            <p>\n              Once the panel is picked, budget its bandwidth with the data usage tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "streaming-data-calculator",
+              "label": "Streaming Data Usage",
+              "icon": "📱"
+            },
+            {
+              "id": "internet-speed-test",
+              "label": "Live Internet Speed Test",
+              "icon": "🚀"
+            },
+            {
+              "id": "percentage-calculator",
+              "label": "Percentage & Area Math",
+              "icon": "📊"
+            }
+          ]
+        },
+        "subcategory": "display",
+        "subcatTitle": "Displays & Hardware",
+        "slug": "screen-size-calculator",
+        "url": "/calculators/tech-network/display/screen-size-calculator/",
+        "subcatUrl": "/calculators/tech-network/display/",
+        "categoryUrl": "/calculators/tech-network/"
       }
     ],
     "faqs": [
@@ -2174,8 +2252,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Health",
     "icon": "💪",
     "colorClass": "health",
-    "badge": "3 Calculators",
-    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, and weight-goal targets with step-by-step health breakdowns.",
+    "badge": "4 Calculators",
+    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, and macro splits (protein, carbs, fat) with step-by-step health breakdowns.",
     "seoTitle": "Health & Fitness Calculators - BMI, BMR & Calorie Needs | CalculatorBowl",
     "seoDescription": "Free health calculators for BMI body mass index, BMR basal metabolic rate, and daily calorie requirements for weight loss, maintenance, and muscle gain.",
     "calculators": [
@@ -2293,6 +2371,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Fitness & Body Metrics",
         "slug": "water-intake-calculator",
         "url": "/calculators/health/fitness/water-intake-calculator/",
+        "subcatUrl": "/calculators/health/fitness/",
+        "categoryUrl": "/calculators/health/"
+      },
+      {
+        "id": "macro-calculator",
+        "name": "Macro Calculator - Protein, Carbs & Fat Split",
+        "shortName": "Macro Calculator",
+        "icon": "🥗",
+        "badge": "Nutrition",
+        "description": "Split daily calories into protein, carbohydrate, and fat grams using body-weight ratios or percent splits, with meal-by-meal targets for cut, maintain, and bulk goals.",
+        "seoTitle": "Macro Calculator - Protein, Carbs & Fat Grams Per Day",
+        "seoDescription": "Calculate daily macro targets in grams of protein, carbohydrates, and fat from calories, body weight, and goal (cut, maintain, bulk) with per-meal gram targets.",
+        "category": "health",
+        "renderFunction": "renderMacroCalculator",
+        "contextualGuide": {
+          "title": "Nutrition & Body Metric Cross-References",
+          "html": "\n            <p>\n              Macros are the practical layer under calories — once TDEE sets the total, protein protects muscle while carbs and fats fuel training and hormones. Explore our <a href=\"/calculators/health/\" class=\"in-text-link\">💪 Health Hub</a> for the complete body-metric suite.\n            </p>\n            <p>\n              Start with the calorie target from your TDEE, then split it here into grams.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "bmi-bmr-calculator",
+              "label": "BMI & Calorie (TDEE) Calculator",
+              "icon": "⚖️"
+            },
+            {
+              "id": "water-intake-calculator",
+              "label": "Daily Water Intake",
+              "icon": "💧"
+            },
+            {
+              "id": "body-fat-calculator",
+              "label": "Body Fat Percentage",
+              "icon": "🎯"
+            }
+          ]
+        },
+        "subcategory": "fitness",
+        "subcatTitle": "Fitness & Body Metrics",
+        "slug": "macro-calculator",
+        "url": "/calculators/health/fitness/macro-calculator/",
         "subcatUrl": "/calculators/health/fitness/",
         "categoryUrl": "/calculators/health/"
       }

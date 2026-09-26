@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  * Date, Time & Physical Measurement Suite: Age Calculator, Time Duration,
- * Weight / Mass Unit Converter, and Business Days Calculator
+ * Weight / Mass Unit Converter, Business Days Calculator, and Time Zone Converter
  * ============================================================================
  */
 
@@ -650,5 +650,262 @@ function renderBusinessDaysCalculator(container, calcDef) {
   });
 
   syncMode();
+  calculate();
+}
+
+/* ==========================================================================
+   Time Zone Converter (IANA zones, DST-aware, Intl API — no server)
+   ========================================================================== */
+function renderTimeZoneCalculator(container, calcDef) {
+  const ZONES = [
+    { tz: "Pacific/Midway", city: "Midway / Pago Pago" },
+    { tz: "Pacific/Honolulu", city: "Honolulu (Hawaii)" },
+    { tz: "America/Anchorage", city: "Anchorage (Alaska)" },
+    { tz: "America/Los_Angeles", city: "Los Angeles / Vancouver" },
+    { tz: "America/Denver", city: "Denver / Calgary" },
+    { tz: "America/Chicago", city: "Chicago / Mexico City" },
+    { tz: "America/New_York", city: "New York / Toronto" },
+    { tz: "America/Sao_Paulo", city: "São Paulo" },
+    { tz: "America/Buenos_Aires", city: "Buenos Aires" },
+    { tz: "UTC", city: "UTC (Coordinated)" },
+    { tz: "Europe/London", city: "London / Dublin" },
+    { tz: "Europe/Lisbon", city: "Lisbon" },
+    { tz: "Europe/Paris", city: "Paris / Berlin / Madrid" },
+    { tz: "Europe/Amsterdam", city: "Amsterdam / Brussels" },
+    { tz: "Europe/Stockholm", city: "Stockholm / Oslo / Helsinki" },
+    { tz: "Europe/Warsaw", city: "Warsaw / Prague" },
+    { tz: "Europe/Athens", city: "Athens / Istanbul" },
+    { tz: "Europe/Moscow", city: "Moscow" },
+    { tz: "Africa/Lagos", city: "Lagos / Accra" },
+    { tz: "Africa/Cairo", city: "Cairo" },
+    { tz: "Africa/Johannesburg", city: "Johannesburg" },
+    { tz: "Africa/Nairobi", city: "Nairobi" },
+    { tz: "Asia/Dubai", city: "Dubai / Abu Dhabi" },
+    { tz: "Asia/Karachi", city: "Karachi" },
+    { tz: "Asia/Kolkata", city: "Kolkata / Delhi / Mumbai" },
+    { tz: "Asia/Kathmandu", city: "Kathmandu (+5:45)" },
+    { tz: "Asia/Dhaka", city: "Dhaka" },
+    { tz: "Asia/Yangon", city: "Yangon" },
+    { tz: "Asia/Bangkok", city: "Bangkok / Jakarta" },
+    { tz: "Asia/Singapore", city: "Singapore / Hong Kong" },
+    { tz: "Asia/Shanghai", city: "Shanghai / Beijing / Manila" },
+    { tz: "Asia/Tokyo", city: "Tokyo / Seoul" },
+    { tz: "Australia/Perth", city: "Perth" },
+    { tz: "Australia/Sydney", city: "Sydney / Melbourne" },
+    { tz: "Pacific/Auckland", city: "Auckland" },
+    { tz: "Asia/Jerusalem", city: "Jerusalem / Tel Aviv" },
+    { tz: "Europe/Kyiv", city: "Kyiv / Bucharest" },
+    { tz: "America/Phoenix", city: "Phoenix (no DST)" },
+    { tz: "America/Indiana/Indianapolis", city: "Indianapolis" },
+    { tz: "Pacific/Guam", city: "Guam" }
+  ];
+
+  const optHtml = (sel) => ZONES.map((z, i) =>
+    `<option value="${z.tz}"${z.tz === sel ? " selected" : ""}>${z.city} · ${z.tz}</option>`
+  ).join("");
+
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="tzDate">Date <span class="form-label-hint">Source zone</span></label>
+        <input type="date" id="tzDate" class="form-control">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="tzTime">Time <span class="form-label-hint">24-hour</span></label>
+        <input type="time" id="tzTime" class="form-control">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="tzFrom">From Time Zone</label>
+        <select id="tzFrom" class="form-control">${optHtml("America/New_York")}</select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="tzTo">To Time Zone</label>
+        <select id="tzTo" class="form-control">${optHtml("Asia/Dhaka")}</select>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcTz" class="btn btn-primary"><span>🌐 Convert Time</span></button>
+      <button type="button" id="btnSwapTz" class="btn btn-secondary"><span>⇄ Swap Zones</span></button>
+      <button type="button" id="btnNowTz" class="btn btn-secondary"><span>⏱ Now</span></button>
+    </div>
+
+    <div id="tzResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const dateInput = container.querySelector("#tzDate");
+  const timeInput = container.querySelector("#tzTime");
+  const fromSel = container.querySelector("#tzFrom");
+  const toSel = container.querySelector("#tzTo");
+  const resultDiv = container.querySelector("#tzResultContainer");
+
+  // Offset of zone at a UTC instant, in minutes east of UTC
+  function zoneOffsetMinutes(utcMs, tz) {
+    const dtf = new Intl.DateTimeFormat("en-US", {
+      timeZone: tz, hour12: false,
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", second: "2-digit"
+    });
+    const map = {};
+    for (const p of dtf.formatToParts(new Date(utcMs))) map[p.type] = p.value;
+    const wallAsUtc = Date.UTC(+map.year, map.month - 1, +map.day, +map.hour % 24, +map.minute, +map.second);
+    return (wallAsUtc - utcMs) / 60000;
+  }
+
+  // Wall-clock time in a zone → exact UTC ms (two-pass for DST edges)
+  function wallToUtc(y, mo, d, h, mi, tz) {
+    const guess = Date.UTC(y, mo - 1, d, h, mi, 0);
+    let off = zoneOffsetMinutes(guess, tz);
+    let utc = guess - off * 60000;
+    const off2 = zoneOffsetMinutes(utc, tz);
+    if (off2 !== off) utc = guess - off2 * 60000;
+    return utc;
+  }
+
+  const fmtIn = (utcMs, tz) => {
+    const dtf = new Intl.DateTimeFormat("en-US", {
+      timeZone: tz, hour12: false,
+      weekday: "long", year: "numeric", month: "long", day: "numeric",
+      hour: "2-digit", minute: "2-digit"
+    });
+    return dtf.format(new Date(utcMs));
+  };
+  const fmtZoneName = (utcMs, tz) => {
+    try {
+      const parts = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "long" })
+        .formatToParts(new Date(utcMs));
+      const n = parts.find(p => p.type === "timeZoneName");
+      return n ? n.value : tz;
+    } catch (e) { return tz; }
+  };
+  const offLabel = (mins) => {
+    const s = mins < 0 ? "-" : "+";
+    const a = Math.abs(mins);
+    return `UTC${s}${String(Math.floor(a / 60)).padStart(2, "0")}:${String(a % 60).padStart(2, "0")}`;
+  };
+
+  function calculate() {
+    const [y, mo, d] = (dateInput.value || "").split("-").map(Number);
+    const [h, mi] = (timeInput.value || "").split(":").map(Number);
+    if (!y || !mo || !d || isNaN(h) || isNaN(mi)) {
+      alert("Please enter a valid date and time.");
+      return;
+    }
+    const fromTz = fromSel.value, toTz = toSel.value;
+    const utc = wallToUtc(y, mo, d, h, mi, fromTz);
+    const fromOff = zoneOffsetMinutes(utc, fromTz);
+    const toOff = zoneOffsetMinutes(utc, toTz);
+    const diff = toOff - fromOff;
+    const diffAbs = Math.abs(diff);
+
+    const fromDst = fromOff !== zoneOffsetMinutes(Date.UTC(y, mo, d, 12, 0, 0) - 86400000 * 180, fromTz) || fmtZoneName(utc, fromTz).toLowerCase().includes("daylight");
+    const sameZone = fromTz === toTz;
+
+    // Offset-change preview: when the source zone next changes DST
+    let dstNote = "";
+    try {
+      const janOff = zoneOffsetMinutes(Date.UTC(y, 0, 15), fromTz);
+      const julOff = zoneOffsetMinutes(Date.UTC(y, 6, 15), fromTz);
+      if (janOff !== julOff) {
+        dstNote = `${fromTz} observes DST (Jan ${offLabel(janOff)} / Jul ${offLabel(julOff)}).`;
+      } else {
+        dstNote = `${fromTz} has a fixed offset year-round (${offLabel(fromOff)}).`;
+      }
+    } catch (e) { dstNote = ""; }
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Converted Time</span>
+        <div class="result-hero-value" style="font-size: 1.5rem;">${fmtIn(utc, toTz)}</div>
+        <span style="font-size: 0.95rem; color: var(--text-secondary);">
+          <b>${fmtZoneName(utc, toTz)}</b> · ${offLabel(toOff)}
+        </span>
+      </div>
+
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Source Time (${fromTz})</div>
+          <div class="result-stat-val" style="font-size: 1rem;">${fmtIn(utc, fromTz)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Target Time (${toTz})</div>
+          <div class="result-stat-val" style="font-size: 1rem; color: var(--accent-emerald);">${fmtIn(utc, toTz)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Source Offset</div>
+          <div class="result-stat-val">${offLabel(fromOff)}${sameZone ? " (same zone)" : ""}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Target Offset</div>
+          <div class="result-stat-val">${offLabel(toOff)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Time Difference</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">
+            ${sameZone ? "0 h" : `${diff > 0 ? "+" : "-"}${Math.floor(diffAbs / 60)}h ${diffAbs % 60}m`}
+          </div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Target Day Shift</div>
+          <div class="result-stat-val">${sameZone ? "—" : targetDayShift(utc, fromTz, toTz)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Exact UTC Instant</div>
+          <div class="result-stat-val" style="font-size: 1rem;">${new Date(utc).toISOString().replace(".000", "")}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">DST / Offset Rule</div>
+          <div class="result-stat-val" style="font-size: 0.9rem;">${dstNote || "—"}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📐 Conversion Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Anchor to UTC</span>
+          <div class="math-formula-box">UTC = source wall time − source offset</div>
+          <p class="step-content">${y}-${String(mo).padStart(2, "0")}-${String(d).padStart(2, "0")} ${String(h).padStart(2, "0")}:${String(mi).padStart(2, "0")} (${offLabel(fromOff)}) → <b>${new Date(utc).toISOString().replace(".000Z", "Z")}</b></p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Project into Target Zone</span>
+          <div class="math-formula-box">target wall time = UTC + target offset</div>
+          <p class="step-content">${sameZone ? "Same zone selected — no shift." : `Offset gap <b>${diff > 0 ? "+" : "-"}${Math.floor(diffAbs / 60)}h ${diffAbs % 60}m</b> → <b>${fmtIn(utc, toTz)}</b>`}</p>
+        </div>
+      </div>
+    `;
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function targetDayShift(utc, fromTz, toTz) {
+    const f = new Intl.DateTimeFormat("en-CA", { timeZone: fromTz, year: "numeric", month: "2-digit", day: "2-digit" });
+    const t = new Intl.DateTimeFormat("en-CA", { timeZone: toTz, year: "numeric", month: "2-digit", day: "2-digit" });
+    const fd = f.format(new Date(utc)), td = t.format(new Date(utc));
+    if (fd === td) return "Same calendar day";
+    const diffDays = Math.round((Date.parse(td + "T00:00:00Z") - Date.parse(fd + "T00:00:00Z")) / 86400000);
+    return diffDays > 0 ? `Next day (+${diffDays})` : `Previous day (${diffDays})`;
+  }
+
+  function setDefaults() {
+    const now = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    dateInput.value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    timeInput.value = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+  }
+
+  container.querySelector("#btnCalcTz").addEventListener("click", calculate);
+  container.querySelector("#btnSwapTz").addEventListener("click", () => {
+    const t = fromSel.value;
+    fromSel.value = toSel.value;
+    toSel.value = t;
+    calculate();
+  });
+  container.querySelector("#btnNowTz").addEventListener("click", () => { setDefaults(); calculate(); });
+  fromSel.addEventListener("change", calculate);
+  toSel.addEventListener("change", calculate);
+  dateInput.addEventListener("change", calculate);
+  timeInput.addEventListener("change", calculate);
+
+  setDefaults();
   calculate();
 }
