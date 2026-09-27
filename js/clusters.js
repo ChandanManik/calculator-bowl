@@ -1017,8 +1017,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Math",
     "icon": "➗",
     "colorClass": "math",
-    "badge": "15 Calculators",
-    "description": "Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, quadratic equations, mean/median/mode, standard deviation, and exponents with step-by-step proofs.",
+    "badge": "17 Calculators",
+    "description": "Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.",
     "seoTitle": "Math & Statistics Calculators - Step-by-Step Solvers | CalculatorBowl",
     "seoDescription": "Free online math and statistics calculators for fractions, mixed numbers, prime factors, GCF, LCM, ratios, standard deviation, and algebra.",
     "calculators": [
@@ -1058,6 +1058,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Basic Arithmetic",
         "slug": "basic-calculator",
         "url": "/calculators/math/basic/basic-calculator/",
+        "subcatUrl": "/calculators/math/basic/",
+        "categoryUrl": "/calculators/math/"
+      },
+      {
+        "id": "scientific-calculator",
+        "name": "Scientific Calculator with Step Breakdown",
+        "shortName": "Scientific Calculator",
+        "icon": "🧮",
+        "badge": "Advanced",
+        "description": "Evaluate expressions with trigonometry, logarithms, roots, powers, constants, parentheses, and factorial using a full scientific keyboard in degree or radian mode.",
+        "seoTitle": "Scientific Calculator - Trig, Log, Roots & Exponents Online",
+        "seoDescription": "Free online scientific calculator: evaluate sin, cos, tan, log, ln, square roots, powers, factorial, pi, and parentheses in degree or radian mode with parsed steps.",
+        "category": "math",
+        "renderFunction": "renderScientificCalculator",
+        "contextualGuide": {
+          "title": "Advanced Numeric Evaluation Tools",
+          "html": "\n            <p>\n              Scientific expressions combine arithmetic with transcendental functions and physical constants — the same building blocks used in physics, engineering coursework, and data analysis. Visit our <a href=\"/calculators/math/\" class=\"in-text-link\">➗ Math &amp; Statistics Hub</a> for more step-by-step solvers.\n            </p>\n            <p>\n              Powers, notation formats, and statistical spreads pair naturally with function evaluation — explore the related tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "exponent-calculator",
+              "label": "Exponent & Powers Calculator",
+              "icon": "🔝"
+            },
+            {
+              "id": "scientific-notation",
+              "label": "Scientific Notation Converter",
+              "icon": "🔬"
+            },
+            {
+              "id": "standard-deviation",
+              "label": "Standard Deviation Calculator",
+              "icon": "📉"
+            }
+          ]
+        },
+        "subcategory": "basic",
+        "subcatTitle": "Basic Arithmetic",
+        "slug": "scientific-calculator",
+        "url": "/calculators/math/basic/scientific-calculator/",
         "subcatUrl": "/calculators/math/basic/",
         "categoryUrl": "/calculators/math/"
       },
@@ -1526,6 +1565,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Statistics & Probability",
         "slug": "standard-deviation-calculator",
         "url": "/calculators/math/statistics/standard-deviation-calculator/",
+        "subcatUrl": "/calculators/math/statistics/",
+        "categoryUrl": "/calculators/math/"
+      },
+      {
+        "id": "combination-calculator",
+        "name": "Combination & Permutation Calculator (nCr / nPr)",
+        "shortName": "nCr / nPr Calculator",
+        "icon": "🎲",
+        "badge": "Probability",
+        "description": "Calculate combinations (nCr) and permutations (nPr) with factorials, step-by-step product expansion, and locks/arrangements explanations for probability problems.",
+        "seoTitle": "Combination & Permutation Calculator - nCr and nPr",
+        "seoDescription": "Calculate nCr combinations, nPr permutations, and factorials with step-by-step formulas, simplified expansions, and when-to-use-each explanations.",
+        "category": "math",
+        "renderFunction": "renderCombinationCalculator",
+        "contextualGuide": {
+          "title": "Counting, Probability & Data Analysis",
+          "html": "\n            <p>\n              Combinations count unordered selections while permutations count ordered arrangements — the backbone of lottery odds, sampling, and handshake problems. Browse our <a href=\"/calculators/math/\" class=\"in-text-link\">➗ Math &amp; Statistics Hub</a> for the full probability toolkit.\n            </p>\n            <p>\n              Pair counting results with central tendency and spread measures for complete statistical summaries.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "mean-median-mode",
+              "label": "Mean, Median & Mode",
+              "icon": "📊"
+            },
+            {
+              "id": "standard-deviation",
+              "label": "Standard Deviation Calculator",
+              "icon": "📉"
+            },
+            {
+              "id": "ratio-calculator",
+              "label": "Ratio & Proportion Solver",
+              "icon": "⚖️"
+            }
+          ]
+        },
+        "subcategory": "statistics",
+        "subcatTitle": "Statistics & Probability",
+        "slug": "combination-calculator",
+        "url": "/calculators/math/statistics/combination-calculator/",
         "subcatUrl": "/calculators/math/statistics/",
         "categoryUrl": "/calculators/math/"
       },
@@ -2330,8 +2408,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Health",
     "icon": "💪",
     "colorClass": "health",
-    "badge": "5 Calculators",
-    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, macro splits (protein, carbs, fat), and running pace with race time predictions.",
+    "badge": "6 Calculators",
+    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, macro splits (protein, carbs, fat), running pace with race time predictions, and pregnancy due dates.",
     "seoTitle": "Health & Fitness Calculators - BMI, BMR & Calorie Needs | CalculatorBowl",
     "seoDescription": "Free health calculators for BMI body mass index, BMR basal metabolic rate, and daily calorie requirements for weight loss, maintenance, and muscle gain.",
     "calculators": [
@@ -2528,6 +2606,45 @@ const TOPICAL_CLUSTERS = {
         "slug": "pace-calculator",
         "url": "/calculators/health/fitness/pace-calculator/",
         "subcatUrl": "/calculators/health/fitness/",
+        "categoryUrl": "/calculators/health/"
+      },
+      {
+        "id": "due-date-calculator",
+        "name": "Pregnancy Due Date Calculator (Naegele's Rule)",
+        "shortName": "Due Date Calculator",
+        "icon": "👶",
+        "badge": "Pregnancy",
+        "description": "Estimate your baby's due date from the last menstrual period or conception date using Naegele's rule, with gestational age, trimester timeline, and cycle-length adjustment.",
+        "seoTitle": "Due Date Calculator - Pregnancy Due Date & Gestational Age",
+        "seoDescription": "Calculate your pregnancy due date from LMP or conception date with Naegele's rule, current gestational age, trimester milestones, and cycle length adjustment.",
+        "category": "health",
+        "renderFunction": "renderDueDateCalculator",
+        "contextualGuide": {
+          "title": "Pregnancy Health Cross-References",
+          "html": "\n            <p>\n              A due date anchors every prenatal milestone — scans, glucose screening, and trimester transitions are all scheduled relative to the 40-week gestational clock. Explore our <a href=\"/calculators/health/\" class=\"in-text-link\">💪 Health Hub</a> for more body and wellness tools.\n            </p>\n            <p>\n              Pregnancy nutrition and hydration needs rise steadily — keep macros and water intake on target with the related tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "water-intake-calculator",
+              "label": "Daily Water Intake",
+              "icon": "💧"
+            },
+            {
+              "id": "macro-calculator",
+              "label": "Macro Calculator",
+              "icon": "🥗"
+            },
+            {
+              "id": "bmi-bmr-calculator",
+              "label": "BMI & Calorie Calculator",
+              "icon": "⚖️"
+            }
+          ]
+        },
+        "subcategory": "pregnancy",
+        "subcatTitle": "Pregnancy & Due Date",
+        "slug": "due-date-calculator",
+        "url": "/calculators/health/pregnancy/due-date-calculator/",
+        "subcatUrl": "/calculators/health/pregnancy/",
         "categoryUrl": "/calculators/health/"
       }
     ],

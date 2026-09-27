@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * Basic Standard Online Calculator (Reusable Engine for Homepage & Dedicated)
+ * + Scientific Calculator (tokenizer + shunting-yard parser, DEG/RAD)
  * ============================================================================
  */
 
@@ -299,4 +300,342 @@ function renderBasicCalculator(container, calcDef) {
   `;
 
   initBasicCalculatorEngine(container, "dedicatedBasic", "dedicatedBasicHistoryTape");
+}
+
+/* ==========================================================================
+   Scientific Calculator — tokenizer + shunting-yard parser (no eval)
+   Trig (DEG/RAD), log/ln, roots, powers, factorial, constants, parens
+   ========================================================================== */
+function renderScientificCalculator(container, calcDef) {
+  const KEYS = [
+    { l: "AC", a: "clear" }, { l: "⌫", a: "back" }, { l: "(", i: "(" }, { l: ")", i: ")" }, { l: "π", i: "pi" },
+    { l: "sin", i: "sin(" }, { l: "cos", i: "cos(" }, { l: "tan", i: "tan(" }, { l: "log", i: "log(" }, { l: "ln", i: "ln(" },
+    { l: "7", i: "7" }, { l: "8", i: "8" }, { l: "9", i: "9" }, { l: "÷", i: "/" }, { l: "√", i: "sqrt(" },
+    { l: "4", i: "4" }, { l: "5", i: "5" }, { l: "6", i: "6" }, { l: "×", i: "*" }, { l: "^", i: "^" },
+    { l: "1", i: "1" }, { l: "2", i: "2" }, { l: "3", i: "3" }, { l: "−", i: "-" }, { l: "%", i: "%" },
+    { l: "0", i: "0" }, { l: ".", i: "." }, { l: "e", i: "e" }, { l: "+", i: "+" }, { l: "=", a: "eval" }
+  ];
+
+  const keyHtml = KEYS.map((k, idx) => {
+    const accent = k.a === "eval" ? "var(--accent-emerald)"
+      : k.a === "clear" ? "#ef4444"
+      : /[a-z(]/i.test(k.l) && !/^[0-9.]$/.test(k.l) ? "var(--accent, #38bdf8)"
+      : "var(--bg-subtle)";
+    return `<button type="button" id="sciKey${idx}" class="sci-key"
+      style="padding: 0.7rem 0.2rem; border-radius: 10px; border: 1px solid var(--border-color);
+      background: ${accent}; color: ${k.a === "eval" || k.a === "clear" ? "#fff" : "var(--text-primary)"};
+      font-weight: 700; font-size: 0.95rem; cursor: pointer;">${k.l}</button>`;
+  }).join("");
+
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group" style="grid-column: 1 / -1;">
+        <label class="form-label" for="sciExpr">Expression</label>
+        <input type="text" id="sciExpr" class="form-control" spellcheck="false"
+          placeholder="e.g. sin(30) + sqrt(144) * 2^3" style="font-family: var(--font-mono, monospace); font-size: 1.1rem;">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="sciMode">Angle Mode</label>
+        <select id="sciMode" class="form-control">
+          <option value="deg" selected>Degrees (DEG)</option>
+          <option value="rad">Radians (RAD)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Result</label>
+        <div id="sciResult" style="font-family: var(--font-mono, monospace); font-size: 1.5rem; font-weight: 800;
+          padding: 0.6rem 0.9rem; border-radius: 10px; background: var(--bg-subtle); border: 1px solid var(--border-color);
+          min-height: 3.1rem; word-break: break-all; color: var(--accent-emerald);">0</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 1rem;">${keyHtml}</div>
+
+    <div id="sciSteps" style="margin-top: 1.25rem;"></div>
+  `;
+
+  const exprInput = container.querySelector("#sciExpr");
+  const modeSel = container.querySelector("#sciMode");
+  const resultEl = container.querySelector("#sciResult");
+  const stepsDiv = container.querySelector("#sciSteps");
+
+  const FUNCS = ["sin", "cos", "tan", "asin", "acos", "atan", "log", "ln", "log2", "sqrt", "cbrt", "abs", "exp", "round", "floor", "ceil"];
+  const CONSTS = { pi: Math.PI, e: Math.E };
+
+  function tokenize(src) {
+    const tokens = [];
+    let i = 0;
+    const isDigit = c => c >= "0" && c <= "9";
+    const prev = () => tokens[tokens.length - 1];
+    while (i < src.length) {
+      const c = src[i];
+      if (c === " ") { i++; continue; }
+      if (isDigit(c) || (c === "." && isDigit(src[i + 1]))) {
+        let j = i;
+        while (j < src.length && (isDigit(src[j]) || src[j] === ".")) j++;
+        const num = parseFloat(src.slice(i, j));
+        if (isNaN(num)) throw new Error("Invalid number literal");
+        tokens.push({ t: "num", v: num });
+        i = j;
+        continue;
+      }
+      if (/[a-zA-Z]/.test(c)) {
+        let j = i;
+        while (j < src.length && /[a-zA-Z]/.test(src[j])) j++;
+        const word = src.slice(i, j).toLowerCase();
+        if (Object.prototype.hasOwnProperty.call(CONSTS, word)) {
+          tokens.push({ t: "num", v: CONSTS[word] });
+        } else if (FUNCS.includes(word)) {
+          tokens.push({ t: "fn", v: word });
+        } else {
+          throw new Error('Unknown name "' + word + '"');
+        }
+        i = j;
+        continue;
+      }
+      if ("+-*/^%!".includes(c)) {
+        const p = prev();
+        const unaryPos = !p || p.t === "op" || p.t === "fn" || (p.t === "par" && p.v === "(");
+        if ((c === "-" || c === "+") && unaryPos) {
+          // attach sign directly to a following number literal when possible
+          let j = i + 1;
+          while (j < src.length && src[j] === " ") j++;
+          if (j < src.length && (isDigit(src[j]) || (src[j] === "." && isDigit(src[j + 1])))) {
+            let k = j;
+            while (k < src.length && (isDigit(src[k]) || src[k] === ".")) k++;
+            const num = parseFloat(src.slice(j, k));
+            if (isNaN(num)) throw new Error("Invalid number literal");
+            tokens.push({ t: "num", v: c === "-" ? -num : num });
+            i = k;
+            continue;
+          }
+          tokens.push({ t: "op", v: c === "-" ? "u-" : "u+" });
+          i++;
+          continue;
+        }
+        tokens.push({ t: "op", v: c });
+        i++;
+        continue;
+      }
+      if (c === "(" || c === ")") { tokens.push({ t: "par", v: c }); i++; continue; }
+      throw new Error('Unexpected character "' + c + '"');
+    }
+    return tokens;
+  }
+
+  function toRPN(tokens) {
+    const out = [];
+    const stack = [];
+    const prec = { "u-": 4, "u+": 4, "^": 3, "*": 2, "/": 2, "%": 2, "+": 1, "-": 1 };
+    const rightAssoc = { "^": true, "u-": true, "u+": true };
+    const isOperator = tk => tk.t === "op";
+    for (let idx = 0; idx < tokens.length; idx++) {
+      const tk = tokens[idx];
+      if (tk.t === "num") {
+        out.push(tk);
+      } else if (tk.t === "fn") {
+        stack.push(tk);
+      } else if (tk.t === "op") {
+        if (tk.v === "!") { out.push(tk); continue; }
+        while (stack.length) {
+          const top = stack[stack.length - 1];
+          if (top.t === "fn") { out.push(stack.pop()); continue; }
+          if (top.t === "op" && top.v !== "!") {
+            const tp = prec[top.v] !== undefined ? prec[top.v] : -1;
+            const cp = prec[tk.v];
+            if (tp > cp || (tp === cp && !rightAssoc[tk.v])) { out.push(stack.pop()); continue; }
+          }
+          break;
+        }
+        stack.push(tk);
+      } else if (tk.t === "par" && tk.v === "(") {
+        stack.push(tk);
+      } else if (tk.t === "par" && tk.v === ")") {
+        let found = false;
+        while (stack.length) {
+          const top = stack.pop();
+          if (top.t === "par" && top.v === "(") { found = true; break; }
+          out.push(top);
+        }
+        if (!found) throw new Error("Mismatched parentheses");
+        if (stack.length && stack[stack.length - 1].t === "fn") out.push(stack.pop());
+      }
+    }
+    while (stack.length) {
+      const top = stack.pop();
+      if (top.t === "par") throw new Error("Mismatched parentheses");
+      out.push(top);
+    }
+    return out;
+  }
+
+  function factorial(n) {
+    if (!Number.isInteger(n) || n < 0) throw new Error("Factorial needs a whole number ≥ 0");
+    if (n > 170) throw new Error("Factorial overflows past 170! (double precision limit)");
+    let r = 1;
+    for (let i = 2; i <= n; i++) r *= i;
+    return r;
+  }
+
+  function evalRPN(rpn, mode) {
+    const deg = mode === "deg";
+    const toRad = x => deg ? x * Math.PI / 180 : x;
+    const fromRad = x => deg ? x * 180 / Math.PI : x;
+    const applyFn = (name, a) => {
+      switch (name) {
+        case "sin": return Math.sin(toRad(a));
+        case "cos": return Math.cos(toRad(a));
+        case "tan": return Math.tan(toRad(a));
+        case "asin": {
+          if (a < -1 || a > 1) throw new Error("asin needs a value between −1 and 1");
+          return fromRad(Math.asin(a));
+        }
+        case "acos": {
+          if (a < -1 || a > 1) throw new Error("acos needs a value between −1 and 1");
+          return fromRad(Math.acos(a));
+        }
+        case "atan": return fromRad(Math.atan(a));
+        case "log": {
+          if (a <= 0) throw new Error("log needs a positive value");
+          return Math.log10(a);
+        }
+        case "ln": {
+          if (a <= 0) throw new Error("ln needs a positive value");
+          return Math.log(a);
+        }
+        case "log2": {
+          if (a <= 0) throw new Error("log2 needs a positive value");
+          return Math.log2(a);
+        }
+        case "sqrt": {
+          if (a < 0) throw new Error("sqrt needs a non-negative value");
+          return Math.sqrt(a);
+        }
+        case "cbrt": return Math.cbrt(a);
+        case "abs": return Math.abs(a);
+        case "exp": return Math.exp(a);
+        case "round": return Math.round(a);
+        case "floor": return Math.floor(a);
+        case "ceil": return Math.ceil(a);
+        default: throw new Error('Unknown function "' + name + '"');
+      }
+    };
+    const applyOp = (op, a, b) => {
+      switch (op) {
+        case "+": return a + b;
+        case "-": return a - b;
+        case "*": return a * b;
+        case "/":
+          if (b === 0) throw new Error("Division by zero");
+          return a / b;
+        case "%":
+          if (b === 0) throw new Error("Modulo by zero");
+          return a - b * Math.trunc(a / b);
+        case "^": return Math.pow(a, b);
+        default: throw new Error('Unknown operator "' + op + '"');
+      }
+    };
+    const st = [];
+    for (const tk of rpn) {
+      if (tk.t === "num") {
+        st.push(tk.v);
+      } else if (tk.t === "fn") {
+        if (!st.length) throw new Error("Function missing its argument");
+        st.push(applyFn(tk.v, st.pop()));
+      } else if (tk.t === "op") {
+        if (tk.v === "!") {
+          if (!st.length) throw new Error("Invalid expression");
+          st.push(factorial(st.pop()));
+          continue;
+        }
+        if (tk.v === "u-") { if (!st.length) throw new Error("Invalid expression"); st.push(-st.pop()); continue; }
+        if (tk.v === "u+") { if (!st.length) throw new Error("Invalid expression"); continue; }
+        if (st.length < 2) throw new Error("Incomplete expression");
+        const b = st.pop();
+        const a = st.pop();
+        st.push(applyOp(tk.v, a, b));
+      }
+    }
+    if (st.length !== 1) throw new Error("Incomplete expression");
+    return st[0];
+  }
+
+  function fmtResult(x) {
+    if (!isFinite(x)) throw new Error(x > 0 ? "Result overflows to Infinity" : "Result is not finite");
+    if (x === 0) return "0";
+    const a = Math.abs(x);
+    if (a >= 1e12 || a < 1e-9) return x.toExponential(8);
+    return String(Number(x.toPrecision(12)));
+  }
+
+  function rpnLabel(rpn) {
+    return rpn.map(tk => {
+      if (tk.t === "num") return String(Number(tk.v.toPrecision(6)));
+      if (tk.t === "fn") return tk.v + "()";
+      return tk.v;
+    }).join(" ");
+  }
+
+  function calculate() {
+    const src = (exprInput.value || "").trim();
+    if (!src) {
+      resultEl.textContent = "0";
+      resultEl.style.color = "var(--accent-emerald)";
+      stepsDiv.innerHTML = "";
+      return;
+    }
+    try {
+      const tokens = tokenize(src);
+      if (!tokens.length) throw new Error("Empty expression");
+      const rpn = toRPN(tokens);
+      const value = evalRPN(rpn, modeSel.value);
+      const out = fmtResult(value);
+      resultEl.textContent = out;
+      resultEl.style.color = "var(--accent-emerald)";
+      stepsDiv.innerHTML = `
+        <div class="steps-wrapper">
+          <div class="steps-header"><h3 class="steps-title">📐 Parse Breakdown</h3></div>
+          <div class="step-card">
+            <span class="step-num-badge">Step 1 — Tokens → RPN (shunting-yard)</span>
+            <div class="math-formula-box">${rpnLabel(rpn)}</div>
+            <p class="step-content">Expression: <b>${src.replace(/</g, "&lt;")}</b> · angle mode <b>${modeSel.value === "deg" ? "DEG" : "RAD"}</b> · result <b>${out}</b></p>
+          </div>
+        </div>`;
+    } catch (err) {
+      resultEl.textContent = "Error";
+      resultEl.style.color = "#ef4444";
+      stepsDiv.innerHTML = `
+        <div class="step-card" style="border-left: 3px solid #ef4444;">
+          <span class="step-num-badge" style="background: #ef4444;">Invalid Expression</span>
+          <p class="step-content">${String(err.message || err).replace(/</g, "&lt;")}</p>
+        </div>`;
+    }
+  }
+
+  KEYS.forEach((k, idx) => {
+    const btn = container.querySelector("#sciKey" + idx);
+    btn.addEventListener("click", () => {
+      if (k.a === "clear") {
+        exprInput.value = "";
+      } else if (k.a === "back") {
+        exprInput.value = exprInput.value.slice(0, -1);
+      } else if (k.a === "eval") {
+        calculate();
+        return;
+      } else {
+        exprInput.value += k.i;
+      }
+      calculate();
+    });
+  });
+
+  exprInput.addEventListener("change", calculate);
+  exprInput.addEventListener("keydown", ev => {
+    if (ev && ev.key === "Enter") calculate();
+  });
+  modeSel.addEventListener("change", calculate);
+
+  // sensible default expression
+  exprInput.value = "";
+  calculate();
 }

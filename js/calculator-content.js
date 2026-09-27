@@ -5645,6 +5645,280 @@ const CALCULATOR_RICH_CONTENT = {
         a: "Running the second half faster than the first (each successive split quicker). It's the most energy-efficient way to race because it avoids early glycogen waste and lactic accumulation — elite distance runners routinely negative-split championship races."
       }
     ]
+  },
+
+  // Scientific Calculator
+  "scientific-calculator": {
+    articleTitle: "How a Scientific Calculator Thinks: Parsing, Precedence & Angle Modes",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🧮 Parser Pipeline</span>
+          <h4>From Keystrokes to Value — the Shunting-Yard Path</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 205" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="205" rx="12" fill="var(--bg-subtle)" />
+            <g font-size="12.5">
+              <rect x="35" y="45" width="130" height="52" rx="8" fill="#38bdf8" />
+              <text x="52" y="67" fill="#fff" font-weight="700">Input</text>
+              <text x="52" y="87" fill="#fff" font-size="12">sin(30)+2^3</text>
+              <rect x="235" y="45" width="130" height="52" rx="8" fill="#f59e0b" />
+              <text x="252" y="67" fill="#fff" font-weight="700">RPN</text>
+              <text x="252" y="87" fill="#fff" font-size="12">30 sin 2 3 ^ +</text>
+              <rect x="435" y="45" width="130" height="52" rx="8" fill="#10b981" />
+              <text x="452" y="67" fill="#fff" font-weight="700">Value</text>
+              <text x="452" y="87" fill="#fff" font-size="12">0.5 + 8 = 8.5</text>
+              <text x="172" y="76" fill="#f59e0b" font-weight="700" font-size="16">→</text>
+              <text x="372" y="76" fill="#f59e0b" font-weight="700" font-size="16">→</text>
+              <text x="35" y="135" fill="var(--text-primary)" font-weight="700">Precedence: ! (4) &gt; ^ (3, right-assoc) &gt; × ÷ % (2) &gt; + − (1)</text>
+              <text x="35" y="160" fill="var(--text-muted)" font-size="12.5">DEG mode: sin(30°) = 0.5 · RAD mode: sin(π/2) = 1 — same parser, converted angle.</text>
+              <text x="35" y="184" fill="var(--text-muted)" font-size="12.5">No string evaluation (eval): every token is validated before it can run.</text>
+            </g>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Expressions are tokenized, reordered to postfix (RPN), then evaluated on a stack — deterministic precedence with zero code-execution risk.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A <b>scientific calculator</b> extends plain arithmetic with trigonometry, logarithms, roots, powers, and constants — but its real intelligence is <b>parsing</b>. Before a single number is computed, the expression is split into tokens, precedence is resolved with the shunting-yard algorithm, and evaluation runs on a stack in postfix (RPN) order. That is why <code>(5+3)×2 = 16</code> while <code>5+3×2 = 11</code> — multiplication binds tighter than addition, and parentheses override both.
+      </p>
+
+      <h3 class="content-subheading">1. Operator Precedence &amp; Associativity</h3>
+      <div class="math-formula-box">
+        factorial ! &gt; power ^ (right-assoc) &gt; × ÷ % &gt; + −
+      </div>
+      <ul class="content-list">
+        <li><b>Right-associativity of ^:</b> 2^3^2 groups as 2^(3²) = 512, not (2³)² = 64 — powers chain right-to-left</li>
+        <li><b>Unary minus vs power:</b> the sign attaches to its literal, so −2² = (−2)² = 4; write −(2²) for −4</li>
+        <li><b>Factorial binds first:</b> 2^3! = 2^(3!) = 64, because 3! resolves before the exponent</li>
+        <li><b>Modulo %</b> returns the remainder (7 % 3 = 1) and follows multiplication's precedence</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Degrees vs Radians</h3>
+      <div class="math-formula-box">
+        rad = deg × π ÷ 180 · deg = rad × 180 ÷ π
+      </div>
+      <p>
+        Trigonometric functions expect radians in calculus and physics, but degrees feel natural in geometry — one wrong mode silently produces answers like sin(30) = −0.988 (30 rad ≈ 1,719°) instead of 0.5. The DEG/RAD toggle converts the argument before evaluation and converts inverse results (asin, acos, atan) back afterward, so tan(45) reads exactly 1 in degree mode and tan(π/4) reads 1 in radian mode.
+      </p>
+
+      <h3 class="content-subheading">3. Logarithms, Roots &amp; Factorials</h3>
+      <ol class="content-ordered-list">
+        <li><b>log vs ln:</b> log is base-10 (log(1000) = 3), ln is base-e (ln(e) = 1) — inverse pairs of 10ˣ and eˣ</li>
+        <li><b>Roots as powers:</b> √x = x^0.5 and ∛x = x^(1/3) — sqrt() rejects negatives, while cbrt() handles them</li>
+        <li><b>Factorial limits:</b> n! grows super-exponentially; beyond 170! ≈ 7.26 × 10³⁰⁸ a 64-bit float overflows to Infinity</li>
+        <li><b>Constants:</b> π ≈ 3.141592653589793 and e ≈ 2.718281828459045 carry full double precision</li>
+      </ol>
+    `,
+    faqs: [
+      {
+        q: "Why does sin(30) give 0.5 on a scientific calculator?",
+        a: "Because the calculator is in DEG mode — sin of 30 degrees is exactly 0.5. In RAD mode, 30 is interpreted as 30 radians (≈ 1,719°) and sin(30) ≈ −0.988. Match the mode to the units of your problem: geometry uses degrees, calculus and physics usually use radians."
+      },
+      {
+        q: "What is the difference between log and ln?",
+        a: "log (log₁₀) answers '10 to what power gives x?' — log(1000) = 3. ln (natural log) answers 'e to what power gives x?' — ln(e) = 1. They invert 10ˣ and eˣ respectively; convert with log(x) = ln(x) ÷ ln(10)."
+      },
+      {
+        q: "How do you type exponents like 2^3^2?",
+        a: "Use the ^ key: 2^3^2 evaluates right-to-left as 2^(3²) = 512 because exponentiation is right-associative. For (2³)² = 64, add parentheses: (2^3)^2. When unsure, parentheses always win."
+      },
+      {
+        q: "Why does square root of a negative number show an error?",
+        a: "Real-valued square roots require a non-negative argument — √−1 has no real solution. The calculator flags it rather than returning NaN; complex results (i = √−1) belong to complex-number tools."
+      },
+      {
+        q: "What is the largest factorial a scientific calculator can handle?",
+        a: "170! ≈ 7.26 × 10³⁰⁸ is the last value inside double-precision floating point; 171! overflows to Infinity. Beyond that use logarithms: ln(n!) = Σ ln(k) or Stirling's approximation n! ≈ √(2πn)(n/e)ⁿ."
+      },
+      {
+        q: "Is a scientific calculator safe for evaluating typed expressions?",
+        a: "Yes — this calculator tokenizes and validates every character, then evaluates on an operand stack. No code strings are executed (no eval), so malformed input like '2+' simply returns a parse error instead of running anything."
+      }
+    ]
+  },
+
+  // Combination Calculator
+  "combination-calculator": {
+    articleTitle: "nCr vs nPr: Counting Teams, Lotteries, and Rankings with Combinations",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🎲 Counting Rules</span>
+          <h4>52 Cards, 5 Slots — Team vs Podium</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)" />
+            <g font-size="12.5" font-weight="700">
+              <text x="45" y="45" fill="#38bdf8">COMBINATION — order ignored</text>
+              <text x="45" y="72" fill="var(--text-primary)">Poker hand: {A♠ K♥ Q♦ J♣ 10♠}</text>
+              <text x="45" y="97" fill="var(--text-muted)" font-weight="600">52C5 = 52! ÷ (5! × 47!) = 2,598,960 hands</text>
+              <text x="45" y="140" fill="#f59e0b">PERMUTATION — order counted</text>
+              <text x="45" y="167" fill="var(--text-primary)">Podium: 1st / 2nd / 3rd from 8 runners</text>
+              <text x="45" y="192" fill="var(--text-muted)" font-weight="600">8P3 = 8! ÷ 5! = 336 rankings</text>
+            </g>
+            <line x1="300" y1="30" x2="300" y2="185" stroke="var(--border-color)" stroke-width="2" />
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Same players, different question — a committee is nCr; a ranked shortlist is nPr. Permutations always equal combinations × r!.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Combinations and permutations</b> answer two variants of one question: how many ways can I pick things? If a <b>team of 5 from 49</b> players matters only as a group, order is irrelevant — that is nCr. If a <b>gold, silver, bronze podium</b> from 8 finalists matters by position, order is everything — that is nPr. Getting the variant backwards is the single most common mistake in probability homework and lottery math.
+      </p>
+
+      <h3 class="content-subheading">1. nCr — Unordered Selection</h3>
+      <div class="math-formula-box">
+        C(n, r) = nCr = n! ÷ (r! × (n−r)!)
+      </div>
+      <ul class="content-list">
+        <li>The extra r! in the denominator <b>divides out</b> every internal reordering of the same group</li>
+        <li>Classic checks: 52C5 = 2,598,960 poker hands · 49C6 = 13,983,816 lottery lines · 20C2 = 190 handshakes</li>
+        <li>Symmetry trick: C(n, r) = C(n, n−r) — choosing 5 to keep equals choosing 47 to discard; use the smaller k</li>
+        <li>Edge cases: C(n, 0) = C(n, n) = 1, and C(n, r) = 0 whenever r &gt; n</li>
+      </ul>
+
+      <h3 class="content-subheading">2. nPr — Ordered Arrangement</h3>
+      <div class="math-formula-box">
+        P(n, r) = nPr = n! ÷ (n−r)! = n × (n−1) × … × (n−r+1)
+      </div>
+      <p>
+        Each position you fill shrinks the pool by one: 8P3 = 8 × 7 × 6 = 336. Because every unordered group of r items can be arranged r! different ways, the two formulas lock together: <b>nPr = nCr × r!</b> — e.g. 52P5 = 2,598,960 × 120 = 311,875,200 ordered 5-card sequences.
+      </p>
+
+      <h3 class="content-subheading">3. Factorials &amp; Common Pitfalls</h3>
+      <ol class="content-ordered-list">
+        <li><b>0! = 1</b> by definition (empty product) — without it, C(n, 0) and C(n, n) would break</li>
+        <li><b>Don't expand huge factorials:</b> compute with the running product res = res × (n−k+i) ÷ i, which stays integral and avoids overflow</li>
+        <li><b>Trailing zeros</b> of n! come from pairs of 2 × 5 — count them with ⌊n/5⌋ + ⌊n/25⌋ + ⌊n/125⌋ …</li>
+        <li><b>Replacement changes the rule:</b> drawing with replacement or unlimited repeats is nʳ, not nCr — permutations of a multiset divide by repeated-item factorials</li>
+      </ol>
+    `,
+    faqs: [
+      {
+        q: "What is the difference between nCr and nPr?",
+        a: "nCr (combinations) counts selections where order does not matter — teams, committees, lottery lines. nPr (permutations) counts arrangements where order matters — rankings, PINs, race finish orders. They convert via nPr = nCr × r!."
+      },
+      {
+        q: "How many ways can you choose 6 numbers from 49?",
+        a: "49C6 = 49! ÷ (6! × 43!) = 13,983,816 possible lines — exactly why a full system of every combination would cost millions. Order is irrelevant in a standard lottery, so this is a combination, not a permutation."
+      },
+      {
+        q: "When do I use permutations instead of combinations?",
+        a: "Ask: does swapping two picks create a new outcome? Podiums, passwords, and schedules — yes, use nPr. Teams, handshake groups, and lottery tickets — no, use nCr."
+      },
+      {
+        q: "Why is 0! equal to 1?",
+        a: "It is the empty product — the unique way to arrange zero objects is to do nothing, and defining 0! = 1 keeps nPr = n!/(n−r)! correct at r = n (nPr = n!/0! = n!) and nCr(n, 0) = 1."
+      },
+      {
+        q: "What does nCr mean when r is greater than n?",
+        a: "It equals 0 — you cannot choose more items than exist, and there is genuinely no way to form such a group. The formula returns 0 automatically once the factorial ratio cannot be arranged."
+      },
+      {
+        q: "How large can n and r get before the calculator overflows?",
+        a: "This tool computes nCr/nPr with a running product instead of raw factorials, so it stays accurate for n up to 1,000. Standalone n! is capped at 170 because 171! ≈ 1.04 × 10³⁰⁸ exceeds 64-bit floating-point range."
+      }
+    ]
+  },
+
+  // Due Date Calculator
+  "due-date-calculator": {
+    articleTitle: "Naegele's Rule: How Your Pregnancy Due Date Is Estimated",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">👶 Gestational Timeline</span>
+          <h4>280 Days From the Last Menstrual Period</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)" />
+            <rect x="45" y="55" width="150" height="46" rx="8" fill="#38bdf8" />
+            <text x="62" y="75" fill="#fff" font-weight="700" font-size="13">LMP — Day 0</text>
+            <text x="62" y="93" fill="#fff" font-size="12">week 0 begins</text>
+            <rect x="215" y="55" width="130" height="46" rx="8" fill="#10b981" />
+            <text x="232" y="75" fill="#fff" font-weight="700" font-size="13">Week 14</text>
+            <text x="232" y="93" fill="#fff" font-size="12">2nd trimester</text>
+            <rect x="365" y="55" width="90" height="46" rx="8" fill="#f59e0b" />
+            <text x="382" y="75" fill="#fff" font-weight="700" font-size="13">Week 28</text>
+            <text x="382" y="93" fill="#fff" font-size="12">3rd tri</text>
+            <rect x="475" y="55" width="80" height="46" rx="8" fill="#ef4444" />
+            <text x="490" y="75" fill="#fff" font-weight="700" font-size="13">Day 280</text>
+            <text x="490" y="93" fill="#fff" font-size="12">= 40 wks</text>
+            <text x="45" y="140" fill="var(--text-primary)" font-weight="700">due = LMP + 280 days   ·   conception method: conception + 266 days</text>
+            <text x="45" y="166" fill="var(--text-muted)" font-size="12.5">Cycle ≠ 28? shift the date by (cycle − 28) days — longer cycles mean later ovulation.</text>
+            <text x="45" y="190" fill="var(--text-muted)" font-size="12.5">Only ≈ 5% of babies arrive on the exact due date; ~90% are born between 37–42 weeks.</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> The due date is a 40-week estimate anchored on the first day of the last period — a planning landmark, not an appointment.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A <b>pregnancy due date</b> (estimated date of delivery, EDD) is the single number every scan, test, and appointment orbits around. Obstetrics counts gestation from the <b>first day of the last menstrual period (LMP)</b> — roughly two weeks before conception — which makes the standard math elegantly simple: <b>LMP + 280 days = 40 weeks</b>. This is Naegele's rule, formulated in 1812, and it still anchors nearly every modern pregnancy calculator.
+      </p>
+
+      <h3 class="content-subheading">1. Naegele's Rule, Step by Step</h3>
+      <div class="math-formula-box">
+        EDD = LMP − 3 months + 1 year + 7 days = LMP + 280 days
+      </div>
+      <ul class="content-list">
+        <li>Take the LMP date, subtract 3 calendar months, add 1 year, then add 7 days — arithmetically identical to +280 days</li>
+        <li><b>Cycle adjustment:</b> ovulation in a 32-day cycle arrives 4 days later → shift the due date +4 days (cycle − 28)</li>
+        <li><b>Conception method:</b> fertilization happens ~14 days after LMP, so conception + 266 days lands on the same date</li>
+        <li>Gestational age always runs ~2 weeks ahead of fetal (embryonic) age — scans after 14 weeks confirm dating</li>
+      </ul>
+
+      <h3 class="content-subheading">2. What the Trimester Timeline Looks Like</h3>
+      <p>
+        The 40-week clock splits into trimesters: <b>first trimester</b> weeks 0–13 (organ formation, first ultrasound and bloodwork), <b>second trimester</b> weeks 14–27 (anatomy scan around week 20, movement felt), and <b>third trimester</b> weeks 28–40 (growth checks, group-B strep test at 36–37 weeks, birth preparation). Full term is 39–41 weeks, while 37–42 weeks is the accepted term window — only about 5% of births land on the exact due date, and roughly 90% arrive within the 37–42 week band.
+      </p>
+
+      <h3 class="content-subheading">3. LMP vs Conception vs Ultrasound Dating</h3>
+      <ol class="content-ordered-list">
+        <li><b>LMP method:</b> free and instant, but assumes a regular 28-day cycle with day-14 ovulation — irregular or unknown periods reduce accuracy</li>
+        <li><b>Conception date:</b> reliable for IVF (embryo transfer date known exactly) — add 266 days</li>
+        <li><b>Ultrasound dating:</b> crown-rump length in the first trimester is the clinical gold standard, accurate to ±3–5 days; later scans are ±1–2 weeks and should not re-date a pregnancy</li>
+        <li><b>Post-term:</b> passing 42 weeks prompts induction discussion — that is why the 42-week checkpoint appears in countdowns</li>
+      </ol>
+    `,
+    faqs: [
+      {
+        q: "How is the pregnancy due date calculated?",
+        a: "By Naegele's rule: take the first day of the last menstrual period (LMP) and add 280 days — equivalently subtract 3 months, add 1 year, then add 7 days. With a cycle longer or shorter than 28 days, shift the result by (cycle length − 28) days."
+      },
+      {
+        q: "How accurate is a due date?",
+        a: "For dating by first-trimester ultrasound, about ±3–5 days. When based on an assumed regular 28-day cycle from LMP alone, expect roughly ±2 weeks — which is why the 'due date' is treated as a window (37–42 weeks) rather than a fixed appointment."
+      },
+      {
+        q: "Can I use my conception date instead of LMP?",
+        a: "Yes — add 266 days to the conception date. This equals LMP + 280 because gestation is counted from about two weeks before fertilization. IVF pregnancies use the transfer date for exact dating."
+      },
+      {
+        q: "What if my cycles are irregular or I don't know my LMP?",
+        a: "Cycle-based estimates become unreliable with irregular periods (variance over ~7 days shifts the date accordingly). Use an early ultrasound for dating, and enter the LMP you do have — the calculator's cycle adjustment compensates for consistently long or short cycles (21–45 days)."
+      },
+      {
+        q: "Do twins come earlier than the due date?",
+        a: "Twin pregnancies typically deliver earlier — around 36–37 weeks on average — so the standard 40-week date is less predictive. Your provider will set a twin-specific timeline, usually with more frequent growth scans from the second trimester."
+      },
+      {
+        q: "What do 'weeks pregnant' and gestational age mean?",
+        a: "Gestational age counts completed weeks since the first day of the last period, so it runs two weeks ahead of the embryo's actual age. At 14w 6d you are 14 completed weeks plus 6 days, in the second trimester, with 25 weeks (175 days) to the 40-week mark."
+      }
+    ]
   }
 };
 

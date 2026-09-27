@@ -163,6 +163,12 @@
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/health/pregnancy/</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
 
   <!-- Institutional & Legal Pages -->
   <url>
@@ -356,6 +362,12 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://calculatorbowl.com/calculators/math/basic/scientific-calculator/</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
     <loc>https://calculatorbowl.com/calculators/math/percentage/percentage-calculator/</loc>
     <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -423,6 +435,12 @@
   </url>
   <url>
     <loc>https://calculatorbowl.com/calculators/math/statistics/standard-deviation-calculator/</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/math/statistics/combination-calculator/</loc>
     <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
@@ -569,6 +587,12 @@
   </url>
   <url>
     <loc>https://calculatorbowl.com/calculators/health/fitness/pace-calculator/</loc>
+    <lastmod>2026-09-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://calculatorbowl.com/calculators/health/pregnancy/due-date-calculator/</loc>
     <lastmod>2026-09-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>

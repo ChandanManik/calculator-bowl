@@ -7,6 +7,7 @@
  * 3. Daily Water Intake Calculator (Weight + Activity + Climate)
  * 4. Macro Calculator (Protein, Carbs & Fat split)
  * 5. Running Pace & Race Time Calculator (Riegel predictions)
+ * 6. Pregnancy Due Date Calculator (Naegele's rule)
  * ============================================================================
  */
 
@@ -1107,5 +1108,212 @@ function renderPaceCalculator(container, calcDef) {
     resultDiv.style.display = "none";
   });
 
+  calculate();
+}
+
+/* ==========================================================================
+   Pregnancy Due Date Calculator — Naegele's rule (LMP + 280 days)
+   ========================================================================== */
+function renderDueDateCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="ddMethod">Date Known</label>
+        <select id="ddMethod" class="form-control">
+          <option value="lmp" selected>Last menstrual period (LMP)</option>
+          <option value="conception">Conception date</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="ddDate" id="ddDateLabel">Last Menstrual Period (LMP) Date</label>
+        <input type="date" id="ddDate" class="form-control">
+      </div>
+      <div class="form-group" id="ddCycleGroup">
+        <label class="form-label" for="ddCycle">Average Cycle Length <span class="form-label-hint">21–45 days</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="ddCycle" class="form-control" value="28" min="21" max="45" step="1">
+          <span class="input-addon suffix">days</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcDd" class="btn btn-primary"><span>👶 Calculate Due Date</span></button>
+      <button type="button" id="btnResetDd" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="ddResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const methodSel = container.querySelector("#ddMethod");
+  const dateInput = container.querySelector("#ddDate");
+  const dateLabel = container.querySelector("#ddDateLabel");
+  const cycleGroup = container.querySelector("#ddCycleGroup");
+  const cycleInput = container.querySelector("#ddCycle");
+  const resultDiv = container.querySelector("#ddResultContainer");
+
+  const WD = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const MO = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+  const DAY_MS = 86400000;
+
+  function parseDate(str) {
+    const [y, m, d] = (str || "").split("-").map(Number);
+    if (!y || !m || !d) return null;
+    if (m < 1 || m > 12 || d < 1 || d > 31) return null;
+    return { y, m, d };
+  }
+  const dayNum = dt => Math.round(Date.UTC(dt.y, dt.m - 1, dt.d) / DAY_MS);
+  function fromDayNum(n) {
+    const d = new Date(n * DAY_MS);
+    return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate() };
+  }
+  function fmtDate(dt) {
+    return `${WD[new Date(dt.y, dt.m - 1, dt.d, 12).getDay()]}, ${MO[dt.m - 1]} ${dt.d}, ${dt.y}`;
+  }
+  const pad = n => String(n).padStart(2, "0");
+
+  function syncMethod() {
+    const isLmp = methodSel.value === "lmp";
+    cycleGroup.style.display = isLmp ? "" : "none";
+    dateLabel.textContent = isLmp ? "Last Menstrual Period (LMP) Date" : "Conception Date";
+  }
+
+  function calculate() {
+    const method = methodSel.value;
+    const base = parseDate(dateInput.value);
+    if (!base) { alert("Please enter a valid date."); return; }
+
+    const now = new Date();
+    const today = { y: now.getFullYear(), m: now.getMonth() + 1, d: now.getDate() };
+    const todayN = dayNum(today);
+
+    if (dayNum(base) > todayN) {
+      alert(method === "lmp"
+        ? "The last menstrual period date cannot be in the future."
+        : "The conception date cannot be in the future.");
+      return;
+    }
+
+    let lmp, dueN, cycleAdj = 0;
+    if (method === "lmp") {
+      let cycle = parseInt(cycleInput.value, 10);
+      if (isNaN(cycle) || cycle < 21 || cycle > 45) cycle = 28;
+      cycleAdj = cycle - 28;
+      lmp = base;
+      dueN = dayNum(lmp) + 280 + cycleAdj;
+    } else {
+      lmp = fromDayNum(dayNum(base) - 14);
+      dueN = dayNum(base) + 266;
+    }
+
+    const due = fromDayNum(dueN);
+    const gestDays = todayN - dayNum(lmp);
+    const weeks = Math.floor(gestDays / 7);
+    const remDays = gestDays % 7;
+    const daysLeft = dueN - todayN;
+    const progress = Math.max(0, Math.min(100, Math.round((gestDays / 280) * 1000) / 10));
+
+    let trimester, triColor;
+    if (weeks < 14) { trimester = "First trimester (weeks 0–13)"; triColor = "#38bdf8"; }
+    else if (weeks < 28) { trimester = "Second trimester (weeks 14–27)"; triColor = "#10b981"; }
+    else if (weeks < 42) { trimester = "Third trimester (weeks 28–40)"; triColor = "#f59e0b"; }
+    else { trimester = "Post-term (42+ weeks) — contact your provider"; triColor = "#ef4444"; }
+
+    const conception = fromDayNum(dayNum(lmp) + 14);
+    const tri2 = fromDayNum(dayNum(lmp) + 98);
+    const tri3 = fromDayNum(dayNum(lmp) + 196);
+    const fullTerm = fromDayNum(dayNum(lmp) + 259);
+
+    const countLabel = gestDays < 0 ? "Before LMP" : `Week ${weeks + 1} of 40`;
+    const dueSub = daysLeft > 0
+      ? `${daysLeft.toLocaleString()} day${daysLeft === 1 ? "" : "s"} to go · 40 weeks (${(280 + cycleAdj).toLocaleString()} days) from LMP`
+      : daysLeft === 0
+        ? "Today is the estimated due date — 40 weeks reached"
+        : `${Math.abs(daysLeft).toLocaleString()} day${Math.abs(daysLeft) === 1 ? "" : "s"} past the estimated due date (only ~5% of births happen on the exact date)`;
+
+    const stats = `
+      <div class="result-stat-card"><div class="result-stat-label">Gestational Age</div>
+        <div class="result-stat-val" style="color: var(--accent-emerald);">${weeks}w ${remDays}d</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);">${gestDays.toLocaleString()} days · ${countLabel}</div></div>
+      <div class="result-stat-card"><div class="result-stat-label">Days Until Due</div>
+        <div class="result-stat-val" style="color: ${daysLeft >= 0 ? "var(--accent-emerald)" : "#f59e0b"};">${daysLeft >= 0 ? daysLeft.toLocaleString() + " days" : Math.abs(daysLeft).toLocaleString() + " overdue"}</div></div>
+      <div class="result-stat-card"><div class="result-stat-label">Trimester</div>
+        <div class="result-stat-val" style="font-size: 0.95rem; color: ${triColor};">${trimester}</div></div>
+      <div class="result-stat-card"><div class="result-stat-label">Pregnancy Progress</div>
+        <div class="result-stat-val">${progress}% of 40 weeks</div></div>
+      <div class="result-stat-card"><div class="result-stat-label">Estimated Conception</div>
+        <div class="result-stat-val" style="font-size: 0.95rem;">${fmtDate(conception)}</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);">LMP + 14 days (ovulation)</div></div>
+      <div class="result-stat-card"><div class="result-stat-label">Cycle Adjustment</div>
+        <div class="result-stat-val" style="font-size: 0.95rem;">${method === "conception"
+          ? "N/A (conception method)"
+          : cycleAdj === 0 ? "None (28-day cycle)" : `${cycleAdj > 0 ? "+" : ""}${cycleAdj} days (${cycleInput.value}-day cycle)`}</div></div>
+      <div class="result-stat-card"><div class="result-stat-label">2nd Trimester Begins</div>
+        <div class="result-stat-val" style="font-size: 0.95rem;">${fmtDate(tri2)}</div></div>
+      <div class="result-stat-card"><div class="result-stat-label">3rd Trimester Begins</div>
+        <div class="result-stat-val" style="font-size: 0.95rem;">${fmtDate(tri3)}</div></div>
+      <div class="result-stat-card"><div class="result-stat-label">Full Term (37 weeks)</div>
+        <div class="result-stat-val" style="font-size: 0.95rem;">${fmtDate(fullTerm)}</div></div>
+      <div class="result-stat-card"><div class="result-stat-label">Post-Term Check (42 weeks)</div>
+        <div class="result-stat-val" style="font-size: 0.95rem;">${fmtDate(fromDayNum(dayNum(lmp) + 294))}</div></div>`;
+
+    const steps = `
+      <div class="step-card">
+        <span class="step-num-badge">Step 1 — Naegele's Rule</span>
+        <div class="math-formula-box">${method === "lmp"
+          ? `due = LMP + 280 days${cycleAdj !== 0 ? ` (${cycleAdj > 0 ? "+" : ""}${cycleAdj} cycle adjustment)` : ""}`
+          : `due = conception + 266 days (280 − 14)`}</div>
+        <p class="step-content">${method === "lmp"
+          ? `LMP <b>${fmtDate(base)}</b> + ${(280 + cycleAdj).toLocaleString()} days → <b>${fmtDate(due)}</b>`
+          : `Conception <b>${fmtDate(base)}</b> + 266 days → <b>${fmtDate(due)}</b> (equivalent LMP: ${fmtDate(lmp)})`}</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num-badge">Step 2 — Countdown From Today</span>
+        <div class="math-formula-box">days left = due date − today (${today.y}-${pad(today.m)}-${pad(today.d)})</div>
+        <p class="step-content"><b>${daysLeft >= 0 ? daysLeft.toLocaleString() + " day(s) remaining" : Math.abs(daysLeft).toLocaleString() + " day(s) past due"}</b> — gestational age <b>${weeks} weeks ${remDays} day(s)</b> counted from the LMP date.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-num-badge">Step 3 — Method Notes</span>
+        <div class="math-formula-box">LMP method: +280 d · conception method: +266 d · cycle ±(cycle − 28) d</div>
+        <p class="step-content">Ultrasound dating in the first trimester is the most accurate — this estimate assumes a regular 28-day cycle${method === "lmp" && cycleAdj !== 0 ? `, adjusted for a ${cycleInput.value}-day cycle` : ""}. Longer cycles shift ovulation (and the due date) later by the same number of days.</p>
+      </div>`;
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Estimated Due Date</span>
+        <div class="result-hero-value" style="font-size: 1.5rem;">${fmtDate(due)}</div>
+        <span style="font-size: 0.95rem; color: var(--text-secondary);">${dueSub}</span>
+      </div>
+      <div class="result-stat-grid">${stats}</div>
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📐 Calculation Breakdown</h3></div>
+        ${steps}
+      </div>`;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  methodSel.addEventListener("change", () => { syncMethod(); calculate(); });
+  dateInput.addEventListener("change", calculate);
+  cycleInput.addEventListener("change", calculate);
+  container.querySelector("#btnCalcDd").addEventListener("click", calculate);
+  container.querySelector("#btnResetDd").addEventListener("click", () => {
+    methodSel.value = "lmp";
+    cycleInput.value = "28";
+    syncMethod();
+    setDefaults();
+    resultDiv.style.display = "none";
+  });
+
+  function setDefaults() {
+    const now = new Date();
+    now.setDate(now.getDate() - 104);
+    dateInput.value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  }
+
+  syncMethod();
+  setDefaults();
   calculate();
 }

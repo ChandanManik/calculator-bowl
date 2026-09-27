@@ -1,7 +1,8 @@
 /**
  * ============================================================================
  * Statistics & Advanced Math Suite: Mean/Median/Mode, Standard Deviation,
- * Scientific Notation & Exponent / Powers Calculator
+ * Scientific Notation, Exponent / Powers Calculator, and
+ * Combination & Permutation Calculator (nCr / nPr / factorial)
  * ============================================================================
  */
 
@@ -532,5 +533,281 @@ function renderExponentCalculator(container, calcDef) {
     resultDiv.style.display = "none";
   });
 
+  calculate();
+}
+
+/* ==========================================================================
+   Combination & Permutation Calculator — nCr, nPr, factorial
+   ========================================================================== */
+function renderCombinationCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="cmbMode">Calculation</label>
+        <select id="cmbMode" class="form-control">
+          <option value="ncr" selected>Combination — nCr (order does NOT matter)</option>
+          <option value="npr">Permutation — nPr (order matters)</option>
+          <option value="fact">Factorial — n!</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cmbN">Total items (n)</label>
+        <input type="number" id="cmbN" class="form-control" value="52" min="0" step="1">
+      </div>
+      <div class="form-group" id="cmbRGroup">
+        <label class="form-label" for="cmbR">Choose / arrange (r)</label>
+        <input type="number" id="cmbR" class="form-control" value="5" min="0" step="1">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcCmb" class="btn btn-primary"><span>🎲 Calculate</span></button>
+      <button type="button" id="btnResetCmb" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="cmbResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const modeSel = container.querySelector("#cmbMode");
+  const nInput = container.querySelector("#cmbN");
+  const rInput = container.querySelector("#cmbR");
+  const rGroup = container.querySelector("#cmbRGroup");
+  const resultDiv = container.querySelector("#cmbResultContainer");
+
+  function factorial(n) {
+    let r = 1;
+    for (let i = 2; i <= n; i++) r *= i;
+    return r;
+  }
+  function nCr(n, r) {
+    const k = Math.min(r, n - r);
+    let res = 1;
+    for (let i = 1; i <= k; i++) res = res * (n - k + i) / i;
+    return res;
+  }
+  function nPr(n, r) {
+    let res = 1;
+    for (let i = 0; i < r; i++) res *= (n - i);
+    return res;
+  }
+  function fmtBig(x) {
+    if (!isFinite(x)) return "Overflow";
+    if (Number.isInteger(x) && Math.abs(x) < 9.007e15) return x.toLocaleString("en-US");
+    if (Math.abs(x) >= 1e15) return x.toExponential(6);
+    return String(Number(x.toPrecision(10)));
+  }
+  function expansion(n, r) {
+    const terms = [];
+    for (let i = 0; i < r; i++) terms.push(n - i);
+    return terms.join(" × ");
+  }
+
+  function calculate() {
+    const mode = modeSel.value;
+    const n = parseInt(nInput.value, 10);
+    if (isNaN(n) || n < 0) { alert("Please enter a non-negative whole number for n."); return; }
+    if (mode !== "fact") {
+      if (n > 1000) { alert("n is capped at 1,000 to keep results meaningful."); return; }
+    } else if (n > 170) {
+      alert("Factorial is capped at 170 — 171! exceeds double-precision (≈ 1.04 × 10³⁰⁸).");
+      return;
+    }
+
+    let heroLabel = "", heroValue = "", sub = "", stats = "", steps = "";
+
+    if (mode === "ncr") {
+      const r = parseInt(rInput.value, 10);
+      if (isNaN(r) || r < 0) { alert("Please enter a non-negative whole number for r."); return; }
+      if (r > n) {
+        resultDiv.innerHTML = `
+          <div class="result-hero-box">
+            <span class="result-hero-label">${n} Choose ${r} (nCr)</span>
+            <div class="result-hero-value" style="font-size: 1.5rem;">0</div>
+            <span style="font-size: 0.95rem; color: var(--text-secondary);">
+              Choosing more items than exist is impossible — nCr = 0 when r &gt; n.
+            </span>
+          </div>`;
+        resultDiv.style.display = "block";
+        return;
+      }
+      const k = Math.min(r, n - r);
+      const val = nCr(n, r);
+      const perm = nPr(n, r);
+      const rf = factorial(r);
+
+      heroLabel = `${n} Choose ${r} (nCr)`;
+      heroValue = fmtBig(val);
+      sub = `${n}! ÷ (${r}! × ${n - r}!)`;
+
+      stats = `
+        <div class="result-stat-card"><div class="result-stat-label">n (total)</div>
+          <div class="result-stat-val">${n.toLocaleString()}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">r (choose)</div>
+          <div class="result-stat-val">${r.toLocaleString()}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">k = min(r, n−r)</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${k}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Permutation nPr</div>
+          <div class="result-stat-val">${fmtBig(perm)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">r! factorial</div>
+          <div class="result-stat-val">${fmtBig(rf)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">(n−r)! factorial</div>
+          <div class="result-stat-val">${fmtBig(factorial(n - r))}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Read as</div>
+          <div class="result-stat-val" style="font-size: 1rem;">"${n} pick ${r}"</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">nPr ÷ nCr = r!</div>
+          <div class="result-stat-val" style="font-size: 1rem;">${fmtBig(perm)} ÷ ${fmtBig(val)} = ${fmtBig(rf)}</div></div>`;
+
+      steps = `
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Complement Reduction</span>
+          <div class="math-formula-box">C(n, r) = C(n, n−r) → use k = min(r, n−r) = ${k}</div>
+          <p class="step-content">Choosing ${r} of ${n} is identical to discarding ${n - r} — the smaller k keeps the arithmetic short.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Multiplicative Formula</span>
+          <div class="math-formula-box">${k <= 9 ? `${expansion(n, k)} ÷ ${k}!` : `C = Π (n−k+i)/i for i = 1…${k}`}</div>
+          <p class="step-content">${k <= 9 ? `${expansion(n, k)} = ${fmtBig(nPr(n, k))} numerator · ${k}! = ${fmtBig(factorial(k))} denominator → ${fmtBig(nPr(n, k))} ÷ ${fmtBig(factorial(k))} = <b>${fmtBig(val)}</b>` : `Evaluated iteratively (res = res × (n−k+i) ÷ i) keeping every intermediate value an integer → <b>${fmtBig(val)}</b>`}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Order Check</span>
+          <div class="math-formula-box">nPr = nCr × r! = ${fmtBig(val)} × ${fmtBig(rf)} = ${fmtBig(perm)}</div>
+          <p class="step-content">Use <b>nCr</b> when the selection is a team/committee (order irrelevant); use <b>nPr</b> when it is a ranking/password/pin (order relevant).</p>
+        </div>`;
+    } else if (mode === "npr") {
+      const r = parseInt(rInput.value, 10);
+      if (isNaN(r) || r < 0) { alert("Please enter a non-negative whole number for r."); return; }
+      if (r > n) {
+        resultDiv.innerHTML = `
+          <div class="result-hero-box">
+            <span class="result-hero-label">${n} Permute ${r} (nPr)</span>
+            <div class="result-hero-value" style="font-size: 1.5rem;">0</div>
+            <span style="font-size: 0.95rem; color: var(--text-secondary);">
+              Arranging more slots than items is impossible — nPr = 0 when r &gt; n.
+            </span>
+          </div>`;
+        resultDiv.style.display = "block";
+        return;
+      }
+      const val = nPr(n, r);
+      const comb = nCr(n, r);
+      const rf = factorial(r);
+
+      heroLabel = `${n} Permute ${r} (nPr)`;
+      heroValue = fmtBig(val);
+      sub = `${n}! ÷ (${n - r}!)`;
+
+      stats = `
+        <div class="result-stat-card"><div class="result-stat-label">n (total)</div>
+          <div class="result-stat-val">${n.toLocaleString()}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">r (arrange)</div>
+          <div class="result-stat-val">${r.toLocaleString()}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Combination nCr</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${fmtBig(comb)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">r! ways to reorder</div>
+          <div class="result-stat-val">${fmtBig(rf)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">(n−r)!</div>
+          <div class="result-stat-val">${fmtBig(factorial(n - r))}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Read as</div>
+          <div class="result-stat-val" style="font-size: 1rem;">"${n} arrangements of ${r}"</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">nCr × r! = nPr</div>
+          <div class="result-stat-val" style="font-size: 1rem;">${fmtBig(comb)} × ${fmtBig(rf)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Last factor</div>
+          <div class="result-stat-val">${n - r + 1}${r === 0 ? "" : " … " + n}</div></div>`;
+
+      steps = `
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Falling Factorial</span>
+          <div class="math-formula-box">nPr = n × (n−1) × … × (n−r+1)${r <= 9 ? ` = ${expansion(n, r)}` : ` (${r} factors)`}</div>
+          <p class="step-content">${r === 0 ? "Arranging zero positions gives exactly 1 (empty arrangement)." : r <= 9 ? `Each position has one fewer choice than the last: ${expansion(n, r)} = <b>${fmtBig(val)}</b>` : `Computed iteratively as res ×= (n−i) for i = 0…${r - 1} → <b>${fmtBig(val)}</b>`}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Factorial Form</span>
+          <div class="math-formula-box">nPr = n! ÷ (n−r)! = ${fmtBig(factorial(n))} ÷ ${fmtBig(factorial(n - r))}</div>
+          <p class="step-content">The tail factorials cancel — that is why the running product avoids huge intermediate numbers.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Combinations Link</span>
+          <div class="math-formula-box">nPr = nCr × r! = ${fmtBig(comb)} × ${fmtBig(rf)} = ${fmtBig(val)}</div>
+          <p class="step-content">Permutations count every ordering separately; dividing by r! collapses them into unordered groups (combinations).</p>
+        </div>`;
+    } else {
+      const val = factorial(n);
+      let digits = 0;
+      if (n > 0) {
+        let logSum = 0;
+        for (let i = 2; i <= n; i++) logSum += Math.log10(i);
+        digits = Math.floor(logSum) + 1;
+      } else {
+        digits = 1;
+      }
+      let zeros = 0;
+      for (let p = 5; p <= n; p *= 5) zeros += Math.floor(n / p);
+
+      heroLabel = `${n} Factorial (n!)`;
+      heroValue = fmtBig(val);
+      sub = n === 0 ? "0! = 1 by definition (empty product)" : `${n} × ${n - 1} × … × 1`;
+
+      stats = `
+        <div class="result-stat-card"><div class="result-stat-label">Digits</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${digits.toLocaleString()}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Trailing zeros</div>
+          <div class="result-stat-val">${zeros.toLocaleString()}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">(n−1)!</div>
+          <div class="result-stat-val">${n >= 1 ? fmtBig(factorial(n - 1)) : "—"}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Scientific form</div>
+          <div class="result-stat-val" style="font-size: 1rem;">${val >= 1e6 || val === 0 ? val.toExponential(4) : fmtBig(val)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">n! ÷ n = (n−1)!</div>
+          <div class="result-stat-val" style="font-size: 1rem;">${n >= 1 ? fmtBig(val / n) : "—"}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Double-precision cap</div>
+          <div class="result-stat-val">170! max</div></div>`;
+
+      steps = `
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Definition</span>
+          <div class="math-formula-box">n! = n × (n−1) × … × 2 × 1, with 0! = 1</div>
+          <p class="step-content">${n === 0 ? "By convention 0! = 1 — the empty product, and it makes nCr formulas work for r = 0 and r = n." : n <= 20 ? `${n}! = ${Array.from({ length: n }, (_, i) => n - i).join(" × ")}${n > 1 ? " = " + fmtBig(val) : ""}` : `${n}! evaluated iteratively — the value has ${digits.toLocaleString()} digits and ${zeros.toLocaleString()} trailing zeros (each pair of 2 × 5 contributes one zero).`}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Trailing-Zero Rule</span>
+          <div class="math-formula-box">zeros = ⌊n/5⌋ + ⌊n/25⌋ + ⌊n/125⌋ + …</div>
+          <p class="step-content">Fives are the scarce factor (twos are plentiful) → for n = ${n}: ${zeros.toLocaleString()} zero${zeros === 1 ? "" : "s"} at the end of ${fmtBig(val)}.</p>
+        </div>`;
+    }
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">${heroLabel}</span>
+        <div class="result-hero-value" style="font-size: 1.5rem;">${heroValue}</div>
+        <span style="font-size: 0.95rem; color: var(--text-secondary);">${sub}</span>
+      </div>
+      <div class="result-stat-grid">${stats}</div>
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📐 Calculation Breakdown</h3></div>
+        ${steps}
+      </div>`;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function syncMode() {
+    const isFact = modeSel.value === "fact";
+    rGroup.style.display = isFact ? "none" : "";
+    nInput.previousElementSibling && (nInput.previousElementSibling.textContent = isFact ? "Value (n)" : "Total items (n)");
+  }
+
+  modeSel.addEventListener("change", () => { syncMode(); calculate(); });
+  nInput.addEventListener("change", calculate);
+  rInput.addEventListener("change", calculate);
+  container.querySelector("#btnCalcCmb").addEventListener("click", calculate);
+  container.querySelector("#btnResetCmb").addEventListener("click", () => {
+    modeSel.value = "ncr";
+    nInput.value = "52";
+    rInput.value = "5";
+    syncMode();
+    resultDiv.style.display = "none";
+  });
+
+  syncMode();
   calculate();
 }
