@@ -5388,6 +5388,263 @@ const CALCULATOR_RICH_CONTENT = {
         a: "Change calories first (−150 to −250 on a stall), keep protein at target, and pull the reduction mostly from carbs and fats proportionally. Re-check after 2 weeks — daily scale noise can hide a genuine 0.5 kg/week trend."
       }
     ]
+  },
+
+  // Date Calculator
+  "date-calculator": {
+    articleTitle: "Date Arithmetic: Adding and Subtracting Days Across Calendars",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">📅 Date Math</span>
+          <h4>Adding 90 Days to a Start Date</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 190" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="190" rx="12" fill="var(--bg-subtle)" />
+            <rect x="45" y="50" width="150" height="55" rx="8" fill="#38bdf8" />
+            <text x="62" y="74" fill="#fff" font-weight="700" font-size="13">Start</text>
+            <text x="62" y="94" fill="#fff" font-size="13">Oct 5, 2026 (Mon)</text>
+            <rect x="235" y="50" width="130" height="55" rx="8" fill="#f59e0b" />
+            <text x="255" y="74" fill="#fff" font-weight="700" font-size="13">+ 90 days</text>
+            <text x="255" y="94" fill="#fff" font-size="13">= 12 wk + 6 d</text>
+            <rect x="405" y="50" width="150" height="55" rx="8" fill="#10b981" />
+            <text x="422" y="74" fill="#fff" font-weight="700" font-size="13">Result</text>
+            <text x="422" y="94" fill="#fff" font-size="13">Jan 3, 2027 (Sun)</text>
+            <text x="45" y="145" fill="var(--text-primary)" font-weight="600" font-size="13">Days cross month AND year boundaries — simple month arithmetic (Oct + 3) would be wrong.</text>
+            <text x="45" y="172" fill="var(--text-muted)" font-size="12">Month-end clamp: Jan 31 + 1 month = Feb 28/29, not Mar 3.</text>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Count raw days on the timeline, then read the calendar date back — never add "one month" as 30 fixed days.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Date arithmetic</b> underpins every deadline: contract terms ("net 30"), project plans ("delivery in 60 days"), subscriptions, and legal windows all specify raw day counts. The trap is mixing <b>fixed-length units</b> (days, weeks) with <b>variable-length ones</b> (months, years) — October has 31 days, February has 28 or 29, and 12 weeks is not the same as 3 months.
+      </p>
+
+      <h3 class="content-subheading">1. Adding and Subtracting Days</h3>
+      <div class="math-formula-box">
+        target = start ± n days · weeks = n × 7 · months = calendar shift with clamping
+      </div>
+      <ul class="content-list">
+        <li><b>Days &amp; weeks:</b> pure timeline arithmetic — 90 days from Oct 5, 2026 = Jan 3, 2027 (crosses year end)</li>
+        <li><b>Months:</b> shift the month field, then clamp the day — Jan 31 + 1 month = Feb 28/29, never Mar 3</li>
+        <li><b>Years:</b> Feb 29 on a non-leap target year clamps to Feb 28</li>
+        <li>Weekday shifts by (days mod 7): 90 days = 12 weeks + 6 days → weekday moves forward 6 positions</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Counting the Difference Between Dates</h3>
+      <p>
+        Convert both dates to a day-number (midnight UTC epoch) and subtract — this is immune to DST and clock anomalies because calendar days, not hours, are being compared. A span of 365 days may be 52 weeks + 1 day, and inclusive counting (both endpoints included) adds exactly one day. The Y/M/D breakdown counts full years, then full months, then leftover days using the end month's length for the borrowed-day adjustment.
+      </p>
+
+      <h3 class="content-subheading">3. Practical Deadline Patterns</h3>
+      <ol class="content-ordered-list">
+        <li><b>Net-30 invoices:</b> issue date + 30 calendar days; business-day variants swap in the business days calculator</li>
+        <li><b>Statutes of limitation:</b> often count "days" as business days with specific exclusion rules — read the statute before using a plain calendar count</li>
+        <li><b>Shipping estimates:</b> "3–5 business days" excludes weekends and holidays; raw calendar days overstate by ~40% on long spans</li>
+        <li><b>Leap-year checkpoints:</b> anything anchored to Feb 29 must define its non-leap behavior (Feb 28 vs Mar 1) — contracts and software both get this wrong</li>
+      </ol>
+    `,
+    faqs: [
+      {
+        q: "How do I add 90 days to a date?",
+        a: "Add the days directly to the calendar — 90 days = 12 weeks + 6 days, so the date moves forward 12 full weeks plus 6 extra days. For Oct 5, 2026 that lands on Jan 3, 2027, crossing both a month and year boundary."
+      },
+      {
+        q: "Why does adding one month sometimes skip a day?",
+        a: "Months have different lengths, so a safe addition clamps the day to the target month's last day: Jan 31 + 1 month = Feb 28 (Feb 29 in leap years). Simply adding 30 days would give Mar 2/3 — a different result entirely."
+      },
+      {
+        q: "How do I count days between two dates excluding weekends?",
+        a: "Use total days minus weekend days: a 45-calendar-day span contains roughly 13 weekend days, leaving ~32 weekdays. Our business days calculator applies the exact count including holidays and optional half-days."
+      },
+      {
+        q: "Is a year always 365 days when counting dates?",
+        a: "No — a calendar year is 365 days but a leap year is 366 (Feb 29), and any span crossing a leap boundary changes by a day. Date arithmetic handles this automatically because it works on calendar dates rather than fixed 365-day assumptions."
+      },
+      {
+        q: "What does 'inclusive' mean in date counting?",
+        a: "Inclusive counting includes both the start and end dates, adding one extra day: Oct 1 to Oct 3 inclusive = 3 days (1, 2, 3), while exclusive difference = 2 days. Contracts specify which convention applies — 'within 3 days of notice' is usually inclusive."
+      }
+    ]
+  },
+
+  // Data Size Converter
+  "data-size-converter": {
+    articleTitle: "Digital Storage Units: Bytes, Kilobytes, and the SI vs IEC Split",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">💾 Unit Ladder</span>
+          <h4>Decimal (SI) vs Binary (IEC) Scaling</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)" />
+            <g font-size="12.5" font-weight="700">
+              <text x="45" y="42" fill="#38bdf8">SI (drive marketing)</text>
+              <text x="330" y="42" fill="#f59e0b">IEC (Windows / OS)</text>
+              <g fill="var(--text-primary)" font-weight="600">
+                <text x="45" y="75">KB = 1,000 B</text>
+                <text x="45" y="102">MB = 1,000,000 B</text>
+                <text x="45" y="129">GB = 10⁹ B</text>
+                <text x="45" y="156">TB = 10¹² B</text>
+                <text x="330" y="75">KiB = 1,024 B</text>
+                <text x="330" y="102">MiB = 1,048,576 B</text>
+                <text x="330" y="129">GiB = 1,073,741,824 B</text>
+                <text x="330" y="156">TiB = 1,099,511,627,776 B</text>
+              </g>
+              <text x="45" y="190" fill="var(--text-muted)">1 TB advertised = 0.909 TiB reported → a "1 TB" drive shows ≈ 931 GiB</text>
+            </g>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Marketing counts in powers of 1,000, operating systems in powers of 1,024 — the 6.9% gap explains every "missing" gigabyte.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Every file size, storage spec, and download estimate passes through the same ladder of <b>digital units</b> — bits, bytes, and their kilo-, mega-, giga-, and tera- multiples. Two standards govern that ladder, and confusing them is the single most common source of "my drive is smaller than advertised" complaints.
+      </p>
+
+      <h3 class="content-subheading">1. The Unit Ladder</h3>
+      <div class="math-formula-box">
+        8 bits = 1 byte · 1 KB = 1,000 B (SI) · 1 KiB = 1,024 B (IEC)
+      </div>
+      <ul class="content-list">
+        <li>Each step multiplies the previous one — MB = 1,000² B, GB = 1,000³ B, TB = 1,000⁴ B in decimal notation</li>
+        <li>Binary units use 1,024 per step: 1 MiB = 1,048,576 bytes exactly</li>
+        <li>Conversion between systems: value ÷ 1.074 at each step (1 GB = 0.931 GiB)</li>
+        <li>Bits measure wire speed (Mbps), bytes measure storage (MB) — divide by 8 to cross over</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Why Drives Show Fewer Gigabytes</h3>
+      <p>
+        Drive manufacturers count in decimal SI units (1 TB = 1,000,000,000,000 bytes), which is correct under the standard — but Windows and macOS then group those same bytes in binary chunks of 1,024³, reporting 1,000,000,000,000 ÷ 1,073,741,824 ≈ <b>931 GiB</b>. Nothing is missing; the OS is simply applying a different base. The IEC introduced KiB/MiB/GiB notation in 1998 precisely to end this ambiguity, though marketing never adopted it.
+      </p>
+
+      <h3 class="content-subheading">3. Transfer Time: Bridging Size and Speed</h3>
+      <ol class="content-ordered-list">
+        <li>Convert speed to bits per second: 100 Mbps = 100,000,000 bit/s</li>
+        <li>Multiply size by 8 to get bits: 1 GB = 8,000,000,000 bit (SI)</li>
+        <li>Divide: 8 × 10⁹ ÷ 10⁸ = <b>80 seconds</b> to download 1 GB at 100 Mbps</li>
+        <li>Real throughput runs 80–95% of advertised (protocol overhead), so expect ~95–120 s in practice</li>
+      </ol>
+    `,
+    faqs: [
+      {
+        q: "What is the difference between KB and KiB?",
+        a: "KB (kilobyte) is decimal: exactly 1,000 bytes. KiB (kibibyte) is binary: exactly 1,024 bytes. Storage makers sell in KB/MB/GB (powers of 1,000); operating systems historically report in binary powers — the IEC suffixes remove the ambiguity."
+      },
+      {
+        q: "Why does my 1 TB hard drive show only 931 GB?",
+        a: "The drive stores 1,000,000,000,000 bytes (decimal TB), but Windows divides by 1,024³ = 1,073,741,824, giving ≈ 931 GiB. About 7% is the base conversion, not missing capacity."
+      },
+      {
+        q: "How many megabytes are in a gigabyte?",
+        a: "Decimal (SI): 1 GB = 1,000 MB. Binary (IEC): 1 GiB = 1,024 MiB. Since both standards are in circulation, always state which one you mean when precision matters — file copy speeds and disk tools usually label their base."
+      },
+      {
+        q: "Bits or bytes — which do internet speeds use?",
+        a: "Internet speeds use bits (Mbps = megabits per second), while file sizes use bytes. Divide the speed by 8 for byte throughput: a 100 Mbps line transfers 12.5 MB/s, which is why a 120 MB file takes ~10 seconds."
+      },
+      {
+        q: "How long does it take to download 1 GB at 100 Mbps?",
+        a: "Theoretical: 8,000,000,000 bits ÷ 100,000,000 bit/s = 80 seconds. With protocol overhead expect 95–120 seconds — about 12.5 MB/s sustained."
+      }
+    ]
+  },
+
+  // Pace Calculator
+  "pace-calculator": {
+    articleTitle: "Running Pace: Minutes per Kilometer, Splits, and Race Time Prediction",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🏃 Pace Zones</span>
+          <h4>Pace at Common Training Speeds</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 200" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="200" rx="12" fill="var(--bg-subtle)" />
+            <g font-size="12.5" font-weight="700">
+              <text x="45" y="48" fill="var(--text-primary)">Easy 8:00 /km</text>
+              <rect x="190" y="33" width="110" height="18" rx="4" fill="#10b981" />
+              <text x="310" y="48" fill="#10b981">12.0 km/h · 53 min 20 s /5K</text>
+              <text x="45" y="93" fill="var(--text-primary)">Tempo 5:00 /km</text>
+              <rect x="190" y="78" width="176" height="18" rx="4" fill="#38bdf8" />
+              <text x="376" y="93" fill="#38bdf8">12.0→19.2 km/h · 25 min 00 s</text>
+              <text x="45" y="138" fill="var(--text-primary)">Race 4:00 /km</text>
+              <rect x="190" y="123" width="220" height="18" rx="4" fill="#f59e0b" />
+              <text x="420" y="138" fill="#f59e0b">15.0 km/h</text>
+              <text x="45" y="178" fill="var(--text-muted)">Pace (min/km) × distance = finish time · 10 km at 5:00 = 50:00 · mile = km × 1.609344</text>
+            </g>
+          </svg>
+        </div>
+        <p class="infographic-caption">
+          <b>Key Takeaway:</b> Pace and speed are reciprocals — runners think in min/km, treadmills in km/h; converting is one division apart.
+        </p>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Running pace</b> — minutes per kilometer or mile — is the unit every training plan speaks. Unlike speed (km/h), pace scales intuitively with effort: an easy 8:00/km and a race 4:00/km differ by exactly a factor of two, and finish times fall out of one multiplication: <b>pace × distance</b>.
+      </p>
+
+      <h3 class="content-subheading">1. Pace, Speed, and the Conversion</h3>
+      <div class="math-formula-box">
+        pace = time ÷ distance · speed = distance ÷ time · min/mi = min/km × 1.609344
+      </div>
+      <ul class="content-list">
+        <li>10 km in 50:00 → pace <b>5:00/km</b> → speed <b>12.0 km/h</b> → 8:03/mi</li>
+        <li>Pace to speed: 60 ÷ pace in minutes — 4:30/km = 60 ÷ 4.5 = 13.33 km/h</li>
+        <li>Speed to pace: 60 ÷ km/h — 15 km/h = 4:00/km</li>
+        <li>Even splits mean every kilometer takes the same time — the default assumption behind split tables</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Reading Your Splits</h3>
+      <p>
+        A split table shows each kilometer's lap time and cumulative total. Even splits (flat pacing) minimize energy cost; negative splits (each km faster than the last) are the hallmark of well-executed distance races, while positive splits usually signal going out too fast. Half-marathon and marathon pacing deserves special care: glycogen depletion punishes early surges far more than the clock suggests, so start 5–10 seconds per kilometer slower than goal pace and settle in.
+      </p>
+
+      <h3 class="content-subheading">3. Predicting Other Race Times</h3>
+      <div class="math-formula-box">
+        T₂ = T₁ × (D₂ ÷ D₁)^1.06  (Riegel formula)
+      </div>
+      <ol class="content-ordered-list">
+        <li>Take a recent race or time trial — 10 km in 50:00</li>
+        <li>Scale by the distance ratio raised to 1.06: half marathon = 50:00 × (21.0975 ÷ 10)^1.06 ≈ <b>1:50:19</b> (linear pacing alone would say 1:45:29)</li>
+        <li>The 1.06 exponent (slightly above linear) models fatigue accumulating over longer efforts</li>
+        <li>Adjust for conditions: heat, hills, and altitude can add 2–5%; fresh legs subtract 1–2% from a tired-effort baseline</li>
+      </ol>
+    `,
+    faqs: [
+      {
+        q: "How do I calculate running pace from time and distance?",
+        a: "Divide total time by distance. Example: 50 minutes over 10 km = 5:00 min/km. For miles, multiply the km pace by 1.609344 (5:00/km ≈ 8:03/mi), or divide time by distance in miles directly."
+      },
+      {
+        q: "What is a good pace for a beginner?",
+        a: "Whatever lets you speak in full sentences — typically 7:00–9:00 min/km. Beginners should run by effort, not clock; speed arrives after consistent aerobic base, usually in 8–12 weeks of 3–4 runs per week."
+      },
+      {
+        q: "How do I convert pace to speed?",
+        a: "Speed (km/h) = 60 ÷ pace in minutes. A 4:30/km pace = 60 ÷ 4.5 = 13.33 km/h. The reverse: pace = 60 ÷ speed — 15 km/h = 4:00/km."
+      },
+      {
+        q: "How accurate is the Riegel race time prediction?",
+        a: "For well-trained runners within one year of the source race it's typically within 1–2%. It assumes equal conditions and even pacing — heat, hills, injury layoffs, or a fresh taper can shift results several percent either way."
+      },
+      {
+        q: "What is a negative split?",
+        a: "Running the second half faster than the first (each successive split quicker). It's the most energy-efficient way to race because it avoids early glycogen waste and lactic accumulation — elite distance runners routinely negative-split championship races."
+      }
+    ]
   }
 };
 

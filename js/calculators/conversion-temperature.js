@@ -1,6 +1,7 @@
 /**
  * ============================================================================
- * Conversion Calculators: Temperature, Length, Area/Volume & Speed Converters
+ * Conversion Calculators: Temperature, Length, Area/Volume, Speed &
+ * Digital Data Size Converters
  * ============================================================================
  */
 
@@ -516,6 +517,184 @@ function renderSpeedCalculator(container, calcDef) {
   btnCalc.addEventListener("click", calculate);
   fromSel.addEventListener("change", calculate);
   toSel.addEventListener("change", calculate);
+
+  calculate();
+}
+
+/* ==========================================================================
+   Data Size & Digital Storage Converter (SI decimal + IEC binary units)
+   ========================================================================== */
+function renderDataSizeConverter(container, calcDef) {
+  const UNITS = [
+    { key: "bit", label: "Bits (bit)", short: "bit", f: 1 / 8 },
+    { key: "b", label: "Bytes (B)", short: "B", f: 1 },
+    { key: "kb", label: "Kilobytes (KB · SI)", short: "KB", f: 1e3 },
+    { key: "kib", label: "Kibibytes (KiB · IEC)", short: "KiB", f: 1024 },
+    { key: "mb", label: "Megabytes (MB · SI)", short: "MB", f: 1e6 },
+    { key: "mib", label: "Mebibytes (MiB · IEC)", short: "MiB", f: 1024 * 1024 },
+    { key: "gb", label: "Gigabytes (GB · SI)", short: "GB", f: 1e9 },
+    { key: "gib", label: "Gibibytes (GiB · IEC)", short: "GiB", f: 1024 ** 3 },
+    { key: "tb", label: "Terabytes (TB · SI)", short: "TB", f: 1e12 },
+    { key: "tib", label: "Tebibytes (TiB · IEC)", short: "TiB", f: 1024 ** 4 },
+    { key: "pb", label: "Petabytes (PB · SI)", short: "PB", f: 1e15 },
+    { key: "pib", label: "Pebibytes (PiB · IEC)", short: "PiB", f: 1024 ** 5 }
+  ];
+
+  const opts = (sel) => UNITS.map(u =>
+    `<option value="${u.key}"${u.key === sel ? " selected" : ""}>${u.label}</option>`).join("");
+
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="dsVal">Value</label>
+        <input type="number" id="dsVal" class="form-control" value="1" min="0" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="dsFrom">From Unit</label>
+        <select id="dsFrom" class="form-control">${opts("gb")}</select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="dsTo">To Unit</label>
+        <select id="dsTo" class="form-control">${opts("mib")}</select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="dsSpeed">Connection Speed <span class="form-label-hint">For transfer time</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="dsSpeed" class="form-control" value="100" min="0.01" step="any">
+          <span class="input-addon suffix">Mbps</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcDs" class="btn btn-primary"><span>💾 Convert Data Size</span></button>
+      <button type="button" id="btnSwapDs" class="btn btn-secondary"><span>⇄ Swap Units</span></button>
+    </div>
+
+    <div id="dsResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const valInput = container.querySelector("#dsVal");
+  const fromSel = container.querySelector("#dsFrom");
+  const toSel = container.querySelector("#dsTo");
+  const speedInput = container.querySelector("#dsSpeed");
+  const resultDiv = container.querySelector("#dsResultContainer");
+
+  function fmt(n) {
+    if (n === 0) return "0";
+    const abs = Math.abs(n);
+    if (abs >= 1e18 || abs < 1e-9) return n.toExponential(4).replace("e+", " × 10^");
+    const rounded = Number(n.toPrecision(7));
+    return rounded.toLocaleString("en-US", { maximumFractionDigits: 6 });
+  }
+
+  function fmtDuration(sec) {
+    if (!isFinite(sec)) return "—";
+    if (sec < 1) return `${(sec * 1000).toFixed(0)} ms`;
+    if (sec < 60) return `${sec.toFixed(1)} s`;
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    const s = Math.round(sec % 60);
+    if (h > 72) return `${(sec / 86400).toFixed(1)} days`;
+    return h > 0 ? `${h} h ${m} m ${s} s` : `${m} m ${s} s`;
+  }
+
+  function calculate() {
+    const val = parseFloat(valInput.value);
+    if (isNaN(val) || val < 0) { alert("Please enter a valid non-negative value."); return; }
+
+    const from = UNITS.find(u => u.key === fromSel.value);
+    const to = UNITS.find(u => u.key === toSel.value);
+    const bytes = val * from.f;
+    const out = bytes / to.f;
+
+    const matrix = UNITS.filter(u => u.key !== from.key).slice(0, 8).map(u => `
+      <div class="result-stat-card">
+        <div class="result-stat-label">${u.short}</div>
+        <div class="result-stat-val" style="font-size: 1rem;">${fmt(bytes / u.f)}</div>
+      </div>`).join("");
+
+    const mbps = parseFloat(speedInput.value) || 100;
+    const transferSec = (bytes * 8) / (mbps * 1e6);
+
+    // SI vs IEC gap for the source value when applicable
+    const isSi = ["kb", "mb", "gb", "tb", "pb"].includes(from.key);
+    const equivKey = { kb: "kib", mb: "mib", gb: "gib", tb: "tib", pb: "pib" }[from.key];
+    const gapNote = isSi ? (() => {
+      const ib = UNITS.find(u => u.key === equivKey);
+      const ibVal = bytes / ib.f;
+      return `1 ${from.short} = ${fmt(from.f / ib.f)} ${ib.short} — so ${fmt(val)} ${from.short} = ${fmt(ibVal)} ${ib.short} (binary counting).`;
+    })() : ["kib", "mib", "gib", "tib", "pib"].includes(from.key) ? (() => {
+      const siKey = { kib: "kb", mib: "mb", gib: "gb", tib: "tb", pib: "pb" }[from.key];
+      const si = UNITS.find(u => u.key === siKey);
+      return `1 ${from.short} = ${fmt(from.f / si.f)} ${si.short} — a 1,024× base rounded to a 1,000× label.`;
+    })() : "";
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Converted Size</span>
+        <div class="result-hero-value" style="font-size: 1.5rem;">${fmt(out)} ${to.short}</div>
+        <span style="font-size: 0.95rem; color: var(--text-secondary);">
+          ${fmt(val)} ${from.short} = <b>${fmt(bytes)} bytes</b> = ${fmt(out)} ${to.short}
+        </span>
+      </div>
+
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">In Bits</div>
+          <div class="result-stat-val">${fmt(bytes * 8)} bit</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">In Bytes</div>
+          <div class="result-stat-val">${fmt(bytes)} B</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Transfer at ${fmt(mbps)} Mbps</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${fmtDuration(transferSec)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Files of 4.5 MB (song)</div>
+          <div class="result-stat-val">${fmt(bytes / 4.5e6)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Photos of 5 MB</div>
+          <div class="result-stat-val">${fmt(bytes / 5e6)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">4K Movies (25 GB each)</div>
+          <div class="result-stat-val">${fmt(bytes / 25e9)}</div>
+        </div>
+      </div>
+
+      ${gapNote ? `<div class="step-card" style="margin-top: 1.5rem;">
+        <span class="step-num-badge">SI vs IEC — the storage-label gap</span>
+        <p class="step-content">${gapNote} Drive makers advertise decimal (1,000³) while Windows reports binary (1,024³) — a "1 TB" drive shows as ≈ 931 GiB.</p>
+      </div>` : ""}
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📐 Full Conversion Matrix</h3></div>
+        <div class="result-stat-grid">${matrix}</div>
+        <div class="step-card" style="margin-top: 1.5rem;">
+          <span class="step-num-badge">Conversion Formula</span>
+          <div class="math-formula-box">target = value × (from factor ÷ to factor)</div>
+          <p class="step-content">${fmt(val)} × (${fmt(from.f)} ÷ ${fmt(to.f)}) = <b>${fmt(out)} ${to.short}</b>
+          <br><span style="color: var(--text-muted); font-size: 0.9rem;">Transfer time = bytes × 8 ÷ (Mbps × 1,000,000) = ${fmtDuration(transferSec)} at ${fmt(mbps)} Mbps.</span></p>
+        </div>
+      </div>`;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  container.querySelector("#btnCalcDs").addEventListener("click", calculate);
+  container.querySelector("#btnSwapDs").addEventListener("click", () => {
+    const t = fromSel.value;
+    fromSel.value = toSel.value;
+    toSel.value = t;
+    calculate();
+  });
+  [valInput, speedInput].forEach(el => el.addEventListener("input", calculate));
+  [fromSel, toSel].forEach(el => el.addEventListener("change", calculate));
 
   calculate();
 }

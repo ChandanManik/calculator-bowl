@@ -1631,8 +1631,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Conversions",
     "icon": "🔄",
     "colorClass": "conversions",
-    "badge": "5 Calculators",
-    "description": "Convert temperature, length, distance, weight, mass, area, volume, and speed across metric and imperial systems.",
+    "badge": "6 Calculators",
+    "description": "Convert temperature, length, distance, weight, mass, area, volume, speed, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.",
     "seoTitle": "Unit Converters - Metric & Imperial Tools | CalculatorBowl",
     "seoDescription": "Precision unit conversion calculators for temperature (°C, °F, K), length & distance, weight & mass, area (sq ft, acres), volume (liters, gallons), and speed (mph, km/h, knots).",
     "calculators": [
@@ -1830,6 +1830,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/conversion/measurement/speed-converter/",
         "subcatUrl": "/calculators/conversion/measurement/",
         "categoryUrl": "/calculators/conversion/"
+      },
+      {
+        "id": "data-size-converter",
+        "name": "Data Size & Digital Storage Converter",
+        "shortName": "Data Size Converter",
+        "icon": "💾",
+        "badge": "Digital Units",
+        "description": "Convert digital storage units — bits, bytes, kilobytes, megabytes, gigabytes, and terabytes — using both decimal (SI) and binary (IEC) standards, with transfer-time estimates.",
+        "seoTitle": "Data Size Converter - Bits, Bytes, KB, MB, GB & TB",
+        "seoDescription": "Convert digital storage units between bits, bytes, KB, MB, GB, TB, and PB using decimal SI and binary IEC standards, with file transfer time estimates.",
+        "category": "conversion",
+        "renderFunction": "renderDataSizeConverter",
+        "contextualGuide": {
+          "title": "Digital Measurement Cross-References",
+          "html": "\n            <p>\n              Storage marketing uses decimal units (1 GB = 1,000,000,000 bytes) while operating systems count binary (1 GiB = 1,073,741,824 bytes) — that gap is why a 1 TB drive shows as ~931 GiB. Explore our <a href=\"/calculators/conversion/\" class=\"in-text-link\">🔄 Unit Conversions Hub</a> for the full dimensional matrix.\n            </p>\n            <p>\n              Once the size is known, pair it with connection speed to estimate download time, or check live throughput with the network tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "internet-speed-test",
+              "label": "Internet Speed Test",
+              "icon": "🚀"
+            },
+            {
+              "id": "streaming-data-calculator",
+              "label": "Streaming Data Usage",
+              "icon": "📱"
+            },
+            {
+              "id": "speed-converter",
+              "label": "Speed Unit Converter",
+              "icon": "🏎️"
+            }
+          ]
+        },
+        "subcategory": "measurement",
+        "subcatTitle": "Units & Measurements",
+        "slug": "data-size-converter",
+        "url": "/calculators/conversion/measurement/data-size-converter/",
+        "subcatUrl": "/calculators/conversion/measurement/",
+        "categoryUrl": "/calculators/conversion/"
       }
     ],
     "faqs": [
@@ -1851,8 +1890,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Date & Time",
     "icon": "⏱️",
     "colorClass": "datetime",
-    "badge": "5 Calculators",
-    "description": "Calculate exact chronological age, next birthday countdown, elapsed time duration, and live weather forecast with interactive radar maps and sunrise/sunset times.",
+    "badge": "6 Calculators",
+    "description": "Calculate exact chronological age, add or subtract days from any date, next birthday countdown, elapsed time duration, business-day deadlines, world time zone conversions, and live weather forecasts.",
     "seoTitle": "Date & Time Calculators - Age & Duration Solvers | CalculatorBowl",
     "seoDescription": "Free online date, time, and environmental calculators to determine exact chronological age, time durations, and live weather radar forecasts.",
     "calculators": [
@@ -2009,6 +2048,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Calendar & Dates",
         "slug": "business-days-calculator",
         "url": "/calculators/date-time/calendar/business-days-calculator/",
+        "subcatUrl": "/calculators/date-time/calendar/",
+        "categoryUrl": "/calculators/date-time/"
+      },
+      {
+        "id": "date-calculator",
+        "name": "Date Calculator - Add & Subtract Days",
+        "shortName": "Date Calculator",
+        "icon": "📅",
+        "badge": "Calendar",
+        "description": "Add or subtract days, weeks, months, and years from any date, calculate the exact duration between two dates in days, weeks, and months, and find the day of the week for any date.",
+        "seoTitle": "Date Calculator - Add or Subtract Days from a Date",
+        "seoDescription": "Add or subtract days, weeks, or months from a date, find the difference between two dates in days, and see the day of the week for any date instantly.",
+        "category": "date-time",
+        "renderFunction": "renderDateCalculator",
+        "contextualGuide": {
+          "title": "Deadline & Calendar Planning Tools",
+          "html": "\n            <p>\n              Project deadlines, contract terms, and subscription renewals are all written in raw dates — converting them into day counts makes planning concrete. Explore our <a href=\"/calculators/date-time/\" class=\"in-text-link\">⏱️ Date &amp; Time Hub</a> for more chronological utilities.\n            </p>\n            <p>\n              Working-day deadlines need the business-day view, and travel across zones needs the time zone converter — both linked below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "business-days-calculator",
+              "label": "Business Days Calculator",
+              "icon": "📆"
+            },
+            {
+              "id": "time-zone-converter",
+              "label": "Time Zone Converter",
+              "icon": "🌐"
+            },
+            {
+              "id": "age-calculator",
+              "label": "Age & Birthday Calculator",
+              "icon": "🎂"
+            }
+          ]
+        },
+        "subcategory": "calendar",
+        "subcatTitle": "Calendar & Dates",
+        "slug": "date-calculator",
+        "url": "/calculators/date-time/calendar/date-calculator/",
         "subcatUrl": "/calculators/date-time/calendar/",
         "categoryUrl": "/calculators/date-time/"
       },
@@ -2252,8 +2330,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Health",
     "icon": "💪",
     "colorClass": "health",
-    "badge": "4 Calculators",
-    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, and macro splits (protein, carbs, fat) with step-by-step health breakdowns.",
+    "badge": "5 Calculators",
+    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, macro splits (protein, carbs, fat), and running pace with race time predictions.",
     "seoTitle": "Health & Fitness Calculators - BMI, BMR & Calorie Needs | CalculatorBowl",
     "seoDescription": "Free health calculators for BMI body mass index, BMR basal metabolic rate, and daily calorie requirements for weight loss, maintenance, and muscle gain.",
     "calculators": [
@@ -2410,6 +2488,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Fitness & Body Metrics",
         "slug": "macro-calculator",
         "url": "/calculators/health/fitness/macro-calculator/",
+        "subcatUrl": "/calculators/health/fitness/",
+        "categoryUrl": "/calculators/health/"
+      },
+      {
+        "id": "pace-calculator",
+        "name": "Running Pace & Race Time Calculator",
+        "shortName": "Pace Calculator",
+        "icon": "🏃",
+        "badge": "Running",
+        "description": "Calculate running pace per kilometer and mile, average speed, split times for 5K, 10K, half marathon, and marathon, and predicted race times from any recent effort.",
+        "seoTitle": "Pace Calculator - Running Pace, Splits & Race Time Predictor",
+        "seoDescription": "Calculate running pace in min/km and min/mi, average speed, kilometer splits, and predicted 5K, 10K, half marathon, and marathon times from your best effort.",
+        "category": "health",
+        "renderFunction": "renderPaceCalculator",
+        "contextualGuide": {
+          "title": "Training & Body Metric Cross-References",
+          "html": "\n            <p>\n              Pace is the backbone of run training — easy days, tempo runs, and race goals are all prescribed in minutes per kilometer or mile rather than raw speed. Explore our <a href=\"/calculators/health/\" class=\"in-text-link\">💪 Health Hub</a> for more training and body tools.\n            </p>\n            <p>\n              Pair training load with fuel and hydration targets — macros power the session and water keeps it sustainable.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "macro-calculator",
+              "label": "Macro Calculator",
+              "icon": "🥗"
+            },
+            {
+              "id": "water-intake-calculator",
+              "label": "Daily Water Intake",
+              "icon": "💧"
+            },
+            {
+              "id": "bmi-bmr-calculator",
+              "label": "BMI & Calorie Calculator",
+              "icon": "⚖️"
+            }
+          ]
+        },
+        "subcategory": "fitness",
+        "subcatTitle": "Fitness & Body Metrics",
+        "slug": "pace-calculator",
+        "url": "/calculators/health/fitness/pace-calculator/",
         "subcatUrl": "/calculators/health/fitness/",
         "categoryUrl": "/calculators/health/"
       }

@@ -6,6 +6,7 @@
  * 2. Body Fat Percentage & Ideal Weight (US Navy + Devine)
  * 3. Daily Water Intake Calculator (Weight + Activity + Climate)
  * 4. Macro Calculator (Protein, Carbs & Fat split)
+ * 5. Running Pace & Race Time Calculator (Riegel predictions)
  * ============================================================================
  */
 
@@ -888,5 +889,223 @@ function renderMacroCalculator(container, calcDef) {
   });
 
   syncMethod();
+  calculate();
+}
+
+/* ==========================================================================
+   Running Pace & Race Time Calculator (Riegel predictions)
+   ========================================================================== */
+function renderPaceCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="pcPreset">Race / Distance Preset</label>
+        <select id="pcPreset" class="form-control">
+          <option value="custom" selected>Custom distance</option>
+          <option value="5">5K race (5 km)</option>
+          <option value="10">10K race (10 km)</option>
+          <option value="21.0975">Half marathon (21.0975 km)</option>
+          <option value="42.195">Marathon (42.195 km)</option>
+          <option value="1.609344">1 mile</option>
+          <option value="1">1 km</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="pcDist">Distance <span class="form-label-hint">Kilometers</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="pcDist" class="form-control" value="10" min="0.1" max="500" step="any">
+          <span class="input-addon suffix">km</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="pcH">Time — Hours</label>
+        <input type="number" id="pcH" class="form-control" value="0" min="0" max="48" step="1">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="pcM">Minutes</label>
+        <input type="number" id="pcM" class="form-control" value="50" min="0" max="59" step="1">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="pcS">Seconds</label>
+        <input type="number" id="pcS" class="form-control" value="0" min="0" max="59" step="1">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcPc" class="btn btn-primary"><span>🏃 Calculate Pace</span></button>
+      <button type="button" id="btnResetPc" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="pcResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const presetSel = container.querySelector("#pcPreset");
+  const distInput = container.querySelector("#pcDist");
+  const hInput = container.querySelector("#pcH");
+  const mInput = container.querySelector("#pcM");
+  const sInput = container.querySelector("#pcS");
+  const resultDiv = container.querySelector("#pcResultContainer");
+
+  const fmtTime = (sec) => {
+    sec = Math.round(sec);
+    const h = Math.floor(sec / 3600);
+    const m = Math.floor((sec % 3600) / 60);
+    const s = sec % 60;
+    return h > 0 ? `${h}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`
+                 : `${m}:${String(s).padStart(2, "0")}`;
+  };
+  const fmtPace = (sec) => {
+    const m = Math.floor(sec / 60);
+    const s = Math.round(sec % 60);
+    return s === 60 ? `${m + 1}:00` : `${m}:${String(s).padStart(2, "0")}`;
+  };
+
+  function calculate() {
+    const dist = parseFloat(distInput.value);
+    const totalSec = (parseFloat(hInput.value) || 0) * 3600
+      + (parseFloat(mInput.value) || 0) * 60
+      + (parseFloat(sInput.value) || 0);
+
+    if (isNaN(dist) || dist <= 0) { alert("Please enter a valid distance."); return; }
+    if (totalSec <= 0) { alert("Please enter a valid finish time."); return; }
+
+    const paceKm = totalSec / dist;
+    const paceMi = paceKm * 1.609344;
+    const speedKmh = dist / (totalSec / 3600);
+    const speedMph = speedKmh / 1.609344;
+    const speedMs = (dist * 1000) / totalSec;
+
+    // Even splits for whole units covered
+    const wholeUnits = Math.floor(dist);
+    let splitRows = "";
+    if (wholeUnits >= 1) {
+      for (let i = 1; i <= Math.min(wholeUnits, 42); i++) {
+        splitRows += `<tr>
+          <td style="padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--border-color);">${i} km</td>
+          <td style="padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--border-color); text-align: right;">${fmtPace(paceKm)}</td>
+          <td style="padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--border-color); text-align: right;">${fmtTime(paceKm * i)}</td>
+        </tr>`;
+      }
+    }
+
+    // Riegel race predictions: T2 = T1 × (D2/D1)^1.06
+    const RACES = [
+      { name: "5K", km: 5 },
+      { name: "10K", km: 10 },
+      { name: "Half Marathon", km: 21.0975 },
+      { name: "Marathon", km: 42.195 }
+    ];
+    const preds = RACES.filter(r => Math.abs(r.km - dist) > 0.001).map(r => {
+      const t = totalSec * Math.pow(r.km / dist, 1.06);
+      return `<div class="result-stat-card">
+        <div class="result-stat-label">${r.name}</div>
+        <div class="result-stat-val" style="color: var(--accent-emerald);">${fmtTime(t)}</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);">${fmtPace(t / r.km)} /km</div>
+      </div>`;
+    }).join("");
+
+    const isRace = RACES.find(r => Math.abs(r.km - dist) < 0.001);
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">Average Pace</span>
+        <div class="result-hero-value" style="font-size: 1.5rem;">${fmtPace(paceKm)} /km</div>
+        <span style="font-size: 0.95rem; color: var(--text-secondary);">
+          ${fmtPace(paceMi)} /mi · ${fmtTime(totalSec)} for ${dist} km${isRace ? ` (${isRace.name})` : ""}
+        </span>
+      </div>
+
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Pace per km</div>
+          <div class="result-stat-val">${fmtPace(paceKm)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Pace per mile</div>
+          <div class="result-stat-val">${fmtPace(paceMi)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Speed (km/h)</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${speedKmh.toFixed(2)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Speed (mph)</div>
+          <div class="result-stat-val">${speedMph.toFixed(2)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Speed (m/s)</div>
+          <div class="result-stat-val">${speedMs.toFixed(2)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Even km Splits</div>
+          <div class="result-stat-val">${fmtPace(paceKm)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">10 km at this pace</div>
+          <div class="result-stat-val">${fmtTime(paceKm * 10)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Half Marathon</div>
+          <div class="result-stat-val">${fmtTime(paceKm * 21.0975)}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📐 Calculation Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Pace</span>
+          <div class="math-formula-box">pace = total time ÷ distance</div>
+          <p class="step-content">${fmtTime(totalSec)} ÷ ${dist} km = <b>${fmtPace(paceKm)} min/km</b> (${fmtTime(totalSec)} ÷ ${(dist * 1.609344).toFixed(4)} mi = ${fmtPace(paceMi)} min/mi)</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Speed</span>
+          <div class="math-formula-box">speed = distance ÷ time (hours)</div>
+          <p class="step-content">${dist} ÷ ${(totalSec / 3600).toFixed(4)} h = <b>${speedKmh.toFixed(2)} km/h</b> = ${speedMph.toFixed(2)} mph = ${speedMs.toFixed(2)} m/s</p>
+        </div>
+        ${preds ? `
+        <div class="steps-header" style="margin-top: 1.5rem;"><h3 class="steps-title">🎯 Predicted Race Times (Riegel formula)</h3></div>
+        <div class="result-stat-grid">${preds}</div>
+        <div class="step-card" style="margin-top: 1.5rem;">
+          <span class="step-num-badge">Riegel exponent 1.06</span>
+          <div class="math-formula-box">T₂ = T₁ × (D₂ ÷ D₁)^1.06</div>
+          <p class="step-content">Slightly slower than linear because fatigue grows with distance — e.g. ${fmtTime(totalSec)} over ${dist} km scales to ${fmtTime(totalSec * Math.pow(21.0975 / dist, 1.06))} for a half marathon.</p>
+        </div>` : ""}
+        ${splitRows ? `
+        <div class="steps-header" style="margin-top: 1.5rem;"><h3 class="steps-title">🗺️ Kilometer Splits</h3></div>
+        <div class="step-card">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.95rem;">
+            <thead><tr>
+              <th style="text-align:left; padding: 0.35rem 0.6rem; border-bottom: 2px solid var(--border-color);">Km</th>
+              <th style="text-align:right; padding: 0.35rem 0.6rem; border-bottom: 2px solid var(--border-color);">Split</th>
+              <th style="text-align:right; padding: 0.35rem 0.6rem; border-bottom: 2px solid var(--border-color);">Cumulative</th>
+            </tr></thead>
+            <tbody>${splitRows}</tbody>
+          </table>
+        </div>` : ""}
+      </div>`;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  presetSel.addEventListener("change", () => {
+    if (presetSel.value !== "custom") distInput.value = presetSel.value;
+    calculate();
+  });
+  [distInput, hInput, mInput, sInput].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcPc").addEventListener("click", calculate);
+  container.querySelector("#btnResetPc").addEventListener("click", () => {
+    presetSel.value = "custom";
+    distInput.value = "10";
+    hInput.value = "0";
+    mInput.value = "50";
+    sInput.value = "0";
+    resultDiv.style.display = "none";
+  });
+
   calculate();
 }

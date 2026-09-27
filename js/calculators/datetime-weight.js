@@ -1,7 +1,8 @@
 /**
  * ============================================================================
  * Date, Time & Physical Measurement Suite: Age Calculator, Time Duration,
- * Weight / Mass Unit Converter, Business Days Calculator, and Time Zone Converter
+ * Weight / Mass Unit Converter, Business Days Calculator, Time Zone Converter,
+ * and Date Calculator (add/subtract/difference)
  * ============================================================================
  */
 
@@ -906,6 +907,322 @@ function renderTimeZoneCalculator(container, calcDef) {
   dateInput.addEventListener("change", calculate);
   timeInput.addEventListener("change", calculate);
 
+  setDefaults();
+  calculate();
+}
+
+/* ==========================================================================
+   Date Calculator — add/subtract units, date difference, day of week
+   ========================================================================== */
+function renderDateCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="dcMode">Calculation Mode</label>
+        <select id="dcMode" class="form-control">
+          <option value="add" selected>Add / subtract from a date</option>
+          <option value="diff">Difference between two dates</option>
+          <option value="dow">Day of the week</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="dcBaseGroup">
+        <label class="form-label" for="dcBase">Start Date</label>
+        <input type="date" id="dcBase" class="form-control">
+      </div>
+
+      <div class="form-group" id="dcAmountGroup">
+        <label class="form-label" for="dcAmount">Amount</label>
+        <input type="number" id="dcAmount" class="form-control" value="90" step="1">
+      </div>
+
+      <div class="form-group" id="dcUnitGroup">
+        <label class="form-label" for="dcUnit">Unit</label>
+        <select id="dcUnit" class="form-control">
+          <option value="days" selected>Days</option>
+          <option value="weeks">Weeks</option>
+          <option value="months">Months</option>
+          <option value="years">Years</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="dcSignGroup">
+        <label class="form-label" for="dcSign">Direction</label>
+        <select id="dcSign" class="form-control">
+          <option value="1" selected>Add (+)</option>
+          <option value="-1">Subtract (−)</option>
+        </select>
+      </div>
+
+      <div class="form-group" id="dcEndGroup" style="display: none;">
+        <label class="form-label" for="dcEnd">End Date</label>
+        <input type="date" id="dcEnd" class="form-control">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcDc" class="btn btn-primary"><span>📅 Calculate</span></button>
+      <button type="button" id="btnResetDc" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="dcResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const modeSel = container.querySelector("#dcMode");
+  const baseInput = container.querySelector("#dcBase");
+  const amountInput = container.querySelector("#dcAmount");
+  const unitSel = container.querySelector("#dcUnit");
+  const signSel = container.querySelector("#dcSign");
+  const endInput = container.querySelector("#dcEnd");
+  const groups = {
+    base: container.querySelector("#dcBaseGroup"),
+    amount: container.querySelector("#dcAmountGroup"),
+    unit: container.querySelector("#dcUnitGroup"),
+    sign: container.querySelector("#dcSignGroup"),
+    end: container.querySelector("#dcEndGroup")
+  };
+  const resultDiv = container.querySelector("#dcResultContainer");
+
+  const WD = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const MO = ["January", "February", "March", "April", "May", "June", "July",
+    "August", "September", "October", "November", "December"];
+
+  function parseDate(str) {
+    const [y, m, d] = (str || "").split("-").map(Number);
+    if (!y || !m || !d) return null;
+    if (m < 1 || m > 12 || d < 1 || d > 31) return null;
+    return { y, m, d };
+  }
+  const fmtDate = (y, m, d) => `${WD[new Date(y, m - 1, d, 12).getDay()]}, ${MO[m - 1]} ${d}, ${y}`;
+  const pad = n => String(n).padStart(2, "0");
+
+  function syncMode() {
+    const mode = modeSel.value;
+    groups.amount.style.display = mode === "add" ? "" : "none";
+    groups.unit.style.display = mode === "add" ? "" : "none";
+    groups.sign.style.display = mode === "add" ? "" : "none";
+    groups.end.style.display = mode === "diff" ? "" : "none";
+    groups.base.querySelector(".form-label").textContent =
+      mode === "diff" ? "Start Date" : "Date";
+  }
+
+  function calculate() {
+    const mode = modeSel.value;
+    const base = parseDate(baseInput.value);
+    if (!base) { alert("Please enter a valid start date."); return; }
+
+    let heroLabel = "", heroValue = "", sub = "", stats = "", steps = "";
+
+    if (mode === "add") {
+      const amount = parseInt(amountInput.value, 10);
+      if (isNaN(amount)) { alert("Please enter a valid whole number amount."); return; }
+      const unit = unitSel.value;
+      const dir = parseInt(signSel.value, 10);
+      const n = amount * dir;
+      let y = base.y, m = base.m, d = base.d, clamped = false, effN = n;
+
+      if (unit === "days" || unit === "weeks") {
+        const delta = unit === "weeks" ? n * 7 : n;
+        const dt = new Date(base.y, base.m - 1, base.d, 12);
+        dt.setDate(dt.getDate() + delta);
+        y = dt.getFullYear(); m = dt.getMonth() + 1; d = dt.getDate();
+      } else {
+        const months = unit === "years" ? n * 12 : n;
+        const t = new Date(base.y, base.m - 1 + months, 1, 12);
+        y = t.getFullYear(); m = t.getMonth() + 1;
+        const daysInTarget = new Date(y, m, 0).getDate();
+        if (base.d > daysInTarget) { d = daysInTarget; clamped = true; } else { d = base.d; }
+      }
+
+      const dow = WD[new Date(y, m - 1, d, 12).getDay()];
+      const baseDow = WD[new Date(base.y, base.m - 1, base.d, 12).getDay()];
+      const absDays = Math.abs(Math.round(
+        (Date.UTC(y, m - 1, d) - Date.UTC(base.y, base.m - 1, base.d)) / 86400000));
+      const unitLabel = Math.abs(n) === 1 ? unit.slice(0, -1) : unit;
+
+      heroLabel = n >= 0 ? `Date After ${Math.abs(n)} ${unitLabel}` : `Date Before ${Math.abs(n)} ${unitLabel}`;
+      heroValue = fmtDate(y, m, d);
+      sub = `${n >= 0 ? "+" : "−"}${Math.abs(n)} ${unitLabel} from ${fmtDate(base.y, base.m, base.d)}`;
+
+      stats = `
+        <div class="result-stat-card"><div class="result-stat-label">Result Weekday</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${dow}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Start Weekday</div>
+          <div class="result-stat-val">${baseDow}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Calendar Days Moved</div>
+          <div class="result-stat-val">${absDays.toLocaleString()}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">ISO Date</div>
+          <div class="result-stat-val">${y}-${pad(m)}-${pad(d)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Day of Year</div>
+          <div class="result-stat-val">${Math.round((Date.UTC(y, m - 1, d) - Date.UTC(y, 0, 0)) / 86400000)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Leap Year</div>
+          <div class="result-stat-val">${(y % 4 === 0 && y % 100 !== 0) || y % 400 === 0 ? "Yes" : "No"}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Clamped Day</div>
+          <div class="result-stat-val" style="color: ${clamped ? '#f59e0b' : 'var(--accent-emerald)'};">${clamped ? `Yes → ${d} (short month)` : "No"}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Weeks ≈</div>
+          <div class="result-stat-val">${(absDays / 7).toFixed(1)}</div></div>`;
+
+      steps = `
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Resolve the Unit</span>
+          <div class="math-formula-box">${unit === "days" ? `target = start ${n >= 0 ? '+' : '−'} ${Math.abs(n)} days`
+            : unit === "weeks" ? `target = start ${n >= 0 ? '+' : '−'} ${Math.abs(n)} × 7 = ${Math.abs(n * 7)} days`
+            : unit === "months" ? `target = start ${n >= 0 ? '+' : '−'} ${Math.abs(n)} calendar month(s)`
+            : `target = start ${n >= 0 ? '+' : '−'} ${Math.abs(n)} calendar year(s)`}</div>
+          <p class="step-content">${fmtDate(base.y, base.m, base.d)} → <b>${fmtDate(y, m, d)}</b>${clamped ? ` (month has only ${d} days — day clamped from ${base.d})` : ""}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Weekday Shift</span>
+          <div class="math-formula-box">weekday shift = (days moved) mod 7</div>
+          <p class="step-content">${absDays.toLocaleString()} days = ${Math.floor(absDays / 7)} weeks + ${absDays % 7} day(s) → weekday moves from <b>${baseDow}</b> to <b>${dow}</b>.</p>
+        </div>`;
+    } else if (mode === "diff") {
+      const end = parseDate(endInput.value);
+      if (!end) { alert("Please enter a valid end date."); return; }
+
+      const days = Math.round((Date.UTC(end.y, end.m - 1, end.d) - Date.UTC(base.y, base.m - 1, base.d)) / 86400000);
+      const abs = Math.abs(days);
+      const sign = days >= 0 ? "→" : "←";
+
+      let years = end.y - base.y;
+      let months = end.m - base.m;
+      let dDays = end.d - base.d;
+      if (dDays < 0) {
+        months--;
+        dDays += new Date(end.y, end.m - 1, 0).getDate();
+      }
+      if (months < 0) { months += 12; years--; }
+      const totalMonths = years * 12 + months;
+
+      heroLabel = days === 0 ? "Same Date" : days > 0 ? "Days From Start to End" : "Days From End to Start";
+      heroValue = `${Math.abs(days).toLocaleString()} ${Math.abs(days) === 1 ? "day" : "days"}`;
+      sub = `${fmtDate(base.y, base.m, base.d)} ${sign} ${fmtDate(end.y, end.m, end.d)}`;
+
+      stats = `
+        <div class="result-stat-card"><div class="result-stat-label">Weeks</div>
+          <div class="result-stat-val">${Math.floor(abs / 7)} w ${abs % 7} d</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Calendar Breakdown</div>
+          <div class="result-stat-val" style="font-size:1rem;">${years}y ${months}m ${dDays}d</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Total Months</div>
+          <div class="result-stat-val">${totalMonths.toLocaleString()}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Hours / Minutes</div>
+          <div class="result-stat-val">${(abs * 24).toLocaleString()} h</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Start Weekday</div>
+          <div class="result-stat-val">${WD[new Date(base.y, base.m - 1, base.d, 12).getDay()]}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">End Weekday</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${WD[new Date(end.y, end.m - 1, end.d, 12).getDay()]}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Weekend Days</div>
+          <div class="result-stat-val">${countWeekend(base, end)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Inclusive Count</div>
+          <div class="result-stat-val">${(abs + 1).toLocaleString()} days</div></div>`;
+
+      steps = `
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Exact Day Count</span>
+          <div class="math-formula-box">days = (end − start) ÷ 86,400,000 ms</div>
+          <p class="step-content">Midnight-to-midnight UTC difference gives <b>${days.toLocaleString()} days</b> — DST transitions cannot skew it because dates are compared as calendar days, not clock hours.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Y/M/D Breakdown</span>
+          <div class="math-formula-box">years & months counted by calendar, remainder in days</div>
+          <p class="step-content">${abs} days = <b>${years} year(s), ${months} month(s), ${dDays} day(s)</b> (${totalMonths} full months total).</p>
+        </div>`;
+    } else {
+      const dow = WD[new Date(base.y, base.m - 1, base.d, 12).getDay()];
+      const isLeap = (base.y % 4 === 0 && base.y % 100 !== 0) || base.y % 400 === 0;
+      const doy = Math.round((Date.UTC(base.y, base.m - 1, base.d) - Date.UTC(base.y, 0, 0)) / 86400000);
+
+      heroLabel = "Day of the Week";
+      heroValue = dow;
+      sub = fmtDate(base.y, base.m, base.d);
+
+      stats = `
+        <div class="result-stat-card"><div class="result-stat-label">ISO Date</div>
+          <div class="result-stat-val">${base.y}-${pad(base.m)}-${pad(base.d)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Day of Year</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${doy} of ${isLeap ? 366 : 365}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Week Number (approx)</div>
+          <div class="result-stat-val">${Math.ceil(doy / 7)}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Leap Year</div>
+          <div class="result-stat-val">${isLeap ? "Yes" : "No"}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Days Remaining in Year</div>
+          <div class="result-stat-val">${(isLeap ? 366 : 365) - doy}</div></div>
+        <div class="result-stat-card"><div class="result-stat-label">Days Ago / Until (today)</div>
+          <div class="result-stat-val">${daysFromToday(base)}</div></div>`;
+
+      steps = `
+        <div class="step-card">
+          <span class="step-num-badge">Weekday Lookup</span>
+          <div class="math-formula-box">weekday = calendar anchor + days offset (mod 7)</div>
+          <p class="step-content">${fmtDate(base.y, base.m, base.d)} falls on a <b>${dow}</b>.</p>
+        </div>`;
+    }
+
+    resultDiv.innerHTML = `
+      <div class="result-hero-box">
+        <span class="result-hero-label">${heroLabel}</span>
+        <div class="result-hero-value" style="font-size: 1.5rem;">${heroValue}</div>
+        <span style="font-size: 0.95rem; color: var(--text-secondary);">${sub}</span>
+      </div>
+      <div class="result-stat-grid">${stats}</div>
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📐 Calculation Breakdown</h3></div>
+        ${steps}
+      </div>`;
+
+    resultDiv.style.display = "block";
+    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function countWeekend(a, b) {
+    let start = Date.UTC(a.y, a.m - 1, a.d);
+    let end = Date.UTC(b.y, b.m - 1, b.d);
+    if (start > end) { const t = start; start = end; end = t; }
+    const days = Math.round((end - start) / 86400000) + 1; // inclusive
+    const startDow = new Date(start).getUTCDay();
+    const fullWeeks = Math.floor(days / 7);
+    const rem = days % 7;
+    let count = fullWeeks * 2;
+    for (let i = 0; i < rem; i++) {
+      const dow = (startDow + i) % 7;
+      if (dow === 0 || dow === 6) count++;
+    }
+    return `${count} (${days.toLocaleString()} incl.)`;
+  }
+
+  function daysFromToday(d) {
+    const now = new Date();
+    const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    const target = Date.UTC(d.y, d.m - 1, d.d);
+    const diff = Math.round((today - target) / 86400000);
+    if (diff === 0) return "Today";
+    return diff > 0 ? `${diff.toLocaleString()} days ago` : `${Math.abs(diff).toLocaleString()} days ahead`;
+  }
+
+  modeSel.addEventListener("change", () => { syncMode(); calculate(); });
+  [baseInput, endInput, amountInput].forEach(el => el.addEventListener("change", calculate));
+  unitSel.addEventListener("change", calculate);
+  signSel.addEventListener("change", calculate);
+  container.querySelector("#btnCalcDc").addEventListener("click", calculate);
+  container.querySelector("#btnResetDc").addEventListener("click", () => {
+    modeSel.value = "add";
+    amountInput.value = "90";
+    unitSel.value = "days";
+    signSel.value = "1";
+    syncMode();
+    setDefaults();
+    resultDiv.style.display = "none";
+  });
+
+  function setDefaults() {
+    const now = new Date();
+    baseInput.value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    const end = new Date(now);
+    end.setDate(end.getDate() + 90);
+    endInput.value = `${end.getFullYear()}-${pad(end.getMonth() + 1)}-${pad(end.getDate())}`;
+  }
+
+  syncMode();
   setDefaults();
   calculate();
 }

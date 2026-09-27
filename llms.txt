@@ -7,7 +7,7 @@
 - **Directory**: [Master A-Z Directory](https://calculatorbowl.com/calculators/)
 - **Client-Side Processing**: Instant zero-latency mathematical and financial calculations.
 - **Step-by-Step Breakdowns**: Detailed mathematical solutions showing formulas, variable substitutions, and simplification steps.
-- **Topical Siloing**: 58 precision tools structured across 6 topical pillars.
+- **Topical Siloing**: 61 precision tools structured across 6 topical pillars.
 
 ---
 
@@ -301,7 +301,7 @@
 
 ## 📁 Unit Conversion Calculators (Category Hub: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/))
 
-*Description*: Convert temperature, length, distance, weight, mass, area, volume, and speed across metric and imperial systems.
+*Description*: Convert temperature, length, distance, weight, mass, area, volume, speed, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.
 
 ### [Temperature Unit Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/`
@@ -338,9 +338,16 @@
 - **Summary**: Convert miles per hour, kilometers per hour, meters per second, feet per second, and knots for vehicles, aviation, running pace, and maritime speeds.
 - **Related Tools in Category**: [Temperature Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/), [Length Converter](https://calculatorbowl.com/calculators/conversion/measurement/length-converter/), [Weight Converter](https://calculatorbowl.com/calculators/conversion/measurement/weight-converter/)
 
+### [Data Size & Digital Storage Converter](https://calculatorbowl.com/calculators/conversion/measurement/data-size-converter/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/conversion/measurement/data-size-converter/`
+- **Category**: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/)
+- **Subcategory**: `Units & Measurements`
+- **Summary**: Convert digital storage units — bits, bytes, kilobytes, megabytes, gigabytes, and terabytes — using both decimal (SI) and binary (IEC) standards, with transfer-time estimates.
+- **Related Tools in Category**: [Temperature Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/), [Length Converter](https://calculatorbowl.com/calculators/conversion/measurement/length-converter/), [Weight Converter](https://calculatorbowl.com/calculators/conversion/measurement/weight-converter/)
+
 ## 📁 Date & Time Calculators (Category Hub: [Date & Time Calculators](https://calculatorbowl.com/calculators/date-time/))
 
-*Description*: Calculate exact chronological age, next birthday countdown, elapsed time duration, and live weather forecast with interactive radar maps and sunrise/sunset times.
+*Description*: Calculate exact chronological age, add or subtract days from any date, next birthday countdown, elapsed time duration, business-day deadlines, world time zone conversions, and live weather forecasts.
 
 ### [Exact Chronological Age Calculator](https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/`
@@ -368,6 +375,13 @@
 - **Category**: [Date & Time Calculators](https://calculatorbowl.com/calculators/date-time/)
 - **Subcategory**: `Calendar & Dates`
 - **Summary**: Count business days between two dates, exclude weekends and holidays, or add/subtract working days from a start date for project and payroll planning.
+- **Related Tools in Category**: [Age Calculator](https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/), [Time Calculator](https://calculatorbowl.com/calculators/date-time/calendar/time-duration-calculator/), [Weather & Radar](https://calculatorbowl.com/calculators/date-time/environment/weather-forecast-calculator/)
+
+### [Date Calculator - Add & Subtract Days](https://calculatorbowl.com/calculators/date-time/calendar/date-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/date-time/calendar/date-calculator/`
+- **Category**: [Date & Time Calculators](https://calculatorbowl.com/calculators/date-time/)
+- **Subcategory**: `Calendar & Dates`
+- **Summary**: Add or subtract days, weeks, months, and years from any date, calculate the exact duration between two dates in days, weeks, and months, and find the day of the week for any date.
 - **Related Tools in Category**: [Age Calculator](https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/), [Time Calculator](https://calculatorbowl.com/calculators/date-time/calendar/time-duration-calculator/), [Weather & Radar](https://calculatorbowl.com/calculators/date-time/environment/weather-forecast-calculator/)
 
 ### [Time Zone Converter](https://calculatorbowl.com/calculators/date-time/timezone/time-zone-converter/)
@@ -411,7 +425,7 @@
 
 ## 📁 Health & Fitness Calculators (Category Hub: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/))
 
-*Description*: Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, and macro splits (protein, carbs, fat) with step-by-step health breakdowns.
+*Description*: Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, macro splits (protein, carbs, fat), and running pace with race time predictions.
 
 ### [BMI & BMR Calorie Calculator](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/`
@@ -439,5 +453,12 @@
 - **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
 - **Subcategory**: `Fitness & Body Metrics`
 - **Summary**: Split daily calories into protein, carbohydrate, and fat grams using body-weight ratios or percent splits, with meal-by-meal targets for cut, maintain, and bulk goals.
+- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
+
+### [Running Pace & Race Time Calculator](https://calculatorbowl.com/calculators/health/fitness/pace-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/pace-calculator/`
+- **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
+- **Subcategory**: `Fitness & Body Metrics`
+- **Summary**: Calculate running pace per kilometer and mile, average speed, split times for 5K, 10K, half marathon, and marathon, and predicted race times from any recent effort.
 - **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
 
