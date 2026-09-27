@@ -538,7 +538,7 @@ function renderBusinessDaysCalculator(container, calcDef) {
     return cursor;
   }
 
-  function calculate() {
+  function calculate(ev) {
     const mode = modeSel.value;
     const holidays = getHolidaySet();
     const startStr = container.querySelector("#bdStart").value;
@@ -634,7 +634,7 @@ function renderBusinessDaysCalculator(container, calcDef) {
     }
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   modeSel.addEventListener("change", syncMode);
@@ -785,7 +785,7 @@ function renderTimeZoneCalculator(container, calcDef) {
     return `UTC${s}${String(Math.floor(a / 60)).padStart(2, "0")}:${String(a % 60).padStart(2, "0")}`;
   };
 
-  function calculate() {
+  function calculate(ev) {
     const [y, mo, d] = (dateInput.value || "").split("-").map(Number);
     const [h, mi] = (timeInput.value || "").split(":").map(Number);
     if (!y || !mo || !d || isNaN(h) || isNaN(mi)) {
@@ -875,7 +875,7 @@ function renderTimeZoneCalculator(container, calcDef) {
       </div>
     `;
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function targetDayShift(utc, fromTz, toTz) {
@@ -1006,7 +1006,7 @@ function renderDateCalculator(container, calcDef) {
       mode === "diff" ? "Start Date" : "Date";
   }
 
-  function calculate() {
+  function calculate(ev) {
     const mode = modeSel.value;
     const base = parseDate(baseInput.value);
     if (!base) { alert("Please enter a valid start date."); return; }
@@ -1171,7 +1171,7 @@ function renderDateCalculator(container, calcDef) {
       </div>`;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function countWeekend(a, b) {

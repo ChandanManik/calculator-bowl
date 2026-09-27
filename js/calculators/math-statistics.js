@@ -602,7 +602,7 @@ function renderCombinationCalculator(container, calcDef) {
     return terms.join(" × ");
   }
 
-  function calculate() {
+  function calculate(ev) {
     const mode = modeSel.value;
     const n = parseInt(nInput.value, 10);
     if (isNaN(n) || n < 0) { alert("Please enter a non-negative whole number for n."); return; }
@@ -787,7 +787,7 @@ function renderCombinationCalculator(container, calcDef) {
       </div>`;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   function syncMode() {

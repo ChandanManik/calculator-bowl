@@ -71,7 +71,7 @@ function renderLoanCalculator(container, calcDef) {
   const btnPrint = container.querySelector("#btnPrintLoan");
   const resultDiv = container.querySelector("#loanResultContainer");
 
-  function calculate() {
+  function calculate(ev) {
     const P = parseFloat(container.querySelector("#loanAmount").value) || 0;
     const annualRate = parseFloat(container.querySelector("#interestRate").value) || 0;
     const years = parseFloat(container.querySelector("#loanTermYears").value) || 0;
@@ -256,7 +256,7 @@ function renderLoanCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   btnCalc.addEventListener("click", calculate);

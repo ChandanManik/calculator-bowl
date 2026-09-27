@@ -126,7 +126,7 @@ function renderQuadraticCalculator(container, calcDef) {
   const btnCalc = container.querySelector("#btnSolveQuad");
   const resultDiv = container.querySelector("#quadResultContainer");
 
-  function solve() {
+  function solve(ev) {
     const a = parseFloat(container.querySelector("#quadA").value) || 0;
     const b = parseFloat(container.querySelector("#quadB").value) || 0;
     const c = parseFloat(container.querySelector("#quadC").value) || 0;
@@ -201,7 +201,7 @@ function renderQuadraticCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   btnCalc.addEventListener("click", solve);

@@ -73,7 +73,7 @@ function renderFractionCalculator(container, calcDef) {
   const btnReset = container.querySelector("#btnResetFraction");
   const resultDiv = container.querySelector("#fractionResultContainer");
 
-  function calculate() {
+  function calculate(ev) {
     let w1 = parseInt(container.querySelector("#f1Whole").value) || 0;
     let n1 = parseInt(container.querySelector("#f1Num").value) || 0;
     let d1 = parseInt(container.querySelector("#f1Den").value) || 1;
@@ -242,7 +242,7 @@ function renderFractionCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   btnCalc.addEventListener("click", calculate);

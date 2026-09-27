@@ -149,7 +149,7 @@ function renderBmiBmrCalculator(container, calcDef) {
     return { label: "Obese", color: "#f43f5e" };
   }
 
-  function calculate() {
+  function calculate(ev) {
     const imperial = unitSel.value === "imperial";
     const age = parseInt(container.querySelector("#bmiAge").value) || 0;
     const gender = container.querySelector("#bmiGender").value;
@@ -244,7 +244,7 @@ function renderBmiBmrCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   unitSel.addEventListener("change", () => { syncUnitVisibility(); calculate(); });
@@ -359,7 +359,7 @@ function renderBodyFatCalculator(container, calcDef) {
     return { label: "Obese Range", color: "#f43f5e" };
   }
 
-  function calculate() {
+  function calculate(ev) {
     const gender = genderSel.value;
     const height = parseFloat(container.querySelector("#bfHeight").value) || 0;
     const neck = parseFloat(container.querySelector("#bfNeck").value) || 0;
@@ -469,7 +469,7 @@ function renderBodyFatCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   genderSel.addEventListener("change", () => {
@@ -563,7 +563,7 @@ function renderWaterIntakeCalculator(container, calcDef) {
   const btnReset = container.querySelector("#btnResetWi");
   const resultDiv = container.querySelector("#wiResultContainer");
 
-  function calculate() {
+  function calculate(ev) {
     const weight = parseFloat(container.querySelector("#wiWeight").value) || 0;
     const activity = parseFloat(container.querySelector("#wiActivity").value) || 0;
     const climate = parseFloat(container.querySelector("#wiClimate").value) || 0;
@@ -659,7 +659,7 @@ function renderWaterIntakeCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   btnCalc.addEventListener("click", calculate);
@@ -766,7 +766,7 @@ function renderMacroCalculator(container, calcDef) {
     percentGroup.style.display = m === "percent" ? "" : "none";
   }
 
-  function calculate() {
+  function calculate(ev) {
     const kcal = parseFloat(caloriesInput.value);
     const weight = parseFloat(weightInput.value);
     const method = methodSel.value;
@@ -871,7 +871,7 @@ function renderMacroCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   methodSel.addEventListener("change", () => { syncMethod(); calculate(); });
@@ -965,7 +965,7 @@ function renderPaceCalculator(container, calcDef) {
     return s === 60 ? `${m + 1}:00` : `${m}:${String(s).padStart(2, "0")}`;
   };
 
-  function calculate() {
+  function calculate(ev) {
     const dist = parseFloat(distInput.value);
     const totalSec = (parseFloat(hInput.value) || 0) * 3600
       + (parseFloat(mInput.value) || 0) * 60
@@ -1090,7 +1090,7 @@ function renderPaceCalculator(container, calcDef) {
       </div>`;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   presetSel.addEventListener("change", () => {
@@ -1179,7 +1179,7 @@ function renderDueDateCalculator(container, calcDef) {
     dateLabel.textContent = isLmp ? "Last Menstrual Period (LMP) Date" : "Conception Date";
   }
 
-  function calculate() {
+  function calculate(ev) {
     const method = methodSel.value;
     const base = parseDate(dateInput.value);
     if (!base) { alert("Please enter a valid date."); return; }
@@ -1292,7 +1292,7 @@ function renderDueDateCalculator(container, calcDef) {
       </div>`;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   methodSel.addEventListener("change", () => { syncMethod(); calculate(); });

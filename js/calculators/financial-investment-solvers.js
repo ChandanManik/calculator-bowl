@@ -830,7 +830,7 @@ function renderRuleOf72Calculator(container, calcDef) {
   const btnReset = container.querySelector("#btnResetRule72");
   const resultDiv = container.querySelector("#rule72ResultContainer");
 
-  function calculate() {
+  function calculate(ev) {
     const rate = parseFloat(container.querySelector("#rule72Rate").value) || 0;
 
     if (rate <= 0) {
@@ -885,7 +885,7 @@ function renderRuleOf72Calculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   btnCalc.addEventListener("click", calculate);
@@ -970,7 +970,7 @@ function renderSipCalculator(container, calcDef) {
     return "$" + n.toLocaleString("en-US", { maximumFractionDigits: 0 });
   }
 
-  function calculate() {
+  function calculate(ev) {
     const monthly = parseFloat(container.querySelector("#sipMonthly").value) || 0;
     const annualRate = parseFloat(container.querySelector("#sipReturn").value) || 0;
     const years = parseInt(container.querySelector("#sipYears").value) || 0;
@@ -1062,7 +1062,7 @@ function renderSipCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   btnCalc.addEventListener("click", calculate);

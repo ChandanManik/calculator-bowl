@@ -82,7 +82,7 @@ function renderCompoundInterestCalculator(container, calcDef) {
   const btnReset = container.querySelector("#btnResetComp");
   const resultDiv = container.querySelector("#compResultContainer");
 
-  function calculate() {
+  function calculate(ev) {
     const P = parseFloat(container.querySelector("#compPrincipal").value) || 0;
     const PMT = parseFloat(container.querySelector("#compMonthlyDeposit").value) || 0;
     const r = (parseFloat(container.querySelector("#compRate").value) || 0) / 100;
@@ -188,7 +188,7 @@ function renderCompoundInterestCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   btnCalc.addEventListener("click", calculate);

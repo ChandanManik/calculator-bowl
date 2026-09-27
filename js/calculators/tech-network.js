@@ -1204,7 +1204,7 @@ function renderIpSubnetCalculator(container, calcDef) {
     return ipStr.split(".").map(o => (parseInt(o, 10) >>> 0).toString(2).padStart(8, "0")).join(".");
   }
 
-  function calculate() {
+  function calculate(ev) {
     const raw = (ipInput.value || "").trim();
     if (!raw) {
       alert("Please enter an IP address (e.g. 192.168.1.10/24).");
@@ -1386,7 +1386,7 @@ function renderIpSubnetCalculator(container, calcDef) {
 
     resultDiv.innerHTML = resultHtml;
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   btnCalc.addEventListener("click", calculate);
@@ -1477,7 +1477,7 @@ function renderScreenSizeCalculator(container, calcDef) {
     return { w, h, label: ratioSel.value };
   }
 
-  function calculate() {
+  function calculate(ev) {
     const diag = parseFloat(diagonalInput.value);
     const resW = parseFloat(resWInput.value);
     const resH = parseFloat(resHInput.value);
@@ -1585,7 +1585,7 @@ function renderScreenSizeCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   ratioSel.addEventListener("change", () => {

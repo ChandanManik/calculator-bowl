@@ -943,7 +943,7 @@ function renderBreakEvenCalculator(container, calcDef) {
   const btnReset = container.querySelector("#btnResetBEP");
   const resultDiv = container.querySelector("#beResultContainer");
 
-  function calculate() {
+  function calculate(ev) {
     const fixedCost = parseFloat(container.querySelector("#beFixedCosts").value) || 0;
     const variableCost = parseFloat(container.querySelector("#beVariableCost").value) || 0;
     const price = parseFloat(container.querySelector("#bePrice").value) || 0;
@@ -1005,7 +1005,7 @@ function renderBreakEvenCalculator(container, calcDef) {
     `;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   btnCalc.addEventListener("click", calculate);

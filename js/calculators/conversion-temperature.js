@@ -599,7 +599,7 @@ function renderDataSizeConverter(container, calcDef) {
     return h > 0 ? `${h} h ${m} m ${s} s` : `${m} m ${s} s`;
   }
 
-  function calculate() {
+  function calculate(ev) {
     const val = parseFloat(valInput.value);
     if (isNaN(val) || val < 0) { alert("Please enter a valid non-negative value."); return; }
 
@@ -683,7 +683,7 @@ function renderDataSizeConverter(container, calcDef) {
       </div>`;
 
     resultDiv.style.display = "block";
-    resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
   container.querySelector("#btnCalcDs").addEventListener("click", calculate);
