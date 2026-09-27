@@ -12,6 +12,8 @@
  *   3. TECHNICAL SEO — rich content, FAQs, JSON-LD graph, render path, robots
  *   4. SITEMAP       — all calculator URLs present, unique, no legacy, lastmod
  *   5. LLMS.TXT      — all calculator URLs listed + pillar count line in sync
+ *   6. UI SCROLL HYGIENE — every scrollIntoView click-gated (no auto-scroll,
+ *                          see AGENTS.md §5 — incident 2026-09)
  * ============================================================================
  */
 const fs = require('fs');
@@ -163,6 +165,31 @@ check('llms', `count line matches registry (${allCalcs.length} precision tools /
 check('llms', 'every pillar section header present',
   PILLARS.every(k => llms.includes(TOPICAL_CLUSTERS[k].title)));
 check('llms', 'no legacy /calc/ links', !/calculatorbowl\.com\/calc\//.test(llms));
+
+// ==========================================================================
+section('6. UI SCROLL HYGIENE (auto-scroll must be click-only)');
+// Incident: calculate() ended with scrollIntoView + input/change live-recalc
+// bound to the same function → typing/selecting smooth-scrolled the page.
+// Rule: every scrollIntoView in js/calculators must be behind a click guard
+// (ev.type === 'click') or live inside an explicit addEventListener("click", ...)
+const calcJsDir = path.join(rootDir, 'js', 'calculators');
+for (const file of fs.readdirSync(calcJsDir).filter(f => f.endsWith('.js')).sort()) {
+  const lines = fs.readFileSync(path.join(calcJsDir, file), 'utf8').split(/\r?\n/);
+  lines.forEach((ln, i) => {
+    if (!ln.includes('scrollIntoView')) return;
+    let ok = /(?:ev|event|e)\.type\s*===\s*['"]click['"]/.test(ln);
+    if (!ok) {
+      for (let j = i - 1; j >= 0 && j >= i - 80; j--) {
+        const l = lines[j];
+        if (/addEventListener\(\s*['"]click['"]/.test(l)) { ok = true; break; }
+        if (/addEventListener\(\s*['"](input|change|keyup|keydown|mousemove|focus|blur|select)['"]/.test(l)) break;
+        if (/^\s*function\s+/.test(l)) break;
+      }
+    }
+    check('ui-scroll', `${file}:${i + 1} scroll guarded (click-only)`, ok,
+      ln.trim().slice(0, 100));
+  });
+}
 
 // ==========================================================================
 console.log('\n========================================================');
