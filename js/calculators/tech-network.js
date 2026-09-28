@@ -1607,3 +1607,139 @@ function renderScreenSizeCalculator(container, calcDef) {
 
   calculate();
 }
+
+/* ============================================================================
+ * Power Bank Calculator — mAh → Wh, usable energy & device charge count
+ * ========================================================================== */
+function renderPowerBankCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="pbCap">Power Bank Capacity <span class="form-label-hint">mAh</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="pbCap" class="form-control" value="20000" min="1" step="any">
+          <span class="input-addon suffix">mAh</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="pbVolt">Bank Nominal Voltage</label>
+        <select id="pbVolt" class="form-control">
+          <option value="3.7" selected>3.7 V — Li-ion / Li-po (standard)</option>
+          <option value="3.85">3.85 V — high-voltage cell</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="pbEff">Conversion Efficiency <span class="form-label-hint">% (boost + heat loss)</span></label>
+        <input type="number" id="pbEff" class="form-control" value="85" min="1" max="100" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="devCap">Device Battery <span class="form-label-hint">mAh</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="devCap" class="form-control" value="4500" min="1" step="any">
+          <span class="input-addon suffix">mAh</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="devVolt">Device Nominal Voltage</label>
+        <select id="devVolt" class="form-control">
+          <option value="3.85" selected>3.85 V — modern phone</option>
+          <option value="3.7">3.7 V — Li-ion standard</option>
+          <option value="3.6">3.6 V — older cells</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcPb" class="btn btn-primary"><span>🔋 Calculate Charges</span></button>
+      <button type="button" id="btnResetPb" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="pbResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const capInput = container.querySelector("#pbCap");
+  const voltSel = container.querySelector("#pbVolt");
+  const effInput = container.querySelector("#pbEff");
+  const devCapInput = container.querySelector("#devCap");
+  const devVoltSel = container.querySelector("#devVolt");
+  const resultDiv = container.querySelector("#pbResultContainer");
+
+  const fmt = (n) => n.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 2 });
+
+  function calculate(ev) {
+    const cap = parseFloat(capInput.value);          // mAh
+    const volt = parseFloat(voltSel.value);          // V
+    const eff = parseFloat(effInput.value) / 100;    // fraction
+    const devCap = parseFloat(devCapInput.value);    // mAh
+    const devVolt = parseFloat(devVoltSel.value);    // V
+
+    if (!(cap > 0)) { alert("Please enter the power bank capacity in mAh."); return; }
+    if (!(devCap > 0)) { alert("Please enter the device battery capacity in mAh."); return; }
+    if (!(eff > 0) || eff > 1) { alert("Efficiency must be between 1% and 100%."); return; }
+
+    const bankWh = (cap * volt) / 1000;              // labeled energy
+    const usableWh = bankWh * eff;                   // after boost-converter loss
+    const devWh = (devCap * devVolt) / 1000;         // device energy
+    const charges = usableWh / devWh;
+    const whole = Math.floor(charges);
+    const pct = Math.round((charges - whole) * 100);
+    const lostWh = bankWh - usableWh;
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Bank Energy (labeled)</div>
+          <div class="result-stat-val">${fmt(bankWh)} Wh</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Usable Energy</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${fmt(usableWh)} Wh</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Device Charges</div>
+          <div class="result-stat-val">${whole} full${pct > 0 ? ` + ${pct}%` : ""}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Total Charge Cycles</div>
+          <div class="result-stat-val">${charges.toFixed(2)}×</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Battery Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — mAh → watt-hours</span>
+          <div class="math-formula-box">Wh = mAh × V ÷ 1000</div>
+          <p class="step-content">Bank: ${fmt(cap)} mAh × ${volt} V ÷ 1000 = <b>${fmt(bankWh)} Wh</b> &nbsp;·&nbsp; Device: ${fmt(devCap)} mAh × ${devVolt} V ÷ 1000 = <b>${fmt(devWh)} Wh</b></p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Efficiency loss</span>
+          <div class="math-formula-box">Usable = labeled Wh × efficiency</div>
+          <p class="step-content">${fmt(bankWh)} Wh × ${fmt(eff * 100)}% = <b>${fmt(usableWh)} Wh</b> usable — the remaining <b>${fmt(lostWh)} Wh</b> is lost as heat in the boost converter (charging at 5 V from a 3.7 V cell typically wastes 10–20%).</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Charge count</span>
+          <div class="math-formula-box">Charges = usable Wh ÷ device Wh</div>
+          <p class="step-content">${fmt(usableWh)} ÷ ${fmt(devWh)} = <b>${charges.toFixed(2)} charges</b> — about ${whole} full top-up${whole === 1 ? "" : "s"}${pct > 0 ? ` plus a ${pct}% partial charge` : ""}. Compare with the mAh myth: ${fmt(cap)} ÷ ${fmt(devCap)} = ${(cap / devCap).toFixed(2)}× ignores voltage and losses, which is why it always overpromises.</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [capInput, effInput, devCapInput].forEach(el => el.addEventListener("input", calculate));
+  [voltSel, devVoltSel].forEach(el => el.addEventListener("change", calculate));
+  container.querySelector("#btnCalcPb").addEventListener("click", calculate);
+  container.querySelector("#btnResetPb").addEventListener("click", () => {
+    capInput.value = "20000";
+    voltSel.value = "3.7";
+    effInput.value = "85";
+    devCapInput.value = "4500";
+    devVoltSel.value = "3.85";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

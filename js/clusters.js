@@ -13,8 +13,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Financial",
     "icon": "💰",
     "colorClass": "financial",
-    "badge": "25 Calculators",
-    "description": "Plan your retirement savings, 401(k), ROI, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
+    "badge": "26 Calculators",
+    "description": "Plan your retirement savings, 401(k), ROI, CAGR growth, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
     "seoTitle": "Financial, Loan & Investment Calculators | CalculatorBowl",
     "seoDescription": "Accurate financial calculators for loans, mortgages, gold valuation, bitcoin and cryptocurrency conversions, compound interest, simple interest, sales tax, and investment planning.",
     "calculators": [
@@ -992,6 +992,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/finance/investment/sip-calculator/",
         "subcatUrl": "/calculators/finance/investment/",
         "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "cagr-calculator",
+        "name": "CAGR Calculator (Compound Annual Growth Rate)",
+        "shortName": "CAGR Calculator",
+        "icon": "📈",
+        "badge": "Investment",
+        "description": "Compute the compound annual growth rate from beginning and ending values with annualized return, total return, growth multiple, and a constant-rate growth path.",
+        "seoTitle": "CAGR Calculator - Compound Annual Growth Rate Online",
+        "seoDescription": "Calculate compound annual growth rate (CAGR) from start and end values with step-by-step formula, total return percentage, growth multiple, and yearly value path.",
+        "category": "finance",
+        "renderFunction": "renderCagrCalculator",
+        "contextualGuide": {
+          "title": "Investment Growth Cross-References",
+          "html": "\n            <p>\n              CAGR strips volatile timing out of a return so two investments compare fairly — start with our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> for compounding, SIP, ROI, and inflation tools.\n            </p>\n            <p>\n              Growth is only half the story: discount tomorrow's value back with present-value and CD yield tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "compound-interest",
+              "label": "Compound Interest",
+              "icon": "🏦"
+            },
+            {
+              "id": "roi-calculator",
+              "label": "ROI Calculator",
+              "icon": "📊"
+            },
+            {
+              "id": "sip-calculator",
+              "label": "SIP Calculator",
+              "icon": "💵"
+            }
+          ]
+        },
+        "subcategory": "investment",
+        "subcatTitle": "Investment & Wealth",
+        "slug": "cagr-calculator",
+        "url": "/calculators/finance/investment/cagr-calculator/",
+        "subcatUrl": "/calculators/finance/investment/",
+        "categoryUrl": "/calculators/finance/"
       }
     ],
     "faqs": [
@@ -1017,8 +1056,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Math",
     "icon": "➗",
     "colorClass": "math",
-    "badge": "17 Calculators",
-    "description": "Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.",
+    "badge": "19 Calculators",
+    "description": "Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.",
     "seoTitle": "Math & Statistics Calculators - Step-by-Step Solvers | CalculatorBowl",
     "seoDescription": "Free online math and statistics calculators for fractions, mixed numbers, prime factors, GCF, LCM, ratios, standard deviation, and algebra.",
     "calculators": [
@@ -1684,6 +1723,84 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/math/algebra/exponent-power-calculator/",
         "subcatUrl": "/calculators/math/algebra/",
         "categoryUrl": "/calculators/math/"
+      },
+      {
+        "id": "slope-calculator",
+        "name": "Slope Calculator (Slope, Intercept, Equation & Distance)",
+        "shortName": "Slope Calculator",
+        "icon": "📐",
+        "badge": "Algebra",
+        "description": "Find the slope of a line through two points with rise over run, y-intercept, straight-line equation, angle of inclination, and point-to-point distance.",
+        "seoTitle": "Slope Calculator - Find Slope, Intercept & Line Equation",
+        "seoDescription": "Find the slope between two points with step-by-step rise over run, y-intercept, line equation, angle of inclination, and distance calculations.",
+        "category": "math",
+        "renderFunction": "renderSlopeCalculator",
+        "contextualGuide": {
+          "title": "Algebra Cross-References",
+          "html": "\n            <p>\n              Slope is the entry ticket to coordinate geometry — pair it with our <a href=\"/calculators/math/\" class=\"in-text-link\">🧮 Math Hub</a> for quadratic, exponent, and notation solvers.\n            </p>\n            <p>\n              Lines model data; the statistics calculators below summarize what the data is doing.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "quadratic-formula",
+              "label": "Quadratic Solver",
+              "icon": "➗"
+            },
+            {
+              "id": "scientific-notation",
+              "label": "Scientific Notation",
+              "icon": "🔬"
+            },
+            {
+              "id": "exponent-calculator",
+              "label": "Exponent Calculator",
+              "icon": "⏫"
+            }
+          ]
+        },
+        "subcategory": "algebra",
+        "subcatTitle": "Algebra & Numbers",
+        "slug": "slope-calculator",
+        "url": "/calculators/math/algebra/slope-calculator/",
+        "subcatUrl": "/calculators/math/algebra/",
+        "categoryUrl": "/calculators/math/"
+      },
+      {
+        "id": "probability-calculator",
+        "name": "Probability Calculator (Events, Odds & Dice Sums)",
+        "shortName": "Probability Calculator",
+        "icon": "🎲",
+        "badge": "Statistics",
+        "description": "Calculate single-event probability, complement, odds, and 1-in-x chances, plus dice-sum probabilities with the full outcome distribution table.",
+        "seoTitle": "Probability Calculator - Event Probability & Odds",
+        "seoDescription": "Calculate event probability, percentage, complement, and odds from favorable and total outcomes, plus dice-sum chances with a full distribution table.",
+        "category": "math",
+        "renderFunction": "renderProbabilityCalculator",
+        "contextualGuide": {
+          "title": "Statistics & Counting Cross-References",
+          "html": "\n            <p>\n              Probability leans on counting: combinations tell you how many outcomes exist before you divide — see our <a href=\"/calculators/math/\" class=\"in-text-link\">🧮 Math Hub</a> and the nCr/nPr solver.\n            </p>\n            <p>\n              Once events have probabilities, spread and central tendency describe the whole dataset below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "combination-calculator",
+              "label": "nCr / nPr Calculator",
+              "icon": "🔢"
+            },
+            {
+              "id": "standard-deviation",
+              "label": "Standard Deviation",
+              "icon": "📏"
+            },
+            {
+              "id": "mean-median-mode",
+              "label": "Mean, Median & Mode",
+              "icon": "📊"
+            }
+          ]
+        },
+        "subcategory": "statistics",
+        "subcatTitle": "Statistics & Probability",
+        "slug": "probability-calculator",
+        "url": "/calculators/math/statistics/probability-calculator/",
+        "subcatUrl": "/calculators/math/statistics/",
+        "categoryUrl": "/calculators/math/"
       }
     ],
     "faqs": [
@@ -1709,8 +1826,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Conversions",
     "icon": "🔄",
     "colorClass": "conversions",
-    "badge": "6 Calculators",
-    "description": "Convert temperature, length, distance, weight, mass, area, volume, speed, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.",
+    "badge": "7 Calculators",
+    "description": "Convert temperature, length, distance, weight, mass, area, volume, speed, pressure, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.",
     "seoTitle": "Unit Converters - Metric & Imperial Tools | CalculatorBowl",
     "seoDescription": "Precision unit conversion calculators for temperature (°C, °F, K), length & distance, weight & mass, area (sq ft, acres), volume (liters, gallons), and speed (mph, km/h, knots).",
     "calculators": [
@@ -1945,6 +2062,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Units & Measurements",
         "slug": "data-size-converter",
         "url": "/calculators/conversion/measurement/data-size-converter/",
+        "subcatUrl": "/calculators/conversion/measurement/",
+        "categoryUrl": "/calculators/conversion/"
+      },
+      {
+        "id": "pressure-converter",
+        "name": "Pressure Converter (Pa, Bar, ATM, PSI, Torr)",
+        "shortName": "Pressure Converter",
+        "icon": "💨",
+        "badge": "Measurement",
+        "description": "Convert pressure between pascal, kilopascal, bar, atmosphere, PSI, torr and mmHg with exact conversion factors and a full all-unit reference table.",
+        "seoTitle": "Pressure Converter - PSI, Bar, ATM, kPa & Torr",
+        "seoDescription": "Convert pressure units instantly between Pa, kPa, bar, atmosphere, PSI, torr and mmHg with exact factors, formula steps, and a full unit reference table.",
+        "category": "conversion",
+        "renderFunction": "renderPressureConverter",
+        "contextualGuide": {
+          "title": "Measurement Cross-References",
+          "html": "\n            <p>\n              Pressure sits alongside every other physical unit — browse our <a href=\"/calculators/conversion/\" class=\"in-text-link\">🔁 Conversion Hub</a> for temperature, length, speed, and data-size tools.\n            </p>\n            <p>\n              Gas laws tie pressure to temperature directly, so keep the temperature converter handy below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "temperature-converter",
+              "label": "Temperature Converter",
+              "icon": "🌡️"
+            },
+            {
+              "id": "speed-converter",
+              "label": "Speed Converter",
+              "icon": "🚀"
+            },
+            {
+              "id": "length-converter",
+              "label": "Length Converter",
+              "icon": "📏"
+            }
+          ]
+        },
+        "subcategory": "measurement",
+        "subcatTitle": "Units & Measurements",
+        "slug": "pressure-converter",
+        "url": "/calculators/conversion/measurement/pressure-converter/",
         "subcatUrl": "/calculators/conversion/measurement/",
         "categoryUrl": "/calculators/conversion/"
       }
@@ -2227,8 +2383,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Network",
     "icon": "🌐",
     "colorClass": "network",
-    "badge": "4 Tools",
-    "description": "Measure live broadband internet download speed, upload bandwidth, latency ping, jitter, and calculate streaming data consumption across YouTube, Netflix, 4K video, and Zoom.",
+    "badge": "5 Tools",
+    "description": "Measure live broadband internet download speed, upload bandwidth, latency ping, jitter, and calculate streaming data consumption across YouTube, Netflix, 4K video, and Zoom. Estimate power bank battery capacity, usable watt-hours, and full device charges.",
     "seoTitle": "Internet Speed Test & Streaming Data Usage Calculators | CalculatorBowl",
     "seoDescription": "Free real-time internet speed test with live speedometer gauge, latency ping meter, and streaming data usage estimation tools.",
     "calculators": [
@@ -2387,6 +2543,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/tech-network/display/screen-size-calculator/",
         "subcatUrl": "/calculators/tech-network/display/",
         "categoryUrl": "/calculators/tech-network/"
+      },
+      {
+        "id": "power-bank-calculator",
+        "name": "Power Bank & Battery Capacity Calculator",
+        "shortName": "Power Bank Calc",
+        "icon": "🔋",
+        "badge": "Power",
+        "description": "Estimate power bank Wh capacity, usable energy after efficiency losses, and how many full device charges it delivers from mAh, voltage, and efficiency.",
+        "seoTitle": "Power Bank Calculator - Battery Capacity & Charges",
+        "seoDescription": "Estimate power bank watt-hours, usable energy after conversion losses, and full device charges from battery mAh, voltage, and efficiency inputs.",
+        "category": "tech-network",
+        "renderFunction": "renderPowerBankCalculator",
+        "contextualGuide": {
+          "title": "Hardware & Device Cross-References",
+          "html": "\n            <p>\n              Battery math keeps devices online — pair it with our <a href=\"/calculators/tech-network/\" class=\"in-text-link\">🌐 Tech & Network Hub</a> for speed, streaming, and display tools.\n            </p>\n            <p>\n              Streaming drains batteries fast; estimate data use alongside your charge budget below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "internet-speed-test",
+              "label": "Internet Speed Test",
+              "icon": "🌐"
+            },
+            {
+              "id": "streaming-data-calculator",
+              "label": "Streaming Data Calc",
+              "icon": "📺"
+            },
+            {
+              "id": "screen-size-calculator",
+              "label": "Screen Size Calculator",
+              "icon": "🖥️"
+            }
+          ]
+        },
+        "subcategory": "power",
+        "subcatTitle": "Power & Battery",
+        "slug": "power-bank-calculator",
+        "url": "/calculators/tech-network/power/power-bank-calculator/",
+        "subcatUrl": "/calculators/tech-network/power/",
+        "categoryUrl": "/calculators/tech-network/"
       }
     ],
     "faqs": [
@@ -2408,7 +2603,7 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Health",
     "icon": "💪",
     "colorClass": "health",
-    "badge": "6 Calculators",
+    "badge": "7 Calculators",
     "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, macro splits (protein, carbs, fat), running pace with race time predictions, and pregnancy due dates.",
     "seoTitle": "Health & Fitness Calculators - BMI, BMR & Calorie Needs | CalculatorBowl",
     "seoDescription": "Free health calculators for BMI body mass index, BMR basal metabolic rate, and daily calorie requirements for weight loss, maintenance, and muscle gain.",
@@ -2645,6 +2840,45 @@ const TOPICAL_CLUSTERS = {
         "slug": "due-date-calculator",
         "url": "/calculators/health/pregnancy/due-date-calculator/",
         "subcatUrl": "/calculators/health/pregnancy/",
+        "categoryUrl": "/calculators/health/"
+      },
+      {
+        "id": "ideal-weight-calculator",
+        "name": "Ideal Weight Calculator (Devine, Robinson, Miller, Hamwi)",
+        "shortName": "Ideal Weight",
+        "icon": "⚖️",
+        "badge": "Fitness",
+        "description": "Find your ideal weight with the Devine, Robinson, Miller, and Hamwi formulas from height and sex, plus the healthy BMI weight band and current-weight comparison.",
+        "seoTitle": "Ideal Weight Calculator - Devine, Robinson & Miller",
+        "seoDescription": "Calculate ideal body weight using the Devine, Robinson, Miller, and Hamwi formulas from height and sex, with a healthy BMI range and weight comparison.",
+        "category": "health",
+        "renderFunction": "renderIdealWeightCalculator",
+        "contextualGuide": {
+          "title": "Body Metrics Cross-References",
+          "html": "\n            <p>\n              Ideal weight formulas give a target; body composition tells you what that weight is made of — explore our <a href=\"/calculators/health/\" class=\"in-text-link\">💚 Health Hub</a> for BMI, body fat, and macro tools.\n            </p>\n            <p>\n              Pair a target weight with calorie and macro splits to plan how to get there.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "bmi-bmr-calculator",
+              "label": "BMI & Calorie Calculator",
+              "icon": "🩺"
+            },
+            {
+              "id": "body-fat-calculator",
+              "label": "Body Fat Calculator",
+              "icon": "📐"
+            },
+            {
+              "id": "macro-calculator",
+              "label": "Macro Calculator",
+              "icon": "🥗"
+            }
+          ]
+        },
+        "subcategory": "fitness",
+        "subcatTitle": "Fitness & Body Metrics",
+        "slug": "ideal-weight-calculator",
+        "url": "/calculators/health/fitness/ideal-weight-calculator/",
+        "subcatUrl": "/calculators/health/fitness/",
         "categoryUrl": "/calculators/health/"
       }
     ],

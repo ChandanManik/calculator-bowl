@@ -699,3 +699,134 @@ function renderDataSizeConverter(container, calcDef) {
   calculate();
 }
 
+/* ============================================================================
+ * Pressure Converter — Pa, kPa, bar, atm, psi, torr with full reference table
+ * ========================================================================== */
+function renderPressureConverter(container, calcDef) {
+  const PRESSURE_UNITS = [
+    { key: "pa", label: "Pascals (Pa)", short: "Pa", f: 1 },
+    { key: "kpa", label: "Kilopascals (kPa)", short: "kPa", f: 1000 },
+    { key: "bar", label: "Bar (bar)", short: "bar", f: 1e5 },
+    { key: "atm", label: "Atmospheres (atm)", short: "atm", f: 101325 },
+    { key: "psi", label: "PSI — pounds per sq inch", short: "psi", f: 6894.757293168 },
+    { key: "torr", label: "Torr / mmHg", short: "Torr", f: 101325 / 760 }
+  ];
+  const opts = (selKey) => PRESSURE_UNITS.map(u =>
+    `<option value="${u.key}"${u.key === selKey ? " selected" : ""}>${u.label}</option>`).join("");
+
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="prVal">Pressure Value</label>
+        <input type="number" id="prVal" class="form-control" value="1" min="0" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="prFrom">From Unit</label>
+        <select id="prFrom" class="form-control">${opts("atm")}</select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="prTo">To Unit</label>
+        <select id="prTo" class="form-control">${opts("psi")}</select>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcPr" class="btn btn-primary"><span>💨 Convert Pressure</span></button>
+      <button type="button" id="btnSwapPr" class="btn btn-secondary"><span>⇄ Swap</span></button>
+      <button type="button" id="btnResetPr" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="prResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const valInput = container.querySelector("#prVal");
+  const fromSel = container.querySelector("#prFrom");
+  const toSel = container.querySelector("#prTo");
+  const resultDiv = container.querySelector("#prResultContainer");
+
+  const findUnit = (key) => PRESSURE_UNITS.find(u => u.key === key);
+  const fmt = (n) => {
+    const abs = Math.abs(n);
+    if (abs !== 0 && (abs >= 1e6 || abs < 1e-4)) return n.toExponential(4);
+    return n.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 4 });
+  };
+
+  function calculate(ev) {
+    const val = parseFloat(valInput.value);
+    if (isNaN(val) || val < 0) { alert("Please enter a valid pressure value."); return; }
+    const from = findUnit(fromSel.value);
+    const to = findUnit(toSel.value);
+    if (!from || !to) { alert("Please select valid units."); return; }
+
+    const pascal = val * from.f;              // normalize through Pa
+    const out = pascal / to.f;
+
+    const rows = PRESSURE_UNITS.map(u => {
+      const v = pascal / u.f;
+      const hl = u.key === to.key;
+      return `<tr style="${hl ? "background: var(--bg-subtle);" : ""}">
+          <td style="padding: 0.35rem 0.7rem; border-bottom: 1px solid var(--border-color);">${hl ? "➜ " : ""}${u.label}</td>
+          <td style="padding: 0.35rem 0.7rem; border-bottom: 1px solid var(--border-color); text-align: right;">${fmt(v)}</td>
+        </tr>`;
+    }).join("");
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">${fmt(val)} ${from.short}</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${fmt(out)} ${to.short}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">In Pascals</div>
+          <div class="result-stat-val">${fmt(pascal)} Pa</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">In PSI</div>
+          <div class="result-stat-val">${fmt(pascal / PRESSURE_UNITS.find(u => u.key === "psi").f)} psi</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">In Bar</div>
+          <div class="result-stat-val">${fmt(pascal / 1e5)} bar</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Conversion Formula</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Normalize through Pascals</span>
+          <div class="math-formula-box">Pa = value × (from factor ÷ to factor)</div>
+          <p class="step-content">${fmt(val)} × (${fmt(from.f)} ÷ ${fmt(to.f)}) = <b>${fmt(out)} ${to.short}</b><br>
+          <span style="color: var(--text-muted); font-size: 0.9rem;">1 ${from.short} = ${fmt(from.f / to.f)} ${to.short}, and every unit converts via the base pascal (Pa = N/m²).</span></p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — All-unit reference</span>
+          <div style="margin-top: 0.6rem;">
+            <table style="width: 100%; border-collapse: collapse;">${rows}</table>
+          </div>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  valInput.addEventListener("input", calculate);
+  [fromSel, toSel].forEach(el => el.addEventListener("change", calculate));
+  container.querySelector("#btnCalcPr").addEventListener("click", calculate);
+  container.querySelector("#btnSwapPr").addEventListener("click", () => {
+    const t = fromSel.value;
+    fromSel.value = toSel.value;
+    toSel.value = t;
+    calculate();
+  });
+  container.querySelector("#btnResetPr").addEventListener("click", () => {
+    valInput.value = "1";
+    fromSel.value = "atm";
+    toSel.value = "psi";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}
+

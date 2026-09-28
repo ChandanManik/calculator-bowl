@@ -7,13 +7,13 @@
 - **Directory**: [Master A-Z Directory](https://calculatorbowl.com/calculators/)
 - **Client-Side Processing**: Instant zero-latency mathematical and financial calculations.
 - **Step-by-Step Breakdowns**: Detailed mathematical solutions showing formulas, variable substitutions, and simplification steps.
-- **Topical Siloing**: 64 precision tools structured across 6 topical pillars.
+- **Topical Siloing**: 70 precision tools structured across 6 topical pillars.
 
 ---
 
 ## 📁 Financial Calculators (Category Hub: [Financial Calculators](https://calculatorbowl.com/calculators/finance/))
 
-*Description*: Plan your retirement savings, 401(k), ROI, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.
+*Description*: Plan your retirement savings, 401(k), ROI, CAGR growth, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.
 
 ### [Personal & Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/finance/loans/loan-calculator/`
@@ -190,9 +190,16 @@
 - **Summary**: Calculate the future value of monthly SIP investments with annual step-up, total invested amount, and estimated wealth gains.
 - **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
 
+### [CAGR Calculator (Compound Annual Growth Rate)](https://calculatorbowl.com/calculators/finance/investment/cagr-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/investment/cagr-calculator/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Investment & Wealth`
+- **Summary**: Compute the compound annual growth rate from beginning and ending values with annualized return, total return, growth multiple, and a constant-rate growth path.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
 ## 📁 Math & Statistics Calculators (Category Hub: [Math & Statistics Calculators](https://calculatorbowl.com/calculators/math/))
 
-*Description*: Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.
+*Description*: Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.
 
 ### [Standard Online Basic Calculator](https://calculatorbowl.com/calculators/math/basic/basic-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/math/basic/basic-calculator/`
@@ -313,9 +320,23 @@
 - **Summary**: Calculate base raised to any power (xʸ), including negative, fractional, and zero exponents.
 - **Related Tools in Category**: [Basic Calculator](https://calculatorbowl.com/calculators/math/basic/basic-calculator/), [Scientific Calculator](https://calculatorbowl.com/calculators/math/basic/scientific-calculator/), [Percentage Calculator](https://calculatorbowl.com/calculators/math/percentage/percentage-calculator/)
 
+### [Slope Calculator (Slope, Intercept, Equation & Distance)](https://calculatorbowl.com/calculators/math/algebra/slope-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/math/algebra/slope-calculator/`
+- **Category**: [Math & Statistics Calculators](https://calculatorbowl.com/calculators/math/)
+- **Subcategory**: `Algebra & Numbers`
+- **Summary**: Find the slope of a line through two points with rise over run, y-intercept, straight-line equation, angle of inclination, and point-to-point distance.
+- **Related Tools in Category**: [Basic Calculator](https://calculatorbowl.com/calculators/math/basic/basic-calculator/), [Scientific Calculator](https://calculatorbowl.com/calculators/math/basic/scientific-calculator/), [Percentage Calculator](https://calculatorbowl.com/calculators/math/percentage/percentage-calculator/)
+
+### [Probability Calculator (Events, Odds & Dice Sums)](https://calculatorbowl.com/calculators/math/statistics/probability-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/math/statistics/probability-calculator/`
+- **Category**: [Math & Statistics Calculators](https://calculatorbowl.com/calculators/math/)
+- **Subcategory**: `Statistics & Probability`
+- **Summary**: Calculate single-event probability, complement, odds, and 1-in-x chances, plus dice-sum probabilities with the full outcome distribution table.
+- **Related Tools in Category**: [Basic Calculator](https://calculatorbowl.com/calculators/math/basic/basic-calculator/), [Scientific Calculator](https://calculatorbowl.com/calculators/math/basic/scientific-calculator/), [Percentage Calculator](https://calculatorbowl.com/calculators/math/percentage/percentage-calculator/)
+
 ## 📁 Unit Conversion Calculators (Category Hub: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/))
 
-*Description*: Convert temperature, length, distance, weight, mass, area, volume, speed, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.
+*Description*: Convert temperature, length, distance, weight, mass, area, volume, speed, pressure, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.
 
 ### [Temperature Unit Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/`
@@ -357,6 +378,13 @@
 - **Category**: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/)
 - **Subcategory**: `Units & Measurements`
 - **Summary**: Convert digital storage units — bits, bytes, kilobytes, megabytes, gigabytes, and terabytes — using both decimal (SI) and binary (IEC) standards, with transfer-time estimates.
+- **Related Tools in Category**: [Temperature Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/), [Length Converter](https://calculatorbowl.com/calculators/conversion/measurement/length-converter/), [Weight Converter](https://calculatorbowl.com/calculators/conversion/measurement/weight-converter/)
+
+### [Pressure Converter (Pa, Bar, ATM, PSI, Torr)](https://calculatorbowl.com/calculators/conversion/measurement/pressure-converter/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/conversion/measurement/pressure-converter/`
+- **Category**: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/)
+- **Subcategory**: `Units & Measurements`
+- **Summary**: Convert pressure between pascal, kilopascal, bar, atmosphere, PSI, torr and mmHg with exact conversion factors and a full all-unit reference table.
 - **Related Tools in Category**: [Temperature Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/), [Length Converter](https://calculatorbowl.com/calculators/conversion/measurement/length-converter/), [Weight Converter](https://calculatorbowl.com/calculators/conversion/measurement/weight-converter/)
 
 ## 📁 Date & Time Calculators (Category Hub: [Date & Time Calculators](https://calculatorbowl.com/calculators/date-time/))
@@ -407,7 +435,7 @@
 
 ## 📁 Network & Internet Calculators (Category Hub: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/))
 
-*Description*: Measure live broadband internet download speed, upload bandwidth, latency ping, jitter, and calculate streaming data consumption across YouTube, Netflix, 4K video, and Zoom.
+*Description*: Measure live broadband internet download speed, upload bandwidth, latency ping, jitter, and calculate streaming data consumption across YouTube, Netflix, 4K video, and Zoom. Estimate power bank battery capacity, usable watt-hours, and full device charges.
 
 ### [Live Internet Speed & Ping Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/`
@@ -435,6 +463,13 @@
 - **Category**: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/)
 - **Subcategory**: `Displays & Hardware`
 - **Summary**: Calculate screen width and height from diagonal size and aspect ratio, find pixel density (PPI), and compare actual viewing area across monitors and TVs.
+- **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/), [Streaming Data Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/), [IP Subnet Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/)
+
+### [Power Bank & Battery Capacity Calculator](https://calculatorbowl.com/calculators/tech-network/power/power-bank-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/tech-network/power/power-bank-calculator/`
+- **Category**: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/)
+- **Subcategory**: `Power & Battery`
+- **Summary**: Estimate power bank Wh capacity, usable energy after efficiency losses, and how many full device charges it delivers from mAh, voltage, and efficiency.
 - **Related Tools in Category**: [Internet Speed Test](https://calculatorbowl.com/calculators/tech-network/speed/internet-speed-test/), [Streaming Data Calculator](https://calculatorbowl.com/calculators/tech-network/data/streaming-data-calculator/), [IP Subnet Calculator](https://calculatorbowl.com/calculators/tech-network/ip-address/ip-subnet-calculator/)
 
 ## 📁 Health & Fitness Calculators (Category Hub: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/))
@@ -481,5 +516,12 @@
 - **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
 - **Subcategory**: `Pregnancy & Due Date`
 - **Summary**: Estimate your baby's due date from the last menstrual period or conception date using Naegele's rule, with gestational age, trimester timeline, and cycle-length adjustment.
+- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
+
+### [Ideal Weight Calculator (Devine, Robinson, Miller, Hamwi)](https://calculatorbowl.com/calculators/health/fitness/ideal-weight-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/ideal-weight-calculator/`
+- **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
+- **Subcategory**: `Fitness & Body Metrics`
+- **Summary**: Find your ideal weight with the Devine, Robinson, Miller, and Hamwi formulas from height and sex, plus the healthy BMI weight band and current-weight comparison.
 - **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
 

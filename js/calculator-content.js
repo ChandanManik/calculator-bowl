@@ -5919,6 +5919,511 @@ const CALCULATOR_RICH_CONTENT = {
         a: "Gestational age counts completed weeks since the first day of the last period, so it runs two weeks ahead of the embryo's actual age. At 14w 6d you are 14 completed weeks plus 6 days, in the second trimester, with 25 weeks (175 days) to the 40-week mark."
       }
     ]
+  },
+
+  // CAGR Calculator
+  "cagr-calculator": {
+    articleTitle: "CAGR Explained: Reading Compound Annual Growth the Right Way",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">📈 Growth Smoothing</span>
+          <h4>Start Value to End Value at a Constant Annual Rate</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <line x1="70" y1="175" x2="555" y2="175" stroke="var(--border-color)" stroke-width="2"/>
+            <line x1="70" y1="35" x2="70" y2="175" stroke="var(--border-color)" stroke-width="2"/>
+            <polyline points="70,160 170,146 270,131 370,114 470,96 555,80" fill="none" stroke="var(--accent-emerald)" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="70" cy="160" r="6" fill="var(--accent-emerald)"/>
+            <circle cx="555" cy="80" r="6" fill="var(--accent-emerald)"/>
+            <text x="70" y="196" text-anchor="middle" font-size="13" fill="var(--text-muted)">Year 0</text>
+            <text x="555" y="196" text-anchor="middle" font-size="13" fill="var(--text-muted)">Year N</text>
+            <text x="82" y="156" text-anchor="start" font-size="13" fill="var(--text-muted)">Start $</text>
+            <text x="545" y="72" text-anchor="end" font-size="13" fill="var(--text-muted)">End $</text>
+            <text x="315" y="58" text-anchor="middle" font-size="15" font-weight="600" fill="var(--accent-emerald)">CAGR = constant annual growth</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>CAGR — the compound annual growth rate</b> — is the constant annual percentage that would grow a starting value into an ending value over a period of years. Fund reports, pitch decks, and business KPIs quote it because it smooths the bumpiness of real returns: whether the path climbed steadily or swung wildly, CAGR answers one question — <i>what yearly rate gets me from here to there?</i>
+      </p>
+
+      <h3 class="content-subheading">1. The CAGR Formula, Step by Step</h3>
+      <div class="math-formula-box">
+        CAGR = (Ending Value ÷ Beginning Value)^(1 ÷ Years) − 1
+      </div>
+      <ul class="content-list">
+        <li><b>Both values must be positive</b> — a zero or negative ending value (total wipeout) has no meaningful annualized rate</li>
+        <li>The exponent <b>1 ÷ years</b> annualizes the total return: 4 years → 0.25, 10 years → 0.10</li>
+        <li>Subtracting 1 converts the growth <i>factor</i> (1.127) into a rate (<b>12.7%</b>)</li>
+        <li>CAGR is geometric, never arithmetic: averaging +30% and −10% gives +10%, yet the account actually compounds to 0.9 × 1.3 = 1.17 → +17% total → <b>+8.2% CAGR</b></li>
+      </ul>
+
+      <h3 class="content-subheading">2. How to Read the Number</h3>
+      <p>
+        A 10% CAGR doubles money in about 7.2 years (Rule of 72: 72 ÷ 10); a 20% CAGR doubles in 3.6 years. Always compare CAGR over comparable horizons: 15% for 3 years turns $10,000 into $15,209, while 12% for 20 years turns the same $10,000 into $96,460. The lower rate wins decisively because time compounds — multiply the rate by the horizon before judging which is better.
+      </p>
+
+      <h3 class="content-subheading">3. Where CAGR Misleads</h3>
+      <ul class="content-list">
+        <li><b>Path blindness:</b> +100% then −50% ends where it started (0% CAGR) — volatility is invisible in endpoint math</li>
+        <li><b>Endpoint sensitivity:</b> starting the clock at a market peak or trough skews the entire figure</li>
+        <li><b>No cash flows:</b> CAGR assumes one lump sum; SIPs, top-ups, and withdrawals need XIRR (money-weighted) returns instead</li>
+        <li><b>Business use:</b> smooth revenue CAGR across a 3–5 year window so one anomaly year doesn't define the trend</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "How do you calculate CAGR step by step?",
+        a: "Divide the ending value by the beginning value, raise the result to the power of 1 divided by the number of years, then subtract 1. A $10,000 investment growing to $20,000 over 5 years gives (20,000 ÷ 10,000)^(1/5) − 1 = 14.87% per year, the constant rate that reproduces the endpoint exactly."
+      },
+      {
+        q: "Can CAGR be negative?",
+        a: "Yes. When the ending value sits below the beginning value the ratio is under 1, so the computed rate comes out negative — that is an annualized loss, and it is just as informative as a gain. Showing only positive CAGR hides drawdowns and misleads anyone comparing options."
+      },
+      {
+        q: "What is the difference between CAGR and average annual return?",
+        a: "CAGR is geometric and compounds: each year's return applies to the previous balance. A simple arithmetic average ignores that compounding chain and overstates results whenever returns vary, because equal-sized gains and losses do not cancel out symmetrically in a compounding series."
+      },
+      {
+        q: "Why is CAGR better than total return for comparisons?",
+        a: "Total return ignores time: +100% in one year and +100% in ten years look identical as totals but are completely different investments. CAGR annualizes both onto one scale, letting a 3-month trade and a decade-long fund be judged on equal footing."
+      }
+    ]
+  },
+
+  // Slope Calculator
+  "slope-calculator": {
+    articleTitle: "Slope, Rise over Run: Finding the Equation of a Line",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">📐 Coordinate Geometry</span>
+          <h4>Rise ÷ Run Between Two Points</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 230" style="width: 100%; max-width: 550px; height: auto;">
+            <rect width="600" height="230" rx="12" fill="var(--bg-subtle)"/>
+            <line x1="60" y1="190" x2="560" y2="190" stroke="var(--border-color)" stroke-width="2"/>
+            <line x1="60" y1="30" x2="60" y2="190" stroke="var(--border-color)" stroke-width="2"/>
+            <line x1="130" y1="170" x2="480" y2="60" stroke="var(--accent-emerald)" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="130" cy="170" r="7" fill="var(--accent-emerald)"/>
+            <circle cx="480" cy="60" r="7" fill="var(--accent-emerald)"/>
+            <line x1="480" y1="60" x2="480" y2="170" stroke="var(--accent-orange)" stroke-width="3" stroke-dasharray="6 5"/>
+            <line x1="130" y1="170" x2="480" y2="170" stroke="var(--accent-orange)" stroke-width="3" stroke-dasharray="6 5"/>
+            <text x="495" y="120" font-size="14" fill="var(--accent-orange)">rise Δy</text>
+            <text x="285" y="188" font-size="14" fill="var(--accent-orange)">run Δx</text>
+            <text x="112" y="197" font-size="13" fill="var(--text-muted)">(x₁, y₁)</text>
+            <text x="463" y="48" font-size="13" fill="var(--text-muted)">(x₂, y₂)</text>
+            <text x="310" y="95" font-size="15" font-weight="600" fill="var(--accent-emerald)">m = Δy ÷ Δx</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        The <b>slope</b> of a line measures its steepness and direction: how many units <i>y</i> changes for every one unit <i>x</i> moves. Roof pitch, wheelchair ramps, road grades, and profit trends are slope problems in disguise. Give any two points and this calculator returns the slope, y-intercept, full line equation, angle of inclination, and the distance between the points.
+      </p>
+
+      <h3 class="content-subheading">1. The Slope Formula (Rise over Run)</h3>
+      <div class="math-formula-box">
+        m = (y₂ − y₁) ÷ (x₂ − x₁) = rise ÷ run
+      </div>
+      <ul class="content-list">
+        <li><b>m positive:</b> line rises left-to-right (y grows as x grows)</li>
+        <li><b>m negative:</b> line falls left-to-right (y shrinks as x grows)</li>
+        <li><b>m = 0:</b> horizontal line — no rise at all</li>
+        <li><b>x₂ = x₁:</b> vertical line — slope <b>undefined</b>, because dividing by a zero run is impossible</li>
+        <li><b>|m| greater than 1:</b> steep; <b>|m| under 1:</b> shallow — the sign alone never says how steep</li>
+      </ul>
+
+      <h3 class="content-subheading">2. From Slope to the Line Equation</h3>
+      <p>
+        With slope <i>m</i> and any point on the line, point-slope form <b>y − y₁ = m(x − x₁)</b> rearranges into the familiar slope-intercept form <b>y = mx + b</b>, where <b>b = y₁ − m·x₁</b> is the y-intercept. Example with (1, 2) and (4, 8): m = (8 − 2) ÷ (4 − 1) = 2 and b = 2 − 2·1 = 0, so the line is <b>y = 2x</b> — every x doubles into its y.
+      </p>
+
+      <h3 class="content-subheading">3. Angle, Distance, and Real Uses</h3>
+      <div class="math-formula-box">
+        θ = arctan(m) × 180/π &nbsp;&nbsp;·&nbsp;&nbsp; d = √((x₂−x₁)² + (y₂−y₁)²)
+      </div>
+      <ul class="content-list">
+        <li>The inclination angle converts slope into degrees — a 12% road grade is only about 6.8°, yet steep enough for loaded trucks to crawl</li>
+        <li>The distance formula is the Pythagorean theorem applied to Δx and Δy along the segment</li>
+        <li>ADA ramps cap at 1:12 slope (8.3%) — accessibility codes are slope problems with legal limits</li>
+        <li>Roof pitches are quoted as ratios such as 4:12 for exactly the same reason</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "How do you find the slope between two points?",
+        a: "Subtract the y-coordinates to get the rise, subtract the x-coordinates to get the run, then divide rise by run. For points (1, 2) and (4, 8): (8 − 2) ÷ (4 − 1) = 6 ÷ 3 = 2, so the slope m equals 2 — y climbs two units for every single unit of x movement."
+      },
+      {
+        q: "What does a negative slope mean?",
+        a: "A negative slope means the line falls from left to right: as x increases, y decreases. It describes any declining relationship such as depreciation over time or a descent. The steeper the drop, the more negative the number, with −3 being far steeper than −0.5."
+      },
+      {
+        q: "What happens when the x-values are the same?",
+        a: "When x₂ equals x₁ the run is zero and division by zero is undefined — the two points form a vertical line whose equation is x = constant. Vertical lines still have a 90-degree inclination and a finite point-to-point distance; only the numeric slope is undefined."
+      },
+      {
+        q: "What is the difference between slope and angle of inclination?",
+        a: "Slope m is the raw ratio rise ÷ run, while the inclination θ expresses that same steepness in degrees through arctangent. A slope of 1 equals 45°, a slope of √3 equals 60° — the same line measured with two different rulers."
+      }
+    ]
+  },
+
+  // Probability Calculator
+  "probability-calculator": {
+    articleTitle: "Probability Explained: From Favorable Outcomes to Dice Sums",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🎲 Two-Dice Distribution</span>
+          <h4>Why 7 Is the Most Likely Sum (6 Ways of 36)</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 225" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="225" rx="12" fill="var(--bg-subtle)"/>
+            <line x1="55" y1="185" x2="585" y2="185" stroke="var(--border-color)" stroke-width="2"/>
+            <rect x="55" y="168" width="38" height="17" rx="3" fill="var(--accent-emerald)"/>
+            <rect x="103" y="152" width="38" height="33" rx="3" fill="var(--accent-emerald)"/>
+            <rect x="151" y="135" width="38" height="50" rx="3" fill="var(--accent-emerald)"/>
+            <rect x="199" y="118" width="38" height="67" rx="3" fill="var(--accent-emerald)"/>
+            <rect x="247" y="102" width="38" height="83" rx="3" fill="var(--accent-emerald)"/>
+            <rect x="295" y="85" width="38" height="100" rx="3" fill="var(--accent-orange)"/>
+            <rect x="343" y="102" width="38" height="83" rx="3" fill="var(--accent-emerald)"/>
+            <rect x="391" y="118" width="38" height="67" rx="3" fill="var(--accent-emerald)"/>
+            <rect x="439" y="135" width="38" height="50" rx="3" fill="var(--accent-emerald)"/>
+            <rect x="487" y="152" width="38" height="33" rx="3" fill="var(--accent-emerald)"/>
+            <rect x="535" y="168" width="38" height="17" rx="3" fill="var(--accent-emerald)"/>
+            <g font-size="13" fill="var(--text-muted)" text-anchor="middle">
+              <text x="74" y="205">2</text>
+              <text x="122" y="205">3</text>
+              <text x="170" y="205">4</text>
+              <text x="218" y="205">5</text>
+              <text x="266" y="205">6</text>
+              <text x="314" y="205" font-weight="600" fill="var(--accent-orange)">7</text>
+              <text x="362" y="205">8</text>
+              <text x="410" y="205">9</text>
+              <text x="458" y="205">10</text>
+              <text x="506" y="205">11</text>
+              <text x="554" y="205">12</text>
+            </g>
+            <text x="314" y="75" text-anchor="middle" font-size="14" font-weight="600" fill="var(--accent-orange)">6 of 36 ways = 16.67%</text>
+            <text x="320" y="38" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">Sum of 2 fair dice</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Probability</b> quantifies how likely an event is, on a scale from 0 (impossible) to 1 (certain). The classical definition counts equally likely outcomes: the number of ways the event can happen divided by the total number of ways anything can happen. That single fraction powers card games, quality control, insurance pricing, A/B tests, and every statistics exam — and it splits cleanly into a single-event mode and a dice-sum mode in this calculator.
+      </p>
+
+      <h3 class="content-subheading">1. The Classical Formula and the Complement</h3>
+      <div class="math-formula-box">
+        P(A) = favorable outcomes ÷ total possible outcomes &nbsp;&nbsp;·&nbsp;&nbsp; P(not A) = 1 − P(A)
+      </div>
+      <ul class="content-list">
+        <li>Drawn from a shuffled deck, the chance of an ace is 4 ÷ 52 = <b>7.69%</b> — four favorable cards among 52 equally likely ones</li>
+        <li>The <b>complement rule</b> flips the problem: P(no defect) = 1 − P(defect), often far easier to count</li>
+        <li>Probabilities of mutually exclusive events add; independent events multiply (two coin flips → heads twice = 0.5 × 0.5 = 25%)</li>
+        <li>Anything at or below 0 is impossible, anything at or above 1 is certain — outside that band the inputs are wrong</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Odds, Percentages, and 1-in-x Chances</h3>
+      <p>
+        Three dialects describe the same fact. A 25% probability equals odds of <b>1:3</b> (one hit for every three misses) and a <b>1 in 4</b> chance. Convert with p ÷ (1 − p) for odds and 1 ÷ p for the 1-in-x figure. Newspapers love "1 in a million" odds; scientists prefer percentages — when the p is tiny, the1-in-x form communicates rarity far better.
+      </p>
+
+      <h3 class="content-subheading">3. Dice Sums: Where Combinatorics Shows Up</h3>
+      <div class="math-formula-box">
+        P(sum) = ways to hit the total ÷ 6^n
+      </div>
+      <ul class="content-list">
+        <li>Two dice produce 6 × 6 = <b>36 equally likely combinations</b>; the sum of 7 appears in six of them (1+6, 2+5, 3+4, 4+3, 5+2, 6+1) → <b>16.67%</b>, the single most likely total</li>
+        <li>The distribution is a triangle: 2 and 12 each have 1 way, rising linearly to 7 in the middle</li>
+        <li>Three dice give 216 total outcomes, four dice give 1296 — this calculator convolves the counts so every sum's exact odds appear in the breakdown table</li>
+        <li>Craps, Monopoly, and board-game odds all rest on this distribution — the casino edge in craps is literally sums of 7 vs sums of 2, 3, and 12</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "What is the basic probability formula?",
+        a: "Probability equals the number of favorable outcomes divided by the total number of equally likely outcomes. Rolling a 6 on one die is 1 ÷ 6 = 16.67%, and picking a red card from a standard deck is 26 ÷ 52 = 50%, because every elementary outcome has the same chance."
+      },
+      {
+        q: "How do you convert probability into odds?",
+        a: "Divide the probability of the event by the probability of its complement: odds = p ÷ (1 − p). A 25% chance becomes 0.25 ÷ 0.75 = 1:3 — one success for every three failures — while the reverse turns odds back into probability with p = odds ÷ (1 + odds)."
+      },
+      {
+        q: "What is the probability of rolling a sum of 7 with two dice?",
+        a: "Six of the 36 equally likely combinations produce a 7: 1+6, 2+5, 3+4, 4+3, 5+2 and 6+1. That gives 6 ÷ 36 = 16.67%, or about 1 chance in 6, making 7 the single most probable total when rolling a pair of fair dice."
+      },
+      {
+        q: "Why does the complement rule matter?",
+        a: "Counting failures is often easier than counting successes — the chance that at least one face shows a 6 in three rolls is 1 − (5/6)³ rather than summing every case with a six. The complement converts a messy union into a single subtraction and saves real calculation time."
+      }
+    ]
+  },
+
+  // Pressure Converter
+  "pressure-converter": {
+    articleTitle: "Pressure Units Explained: Pa, Bar, ATM, PSI and Torr",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">💨 Unit Ladder</span>
+          <h4>Every Pressure Unit Anchors to the Pascal</h4>
+        </div>
+        <div style="padding: 1.2rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 225" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="225" rx="12" fill="var(--bg-subtle)"/>
+            <line x1="190" y1="50" x2="222" y2="102" stroke="var(--border-color)" stroke-width="1.5"/>
+            <line x1="410" y1="50" x2="378" y2="102" stroke="var(--border-color)" stroke-width="1.5"/>
+            <line x1="190" y1="115" x2="222" y2="117" stroke="var(--border-color)" stroke-width="1.5"/>
+            <line x1="410" y1="115" x2="378" y2="117" stroke="var(--border-color)" stroke-width="1.5"/>
+            <line x1="190" y1="180" x2="222" y2="135" stroke="var(--border-color)" stroke-width="1.5"/>
+            <line x1="410" y1="180" x2="378" y2="135" stroke="var(--border-color)" stroke-width="1.5"/>
+            <rect x="35" y="30" width="155" height="40" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="112" y="55" text-anchor="middle" font-size="13" fill="var(--text-muted)">1 bar = 100,000 Pa</text>
+            <rect x="410" y="30" width="155" height="40" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="487" y="55" text-anchor="middle" font-size="13" fill="var(--text-muted)">1 psi = 6,894.76 Pa</text>
+            <rect x="35" y="95" width="155" height="40" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="112" y="120" text-anchor="middle" font-size="13" fill="var(--text-muted)">1 kPa = 1,000 Pa</text>
+            <rect x="410" y="95" width="155" height="40" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="487" y="120" text-anchor="middle" font-size="13" fill="var(--text-muted)">1 Torr = 133.32 Pa</text>
+            <rect x="35" y="160" width="155" height="40" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="112" y="185" text-anchor="middle" font-size="13" fill="var(--text-muted)">1 inHg = 3,386.39 Pa</text>
+            <rect x="410" y="160" width="155" height="40" rx="8" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="487" y="185" text-anchor="middle" font-size="13" fill="var(--text-muted)">1 kg/cm² = 98,066.5 Pa</text>
+            <rect x="222" y="90" width="156" height="55" rx="10" fill="var(--accent-emerald)"/>
+            <text x="300" y="114" text-anchor="middle" font-size="16" font-weight="600" fill="#fff">1 atm</text>
+            <text x="300" y="135" text-anchor="middle" font-size="13" fill="#fff">= 101,325 Pa</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Pressure</b> is force spread over area — pascals, the SI unit, count newtons per square metre. From car tires to weather maps to blood pressure cuffs, different fields grew different units, and confusing them is more than academic: an underinflated tire at 32 psi versus 32 kPa is a safety hazard. Convert through the pascal and every unit snaps into place.
+      </p>
+
+      <h3 class="content-subheading">1. The Core Units and Their Exact Factors</h3>
+      <div class="math-formula-box">
+        target = value × (from factor ÷ to factor), all factors expressed in pascals
+      </div>
+      <ul class="content-list">
+        <li><b>Pa / kPa / MPa:</b> scientific base — 1 kPa = 1,000 Pa, weather pressure near sea level ≈ 101.325 kPa</li>
+        <li><b>Bar:</b> exactly 100,000 Pa — meteorology and European tire gauges quote bar or mbar (hPa)</li>
+        <li><b>Atmosphere:</b> defined as exactly 101,325 Pa — the old standard of sea-level air</li>
+        <li><b>PSI:</b> 6,894.757 Pa — US tire and scuba tanks; a typical car tire reads 30–35 psi</li>
+        <li><b>Torr / mmHg:</b> exactly 1/760 of an atmosphere (133.322 Pa) — medicine, vacuum physics, and blood pressure live here</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Which Unit Where?</h3>
+      <p>
+        Engineering drawings in the US specify psi; European weather charts use hPa (millibars); laboratories quote torr for vacuum; scuba regulators speak bar; aviation altimeters show inHg in North America and hPa elsewhere. The number itself is meaningless without its unit — and converting first prevents the classic 10×-off errors between kPa and psi ranges.
+      </p>
+
+      <h3 class="content-subheading">3. Worked Example and Gauge vs Absolute</h3>
+      <div class="math-formula-box">
+        1 atm → psi = 101,325 ÷ 6,894.757 = 14.696 psi
+      </div>
+      <ul class="content-list">
+        <li>Normalize to pascals first: 1 atm × 101,325 = 101,325 Pa, then divide by the target factor</li>
+        <li><b>Gauge pressure</b> (what tires measure) starts at local atmospheric pressure; <b>absolute pressure</b> starts at perfect vacuum — add ≈14.7 psi (101.325 kPa) to convert gauge to absolute</li>
+        <li>Vacuum work quotes negative gauge or absolute pressure in torr; a perfect vacuum is 0 absolute but −14.7 psi gauge</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "What is a pascal in pressure units?",
+        a: "One pascal is the pressure of one newton acting over one square metre — a very small amount, roughly the weight of a sheet of paper resting on a table. Because it is so small, engineering uses kilopascals (1,000 Pa) or megapascals (1,000,000 Pa) for convenient magnitudes."
+      },
+      {
+        q: "What is the difference between psi and bar?",
+        a: "Both measure force over area but on different scales: 1 bar equals exactly 100,000 Pa while 1 psi equals about 6,895 Pa, so one bar is roughly 14.5 psi. European tires list bar, American tires list psi, and mixing them up underinflates a tire by about a factor of 14.5."
+      },
+      {
+        q: "Are torr and mmHg the same thing?",
+        a: "They are effectively identical: one torr is defined as exactly 1/760 of an atmosphere (133.322 Pa), and one millimetre of mercury is the pressure of a 1 mm mercury column (133.322 Pa at standard gravity) — they differ only in the fourth decimal place, so clinical and lab readings are interchangeable."
+      },
+      {
+        q: "How do you convert atmospheric pressure to psi?",
+        a: "Multiply the atmosphere value by 101,325 pascals, then divide by 6,894.757 (the pascal value of one psi). One atmosphere works out to 14.696 psi — which is why a car tire at 32 psi gauge sits at about 46.5 psi absolute."
+      },
+      {
+        q: "What is gauge pressure versus absolute pressure?",
+        a: "Gauge pressure measures against the surrounding atmosphere, so a tire gauge reads zero when off the rim; absolute pressure measures against a perfect vacuum. Absolute = gauge + atmospheric pressure (about 101.325 kPa or 14.7 psi) — always state which one a number refers to."
+      }
+    ]
+  },
+
+  // Power Bank Calculator
+  "power-bank-calculator": {
+    articleTitle: "Power Bank Capacity Realized: mAh, Wh and Actual Charges",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🔋 Energy Reality Check</span>
+          <h4>Labeled Capacity vs Energy You Actually Get</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <rect x="60" y="70" width="440" height="80" rx="12" fill="none" stroke="var(--border-color)" stroke-width="3"/>
+            <rect x="502" y="92" width="18" height="36" rx="5" fill="var(--border-color)"/>
+            <rect x="70" y="80" width="366" height="60" rx="6" fill="var(--accent-emerald)"/>
+            <rect x="436" y="80" width="56" height="60" rx="6" fill="var(--accent-orange)" opacity="0.8"/>
+            <text x="253" y="115" text-anchor="middle" font-size="15" font-weight="600" fill="#fff">Usable ~85%</text>
+            <text x="464" y="115" text-anchor="middle" font-size="12" fill="#fff">15%</text>
+            <text x="300" y="45" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">Labeled mAh → delivered watt-hours</text>
+            <text x="253" y="178" text-anchor="middle" font-size="13" fill="var(--text-muted)">boost-converter efficiency (3.7V → 5V)</text>
+            <text x="464" y="178" text-anchor="middle" font-size="13" fill="var(--accent-orange)">heat loss</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Power banks are sold on <b>mAh</b> — milliamp-hours — but batteries move <b>energy</b>, and energy needs volts too. A 20,000 mAh bank at the cell's 3.7 V stores 74 Wh, not some phone-sized multiple of your device's mAh. This calculator converts capacity into watt-hours, applies conversion efficiency, and tells you exactly how many full charges to expect.
+      </p>
+
+      <h3 class="content-subheading">1. From mAh to Watt-Hours</h3>
+      <div class="math-formula-box">
+        Wh = mAh × V ÷ 1000
+      </div>
+      <ul class="content-list">
+        <li>Bank: 20,000 mAh × 3.7 V ÷ 1000 = <b>74 Wh</b> of stored energy</li>
+        <li>Phone: 4,500 mAh × 3.85 V ÷ 1000 = <b>17.3 Wh</b> per full charge</li>
+        <li>The naive mAh ratio (20,000 ÷ 4,500 = 4.4×) ignores voltage and always overpromises — energy conservation does not care how the label reads</li>
+        <li>Charges = usable Wh ÷ device Wh — here 74 × 85% ÷ 17.3 ≈ <b>3.6 charges</b>, not 4.4</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Where the Missing Energy Goes</h3>
+      <p>
+        The cell runs at 3.7 V but USB delivers 5 V (or 9 V for fast charging), so a <b>boost converter</b> steps voltage up — and every conversion leaks as heat. Real-world round-trip efficiency lands at 80–90%; add cable resistance and a warm ambient environment and 85% is a fair default. Cheap no-name banks inflate capacity claims and use low-grade cells that sag under load, delivering even less.
+      </p>
+
+      <h3 class="content-subheading">3. Practical Rules and Travel Limits</h3>
+      <ul class="content-list">
+        <li><b>Airlines cap power banks at 100 Wh</b> (carry-on only) — a 20,000 mAh / 74 Wh bank flies; a 30,000 mAh one usually needs airline approval above 100 Wh</li>
+        <li>Charging a phone at 5 V/2 A is faster than 5 V/1 A but both draw the same total energy — speed changes time, not capacity</li>
+        <li>Cells lose ~20% of capacity per year; a bank that once gave four charges will eventually give three</li>
+        <li>Store banks at ~50% charge in cool places — full charge plus heat accelerates chemical aging</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "How many times will a power bank charge my phone?",
+        a: "Divide the bank's usable watt-hours by your phone's battery watt-hours. A 20,000 mAh / 3.7 V bank stores 74 Wh; after ~85% conversion efficiency you get 63 Wh, and a 4,500 mAh / 3.85 V phone needs 17.3 Wh per charge — about 3.6 full charges in practice."
+      },
+      {
+        q: "Why does the mAh comparison overstate charges?",
+        a: "Because mAh measures charge, not energy, and energy depends on voltage. The bank's cells sit at 3.7 V while your phone battery averages 3.85 V, and the converter in between wastes 10–20% as heat — dividing the two mAh figures directly skips all three corrections."
+      },
+      {
+        q: "What is the Wh limit for flying with a power bank?",
+        a: "Most airlines allow power banks up to 100 Wh in carry-on luggage with no approval, between 100 and 160 Wh with airline permission, and ban anything above 160 Wh. Lithium banks are never allowed in checked bags because of fire risk in the cargo hold."
+      },
+      {
+        q: "Why do I get fewer charges than the box claims?",
+        a: "The label reflects raw cell capacity at 3.7 V with zero losses. Boost-converter inefficiency, cable resistance, phone use during charging, and battery aging each shave off a slice — 15–25% total loss versus the naive mAh ratio is completely normal behavior, not a defective unit."
+      }
+    ]
+  },
+
+  // Ideal Weight Calculator
+  "ideal-weight-calculator": {
+    articleTitle: "Ideal Weight Formulas: Devine, Robinson, Miller and Hamwi Compared",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">⚖️ Formula Comparison</span>
+          <h4>Four Estimates for a 180 cm Male (kg)</h4>
+        </div>
+        <div style="padding: 1.5rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 235" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="235" rx="12" fill="var(--bg-subtle)"/>
+            <text x="300" y="34" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">180 cm male — four formulas</text>
+            <g font-size="13" fill="var(--text-muted)">
+              <text x="30" y="72">Devine</text>
+              <text x="30" y="112">Robinson</text>
+              <text x="30" y="152">Miller</text>
+              <text x="30" y="192">Hamwi</text>
+            </g>
+            <rect x="120" y="54" width="375" height="26" rx="5" fill="var(--accent-emerald)"/>
+            <rect x="120" y="94" width="363" height="26" rx="5" fill="var(--accent-emerald)"/>
+            <rect x="120" y="134" width="357" height="26" rx="5" fill="var(--accent-emerald)"/>
+            <rect x="120" y="174" width="386" height="26" rx="5" fill="var(--accent-emerald)"/>
+            <g font-size="13" font-weight="600" fill="var(--text-muted)">
+              <text x="505" y="72">75.0 kg</text>
+              <text x="493" y="112">72.6 kg</text>
+              <text x="487" y="152">71.5 kg</text>
+              <text x="516" y="192">77.3 kg</text>
+            </g>
+            <text x="300" y="222" text-anchor="middle" font-size="13" fill="var(--text-muted)">Healthy BMI 18.5–24.9 band: 59.9 – 80.7 kg</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        <b>Ideal body weight</b> formulas estimate a healthy target from height and sex alone. The four classics — Devine, Robinson, Miller, and Hamwi — all share one structure: a base weight for people at 5 feet tall, plus a per-inch allowance above that mark. None is a verdict on health; they are starting points that the BMI band and body composition refine.
+      </p>
+
+      <h3 class="content-subheading">1. The Four Formulas, Side by Side</h3>
+      <div class="math-formula-box">
+        Devine: 50 + 2.3 × (in − 60) male · 45.5 + 2.3 × (in − 60) female
+      </div>
+      <ul class="content-list">
+        <li><b>Devine (1974):</b> built for drug dosing — male base 50 kg, female 45.5 kg, +2.3 kg per inch over 5 ft</li>
+        <li><b>Robinson (1983):</b> 52 / 49 kg bases with +1.9 (male) and +1.7 (female) per inch — slightly conservative</li>
+        <li><b>Miller (1983):</b> 56.2 / 53.1 kg bases with +1.41 / +1.36 per inch — highest bases, flattest slope</li>
+        <li><b>Hamwi (1964):</b> 48 / 45.4 kg bases with +2.7 / +2.2 per inch — steepest climb, often the highest result for tall people</li>
+        <li>Under 5 ft the deduction is skipped — the base value itself is the estimate</li>
+      </ul>
+
+      <h3 class="content-subheading">2. The Healthy BMI Band Around Them</h3>
+      <div class="math-formula-box">
+        weight = BMI × height² (metres) → 18.5 and 24.9 bracket the healthy range
+      </div>
+      <p>
+        For 180 cm: 18.5 × 3.24 = <b>59.9 kg</b> and 24.9 × 3.24 = <b>80.7 kg</b> — the four formulas (71.5–77.3 kg) all land inside it, which is the point: they are anchors within a band, not a single number on the scale. Health organizations serving Asian populations often tighten the upper cutoff to 23 because cardiometabolic risk rises earlier.
+      </p>
+
+      <h3 class="content-subheading">3. How to Use These Numbers Well</h3>
+      <ul class="content-list">
+        <li>Treat the spread across the four formulas as your <b>tolerance</b> — a 5 kg window is normal, chasing one exact figure is not</li>
+        <li>Frame and muscle mass break the model: a muscular 180 cm adult can sit above Hamwi's number at a lean body-fat percentage</li>
+        <li>Pair with body fat percentage (Navy tape method) and waist-to-height ratio for a composition-aware picture</li>
+        <li>Targets should trend, not snap — a sustainable 0.5 kg per week beats any formula's exact figure</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "Which ideal weight formula is most accurate?",
+        a: "None is clinically definitive — they correlate with insurance-table data rather than measured outcomes. Devine anchors drug dosing, Miller tends to fit taller adults, Hamwi runs higher for tall frames. The smartest approach is to average all four and treat their spread as your healthy tolerance window."
+      },
+      {
+        q: "What is a healthy weight range for my height?",
+        a: "Multiply your height in metres squared by 18.5 and by 24.9 to bracket the normal BMI band. At 170 cm that is 53.5 to 72.0 kg; at 160 cm it is 47.4 to 63.7 kg — then check where the four formula estimates fall inside that band for a second opinion."
+      },
+      {
+        q: "Why do the formulas all assume 5 feet?",
+        a: "They were derived from actuarial tables where 60 inches was the reference height, so each carries a base weight at exactly 5 ft plus a per-inch adjustment above it. For people shorter than 5 ft the per-inch term would go negative, so practice stops at the base value."
+      },
+      {
+        q: "Is ideal weight the same for men and women?",
+        a: "No — every formula uses a lower base and generally a smaller per-inch allowance for women, reflecting typical differences in height, skeletal frame, and essential body-fat percentage. Comparing a man's and a woman's ideal weight at the same height is not meaningful."
+      }
+    ]
   }
 };
 

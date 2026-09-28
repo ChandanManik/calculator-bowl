@@ -1076,3 +1076,125 @@ function renderSipCalculator(container, calcDef) {
 
   calculate();
 }
+
+/* ============================================================================
+ * CAGR Calculator — compound annual growth rate solver
+ * ========================================================================== */
+function renderCagrCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="cagrBeg">Beginning Value</label>
+        <input type="number" id="cagrBeg" class="form-control" value="10000" min="0.01" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cagrEnd">Ending Value</label>
+        <input type="number" id="cagrEnd" class="form-control" value="20000" min="0.01" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="cagrYears">Time Period <span class="form-label-hint">Years</span></label>
+        <input type="number" id="cagrYears" class="form-control" value="5" min="0.01" step="any">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcCagr" class="btn btn-primary"><span>📈 Calculate CAGR</span></button>
+      <button type="button" id="btnResetCagr" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="cagrResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const begInput = container.querySelector("#cagrBeg");
+  const endInput = container.querySelector("#cagrEnd");
+  const yearsInput = container.querySelector("#cagrYears");
+  const resultDiv = container.querySelector("#cagrResultContainer");
+
+  const fmtMoney = (n) => Math.abs(n) >= 100
+    ? n.toLocaleString("en-US", { maximumFractionDigits: 0 })
+    : n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmtPct = (n) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function calculate(ev) {
+    const beg = parseFloat(begInput.value);
+    const end = parseFloat(endInput.value);
+    const years = parseFloat(yearsInput.value);
+
+    if (!(beg > 0) || !(end > 0)) { alert("Please enter positive beginning and ending values."); return; }
+    if (!(years > 0)) { alert("Please enter a time period greater than zero."); return; }
+
+    const ratio = end / beg;
+    const cagr = (Math.pow(ratio, 1 / years) - 1) * 100;
+    const totalRet = (ratio - 1) * 100;
+    const gain = end - beg;
+    const doubling = cagr > 0 ? Math.log(2) / Math.log(1 + cagr / 100) : NaN;
+
+    // Constant-rate path: value milestones across the period
+    let rows = "";
+    const steps = Math.min(Math.max(Math.round(years), 1), 30);
+    for (let i = 1; i <= steps; i++) {
+      const t = (years * i) / steps;
+      const v = beg * Math.pow(1 + cagr / 100, t);
+      rows += `<tr>
+          <td style="padding: 0.3rem 0.7rem; border-bottom: 1px solid var(--border-color);">Year ${Number(t.toFixed(2))}</td>
+          <td style="padding: 0.3rem 0.7rem; border-bottom: 1px solid var(--border-color); text-align: right;">${fmtMoney(v)}</td>
+        </tr>`;
+    }
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">CAGR (annualized)</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${fmtPct(cagr)}%</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Total Return</div>
+          <div class="result-stat-val">${fmtPct(totalRet)}%</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Absolute Gain</div>
+          <div class="result-stat-val">${fmtMoney(gain)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Growth Multiple</div>
+          <div class="result-stat-val">${ratio.toFixed(2)}×</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Calculation Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — CAGR formula</span>
+          <div class="math-formula-box">CAGR = (End ÷ Beg)^(1 ÷ Years) − 1</div>
+          <p class="step-content">(${fmtMoney(end)} ÷ ${fmtMoney(beg)})^(1 ÷ ${years}) − 1 = <b>${fmtPct(cagr)}%</b> per year</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Total vs annualized</span>
+          <div class="math-formula-box">Total return = (End − Beg) ÷ Beg × 100</div>
+          <p class="step-content">Over ${years} year(s) the investment returned <b>${fmtPct(totalRet)}%</b> overall — CAGR smooths that into a constant ${fmtPct(cagr)}% pace${isFinite(doubling) && doubling > 0 && doubling < 500 ? `, doubling the money every <b>${doubling.toFixed(1)} years</b>` : ""}.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Constant-rate growth path</span>
+          <div class="math-formula-box">V(t) = Beg × (1 + CAGR)^t</div>
+          <div style="margin-top: 0.6rem;">
+            <table style="width: 100%; border-collapse: collapse;">${rows}</table>
+          </div>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [begInput, endInput, yearsInput].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcCagr").addEventListener("click", calculate);
+  container.querySelector("#btnResetCagr").addEventListener("click", () => {
+    begInput.value = "10000";
+    endInput.value = "20000";
+    yearsInput.value = "5";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

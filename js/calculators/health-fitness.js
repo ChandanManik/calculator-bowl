@@ -1317,3 +1317,136 @@ function renderDueDateCalculator(container, calcDef) {
   setDefaults();
   calculate();
 }
+
+/* ============================================================================
+ * Ideal Weight Calculator — Devine, Robinson, Miller & Hamwi formulas
+ * ========================================================================== */
+function renderIdealWeightCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="iwGender">Sex <span class="form-label-hint">formulas are sex-specific</span></label>
+        <select id="iwGender" class="form-control">
+          <option value="male" selected>Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="iwHeight">Height</label>
+        <div class="input-with-addon">
+          <input type="number" id="iwHeight" class="form-control" value="180" min="100" max="230" step="any">
+          <span class="input-addon suffix">cm</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="iwWeight">Current Weight <span class="form-label-hint">optional, kg</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="iwWeight" class="form-control" value="" min="20" max="400" step="any">
+          <span class="input-addon suffix">kg</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcIw" class="btn btn-primary"><span>⚖️ Calculate Ideal Weight</span></button>
+      <button type="button" id="btnResetIw" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="iwResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const genderSel = container.querySelector("#iwGender");
+  const heightInput = container.querySelector("#iwHeight");
+  const weightInput = container.querySelector("#iwWeight");
+  const resultDiv = container.querySelector("#iwResultContainer");
+
+  const kg = (n) => (Math.round(n * 10) / 10).toFixed(1);
+
+  function calculate(ev) {
+    const cm = parseFloat(heightInput.value);
+    const current = parseFloat(weightInput.value);
+    if (isNaN(cm) || cm < 100 || cm > 230) { alert("Please enter a height between 100 and 230 cm."); return; }
+
+    const male = genderSel.value === "male";
+    const inches = cm / 2.54;
+    const d = Math.max(inches - 60, 0);   // inches over 5 ft (formulas' base assumption)
+    const m2 = (cm / 100) * (cm / 100);
+
+    const devine = male ? 50 + 2.3 * d : 45.5 + 2.3 * d;
+    const robinson = male ? 52 + 1.9 * d : 49 + 1.7 * d;
+    const miller = male ? 56.2 + 1.41 * d : 53.1 + 1.36 * d;
+    const hamwi = male ? 48 + 2.7 * d : 45.4 + 2.2 * d;
+    const bmiLow = 18.5 * m2, bmiHigh = 24.9 * m2;
+
+    const avg = (devine + robinson + miller + hamwi) / 4;
+    const diff = !isNaN(current) && current > 0 ? current - avg : NaN;
+    const diffTxt = isNaN(diff) ? "" : diff > 0
+      ? `<b>+${kg(diff)} kg</b> above the four-formula average`
+      : `<b>${kg(diff)} kg</b> below the four-formula average`;
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Devine Formula</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${kg(devine)} kg</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Robinson Formula</div>
+          <div class="result-stat-val">${kg(robinson)} kg</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Miller Formula</div>
+          <div class="result-stat-val">${kg(miller)} kg</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Hamwi Formula</div>
+          <div class="result-stat-val">${kg(hamwi)} kg</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Healthy BMI Range (18.5–24.9)</div>
+          <div class="result-stat-val">${kg(bmiLow)} – ${kg(bmiHigh)} kg</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Four-Formula Average</div>
+          <div class="result-stat-val">${kg(avg)} kg</div>
+        </div>
+      </div>
+
+      ${isNaN(diff) ? "" : `<p style="margin-top: 1rem; color: var(--text-muted);">At ${kg(current)} kg you sit ${diffTxt}.</p>`}
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Formula Breakdown (${male ? "male" : "female"}, ${cm} cm)</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Height to inches</span>
+          <div class="math-formula-box">inches = cm ÷ 2.54</div>
+          <p class="step-content">${cm} ÷ 2.54 = <b>${(Math.round(inches * 100) / 100).toFixed(2)} in</b> → ${d.toFixed(2)} in above (or at) the 60-inch base the formulas assume${inches < 60 ? " — under 5 ft the base value is used without deduction" : ""}.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Devine substitution</span>
+          <div class="math-formula-box">${male ? "Ideal = 50 + 2.3 × (inches − 60)" : "Ideal = 45.5 + 2.3 × (inches − 60)"}</div>
+          <p class="step-content">${male ? "50" : "45.5"} + 2.3 × ${d.toFixed(2)} = <b>${kg(devine)} kg</b> — the clinical standard used for drug dosing since 1974.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Healthy weight band from BMI</span>
+          <div class="math-formula-box">weight = BMI × height² (m²)</div>
+          <p class="step-content">18.5 × ${m2.toFixed(2)} = <b>${kg(bmiLow)} kg</b> and 24.9 × ${m2.toFixed(2)} = <b>${kg(bmiHigh)} kg</b> — the BMI-based healthy band around the formula estimates.</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  genderSel.addEventListener("change", calculate);
+  [heightInput, weightInput].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcIw").addEventListener("click", calculate);
+  container.querySelector("#btnResetIw").addEventListener("click", () => {
+    genderSel.value = "male";
+    heightInput.value = "180";
+    weightInput.value = "";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

@@ -811,3 +811,189 @@ function renderCombinationCalculator(container, calcDef) {
   syncMode();
   calculate();
 }
+
+/* ============================================================================
+ * Probability Calculator — single-event probability & dice-sum probability
+ * ========================================================================== */
+function renderProbabilityCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="probMode">Mode</label>
+        <select id="probMode" class="form-control">
+          <option value="single" selected>Single event — favorable ÷ total</option>
+          <option value="dice">Dice sum — chance of rolling a total</option>
+        </select>
+      </div>
+      <div class="form-group" id="probFavGroup">
+        <label class="form-label" for="probFav">Favorable Outcomes</label>
+        <input type="number" id="probFav" class="form-control" value="25" min="0" step="1">
+      </div>
+      <div class="form-group" id="probTotalGroup">
+        <label class="form-label" for="probTotal">Total Possible Outcomes</label>
+        <input type="number" id="probTotal" class="form-control" value="100" min="1" step="1">
+      </div>
+      <div class="form-group" id="probDiceGroup" style="display: none;">
+        <label class="form-label" for="probDice">Number of Dice</label>
+        <select id="probDice" class="form-control">
+          <option value="1">1 die</option>
+          <option value="2" selected>2 dice</option>
+          <option value="3">3 dice</option>
+          <option value="4">4 dice</option>
+        </select>
+      </div>
+      <div class="form-group" id="probTargetGroup" style="display: none;">
+        <label class="form-label" for="probTarget">Target Sum</label>
+        <input type="number" id="probTarget" class="form-control" value="7" step="1">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcProb" class="btn btn-primary"><span>🎲 Calculate Probability</span></button>
+      <button type="button" id="btnResetProb" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="probResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const modeSel = container.querySelector("#probMode");
+  const favInput = container.querySelector("#probFav");
+  const totalInput = container.querySelector("#probTotal");
+  const diceSel = container.querySelector("#probDice");
+  const targetInput = container.querySelector("#probTarget");
+  const resultDiv = container.querySelector("#probResultContainer");
+
+  function syncMode() {
+    const single = modeSel.value === "single";
+    container.querySelector("#probFavGroup").style.display = single ? "" : "none";
+    container.querySelector("#probTotalGroup").style.display = single ? "" : "none";
+    container.querySelector("#probDiceGroup").style.display = single ? "none" : "";
+    container.querySelector("#probTargetGroup").style.display = single ? "none" : "";
+  }
+
+  const fmtPct = (p) => (p * 100).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  // Dice-sum distribution: counts of each total for n fair dice (iterative convolution)
+  function diceDistribution(n) {
+    let counts = [1]; // 0 dice → sum 0
+    for (let d = 0; d < n; d++) {
+      const next = new Array(counts.length + 6).fill(0);
+      for (let s = 0; s < counts.length; s++) {
+        for (let face = 1; face <= 6; face++) next[s + face] += counts[s];
+      }
+      counts = next;
+    }
+    return counts; // counts[sum] = number of ways
+  }
+
+  function calculate(ev) {
+    const mode = modeSel.value;
+    let p, formula, subst, rows = "", favorable, totalWays;
+
+    if (mode === "single") {
+      const fav = parseFloat(favInput.value);
+      const total = parseFloat(totalInput.value);
+      if (isNaN(fav) || fav < 0) { alert("Please enter a valid number of favorable outcomes."); return; }
+      if (!(total > 0)) { alert("Please enter a total greater than zero."); return; }
+      if (fav > total) { alert("Favorable outcomes cannot exceed the total possible outcomes."); return; }
+
+      favorable = fav;
+      totalWays = total;
+      p = total === 0 ? 0 : fav / total;
+      formula = "P(A) = favorable outcomes ÷ total possible outcomes";
+      subst = `${fav} ÷ ${total} = ${fmtPct(p)}%`;
+      rows = `<tr>
+          <td style="padding: 0.3rem 0.7rem; border-bottom: 1px solid var(--border-color);">P(A) — event happens</td>
+          <td style="padding: 0.3rem 0.7rem; border-bottom: 1px solid var(--border-color); text-align: right;"><b>${fmtPct(p)}%</b></td>
+        </tr>
+        <tr>
+          <td style="padding: 0.3rem 0.7rem; border-bottom: 1px solid var(--border-color);">P(not A) — complement</td>
+          <td style="padding: 0.3rem 0.7rem; border-bottom: 1px solid var(--border-color); text-align: right;">${fmtPct(1 - p)}%</td>
+        </tr>`;
+    } else {
+      const n = parseInt(diceSel.value, 10);
+      const target = parseInt(targetInput.value, 10);
+      if (isNaN(target) || target < n || target > n * 6) {
+        alert(`With ${n} dice the sum must be between ${n} and ${n * 6}.`);
+        return;
+      }
+      const dist = diceDistribution(n);
+      favorable = dist[target];
+      totalWays = Math.pow(6, n);
+      p = favorable / totalWays;
+      formula = "P(sum) = ways to hit the total ÷ 6^n";
+      subst = `${favorable} ÷ ${Math.pow(6, n)} = ${fmtPct(p)}%`;
+      for (let s = n; s <= n * 6; s++) {
+        const hit = s === target;
+        rows += `<tr style="${hit ? "background: var(--bg-subtle);" : ""}">
+            <td style="padding: 0.3rem 0.7rem; border-bottom: 1px solid var(--border-color);">${hit ? "➜ " : ""}Sum of ${s}</td>
+            <td style="padding: 0.3rem 0.7rem; border-bottom: 1px solid var(--border-color); text-align: right;">${dist[s]} way${dist[s] === 1 ? "" : "s"} (${fmtPct(dist[s] / totalWays)}%)</td>
+          </tr>`;
+      }
+    }
+
+    const oneIn = p > 0 ? (1 / p) : Infinity;
+    const odds = p > 0 ? `${favorable}:${Math.max(totalWays - favorable, 0)}` : "0";
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Probability</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${fmtPct(p)}%</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Odds (favorable : rest)</div>
+          <div class="result-stat-val">${odds}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Chance</div>
+          <div class="result-stat-val">${isFinite(oneIn) ? `1 in ${Math.round(oneIn * 100) / 100}` : "never"}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Complement P(not A)</div>
+          <div class="result-stat-val">${fmtPct(1 - p)}%</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Probability Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Formula</span>
+          <div class="math-formula-box">${formula}</div>
+          <p class="step-content">${subst} → the event hits about <b>${isFinite(oneIn) ? `1 time in ${Math.round(oneIn * 100) / 100}` : "never"}</b> on average.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Complement rule</span>
+          <div class="math-formula-box">P(not A) = 1 − P(A)</div>
+          <p class="step-content">1 − ${fmtPct(p)}% = <b>${fmtPct(1 - p)}%</b> — use this when the "fails" case is easier to count than the "hits" case.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — ${mode === "dice" ? "Full dice-sum distribution" : "Outcome count"}</span>
+          <div style="margin-top: 0.6rem;">
+            <table style="width: 100%; border-collapse: collapse;">${rows}</table>
+          </div>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  modeSel.addEventListener("change", () => { syncMode(); calculate(); });
+  [favInput, totalInput, targetInput].forEach(el => el.addEventListener("input", calculate));
+  diceSel.addEventListener("change", calculate);
+  container.querySelector("#btnCalcProb").addEventListener("click", calculate);
+  container.querySelector("#btnResetProb").addEventListener("click", () => {
+    modeSel.value = "single";
+    favInput.value = "25";
+    totalInput.value = "100";
+    diceSel.value = "2";
+    targetInput.value = "7";
+    syncMode();
+    resultDiv.style.display = "none";
+  });
+
+  syncMode();
+  calculate();
+}

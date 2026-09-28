@@ -1085,3 +1085,129 @@ function renderRatioCalculator(container, calcDef) {
 
   calculate();
 }
+
+/* ============================================================================
+ * Slope Calculator — slope, intercept, equation, angle & distance from 2 points
+ * ========================================================================== */
+function renderSlopeCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="slX1">x₁ — Point 1</label>
+        <input type="number" id="slX1" class="form-control" value="1" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="slY1">y₁ — Point 1</label>
+        <input type="number" id="slY1" class="form-control" value="2" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="slX2">x₂ — Point 2</label>
+        <input type="number" id="slX2" class="form-control" value="4" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="slY2">y₂ — Point 2</label>
+        <input type="number" id="slY2" class="form-control" value="8" step="any">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcSlope" class="btn btn-primary"><span>📐 Calculate Slope</span></button>
+      <button type="button" id="btnResetSlope" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="slResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const x1 = container.querySelector("#slX1");
+  const y1 = container.querySelector("#slY1");
+  const x2 = container.querySelector("#slX2");
+  const y2 = container.querySelector("#slY2");
+  const resultDiv = container.querySelector("#slResultContainer");
+
+  const num = (n) => n.toLocaleString("en-US", { maximumFractionDigits: 4 });
+  const eqNum = (n) => {
+    const r = Math.round(n * 10000) / 10000;
+    return num(r);
+  };
+
+  function calculate(ev) {
+    const px1 = parseFloat(x1.value), py1 = parseFloat(y1.value);
+    const px2 = parseFloat(x2.value), py2 = parseFloat(y2.value);
+    if ([px1, py1, px2, py2].some(v => isNaN(v))) { alert("Please enter coordinates for both points."); return; }
+
+    const dx = px2 - px1;
+    const dy = py2 - py1;
+    if (dx === 0 && dy === 0) { alert("Both points are identical — a single point has no slope."); return; }
+
+    const vertical = dx === 0;
+    const m = vertical ? NaN : dy / dx;
+    const b = vertical ? NaN : py1 - m * px1;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    // Angle of inclination θ ∈ [0°, 180°)
+    const angle = vertical ? 90 : ((Math.atan(m) * 180 / Math.PI) + 180) % 180;
+    const label = vertical ? "undefined ↕"
+      : m > 0 ? `${num(m)} ↗` : m < 0 ? `${num(m)} ↘` : "0 → horizontal";
+    const equation = vertical ? `x = ${eqNum(px1)}` : (() => {
+      const mx = m === 1 ? "x" : m === -1 ? "−x" : `${eqNum(m)}x`;
+      return b === 0 ? `y = ${mx}` : `y = ${mx} ${b < 0 ? "−" : "+"} ${eqNum(Math.abs(b))}`;
+    })();
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Slope (m)</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${vertical ? "∞" : num(m)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">y-Intercept (b)</div>
+          <div class="result-stat-val">${vertical ? "n/a" : num(b)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Angle of Inclination</div>
+          <div class="result-stat-val">${num(Math.round(angle * 100) / 100)}°</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Distance |P₁P₂|</div>
+          <div class="result-stat-val">${num(Math.round(dist * 10000) / 10000)}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Line Breakdown — the line is <b>${equation}</b></h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Slope formula</span>
+          <div class="math-formula-box">m = (y₂ − y₁) ÷ (x₂ − x₁) = Δy ÷ Δx</div>
+          <p class="step-content">${vertical
+            ? `x₂ − x₁ = ${eqNum(px2)} − ${eqNum(px1)} = <b>0</b> — division by zero, so the line is <b>vertical</b> (${label}) with undefined slope.`
+            : `(${eqNum(py2)} − ${eqNum(py1)}) ÷ (${eqNum(px2)} − ${eqNum(px1)}) = ${num(dy)} ÷ ${num(dx)} = <b>${num(m)}</b> — the line ${label}.`}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — y-intercept</span>
+          <div class="math-formula-box">b = y₁ − m × x₁</div>
+          <p class="step-content">${vertical
+            ? `A vertical line never crosses the y-axis (except when x = 0), so no intercept exists — the equation is <b>x = ${eqNum(px1)}</b>.`
+            : `${eqNum(py1)} − (${num(m)} × ${eqNum(px1)}) = <b>${num(b)}</b> → the line crosses the y-axis at (0, ${num(b)}).`}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Angle & distance</span>
+          <div class="math-formula-box">θ = arctan(m) · 180/π &nbsp;&nbsp; d = √(Δx² + Δy²)</div>
+          <p class="step-content">${vertical
+            ? `A vertical line stands at <b>90°</b>. Distance = √((${num(dx)})² + (${num(dy)})²) = <b>${num(Math.round(dist * 10000) / 10000)}</b> units.`
+            : `θ = arctan(${num(m)}) = <b>${num(Math.round(angle * 100) / 100)}°</b> from the positive x-axis. Distance = √(${num(dx)}² + ${num(dy)}²) = √${num(Math.round(dist * dist * 10000) / 10000)} = <b>${num(Math.round(dist * 10000) / 10000)}</b> units.`}</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [x1, y1, x2, y2].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcSlope").addEventListener("click", calculate);
+  container.querySelector("#btnResetSlope").addEventListener("click", () => {
+    x1.value = "1"; y1.value = "2"; x2.value = "4"; y2.value = "8";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}
