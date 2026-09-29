@@ -1226,3 +1226,145 @@ function renderDateCalculator(container, calcDef) {
   setDefaults();
   calculate();
 }
+
+/* ============================================================================
+ * Work Hours Calculator — shift times → daily/weekly hours, overtime & gross pay
+ * ========================================================================== */
+function renderWorkHoursCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="whStart">Shift Start</label>
+        <input type="time" id="whStart" class="form-control" value="09:00">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="whEnd">Shift End</label>
+        <input type="time" id="whEnd" class="form-control" value="17:30">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="whBreak">Unpaid Break <span class="form-label-hint">minutes</span></label>
+        <input type="number" id="whBreak" class="form-control" value="30" min="0" max="480" step="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="whDays">Days per Week</label>
+        <input type="number" id="whDays" class="form-control" value="5" min="1" max="7" step="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="whWage">Hourly Wage <span class="form-label-hint">optional</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="whWage" class="form-control" value="20" min="0" step="any">
+          <span class="input-addon suffix">$/hr</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcWh" class="btn btn-primary"><span>⏱️ Calculate Hours</span></button>
+      <button type="button" id="btnResetWh" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="whResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const startInput = container.querySelector("#whStart");
+  const endInput = container.querySelector("#whEnd");
+  const breakInput = container.querySelector("#whBreak");
+  const daysInput = container.querySelector("#whDays");
+  const wageInput = container.querySelector("#whWage");
+  const resultDiv = container.querySelector("#whResultContainer");
+
+  const fmtPay = (n) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function toHours(s) {
+    const m = /^(\d{1,2}):(\d{2})$/.exec(String(s || "").trim());
+    if (!m) return NaN;
+    return parseInt(m[1], 10) + parseInt(m[2], 10) / 60;
+  }
+
+  function calculate(ev) {
+    const start = toHours(startInput.value);
+    const end = toHours(endInput.value);
+    const breakMin = parseFloat(breakInput.value);
+    const days = parseInt(daysInput.value, 10);
+    const wage = parseFloat(wageInput.value);
+
+    if (isNaN(start) || isNaN(end)) { alert("Please enter valid shift start and end times."); return; }
+    if (start === end) { alert("Shift start and end times cannot be identical."); return; }
+    if (isNaN(breakMin) || breakMin < 0) { alert("Please enter a break of 0 minutes or more."); return; }
+    if (isNaN(days) || days < 1 || days > 7) { alert("Days per week must be between 1 and 7."); return; }
+
+    let span = end - start;
+    const overnight = span < 0;
+    if (overnight) span += 24;                       // crosses midnight
+
+    const daily = span - breakMin / 60;
+    if (daily <= 0) { alert("The unpaid break cannot exceed the shift length."); return; }
+
+    const weekly = daily * days;
+    const ot = Math.max(weekly - 40, 0);
+    const payOK = !isNaN(wage) && wage > 0;
+    const baseH = Math.min(weekly, 40);
+    const weeklyPay = payOK ? baseH * wage + ot * wage * 1.5 : 0;
+    const monthlyPay = payOK ? weeklyPay * 52 / 12 : 0;
+    const yearlyPay = payOK ? weeklyPay * 52 : 0;
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Daily Hours</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${daily.toFixed(2)} h</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Weekly Hours (${days} days)</div>
+          <div class="result-stat-val">${weekly.toFixed(2)} h</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Overtime (over 40 h)</div>
+          <div class="result-stat-val">${ot > 0 ? `+${ot.toFixed(2)} h` : "0.00 h"}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Weekly Gross Pay</div>
+          <div class="result-stat-val">${payOK ? fmtPay(weeklyPay) : "—"}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Timesheet Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Daily hours</span>
+          <div class="math-formula-box">daily = (end − start) − break ÷ 60</div>
+          <p class="step-content">${overnight ? `Overnight shift: ${endInput.value} is next day, so add 24 h → span ${span.toFixed(2)} h. ` : ""}${span.toFixed(2)} h − ${(breakMin / 60).toFixed(2)} h = <b>${daily.toFixed(2)} h per day</b></p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Weekly total & overtime</span>
+          <div class="math-formula-box">weekly = daily × days &nbsp;·&nbsp; overtime = max(0, weekly − 40)</div>
+          <p class="step-content">${daily.toFixed(2)} × ${days} = <b>${weekly.toFixed(2)} h</b> — ${ot > 0 ? `of which <b>${ot.toFixed(2)} h</b> is overtime beyond the 40-hour standard week (US FLSA non-exempt workers earn 1.5× on those hours).` : "at or under the 40-hour standard week, so <b>no overtime</b> accrues."}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Gross pay</span>
+          <div class="math-formula-box">pay = regular hours × wage + overtime hours × wage × 1.5</div>
+          <p class="step-content">${payOK
+            ? `${baseH.toFixed(2)} × ${fmtPay(wage)} + ${ot.toFixed(2)} × ${fmtPay(wage)} × 1.5 = <b>${fmtPay(weeklyPay)} per week</b> → <b>${fmtPay(monthlyPay)} per month</b> (×52 ÷ 12) → <b>${fmtPay(yearlyPay)} per year</b>. Gross only — taxes, benefits, and deductions come off the top.`
+            : "Enter an hourly wage to see weekly, monthly, and yearly gross pay — hours calculate fine without it."}</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [startInput, endInput].forEach(el => el.addEventListener("input", calculate));
+  [breakInput, daysInput, wageInput].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcWh").addEventListener("click", calculate);
+  container.querySelector("#btnResetWh").addEventListener("click", () => {
+    startInput.value = "09:00";
+    endInput.value = "17:30";
+    breakInput.value = "30";
+    daysInput.value = "5";
+    wageInput.value = "20";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

@@ -1198,3 +1198,113 @@ function renderCagrCalculator(container, calcDef) {
 
   calculate();
 }
+
+/* ============================================================================
+ * Dividend Calculator — yield, shares owned, annual/monthly income
+ * ========================================================================== */
+function renderDividendCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="dvInvest">Total Investment</label>
+        <input type="number" id="dvInvest" class="form-control" value="10000" min="1" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="dvPrice">Price per Share</label>
+        <input type="number" id="dvPrice" class="form-control" value="50" min="0.01" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="dvDps">Annual Dividend per Share</label>
+        <input type="number" id="dvDps" class="form-control" value="2" min="0" step="any">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcDv" class="btn btn-primary"><span>💰 Calculate Dividends</span></button>
+      <button type="button" id="btnResetDv" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="dvResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const investInput = container.querySelector("#dvInvest");
+  const priceInput = container.querySelector("#dvPrice");
+  const dpsInput = container.querySelector("#dvDps");
+  const resultDiv = container.querySelector("#dvResultContainer");
+
+  const fmtMoney = (n) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmtPct = (n) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function calculate(ev) {
+    const invest = parseFloat(investInput.value);
+    const price = parseFloat(priceInput.value);
+    const dps = parseFloat(dpsInput.value);
+
+    if (!(invest > 0)) { alert("Please enter a total investment greater than zero."); return; }
+    if (!(price > 0)) { alert("Please enter a price per share greater than zero."); return; }
+    if (isNaN(dps) || dps < 0) { alert("Please enter a valid annual dividend per share."); return; }
+
+    const shares = Math.floor(invest / price);          // whole shares only
+    const deployed = shares * price;
+    const idle = invest - deployed;
+    const annual = shares * dps;
+    const monthly = annual / 12;
+    const quarterly = annual / 4;
+    const yieldPct = (dps / price) * 100;
+    const per1000 = (yieldPct / 100) * 1000;
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Dividend Yield</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${fmtPct(yieldPct)}%</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Shares Owned</div>
+          <div class="result-stat-val">${shares.toLocaleString("en-US")}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Annual Income</div>
+          <div class="result-stat-val">${fmtMoney(annual)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Monthly Income</div>
+          <div class="result-stat-val">${fmtMoney(monthly)}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Dividend Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Whole shares</span>
+          <div class="math-formula-box">shares = floor(investment ÷ price)</div>
+          <p class="step-content">${invest.toLocaleString("en-US", { maximumFractionDigits: 2 })} ÷ ${fmtMoney(price)} = <b>${shares.toLocaleString("en-US")} shares</b>${idle >= 0.01 ? ` deployed (${fmtMoney(deployed)}), with <b>${fmtMoney(idle)}</b> left uninvested` : ""}.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Yield on cost</span>
+          <div class="math-formula-box">yield = dividend per share ÷ price × 100</div>
+          <p class="step-content">${fmtMoney(dps)} ÷ ${fmtMoney(price)} × 100 = <b>${fmtPct(yieldPct)}%</b> — that is <b>${fmtMoney(per1000)}</b> of yearly dividends for every $1,000 you put in.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Income streams</span>
+          <div class="math-formula-box">income = shares × dividend per share</div>
+          <p class="step-content">${shares.toLocaleString("en-US")} × ${fmtMoney(dps)} = <b>${fmtMoney(annual)} per year</b> → ${fmtMoney(monthly)} monthly · ${fmtMoney(quarterly)} quarterly. Reinvesting (DRIP) buys ${Math.floor(annual / price)} more share${Math.floor(annual / price) === 1 ? "" : "s"} with the first year's cash.</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [investInput, priceInput, dpsInput].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcDv").addEventListener("click", calculate);
+  container.querySelector("#btnResetDv").addEventListener("click", () => {
+    investInput.value = "10000";
+    priceInput.value = "50";
+    dpsInput.value = "2";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

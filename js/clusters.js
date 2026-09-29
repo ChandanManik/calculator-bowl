@@ -13,8 +13,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Financial",
     "icon": "💰",
     "colorClass": "financial",
-    "badge": "26 Calculators",
-    "description": "Plan your retirement savings, 401(k), ROI, CAGR growth, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
+    "badge": "27 Calculators",
+    "description": "Plan your retirement savings, 401(k), ROI, CAGR growth, dividend yield, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
     "seoTitle": "Financial, Loan & Investment Calculators | CalculatorBowl",
     "seoDescription": "Accurate financial calculators for loans, mortgages, gold valuation, bitcoin and cryptocurrency conversions, compound interest, simple interest, sales tax, and investment planning.",
     "calculators": [
@@ -1031,6 +1031,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/finance/investment/cagr-calculator/",
         "subcatUrl": "/calculators/finance/investment/",
         "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "dividend-calculator",
+        "name": "Dividend Calculator (Yield, Shares & Income)",
+        "shortName": "Dividend Calc",
+        "icon": "💰",
+        "badge": "Investment",
+        "description": "Calculate dividend yield, shares owned, annual and monthly dividend income, and income per $1,000 invested from stock price and dividend per share.",
+        "seoTitle": "Dividend Calculator - Stock Yield & Income",
+        "seoDescription": "Calculate dividend yield, shares owned, annual and monthly dividend income, and income per $1,000 invested from price and dividend per share.",
+        "category": "finance",
+        "renderFunction": "renderDividendCalculator",
+        "contextualGuide": {
+          "title": "Dividend & Growth Cross-References",
+          "html": "\n            <p>\n              Dividends are the cash side of total return — pair yield-on-cost with our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> to compare compounding, CAGR, and ROI tools side by side.\n            </p>\n            <p>\n              Reinvested dividends buy more shares, which is exactly what the compound interest and SIP calculators model over long horizons.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "cagr-calculator",
+              "label": "CAGR Calculator",
+              "icon": "📈"
+            },
+            {
+              "id": "compound-interest",
+              "label": "Compound Interest",
+              "icon": "🏦"
+            },
+            {
+              "id": "roi-calculator",
+              "label": "ROI Calculator",
+              "icon": "📊"
+            }
+          ]
+        },
+        "subcategory": "investment",
+        "subcatTitle": "Investment & Wealth",
+        "slug": "dividend-calculator",
+        "url": "/calculators/finance/investment/dividend-calculator/",
+        "subcatUrl": "/calculators/finance/investment/",
+        "categoryUrl": "/calculators/finance/"
       }
     ],
     "faqs": [
@@ -1056,8 +1095,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Math",
     "icon": "➗",
     "colorClass": "math",
-    "badge": "19 Calculators",
-    "description": "Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.",
+    "badge": "20 Calculators",
+    "description": "Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, the Pythagorean theorem, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.",
     "seoTitle": "Math & Statistics Calculators - Step-by-Step Solvers | CalculatorBowl",
     "seoDescription": "Free online math and statistics calculators for fractions, mixed numbers, prime factors, GCF, LCM, ratios, standard deviation, and algebra.",
     "calculators": [
@@ -1801,6 +1840,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/math/statistics/probability-calculator/",
         "subcatUrl": "/calculators/math/statistics/",
         "categoryUrl": "/calculators/math/"
+      },
+      {
+        "id": "pythagorean-calculator",
+        "name": "Pythagorean Theorem Calculator (Right Triangle Solver)",
+        "shortName": "Pythagorean Calc",
+        "icon": "🔺",
+        "badge": "Algebra",
+        "description": "Find any missing side of a right triangle with the Pythagorean theorem, plus area, perimeter, and both acute angles with step-by-step substitutions.",
+        "seoTitle": "Pythagorean Theorem Calculator - Right Triangle",
+        "seoDescription": "Find the missing side of a right triangle using the Pythagorean theorem with step-by-step substitutions, plus area, perimeter, and acute angle calculations.",
+        "category": "math",
+        "renderFunction": "renderPythagoreanCalculator",
+        "contextualGuide": {
+          "title": "Geometry & Algebra Cross-References",
+          "html": "\n            <p>\n              The theorem is coordinate geometry's workhorse — pair it with our <a href=\"/calculators/math/\" class=\"in-text-link\">🧮 Math Hub</a> for slope, quadratic, and exponent solvers.\n            </p>\n            <p>\n              Sides become coordinates: once you have two points, the slope calculator returns rise, run, and segment length for the same triangle.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "slope-calculator",
+              "label": "Slope Calculator",
+              "icon": "📐"
+            },
+            {
+              "id": "quadratic-formula",
+              "label": "Quadratic Solver",
+              "icon": "➗"
+            },
+            {
+              "id": "exponent-calculator",
+              "label": "Exponent Calculator",
+              "icon": "⏫"
+            }
+          ]
+        },
+        "subcategory": "algebra",
+        "subcatTitle": "Algebra & Numbers",
+        "slug": "pythagorean-calculator",
+        "url": "/calculators/math/algebra/pythagorean-calculator/",
+        "subcatUrl": "/calculators/math/algebra/",
+        "categoryUrl": "/calculators/math/"
       }
     ],
     "faqs": [
@@ -2124,8 +2202,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Date & Time",
     "icon": "⏱️",
     "colorClass": "datetime",
-    "badge": "6 Calculators",
-    "description": "Calculate exact chronological age, add or subtract days from any date, next birthday countdown, elapsed time duration, business-day deadlines, world time zone conversions, and live weather forecasts.",
+    "badge": "7 Calculators",
+    "description": "Calculate exact chronological age, add or subtract days from any date, next birthday countdown, elapsed time duration, business-day deadlines, weekly work-hours and overtime totals, world time zone conversions, and live weather forecasts.",
     "seoTitle": "Date & Time Calculators - Age & Duration Solvers | CalculatorBowl",
     "seoDescription": "Free online date, time, and environmental calculators to determine exact chronological age, time durations, and live weather radar forecasts.",
     "calculators": [
@@ -2361,6 +2439,45 @@ const TOPICAL_CLUSTERS = {
         "slug": "time-zone-converter",
         "url": "/calculators/date-time/timezone/time-zone-converter/",
         "subcatUrl": "/calculators/date-time/timezone/",
+        "categoryUrl": "/calculators/date-time/"
+      },
+      {
+        "id": "work-hours-calculator",
+        "name": "Work Hours Calculator (Shifts, Overtime & Pay)",
+        "shortName": "Work Hours",
+        "icon": "⏱️",
+        "badge": "Time Card",
+        "description": "Calculate daily and weekly work hours from shift start, end, and unpaid breaks, with overtime over 40 hours and weekly, monthly, and yearly gross pay.",
+        "seoTitle": "Work Hours Calculator - Weekly Hours & Overtime",
+        "seoDescription": "Calculate daily and weekly work hours from shift times and breaks, find overtime over 40 hours, and estimate weekly, monthly, and yearly gross pay.",
+        "category": "date-time",
+        "renderFunction": "renderWorkHoursCalculator",
+        "contextualGuide": {
+          "title": "Scheduling Cross-References",
+          "html": "\n            <p>\n              Shift hours feed straight into deadlines and planning — browse our <a href=\"/calculators/date-time/\" class=\"in-text-link\">🕒 Date & Time Hub</a> for business-day, duration, and time-zone tools.\n            </p>\n            <p>\n              Salaried or freelancing? Convert the weekly total into an annual figure with the salary calculator below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "business-days-calculator",
+              "label": "Business Days Calc",
+              "icon": "📅"
+            },
+            {
+              "id": "time-calculator",
+              "label": "Time Calculator",
+              "icon": "⏰"
+            },
+            {
+              "id": "salary-calculator",
+              "label": "Salary Calculator",
+              "icon": "💼"
+            }
+          ]
+        },
+        "subcategory": "calendar",
+        "subcatTitle": "Calendar & Dates",
+        "slug": "work-hours-calculator",
+        "url": "/calculators/date-time/calendar/work-hours-calculator/",
+        "subcatUrl": "/calculators/date-time/calendar/",
         "categoryUrl": "/calculators/date-time/"
       }
     ],

@@ -1211,3 +1211,146 @@ function renderSlopeCalculator(container, calcDef) {
 
   calculate();
 }
+
+/* ============================================================================
+ * Pythagorean Theorem Calculator — solve right triangle, area, perimeter, angles
+ * ========================================================================== */
+function renderPythagoreanCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="ptA">Side a <span class="form-label-hint">leg</span></label>
+        <input type="number" id="ptA" class="form-control" value="3" min="0" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="ptB">Side b <span class="form-label-hint">leg</span></label>
+        <input type="number" id="ptB" class="form-control" value="4" min="0" step="any">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="ptC">Side c <span class="form-label-hint">hypotenuse — leave one side blank to solve</span></label>
+        <input type="number" id="ptC" class="form-control" value="" min="0" step="any">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcPt" class="btn btn-primary"><span>🔺 Solve Triangle</span></button>
+      <button type="button" id="btnResetPt" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="ptResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const aInput = container.querySelector("#ptA");
+  const bInput = container.querySelector("#ptB");
+  const cInput = container.querySelector("#ptC");
+  const resultDiv = container.querySelector("#ptResultContainer");
+
+  const num = (n) => n.toLocaleString("en-US", { maximumFractionDigits: 4 });
+
+  function parseSide(el) {
+    const raw = el.value.trim();
+    if (raw === "") return null;
+    const v = parseFloat(raw);
+    if (isNaN(v) || v <= 0) return NaN;
+    return v;
+  }
+
+  function calculate(ev) {
+    let a = parseSide(aInput);
+    let b = parseSide(bInput);
+    let c = parseSide(cInput);
+    if ([a, b, c].some(v => isNaN(v))) { alert("Sides must be positive numbers — leave exactly one blank to solve for it."); return; }
+
+    const known = [a, b, c].filter(v => v !== null);
+    if (known.length < 2) { alert("Please enter at least two sides."); return; }
+
+    let solvedSide = "", formula = "", subst = "", note = "";
+    if (c === null) {
+      c = Math.sqrt(a * a + b * b);
+      solvedSide = "c (hypotenuse)";
+      formula = "c² = a² + b²  →  c = √(a² + b²)";
+      subst = `√(${num(a)}² + ${num(b)}²) = √(${num(a * a)} + ${num(b * b)}) = √${num(Math.round(c * c * 10000) / 10000)} = <b>${num(Math.round(c * 10000) / 10000)}</b>`;
+    } else if (b === null) {
+      const disc = c * c - a * a;
+      if (disc <= 0) { alert("The hypotenuse c must be longer than leg a — those sides cannot form a right triangle."); return; }
+      b = Math.sqrt(disc);
+      solvedSide = "b (leg)";
+      formula = "b² = c² − a²  →  b = √(c² − a²)";
+      subst = `√(${num(c)}² − ${num(a)}²) = √(${num(c * c)} − ${num(a * a)}) = <b>${num(Math.round(b * 10000) / 10000)}</b>`;
+    } else if (a === null) {
+      const disc = c * c - b * b;
+      if (disc <= 0) { alert("The hypotenuse c must be longer than leg b — those sides cannot form a right triangle."); return; }
+      a = Math.sqrt(disc);
+      solvedSide = "a (leg)";
+      formula = "a² = c² − b²  →  a = √(c² − b²)";
+      subst = `√(${num(c)}² − ${num(b)}²) = √(${num(c * c)} − ${num(b * b)}) = <b>${num(Math.round(a * 10000) / 10000)}</b>`;
+    } else {
+      const isRight = Math.abs(a * a + b * b - c * c) < 1e-6 * Math.max(1, c * c);
+      solvedSide = "given triple";
+      formula = "a² + b² = c² (verification)";
+      subst = `${num(a)}² + ${num(b)}² = ${num(a * a + b * b)} vs c² = ${num(c * c)} → <b>${isRight ? "right triangle ✓" : "not a right triangle (a² + b² ≠ c²)"}</b>`;
+      note = isRight ? "" : "The three given sides do not satisfy the theorem — check which side is the hypotenuse (it must be the longest).";
+    }
+
+    const area = (a * b) / 2;
+    const perim = a + b + c;
+    const angA = Math.atan2(a, b) * 180 / Math.PI;   // opposite side a
+    const angB = 90 - angA;
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Solved: ${solvedSide}</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${num(Math.round((solvedSide === "c (hypotenuse)" ? c : solvedSide === "b (leg)" ? b : solvedSide === "a (leg)" ? a : c) * 10000) / 10000)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Area (a × b ÷ 2)</div>
+          <div class="result-stat-val">${num(Math.round(area * 10000) / 10000)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Perimeter</div>
+          <div class="result-stat-val">${num(Math.round(perim * 10000) / 10000)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Acute Angles</div>
+          <div class="result-stat-val">${num(Math.round(angA * 100) / 100)}° / ${num(Math.round(angB * 100) / 100)}°</div>
+        </div>
+      </div>
+
+      ${note ? `<p style="margin-top: 1rem; color: var(--accent-orange);">⚠ ${note}</p>` : ""}
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Right-Triangle Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Pythagorean theorem</span>
+          <div class="math-formula-box">${formula}</div>
+          <p class="step-content">${subst}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Area & perimeter</span>
+          <div class="math-formula-box">area = a × b ÷ 2 &nbsp;·&nbsp; perimeter = a + b + c</div>
+          <p class="step-content">${num(a)} × ${num(b)} ÷ 2 = <b>${num(Math.round(area * 10000) / 10000)}</b> &nbsp;·&nbsp; ${num(Math.round(a * 10000) / 10000)} + ${num(Math.round(b * 10000) / 10000)} + ${num(Math.round(c * 10000) / 10000)} = <b>${num(Math.round(perim * 10000) / 10000)}</b></p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Acute angles</span>
+          <div class="math-formula-box">angle opposite a = arctan(a ÷ b), other = 90° − θ</div>
+          <p class="step-content">arctan(${num(a)} ÷ ${num(b)}) = <b>${num(Math.round(angA * 100) / 100)}°</b>, and 90° − ${num(Math.round(angA * 100) / 100)}° = <b>${num(Math.round(angB * 100) / 100)}°</b> — the two acute angles always sum to a right angle.</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [aInput, bInput, cInput].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcPt").addEventListener("click", calculate);
+  container.querySelector("#btnResetPt").addEventListener("click", () => {
+    aInput.value = "3";
+    bInput.value = "4";
+    cInput.value = "";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

@@ -6424,6 +6424,253 @@ const CALCULATOR_RICH_CONTENT = {
         a: "No — every formula uses a lower base and generally a smaller per-inch allowance for women, reflecting typical differences in height, skeletal frame, and essential body-fat percentage. Comparing a man's and a woman's ideal weight at the same height is not meaningful."
       }
     ]
+  },
+
+  // Dividend Calculator
+  "dividend-calculator": {
+    articleTitle: "Dividend Investing: Yield, Income and the Power of Reinvestment",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">💰 Cash-Flow Engine</span>
+          <h4>From Capital to Recurring Dividend Income</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <rect x="35" y="55" width="155" height="58" rx="10" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="112" y="80" text-anchor="middle" font-size="14" font-weight="600" fill="var(--text-muted)">Invest $10,000</text>
+            <text x="112" y="100" text-anchor="middle" font-size="12" fill="var(--text-muted)">at $50 / share</text>
+            <line x1="195" y1="84" x2="240" y2="84" stroke="var(--border-color)" stroke-width="2.5"/>
+            <polygon points="240,84 232,79 232,89" fill="var(--border-color)"/>
+            <rect x="247" y="55" width="155" height="58" rx="10" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="324" y="80" text-anchor="middle" font-size="14" font-weight="600" fill="var(--text-muted)">200 shares owned</text>
+            <text x="324" y="100" text-anchor="middle" font-size="12" fill="var(--text-muted)">× $2.00 dividend</text>
+            <line x1="407" y1="84" x2="452" y2="84" stroke="var(--border-color)" stroke-width="2.5"/>
+            <polygon points="452,84 444,79 444,89" fill="var(--border-color)"/>
+            <rect x="459" y="55" width="110" height="58" rx="10" fill="var(--accent-emerald)"/>
+            <text x="514" y="80" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">$400 / year</text>
+            <text x="514" y="100" text-anchor="middle" font-size="12" fill="#fff">cash flow</text>
+            <text x="300" y="150" text-anchor="middle" font-size="15" font-weight="600" fill="var(--accent-emerald)">Yield on cost 4.00% → $40 per $1,000 invested</text>
+            <text x="300" y="180" text-anchor="middle" font-size="13" fill="var(--text-muted)">$33.33 monthly · $100 quarterly · DRIP reinvests ≈ 8 more shares a year</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A <b>dividend</b> is cash paid by a company to shareholders, usually quarterly, straight out of profits. For the investor it turns stock into a cash-flow engine: buy enough shares and the portfolio pays you whether you work or not. This calculator answers the three questions every income investor asks first — <b>what yield does it pay, how many shares can I own, and how much cash lands in my account?</b>
+      </p>
+
+      <h3 class="content-subheading">1. The Three Core Formulas</h3>
+      <div class="math-formula-box">
+        yield = dividend per share ÷ price × 100 &nbsp;·&nbsp; shares = investment ÷ price &nbsp;·&nbsp; income = shares × dividend
+      </div>
+      <ul class="content-list">
+        <li><b>Yield on cost:</b> $2.00 annual dividend on a $50 stock = <b>4.00%</b> — the return your cash produces each year</li>
+        <li><b>Whole shares only:</b> $10,000 ÷ $50 buys <b>200 shares</b>; leftover cash ($0 here, but often a few dollars) sits uninvested</li>
+        <li><b>Income:</b> 200 × $2.00 = <b>$400/year</b>, paid as $100 each quarter, or $33.33 per month averaged out</li>
+        <li><b>Per-$1,000 rule:</b> a4% payer delivers <b>$40 per $1,000</b> — scale any yield mentally without a calculator</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Reading a Yield Without Getting Trapped</h3>
+      <p>
+        Mature dividend payers cluster around <b>2–5%</b>; anything above <b>7–8%</b> deserves scrutiny, because yield is price in disguise — when a stock price collapses, the yield spikes mechanically while the dividend itself may be one cut away. Check the <b>payout ratio</b> (dividends ÷ earnings): under 60% is generally sustainable, over 100% means the company is borrowing to pay you. Also note the <b>ex-dividend date</b>: buy on or after it and you miss the upcoming payment; buy before and it arrives.
+      </p>
+
+      <h3 class="content-subheading">3. Reinvestment, Growth and Taxes</h3>
+      <ul class="content-list">
+        <li><b>DRIP</b> (dividend reinvestment plan) converts $400 of dividends into fresh shares automatically — at $50 that is 8 more shares next year earning their own dividends (compounding's cash half)</li>
+        <li><b>Yield on cost grows:</b> if the company raises its dividend 5%/year, your original $50 investment pays 4.20% next year without you spending a cent more</li>
+        <li>Tax treatment varies: <b>qualified dividends</b> (most long-term payers) are taxed at capital-gains rates, reinvested shares still owe tax on the cash received</li>
+        <li>Track <b>forward yield</b> (annualized latest payment) versus <b>trailing yield</b> (last12 months) — a recent cut or hike makes them diverge sharply</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "How do you calculate dividend yield?",
+        a: "Divide the annual dividend per share by the share price and multiply by 100. A company paying $1.50 per share yearly on a $60 stock yields 2.5%. The same math on your total position gives yield on cost, which stays fixed to your purchase price forever."
+      },
+      {
+        q: "What is a good dividend yield?",
+        a: "For most established payers, 2–5% blends durability with income; above 7–8% the market is usually pricing in a dividend cut rather than generosity. Pair yield with the payout ratio — under 60% of earnings is the typical safety line, and a rising yield on a falling price is a warning, not a gift."
+      },
+      {
+        q: "Does this calculator include reinvested dividends?",
+        a: "It shows cash income first, then estimates how many whole shares a DRIP would buy with the first year's payouts. True DRIP compounding needs a year-by-year model — each reinvested share joins the count and pays its own dividends from the following period onward."
+      },
+      {
+        q: "What does income per $1,000 invested mean?",
+        a: "It is the yield translated into cash: a 4% payer sends $40 each year per $1,000 committed. This lets you compare a5% utility stock with a2% grower on identical terms — and to size a portfolio against a real expense, like needing $300/month from $120,000 at a3% blended yield."
+      }
+    ]
+  },
+
+  // Pythagorean Theorem Calculator
+  "pythagorean-calculator": {
+    articleTitle: "The Pythagorean Theorem: Solving Right Triangles Step by Step",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🔺 Geometry</span>
+          <h4>3² + 4² = 5² — The Classic Right Triangle</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 230" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="230" rx="12" fill="var(--bg-subtle)"/>
+            <polygon points="130,185 410,185 130,35" fill="var(--accent-emerald)" fill-opacity="0.12" stroke="var(--accent-emerald)" stroke-width="3"/>
+            <polyline points="130,165 150,165 150,185" fill="none" stroke="var(--border-color)" stroke-width="2.5"/>
+            <text x="270" y="205" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">a = 3</text>
+            <text x="98" y="115" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">b = 4</text>
+            <text x="285" y="98" text-anchor="middle" font-size="15" font-weight="600" fill="var(--accent-emerald)">c = 5</text>
+            <text x="465" y="90" text-anchor="middle" font-size="17" font-weight="600" fill="var(--accent-emerald)">a² + b² = c²</text>
+            <text x="465" y="118" text-anchor="middle" font-size="14" fill="var(--text-muted)">9 + 16 = 25 ✓</text>
+            <text x="465" y="150" text-anchor="middle" font-size="13" fill="var(--text-muted)">c is always the</text>
+            <text x="465" y="168" text-anchor="middle" font-size="13" fill="var(--text-muted)">longest side</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        The <b>Pythagorean theorem</b> — <b>a² + b² = c²</b> — states that the two legs of a right triangle add up to the square of its hypotenuse. It is the oldest working formula in geometry (Babylonian tablets predate Pythagoras by a millennium) and still the fastest way to get a distance: from laying out a roof truss to the GPS ping calculating how far away you are.
+      </p>
+
+      <h3 class="content-subheading">1. Identify the Sides, Then Apply the Formula</h3>
+      <div class="math-formula-box">
+        c = √(a² + b²) &nbsp;&nbsp;·&nbsp;&nbsp; solve a leg: a = √(c² − b²)
+      </div>
+      <ul class="content-list">
+        <li><b>c (hypotenuse) is always the longest side</b>, opposite the right angle — swap it with a leg and the numbers break</li>
+        <li>Memorized triples make checking instant: <b>3-4-5</b>, <b>5-12-13</b>, <b>8-15-17</b>, <b>7-24-25</b> — any multiple (6-8-10,15-20-25) works too</li>
+        <li>Carpenters use the3-4-5 rule to square a foundation: measure3 ft one way,4 ft the other, and the diagonal must be exactly5 ft</li>
+        <li>Non-triple answers are irrational: legs7 and24 give hypotenuse25, but7 and9 give <b>√130 = 11.4018…</b></li>
+      </ul>
+
+      <h3 class="content-subheading">2. Solving for a Missing Leg</h3>
+      <p>
+        Rearrange before computing — subtract instead of add: given hypotenuse13 and leg5, the missing leg is <b>√(13² − 5²) = √144 = 12</b>. Because subtraction shrinks the radicand, a leg can never exceed the hypotenuse: try √(5² − 13²) and you get a negative under the root — proof those sides cannot form a right triangle. The calculator flags exactly this case instead of printing NaN.
+      </p>
+
+      <h3 class="content-subheading">3. Where the Theorem Shows Up</h3>
+      <ul class="content-list">
+        <li><b>Distances on a coordinate plane:</b> Δx and Δy are legs — the distance formula in the slope calculator <i>is</i> this theorem (see √(Δx² + Δy²))</li>
+        <li><b>Screen diagonals:</b> width and height are legs; a27-inch16:9 panel measures its diagonal by the same sum of squares</li>
+        <li><b>Construction & fabrication:</b> stair stringers, rafter cuts, ramp slopes — verify right angles before cutting material</li>
+        <li>From the completed sides the calculator also derives <b>area (a × b ÷2)</b>, <b>perimeter</b>, and both acute angles via arctangent — the full right-triangle toolkit in one pass</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "What is the Pythagorean theorem formula?",
+        a: "For any right triangle, a² + b² = c² where a and b are the legs and c is the hypotenuse. Rearranged: c = √(a² + b²) for the hypotenuse, or a = √(c² − b²) for a missing leg — subtraction always isolates the unknown side."
+      },
+      {
+        q: "How do you find the hypotenuse of a 3-4-5 triangle?",
+        a: "Square the legs, add, then take the root: 3² + 4² = 9 + 16 = 25, and √25 = 5. The3-4-5 triple is the most common whole-number right triangle, which is why builders carry it in their heads for quick field checks."
+      },
+      {
+        q: "What if my three sides don't satisfy a² + b² = c²?",
+        a: "Then the triangle is not right-angled — it is either obtuse (a² + b² less than c²) or acute (a² + b² greater than c²). This calculator reports the mismatch so you can re-check which side you assumed was the hypotenuse; it must be the longest of the three."
+      },
+      {
+        q: "Where is the Pythagorean theorem used in real life?",
+        a: "Anywhere distance hides behind perpendicular components: navigation and GPS offsets, screen diagonal sizes, roofing and framing squareness, ramp accessibility checks, and machine design — plus every coordinate-geometry distance formula derived from it."
+      }
+    ]
+  },
+
+  // Work Hours Calculator
+  "work-hours-calculator": {
+    articleTitle: "Work Hours Explained: Shift Math, Overtime and Gross Pay",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">⏱️ Timesheet</span>
+          <h4>Where the 40-Hour Week Splits Into Regular and Overtime</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <text x="300" y="40" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">Weekly hours at a glance</text>
+            <rect x="60" y="62" width="360" height="46" rx="8" fill="var(--accent-emerald)"/>
+            <rect x="424" y="62" width="72" height="46" rx="8" fill="var(--accent-orange)"/>
+            <text x="240" y="91" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">40 h regular</text>
+            <text x="460" y="91" text-anchor="middle" font-size="13" font-weight="600" fill="#fff">8 h OT</text>
+            <g font-size="12" fill="var(--text-muted)" text-anchor="middle">
+              <text x="60" y="128">0 h</text>
+              <text x="420" y="128">40 h</text>
+              <text x="496" y="128">48 h</text>
+            </g>
+            <g>
+              <rect x="60" y="148" width="52" height="34" rx="6" fill="var(--accent-emerald)" fill-opacity="0.85"/>
+              <rect x="120" y="148" width="52" height="34" rx="6" fill="var(--accent-emerald)" fill-opacity="0.85"/>
+              <rect x="180" y="148" width="52" height="34" rx="6" fill="var(--accent-emerald)" fill-opacity="0.85"/>
+              <rect x="240" y="148" width="52" height="34" rx="6" fill="var(--accent-emerald)" fill-opacity="0.85"/>
+              <rect x="300" y="148" width="52" height="34" rx="6" fill="var(--accent-emerald)" fill-opacity="0.85"/>
+              <rect x="360" y="148" width="52" height="34" rx="6" fill="var(--accent-orange)" fill-opacity="0.85"/>
+              <g font-size="13" font-weight="600" fill="#fff" text-anchor="middle">
+                <text x="86" y="170">Mon</text><text x="146" y="170">Tue</text><text x="206" y="170">Wed</text>
+                <text x="266" y="170">Thu</text><text x="326" y="170">Fri</text><text x="386" y="170">Sat</text>
+              </g>
+            </g>
+            <text x="470" y="166" text-anchor="middle" font-size="13" font-weight="600" fill="var(--accent-orange)">1.5× pay</text>
+            <text x="300" y="203" text-anchor="middle" font-size="13" fill="var(--text-muted)">6 days × 8 h = 48 h → 8 h overtime beyond the 40-hour standard week</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A <b>work-hours calculator</b> turns raw shift times into the numbers that actually matter: hours per day, hours per week, overtime accrued, and gross pay. Payroll departments run this math every cycle — and any discrepancy between their number and yours is worth catching before the deposit lands. Enter start, end, unpaid break, days per week, and (optionally) an hourly wage to get the whole picture.
+      </p>
+
+      <h3 class="content-subheading">1. Daily Hours: Span Minus Break</h3>
+      <div class="math-formula-box">
+        daily = (end − start) − break ÷ 60
+      </div>
+      <ul class="content-list">
+        <li>09:00–17:30 is an 8.50-hour span; subtract a 30-minute unpaid lunch → <b>8.00 paid hours</b></li>
+        <li><b>Overnight shifts:</b>22:00–06:00 crosses midnight — add 24 hours to the span (or work in mod-24 arithmetic) before subtracting the break</li>
+        <li>Break rules differ by jurisdiction: in the US, short breaks under 20 minutes must be paid; bona fide meal periods (30+ minutes, duty-free) usually are not</li>
+        <li>A break longer than the shift itself is flagged — that is a data-entry problem, not a shift</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Weekly Totals and the 40-Hour Overtime Line</h3>
+      <div class="math-formula-box">
+        weekly = daily × days &nbsp;·&nbsp; overtime = max(0, weekly − 40)
+      </div>
+      <p>
+        In the United States, the <b>FLSA</b> requires non-exempt employees to receive <b>1.5× regular pay</b> for hours worked beyond 40 in a workweek —5 × 8 lands exactly on the line with zero overtime, while a6-day week at 8 hours pushes 8 hours into overtime. Other regimes differ: the EU's Working Time Directive averages ≤48 hours per week including overtime, and many countries specify daily limits instead. Always anchor to your local rule.
+      </p>
+
+      <h3 class="content-subheading">3. From Hours to Gross Pay</h3>
+      <ul class="content-list">
+        <li><b>Weekly:</b> regular hours × wage, plus overtime hours × wage ×1.5 (this calculator splits the two so the premium is visible)</li>
+        <li><b>Monthly:</b> weekly ×52 ÷12 — averaging, not a literal calendar month; freelancers billing per month should pick one convention and stay consistent</li>
+        <li><b>Yearly:</b> weekly ×52 (or × hours + unpaid-leave adjustments)</li>
+        <li>Gross ≠ net: taxes, benefits, retirement contributions, and garnishments come off afterward — treat every figure here as pre-deduction</li>
+        <li>Rounding matters legally: many jurisdictions require rounding to the nearest quarter-hour <i>in the worker's favor</i> and pay for unrecorded minutes worked</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "How do I calculate my weekly work hours?",
+        a: "Subtract your unpaid break from each shift's span, then multiply by the number of shifts. A9:00–17:30 shift minus30 minutes is8 hours; five such shifts total40. Sum irregular shifts individually instead of multiplying — totals must reflect each day's actual span."
+      },
+      {
+        q: "What counts as overtime?",
+        a: "In the US under the FLSA, any hours beyond40 in a workweek for non-exempt employees, paid at1.5× the regular rate. Some states (like California) add daily rules after8 or12 hours. Exempt salaried professionals usually receive no overtime regardless of hours worked."
+      },
+      {
+        q: "How do I count hours on an overnight shift?",
+        a: "Treat the end time as the next day:22:00 to06:00 spans8 hours because06:00 becomes30:00 on the same clock (24 +6). This calculator applies that +24 adjustment automatically whenever the end time is earlier than the start time, then subtracts the break as usual."
+      },
+      {
+        q: "How do I convert hourly pay to a monthly salary?",
+        a: "Multiply weekly gross by52 and divide by12 for an averaged month —40 hours at $20 is $800 weekly, giving $3,466.67 monthly. For an exact calendar month, count the actual days worked instead; February and a31-day month differ by more than10% at the same hourly rate."
+      }
+    ]
   }
 };
 
