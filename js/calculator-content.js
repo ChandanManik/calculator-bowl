@@ -6671,6 +6671,511 @@ const CALCULATOR_RICH_CONTENT = {
         a: "Multiply weekly gross by52 and divide by12 for an averaged month —40 hours at $20 is $800 weekly, giving $3,466.67 monthly. For an exact calendar month, count the actual days worked instead; February and a31-day month differ by more than10% at the same hourly rate."
       }
     ]
+  },
+
+  // Debt Snowball Calculator
+  "debt-snowball-calculator": {
+    articleTitle: "Debt Snowball vs Avalanche: Choosing a Payoff Order That Sticks",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🎯 Debt-Free Plan</span>
+          <h4>Two Orders, One Destination: Zero Balances</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <text x="300" y="34" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">Every freed minimum rolls onto the next target</text>
+            <!-- snowball column -->
+            <text x="155" y="66" text-anchor="middle" font-size="14" font-weight="600" fill="var(--accent-emerald)">SNOWBALL · balance ↑</text>
+            <rect x="60" y="80" width="60" height="26" rx="6" fill="var(--accent-emerald)"/>
+            <text x="90" y="98" text-anchor="middle" font-size="12" fill="#fff">$800</text>
+            <rect x="60" y="114" width="140" height="26" rx="6" fill="var(--accent-emerald)" fill-opacity="0.75"/>
+            <text x="130" y="132" text-anchor="middle" font-size="12" fill="#fff">$2,500</text>
+            <rect x="60" y="148" width="240" height="26" rx="6" fill="var(--accent-emerald)" fill-opacity="0.5"/>
+            <text x="180" y="166" text-anchor="middle" font-size="12" fill="#fff">$5,200</text>
+            <!-- avalanche column -->
+            <text x="450" y="66" text-anchor="middle" font-size="14" font-weight="600" fill="var(--accent-orange)">AVALANCHE · APR ↓</text>
+            <rect x="360" y="80" width="60" height="26" rx="6" fill="var(--accent-orange)"/>
+            <text x="390" y="98" text-anchor="middle" font-size="12" fill="#fff">24.99%</text>
+            <rect x="360" y="114" width="140" height="26" rx="6" fill="var(--accent-orange)" fill-opacity="0.75"/>
+            <text x="430" y="132" text-anchor="middle" font-size="12" fill="#fff">19.99%</text>
+            <rect x="360" y="148" width="240" height="26" rx="6" fill="var(--accent-orange)" fill-opacity="0.5"/>
+            <text x="480" y="166" text-anchor="middle" font-size="12" fill="#fff">7.50%</text>
+            <text x="300" y="200" text-anchor="middle" font-size="13" fill="var(--text-muted)">Same debts · same extra payment · different first domino</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A <b>debt snowball</b> clears your smallest balance first; an <b>avalanche</b> clears your highest interest rate first. Both share the engine: keep paying minimums on everything, throw an extra lump at one target, then <b>roll that target's entire payment onto the next debt</b> like a growing snowball. The order changes psychology versus arithmetic — this calculator runs both plans side by side so you can pick with open eyes.
+      </p>
+
+      <h3 class="content-subheading">1. The Mechanics of a Payoff Plan</h3>
+      <div class="math-formula-box">
+        monthly attack = extra + every minimum you have already freed
+      </div>
+      <ul class="content-list">
+        <li>Interest accrues each month: <b>balance × APR ÷ 12</b> — a $2,500 card at19.99% costs about <b>$41.66 the first month alone</b></li>
+        <li>Pay all minimums, then aim the extra at your target debt until it hits zero</li>
+        <li>The month a debt dies, its minimum joins the attack budget permanently — payments compound the same way interest does, in your favor</li>
+        <li>Our worked example adds only <b>$100/month</b> beyond minimums and still collapses the timeline dramatically versus minimum-only</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Avalanche Saves Interest, Snowball Saves Momentum</h3>
+      <p>
+        The avalanche is mathematically optimal: highest-APR debt accrues interest fastest, so killing it first minimizes total interest — usually by a few hundred to a few thousand dollars on mid-size debt loads. The snowball trades that margin for <b>early wins</b>: small balances vanish in the first months, and behavioural research (and Dave Ramsey's audience of millions) argues the momentum is what keeps people from quitting at month nine. If your smallest debt is also near your highest rate, both orders converge anyway.
+      </p>
+
+      <h3 class="content-subheading">3. Why Minimum-Only Never Ends</h3>
+      <ul class="content-list">
+        <li>Credit-card minimums are typically <b>1%–3% of the balance plus interest</b> — early payments barely dent principal, so a $5,000 card can take <b>decades</b> at the minimum</li>
+        <li>If a debt's minimum is <b>lower than its monthly interest</b>, the balance grows forever — the calculator flags these "impossible" debts outright</li>
+        <li>Levers that accelerate either plan: negotiate a lower APR, a0% balance transfer (mind the transfer fee), or consolidate a high-rate balance into a lower-rate loan</li>
+        <li>Keep the plan honest: freeze the cards, automate the extra payment on payday, and re-run this calculator with real balances every quarter</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "What is the difference between debt snowball and debt avalanche?",
+        a: "Snowball targets the smallest balance first for quick psychological wins; avalanche targets the highest interest rate first to minimize total interest. Both roll each freed minimum payment onto the next debt — only the attack order differs, never the total monthly outlay."
+      },
+      {
+        q: "Which method saves more money?",
+        a: "Avalanche, almost always — paying high-interest balances first reduces compounding. The gap depends on rate spread: with cards at24%,19%, and7%, expect avalanche to win by months of interest. If the spread is under2%, pick whichever order you will actually follow."
+      },
+      {
+        q: "How does an extra monthly payment change the plan?",
+        a: "Every extra dollar goes straight to principal on the target debt, cutting its remaining interest and letting the rolled payment reach the next debt sooner. The savings are superlinear — modest extras like $100/month routinely remove a year or more from the schedule."
+      },
+      {
+        q: "Why does paying only the minimum take so long?",
+        a: "Minimums are sized to cover mostly interest early on, so principal shrinks at a crawl while interest reaccrues on the full balance. A debt whose minimum no longer exceeds its monthly interest never ends at all — increase the payment or stop borrowing against it."
+      }
+    ]
+  },
+
+  // Home Affordability Calculator
+  "home-affordability-calculator": {
+    articleTitle: "How Much House Can You Afford? The 28/36 Rule Explained",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🏠 Affordability</span>
+          <h4>The Lender's Two Caps, Stacked on One Price</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 230" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="230" rx="12" fill="var(--bg-subtle)"/>
+            <text x="300" y="34" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">$100k income → $352,000 price ceiling (6.5%, $50k down)</text>
+            <!-- price bar -->
+            <rect x="60" y="52" width="80" height="34" rx="6" fill="var(--accent-emerald)"/>
+            <text x="100" y="74" text-anchor="middle" font-size="12" fill="#fff">$50k down</text>
+            <rect x="144" y="52" width="396" height="34" rx="6" fill="var(--accent-blue, #3b82f6)" fill-opacity="0.8"/>
+            <text x="342" y="74" text-anchor="middle" font-size="12" fill="#fff">≈ $302k loan · principal + interest</text>
+            <!-- PITI stack -->
+            <text x="60" y="116" font-size="13" font-weight="600" fill="var(--text-muted)">Monthly PITI stack vs the28% cap:</text>
+            <rect x="60" y="126" width="266" height="32" rx="6" fill="var(--accent-blue, #3b82f6)" fill-opacity="0.55"/>
+            <text x="193" y="147" text-anchor="middle" font-size="12" fill="#fff">P&amp;I $1,911</text>
+            <rect x="330" y="126" width="45" height="32" rx="6" fill="var(--accent-orange)"/>
+            <text x="352" y="147" text-anchor="middle" font-size="11" fill="#fff">tax</text>
+            <rect x="379" y="126" width="16" height="32" rx="6" fill="var(--accent-purple, #8b5cf6)"/>
+            <text x="440" y="147" text-anchor="middle" font-size="12" fill="var(--text-muted)">ins</text>
+            <line x1="403" y1="118" x2="403" y2="170" stroke="var(--accent-orange)" stroke-width="2.5" stroke-dasharray="6 4"/>
+            <text x="452" y="170" text-anchor="middle" font-size="12" font-weight="600" fill="var(--accent-orange)">cap $2,333/mo</text>
+            <text x="300" y="208" text-anchor="middle" font-size="13" fill="var(--text-muted)">Front-end: housing ≤28% of gross · Back-end: all debts ≤36%</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        "How much house can I afford" has a lender's answer, not a wish-list answer. Underwriters apply two ratios to your <b>gross monthly income</b> (before tax): the <b>front-end ratio</b> caps total housing cost (PITI) at about <b>28%</b>, and the <b>back-end ratio</b> caps housing plus all other debts at about <b>36%</b>. Whichever cap binds harder sets your real ceiling — this calculator solves both, then back-solves the maximum home price they imply.
+      </p>
+
+      <h3 class="content-subheading">1. The Two Spending Caps</h3>
+      <div class="math-formula-box">
+        housing ≤ 28% × gross monthly &nbsp;·&nbsp; housing + debts ≤ 36% × gross monthly
+      </div>
+      <ul class="content-list">
+        <li>Income <b>$100,000</b>/yr → gross monthly <b>$8,333</b> → front-end cap <b>$2,333</b></li>
+        <li>Back-end: 36% × $8,333 = $3,000, minus $500 of car/card payments → <b>$2,500</b> available for housing</li>
+        <li>The <b>binding limit is the smaller number</b> — here the front-end $2,333 — and every dollar of extra monthly debt you carry eats the back-end cap</li>
+        <li>Some lenders stretch to29/41 or33/38; government programs sometimes allow higher with good credit — treat28/36 as the conservative floor</li>
+      </ul>
+
+      <h3 class="content-subheading">2. From Monthly Cap to Home Price</h3>
+      <p>
+        The tricky part: property tax is a percentage <i>of the price you are solving for</i>. The algebra collapses neatly because mortgage principal-and-interest is a fixed fraction <b>f = r ÷ (1 − (1+r)<sup>−n</sup>)</b> of the loan — at6.5% over30 years, f ≈0.00632 per month per dollar borrowed. Solve <b>price = (PITI cap + down × f − insurance) ÷ (f + tax/12)</b> and the default inputs return about <b>$352,000</b>, funded by a $302k loan plus $50k down. Rate sensitivity is brutal: each +0.5% on the mortgage shrinks the ceiling by roughly4% of price.
+      </p>
+
+      <h3 class="content-subheading">3. Costs the Ratio Ignores</h3>
+      <ul class="content-list">
+        <li><b>PMI</b>: under20% down adds roughly0.3%–1% of the loan annually until you reach80% equity — outside the DTI math but inside your wallet</li>
+        <li><b>HOA dues</b>, special assessments, and rising tax/insurance bills all push PITI up after closing</li>
+        <li><b>Closing costs</b> (2%–5% of price) and moving funds must come from cash — don't spend your entire down payment to hit the ratio</li>
+        <li>Get <b>pre-approved</b> (income and credit verified) before house hunting — a pre-qualification letter alone carries little weight in competitive markets</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "What is the 28/36 rule?",
+        a: "A lending guideline: total housing expenses should stay under28% of gross monthly income, and housing plus all other debt payments under36%. It is the baseline underwriting standard in the US — not a legal limit, so individual lenders and loan programs vary."
+      },
+      {
+        q: "How much house can I afford on a $100,000 salary?",
+        a: "With $500 in monthly debts, $50k down,6.5% over30 years,1.1% property tax, and $1,200 insurance, this calculator lands near $352,000 — a $302k loan fitting inside the28% housing cap of $2,333/month. Lower rates, smaller debts, or a bigger down payment each raise that ceiling."
+      },
+      {
+        q: "Does a larger down payment increase my price range?",
+        a: "Modestly — the ratio caps the monthly payment, not the price, so extra down mainly removes mortgage insurance and shrinks interest. The bigger lever is monthly debt: paying off a $500 car payment can lift the affordable price by tens of thousands."
+      },
+      {
+        q: "What does PITI stand for?",
+        a: "Principal, Interest, Taxes, and Insurance — the four components of a lender's housing payment. Add HOA dues and PMI when applicable and you get the full monthly cost of ownership that the front-end ratio measures."
+      }
+    ]
+  },
+
+  // Ovulation Calculator
+  "ovulation-calculator": {
+    articleTitle: "Ovulation and the Fertile Window: Reading Your Cycle Like a Calendar",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🌸 Cycle Map</span>
+          <h4>A28-Day Cycle: Period → Fertile Window → Ovulation → Luteal</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <text x="300" y="34" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">Days counted from the first day of your period</text>
+            <!-- axis -->
+            <line x1="60" y1="118" x2="540" y2="118" stroke="var(--border-color)" stroke-width="3"/>
+            <!-- fertile band days10-16 of28 -->
+            <rect x="218" y="92" width="110" height="52" rx="8" fill="var(--accent-emerald)" fill-opacity="0.18" stroke="var(--accent-emerald)" stroke-width="1.5"/>
+            <text x="273" y="84" text-anchor="middle" font-size="12" font-weight="600" fill="var(--accent-emerald)">fertile window (6 days)</text>
+            <!-- ovulation marker day15 -->
+            <line x1="309" y1="98" x2="309" y2="146" stroke="var(--accent-emerald)" stroke-width="3"/>
+            <circle cx="309" cy="98" r="7" fill="var(--accent-emerald)"/>
+            <text x="309" y="66" text-anchor="middle" font-size="13" font-weight="600" fill="var(--accent-emerald)">ovulation</text>
+            <!-- period starts -->
+            <circle cx="60" cy="118" r="7" fill="var(--accent-orange)"/>
+            <text x="60" y="152" text-anchor="middle" font-size="12" font-weight="600" fill="var(--accent-orange)">period · day1</text>
+            <circle cx="540" cy="118" r="7" fill="var(--accent-orange)"/>
+            <text x="540" y="152" text-anchor="middle" font-size="12" font-weight="600" fill="var(--accent-orange)">next period</text>
+            <!-- phase brackets -->
+            <text x="140" y="180" text-anchor="middle" font-size="12" fill="var(--text-muted)">follicular phase</text>
+            <text x="430" y="180" text-anchor="middle" font-size="12" fill="var(--text-muted)">luteal phase · stable14 days</text>
+            <text x="300" y="204" text-anchor="middle" font-size="13" fill="var(--text-muted)">ovulation = next period − luteal length (day29 −14 = day15)</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Ovulation — the release of a mature egg — happens roughly <b>two weeks before your next period</b>, not simply "day14." The post-ovulation <b>luteal phase</b> stays remarkably stable at13–15 days across cycles, while the pre-ovulation phase flexes with stress, sleep, and hormones. That asymmetry is the whole trick: count <b>backwards from your expected period</b>, and the fertile window falls into place.
+      </p>
+
+      <h3 class="content-subheading">1. The Calendar Calculation</h3>
+      <div class="math-formula-box">
+        ovulation = last period + cycle length − luteal phase &nbsp;·&nbsp; fertile = ovulation −5 → +1
+      </div>
+      <ul class="content-list">
+        <li>Worked example: period starts <b>September1</b>, typical28-day cycle,14-day luteal phase → next period <b>September29</b> → ovulation <b>September15</b></li>
+        <li>Fertile window opens five days earlier: <b>September10 – September16</b></li>
+        <li>Upcoming periods map forward arithmetically: last period +28, +56, +84… so planning travel or events becomes trivial</li>
+        <li>The tool also reports your live cycle phase — follicular before ovulation, luteal after — plus days remaining</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Why the Window Opens Before Ovulation</h3>
+      <p>
+        Sperm survive <b>up to3–5 days</b> in fertile cervical mucus, while the egg survives about <b>24 hours</b> after release. Intercourse on ovulation minus two or three days can absolutely conceive — waiting for the exact ovulation day actually <i>narrows</i> your odds. That is why the window is six days wide (five before + the day after) and why timing guidance emphasizes the days leading up to the peak rather than the peak itself.
+      </p>
+
+      <h3 class="content-subheading">3. Accuracy, Limitations and Next Steps</h3>
+      <ul class="content-list">
+        <li>Calendar predictions are excellent for <b>planning</b> but unreliable for <b>contraception</b> — cycles shift1–3 days with travel, illness, stress, or PCOS; contraception needs symptothermal tracking or clinician-guided methods</li>
+        <li>Improve accuracy by logging <b>3–6 cycles</b> (the calculator uses your real average length), and confirm the surge with an <b>OPK test strip</b> or temperature shift</li>
+        <li>Cycles consistently shorter than21 or longer than35 days, or skipped periods, deserve a gynecological check — ovulation disorders are a common, treatable cause of infertility</li>
+        <li>Testing for pregnancy: wait until the day of your missed period for reliable results — implantation needs about6–12 days after conception</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "How is the ovulation date calculated?",
+        a: "From your last period's first day, add your average cycle length to find the next period, then subtract the luteal phase (usually14 days). For a28-day cycle starting September1: next period September29, ovulation September15 — the stable luteal phase makes backwards-counting reliable."
+      },
+      {
+        q: "How many days is the fertile window?",
+        a: "Six days: the five days before ovulation plus ovulation day itself. Sperm remain viable for up to3–5 days and the egg for about24 hours, so intercourse earlier in the window carries nearly the same conception odds as the day before ovulation."
+      },
+      {
+        q: "How accurate is the calendar method?",
+        a: "It tracks your historical average, so it is accurate for predictable cycles and rough estimates for everyone else — actual ovulation can drift1–3 days. For conception timing, confirm with an LH test strip (OPK) or basal body temperature; for contraception, calendar-only tracking is not considered reliable."
+      },
+      {
+        q: "What if my cycles are irregular?",
+        a: "Average your last3–6 cycles and enter the mean length — or re-run after each cycle once dates shift. Persistent irregularity (cycles under21 or over35 days, skipped periods) can signal anovulation, thyroid issues, or PCOS; a clinician can test and treat the underlying cause."
+      }
+    ]
+  },
+
+  // Weight Loss Calculator
+  "weight-loss-calculator": {
+    articleTitle: "Weight Loss Timelines: Turning a Goal Weight Into a Real Date",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">📉 Goal Timeline</span>
+          <h4>8 kg Down,16 Weeks Out, −550 kcal a Day</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <!-- BMI shift -->
+            <text x="150" y="44" text-anchor="middle" font-size="15" font-weight="600" fill="var(--accent-orange)">BMI27.7</text>
+            <text x="300" y="44" text-anchor="middle" font-size="16" fill="var(--text-muted)">→</text>
+            <text x="450" y="44" text-anchor="middle" font-size="15" font-weight="600" fill="var(--accent-emerald)">BMI24.9</text>
+            <!-- timeline -->
+            <rect x="60" y="76" width="440" height="34" rx="8" fill="var(--accent-emerald)" fill-opacity="0.25" stroke="var(--accent-emerald)" stroke-width="1.5"/>
+            <g font-size="12" fill="var(--text-muted)" text-anchor="middle">
+              <text x="60" y="130">week0</text><text x="170" y="130">4</text>
+              <text x="280" y="130">8</text><text x="390" y="130">12</text><text x="500" y="130">16 weeks</text>
+            </g>
+            <circle cx="60" cy="93" r="8" fill="var(--accent-orange)"/>
+            <circle cx="500" cy="93" r="8" fill="var(--accent-emerald)"/>
+            <text x="60" y="66" text-anchor="start" font-size="13" font-weight="600" fill="var(--accent-orange)">80 kg</text>
+            <text x="500" y="66" text-anchor="end" font-size="13" font-weight="600" fill="var(--accent-emerald)">72 kg goal</text>
+            <!-- deficit chips -->
+            <rect x="150" y="152" width="300" height="36" rx="10" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="300" y="175" text-anchor="middle" font-size="14" font-weight="600" fill="var(--text-muted)">0.5 kg/wk ×7,700 ÷7 = −550 kcal/day</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A weight-loss goal gets real the day it acquires a date. The math is energy balance: one kilogram of body fat stores roughly <b>7,700 kcal</b>, so a sustained weekly loss of0.5 kg requires a daily deficit of <b>550 kcal</b> — about a latte plus a walk, or a strict hour on the bike. Enter your current weight, goal, and pace; this calculator returns the target date, the required deficit, and whether your pace clears the safety bar.
+      </p>
+
+      <h3 class="content-subheading">1. From Weekly Rate to Daily Deficit</h3>
+      <div class="math-formula-box">
+        daily deficit = weekly rate (kg) ×7,700 ÷7 &nbsp;·&nbsp; weeks = (current − goal) ÷ rate
+      </div>
+      <ul class="content-list">
+        <li>Default plan: <b>80 →72 kg at0.5 kg/week</b> =8 kg ÷0.5 = <b>16 weeks</b>, needing <b>−550 kcal/day</b></li>
+        <li>Split the deficit freely: cut300 kcal from food and burn250 in the gym — adherence beats optimization</li>
+        <li>Doubling the rate quadruples nothing — it doubles the deficit, and the body answers with hunger and adaptation</li>
+        <li>Deficit is relative to <i>your</i> maintenance: know it first via the BMI/BMR tool (BMR × activity), then subtract</li>
+      </ul>
+
+      <h3 class="content-subheading">2. The Timeline Is an Estimate, Not a Contract</h3>
+      <p>
+        The linear model predicts16 weeks exactly; real bodies deviate. Week one often shows a larger drop (glycogen and water shed with lower carbs), plateaus stall scale readings for2–4 weeks while recomposition continues, and holidays or illness pause progress. Expect the true finish line within <b>±1–2 weeks</b> of the estimate, judge trends by <b>weekly averages</b> rather than single mornings, and re-run the calculator each time you pass a checkpoint — the date shortens as the goal approaches.
+      </p>
+
+      <h3 class="content-subheading">3. Safety: The1% Rule and BMI Shift</h3>
+      <ul class="content-list">
+        <li>Clinicians generally cap loss at <b>1% of body weight per week</b> (0.8 kg at80 kg) — faster rates risk lean-mass loss, gallstones, and hormonal disruption</li>
+        <li>The calculator flags any rate above that ceiling;0.5 kg/week sits comfortably at0.63% for an80 kg start</li>
+        <li>Never drive a deficit below roughly <b>1,200 kcal (women) /1,500 kcal (men)</b> of actual intake — that is the floor below which micronutrients and muscle suffer</li>
+        <li>BMI at goal (27.7 →24.9 here) is a screening number, not a verdict: pair it with waist measurement and body-fat percentage for the full picture</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "How long will it take to reach my goal weight?",
+        a: "Divide the total weight to lose by your weekly rate:8 kg at0.5 kg/week is16 weeks (about4 months). The calculator turns that into a calendar date plus the daily deficit required, and the pace-safety check warns when the rate exceeds1% of body weight per week."
+      },
+      {
+        q: "How many calories do I need to cut to lose 0.5 kg a week?",
+        a: "550 kcal per day — the weekly surplus of0.5 kg ×7,700 kcal divided across seven days. Achieve it through food, exercise, or both: a40-minute brisk walk plus skipping one snack roughly covers it for many people."
+      },
+      {
+        q: "Is losing 1 kg per week safe?",
+        a: "Only at higher starting weights, and even then it sits at the ceiling. For an80 kg person1 kg/week equals1.25% of body weight — above the1% guideline. Prefer0.5–0.75 kg/week: slower, but sustainable and muscle-sparing."
+      },
+      {
+        q: "Why does my real progress differ from the estimate?",
+        a: "Water retention from carbs, sodium, and your menstrual cycle masks fat loss for days at a time; muscle gain can offset fat loss on the scale; and metabolic adaptation slows the rate as you shrink. Track weekly averages and body measurements — the trend line always tells a truer story than one reading."
+      }
+    ]
+  },
+
+  // Random Number Generator
+  "random-number-generator": {
+    articleTitle: "How Random Number Generators Actually Make Their Picks",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🎲 Uniform Draw</span>
+          <h4>Every Bucket Equally Likely — That Is Uniformity</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <text x="300" y="34" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">Sample counts per bucket after repeated1–100 draws</text>
+            <g fill="var(--accent-blue, #3b82f6)">
+              <rect x="60" y="118" width="20" height="46" rx="3"/><rect x="86" y="108" width="20" height="56" rx="3"/>
+              <rect x="112" y="122" width="20" height="42" rx="3"/><rect x="138" y="104" width="20" height="60" rx="3"/>
+              <rect x="164" y="116" width="20" height="48" rx="3"/><rect x="190" y="126" width="20" height="38" rx="3"/>
+              <rect x="216" y="110" width="20" height="54" rx="3"/><rect x="242" y="120" width="20" height="44" rx="3"/>
+              <rect x="268" y="106" width="20" height="58" rx="3"/><rect x="294" y="124" width="20" height="40" rx="3"/>
+              <rect x="320" y="112" width="20" height="52" rx="3"/><rect x="346" y="118" width="20" height="46" rx="3"/>
+              <rect x="372" y="102" width="20" height="62" rx="3"/><rect x="398" y="128" width="20" height="36" rx="3"/>
+              <rect x="424" y="114" width="20" height="50" rx="3"/><rect x="450" y="122" width="20" height="42" rx="3"/>
+              <rect x="476" y="108" width="20" height="56" rx="3"/><rect x="502" y="120" width="20" height="44" rx="3"/>
+            </g>
+            <line x1="55" y1="164" x2="545" y2="164" stroke="var(--border-color)" stroke-width="2"/>
+            <text x="60" y="182" font-size="12" fill="var(--text-muted)">1</text>
+            <text x="512" y="182" font-size="12" fill="var(--text-muted)">100</text>
+            <text x="300" y="204" text-anchor="middle" font-size="13" fill="var(--text-muted)">Flat on average, jitter from luck — rejection sampling keeps it unbiased</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        A <b>random number generator</b> picks integers where every value in the range is equally likely — a uniform distribution. It sounds trivial until you try to build one: naïve code is predictable, biased, or both. This generator offers count control, unique (without-replacement) draws, sorting, and history, backed by your browser's cryptographic randomness whenever it is available.
+      </p>
+
+      <h3 class="content-subheading">1. Crypto Randomness vs Math.random()</h3>
+      <div class="math-formula-box">
+        randInt = min + (value mod range), with rejection sampling to stay uniform
+      </div>
+      <ul class="content-list">
+        <li><b>Math.random()</b> is a seeded PRNG — fast, fine for games, but predictable to anyone who observes enough outputs</li>
+        <li><b>crypto.getRandomValues()</b> pulls from the operating system's entropy pool — suitable for secrets, tickets, and audited picks</li>
+        <li><b>Modulo bias:</b>2<sup>32</sup> is not divisible by most ranges; raw modulo over-favors low values. We compute the largest exact multiple of the range and <b>reject</b> the rare out-of-band sample, looping until it passes</li>
+        <li>Huge ranges (beyond2<sup>32</sup>) skip rejection sampling and fall back to floating-point scaling, where uniformity is limited only by double precision</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Unique Draws, Sorting, and Collisions</h3>
+      <p>
+        <b>Unique</b> mode samples <i>without replacement</i> — a Set collects values until the count is reached, so "no repeats" is guaranteed (and impossible when the count exceeds the range:5 numbers from1–4 has no solution). Sorting reorders the batch for readability and changes nothing about the odds. The flip side is famous: even <i>with</i> repeats allowed, the <b>birthday paradox</b> means23 random people share a birth date with ~50% probability in a365-day range — collisions arrive far faster than intuition expects.
+      </p>
+
+      <h3 class="content-subheading">3. Odds Behind Each Draw</h3>
+      <ul class="content-list">
+        <li>One specific number in1–100: <b>1 in100</b> per draw — and1 in100 every single draw; previous results never "warm up" the generator</li>
+        <li>An exact batch of5 repeats:100<sup>5</sup> = <b>1 in10<sup>10</sup></b> — the calculator prints this whenever it is computable</li>
+        <li>Picking k numbers from n: that is an nCr problem — a5-from-69 lottery has20,259,280 distinct tickets, which the combination calculator will show you</li>
+        <li>Legitimate uses: raffles, sampling frames, game mechanics, Monte-Carlo simulations, and splitting groups — anywhere a verifiable fair pick matters</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "Are the generated numbers truly random?",
+        a: "In modern browsers the generator uses crypto.getRandomValues(), which draws from the operating system's entropy pool — the same class of randomness security software depends on. Where unavailable it falls back to Math.random(), a high-quality but deterministic PRNG."
+      },
+      {
+        q: "Why can't I generate more unique numbers than the range contains?",
+        a: "Unique mode draws without replacement, so the count cannot exceed the range size: from1–10 you can request at most10 unique numbers. The calculator blocks the impossible request instead of silently repeating values."
+      },
+      {
+        q: "Does sorting or regenerating affect the odds?",
+        a: "No. Sorting only rearranges a completed batch, and every fresh generation starts from the same uniform distribution — a number that appeared last draw is exactly as likely this time. Independence between draws is the defining property of a proper generator."
+      },
+      {
+        q: "What should I use for a raffle or giveaway?",
+        a: "Enter the number of entrants as both minimum and maximum, choose the number of winners, and enable unique draws so nobody wins twice. For high-stakes or public draws, generate with unique mode on and screenshot the batch — the underlying randomness is audit-grade."
+      }
+    ]
+  },
+
+  // Gas Mileage Calculator
+  "gas-mileage-calculator": {
+    articleTitle: "Gas Mileage and Trip Fuel Cost: The Numbers Behind Every Fill-Up",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">⛽ Trip Fuel</span>
+          <h4>Distance ÷ MPG × Price = What You Pay at the Pump</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <rect x="30" y="50" width="115" height="56" rx="10" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="87" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text-muted)">500 mi</text>
+            <text x="87" y="94" text-anchor="middle" font-size="12" fill="var(--text-muted)">trip distance</text>
+            <text x="160" y="84" text-anchor="middle" font-size="16" fill="var(--text-muted)">÷</text>
+            <rect x="176" y="50" width="115" height="56" rx="10" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <text x="233" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text-muted)">25 mpg</text>
+            <text x="233" y="94" text-anchor="middle" font-size="12" fill="var(--text-muted)">your economy</text>
+            <text x="306" y="84" text-anchor="middle" font-size="16" fill="var(--text-muted)">→</text>
+            <rect x="322" y="50" width="105" height="56" rx="10" fill="var(--accent-emerald)"/>
+            <text x="374" y="74" text-anchor="middle" font-size="13" font-weight="600" fill="#fff">20 gal</text>
+            <text x="374" y="94" text-anchor="middle" font-size="12" fill="#fff">75.7 L</text>
+            <text x="440" y="84" text-anchor="middle" font-size="16" fill="var(--text-muted)">×$3.50 →</text>
+            <rect x="470" y="50" width="105" height="56" rx="10" fill="var(--accent-orange)"/>
+            <text x="522" y="74" text-anchor="middle" font-size="14" font-weight="600" fill="#fff">$70.00</text>
+            <text x="522" y="94" text-anchor="middle" font-size="12" fill="#fff">round trip $140</text>
+            <!-- economy gauge -->
+            <rect x="120" y="140" width="360" height="20" rx="10" fill="var(--card-bg)" stroke="var(--border-color)" stroke-width="1.5"/>
+            <rect x="120" y="140" width="112" height="20" rx="10" fill="var(--accent-emerald)" fill-opacity="0.6"/>
+            <rect x="368" y="140" width="112" height="20" rx="10" fill="var(--accent-orange)" fill-opacity="0.5"/>
+            <line x1="285" y1="132" x2="285" y2="168" stroke="var(--text-muted)" stroke-width="3"/>
+            <text x="285" y="128" text-anchor="middle" font-size="13" font-weight="600" fill="var(--text-muted)">9.41 L/100km</text>
+            <text x="300" y="190" text-anchor="middle" font-size="13" fill="var(--text-muted)">lower L/100km is better · higher mpg is better · cost/mile = $0.14</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Whether you are budgeting a road trip or sanity-checking a used car, <b>gas mileage</b> reduces to three numbers: distance, fuel economy, and price per gallon. This calculator chains them — gallons needed, total cost, cost per mile — and converts your MPG into the metric figures (L/100 km, km/L) that the rest of the world quotes.
+      </p>
+
+      <h3 class="content-subheading">1. The Trip Fuel Formulas</h3>
+      <div class="math-formula-box">
+        gallons = distance ÷ MPG &nbsp;·&nbsp; cost = gallons × price &nbsp;·&nbsp; per mile = cost ÷ distance
+      </div>
+      <ul class="content-list">
+        <li>Worked default: <b>500 mi ÷25 mpg =20 gallons</b> (75.71 L) × $3.50 = <b>$70.00</b>, or $0.14 per mile</li>
+        <li>Round trip doubles everything:40 gallons, $140 — easy to forget when comparing flying versus driving</li>
+        <li>Cross-country runs reward MPG in non-linear ways: the same500 miles at18 mpg costs <b>$97.22</b> instead — a39% jump from a28% efficiency drop</li>
+        <li>Real consumption differs from the window sticker: city stop-and-go drags economy down, steady highway cruising lifts it</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Converting Between the World's Fuel Units</h3>
+      <div class="math-formula-box">
+        L/100km =235.21 ÷ MPG(US) &nbsp;·&nbsp; imperial mpg = US mpg ×1.20095 &nbsp;·&nbsp;1 US gal =3.785 L
+      </div>
+      <ul class="content-list">
+        <li>25 mpg US = <b>9.41 L/100 km</b> =10.63 km/L =30.02 mpg Imperial</li>
+        <li>The two scales run <b>opposite</b>: Americans celebrate high mpg, Europeans celebrate low L/100km — same physics, inverted axis</li>
+        <li>Canadian readers:Canada quotes L/100km but often prices fuel per liter — multiply your L/100km trip volume by the pump price directly</li>
+        <li>Quick mental check: mpg × L/100km ≈235 — if yours wildly misses, one of the two numbers was entered in the wrong system</li>
+      </ul>
+
+      <h3 class="content-subheading">3. Squeezing More Miles From Each Tank</h3>
+      <ul class="content-list">
+        <li><b>Speed is the biggest lever:</b> aero drag rises with the square of speed — dropping from75 to65 mph can save5%–10% on the highway</li>
+        <li>Tire pressure (check monthly), gentle acceleration, and removing roof racks at highway speeds each add1%–3%</li>
+        <li>Idling gets <b>zero</b> miles per gallon — modern start-stop systems and avoiding traffic lights beat almost any driving "hack"</li>
+        <li>EV comparison: at3.5 mi/kWh and $0.15/kWh an electric car costs about <b>4.3¢/mile</b> versus14¢ for25-mpg gas — roughly a third, before maintenance</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "How do I calculate fuel needed for a trip?",
+        a: "Divide the trip distance by your vehicle's MPG:500 miles at25 mpg needs20 gallons (75.7 liters). Multiply by the pump price for total cost — $3.50/gal gives $70. Add10% as a buffer for detours, idling, and terrain the estimate cannot see."
+      },
+      {
+        q: "How do I convert MPG to L/100km?",
+        a: "Divide235.21 by your US MPG figure:25 mpg →235.21 ÷25 =9.41 L/100km. The metric figure is consumption (fuel per distance, lower is better) while mpg is efficiency (distance per fuel, higher is better) — they are reciprocal measures of the same thing."
+      },
+      {
+        q: "Why is my real fuel economy worse than the sticker?",
+        a: "Sticker numbers come from standardized test cycles that flatter most driving: cold starts, short trips, traffic, aggressive acceleration, roof cargo, tires underinflated, and idling all push real MPG below the rating. Reset the trip computer and average a full mixed tank for a true figure."
+      },
+      {
+        q: "Is it cheaper to drive or fly for a family of four?",
+        a: "Run both: driving cost = distance ÷ MPG × price ×2 for the return (add lodging and food on long hauls), while airfare multiplies by passenger count plus airport ground transport. The calculator gives you the honest per-mile driving number to put against the tickets."
+      }
+    ]
   }
 };
 

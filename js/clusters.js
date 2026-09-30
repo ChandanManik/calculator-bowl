@@ -13,8 +13,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Financial",
     "icon": "💰",
     "colorClass": "financial",
-    "badge": "27 Calculators",
-    "description": "Plan your retirement savings, 401(k), ROI, CAGR growth, dividend yield, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
+    "badge": "29 Calculators",
+    "description": "Plan your retirement savings, 401(k), ROI, CAGR growth, dividend yield, debt-free payoff schedules, home affordability, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
     "seoTitle": "Financial, Loan & Investment Calculators | CalculatorBowl",
     "seoDescription": "Accurate financial calculators for loans, mortgages, gold valuation, bitcoin and cryptocurrency conversions, compound interest, simple interest, sales tax, and investment planning.",
     "calculators": [
@@ -1070,6 +1070,84 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/finance/investment/dividend-calculator/",
         "subcatUrl": "/calculators/finance/investment/",
         "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "debt-snowball-calculator",
+        "name": "Debt Snowball & Avalanche Calculator (Payoff Planner)",
+        "shortName": "Debt Snowball",
+        "icon": "🎯",
+        "badge": "Payoff",
+        "description": "Build a debt payoff plan: snowball or avalanche order, months to debt-free, total interest, debt-free date, and savings versus minimum payments only.",
+        "seoTitle": "Debt Snowball & Avalanche Calculator - Payoff Date",
+        "seoDescription": "Compare debt snowball and avalanche payoff plans, see your debt-free date, total interest, and how much extra monthly payment saves versus minimums only.",
+        "category": "finance",
+        "renderFunction": "renderDebtSnowballCalculator",
+        "contextualGuide": {
+          "title": "Debt Payoff Cross-References",
+          "html": "\n            <p>\n              Avalanche minimizes interest on paper while snowball buys quick wins — map every balance against the <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> and keep all your cards in a single plan.\n            </p>\n            <p>\n              Large minimum payments inflate your debt-to-income ratio; once balances clear, re-check borrowing room with the DTI calculator below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "credit-card-payoff",
+              "label": "Credit Card Payoff",
+              "icon": "💳"
+            },
+            {
+              "id": "early-loan-payoff-calculator",
+              "label": "Early Loan Payoff",
+              "icon": "⏩"
+            },
+            {
+              "id": "debt-to-income-calculator",
+              "label": "DTI Ratio",
+              "icon": "📊"
+            }
+          ]
+        },
+        "subcategory": "loans",
+        "subcatTitle": "Loans & Mortgages",
+        "slug": "debt-snowball-calculator",
+        "url": "/calculators/finance/loans/debt-snowball-calculator/",
+        "subcatUrl": "/calculators/finance/loans/",
+        "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "home-affordability-calculator",
+        "name": "Home Affordability Calculator (28/36 Rule)",
+        "shortName": "Home Affordability",
+        "icon": "🏠",
+        "badge": "Property",
+        "description": "Estimate how much house you can afford from income, debts, down payment, rate, taxes, and insurance using lender front-end and back-end DTI caps.",
+        "seoTitle": "Home Affordability Calculator - How Much Can I Afford",
+        "seoDescription": "Estimate how much house you can afford using the 28/36 rule: income, debts, down payment, rates, taxes, and insurance roll into a max home price.",
+        "category": "finance",
+        "renderFunction": "renderHomeAffordabilityCalculator",
+        "contextualGuide": {
+          "title": "Home-Buying Cross-References",
+          "html": "\n            <p>\n              Affordability sets the price ceiling — the mortgage calculator turns that ceiling into a monthly payment, all indexed from our <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a>.\n            </p>\n            <p>\n              Lenders qualify on gross income and total DTI, so clear car and card payments first, then re-run this tool with the real numbers.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "mortgage-calculator",
+              "label": "Mortgage Payment",
+              "icon": "🏡"
+            },
+            {
+              "id": "auto-loan",
+              "label": "Auto Loan",
+              "icon": "🚗"
+            },
+            {
+              "id": "debt-to-income-calculator",
+              "label": "DTI Ratio",
+              "icon": "📊"
+            }
+          ]
+        },
+        "subcategory": "loans",
+        "subcatTitle": "Loans & Mortgages",
+        "slug": "home-affordability-calculator",
+        "url": "/calculators/finance/loans/home-affordability-calculator/",
+        "subcatUrl": "/calculators/finance/loans/",
+        "categoryUrl": "/calculators/finance/"
       }
     ],
     "faqs": [
@@ -1095,8 +1173,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Math",
     "icon": "➗",
     "colorClass": "math",
-    "badge": "20 Calculators",
-    "description": "Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, the Pythagorean theorem, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.",
+    "badge": "21 Calculators",
+    "description": "Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, the Pythagorean theorem, random number generation, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.",
     "seoTitle": "Math & Statistics Calculators - Step-by-Step Solvers | CalculatorBowl",
     "seoDescription": "Free online math and statistics calculators for fractions, mixed numbers, prime factors, GCF, LCM, ratios, standard deviation, and algebra.",
     "calculators": [
@@ -1879,6 +1957,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/math/algebra/pythagorean-calculator/",
         "subcatUrl": "/calculators/math/algebra/",
         "categoryUrl": "/calculators/math/"
+      },
+      {
+        "id": "random-number-generator",
+        "name": "Random Number Generator (Range, Unique, Sorted)",
+        "shortName": "Random Numbers",
+        "icon": "🎲",
+        "badge": "Random",
+        "description": "Generate secure random numbers in any range with count, unique-draw, and sort options, plus generation history and the odds behind every draw.",
+        "seoTitle": "Random Number Generator - Range, Unique, Sorted",
+        "seoDescription": "Generate cryptographically secure random numbers in any range with count, uniqueness, and sorting options, plus history and the odds behind each draw.",
+        "category": "math",
+        "renderFunction": "renderRandomNumberGenerator",
+        "contextualGuide": {
+          "title": "Chance & Counting Cross-References",
+          "html": "\n            <p>\n              Random draws are uniform probability in action — connect them to the odds math in our <a href=\"/calculators/math/\" class=\"in-text-link\">🧮 Math Hub</a> for probability, combinations, and statistics solvers.\n            </p>\n            <p>\n              Picking k numbers from a range is literally an nCr problem: the combination calculator shows how many possible tickets exist.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "probability-calculator",
+              "label": "Probability",
+              "icon": "🎯"
+            },
+            {
+              "id": "combination-calculator",
+              "label": "Combinations",
+              "icon": "🔢"
+            },
+            {
+              "id": "standard-deviation",
+              "label": "Std Dev",
+              "icon": "📈"
+            }
+          ]
+        },
+        "subcategory": "statistics",
+        "subcatTitle": "Statistics & Probability",
+        "slug": "random-number-generator",
+        "url": "/calculators/math/statistics/random-number-generator/",
+        "subcatUrl": "/calculators/math/statistics/",
+        "categoryUrl": "/calculators/math/"
       }
     ],
     "faqs": [
@@ -1904,8 +2021,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Conversions",
     "icon": "🔄",
     "colorClass": "conversions",
-    "badge": "7 Calculators",
-    "description": "Convert temperature, length, distance, weight, mass, area, volume, speed, pressure, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.",
+    "badge": "8 Calculators",
+    "description": "Convert temperature, length, distance, weight, mass, area, volume, speed, pressure, fuel economy and trip fuel costs, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.",
     "seoTitle": "Unit Converters - Metric & Imperial Tools | CalculatorBowl",
     "seoDescription": "Precision unit conversion calculators for temperature (°C, °F, K), length & distance, weight & mass, area (sq ft, acres), volume (liters, gallons), and speed (mph, km/h, knots).",
     "calculators": [
@@ -2179,6 +2296,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Units & Measurements",
         "slug": "pressure-converter",
         "url": "/calculators/conversion/measurement/pressure-converter/",
+        "subcatUrl": "/calculators/conversion/measurement/",
+        "categoryUrl": "/calculators/conversion/"
+      },
+      {
+        "id": "gas-mileage-calculator",
+        "name": "Gas Mileage Calculator (MPG & Trip Fuel Cost)",
+        "shortName": "Gas Mileage",
+        "icon": "⛽",
+        "badge": "Fuel",
+        "description": "Calculate fuel economy in MPG and L/100km, gallons or liters needed, total trip fuel cost, and cost per mile from distance, MPG, and gas price.",
+        "seoTitle": "Gas Mileage Calculator - MPG & Trip Fuel Cost",
+        "seoDescription": "Calculate MPG, gallons or liters needed, total trip fuel cost, cost per mile, and fuel economy in L/100km from distance, efficiency, and gas price.",
+        "category": "conversion",
+        "renderFunction": "renderGasMileageCalculator",
+        "contextualGuide": {
+          "title": "Road-Trip Cross-References",
+          "html": "\n            <p>\n              Fuel math is unit math in disguise — every conversion you need for the trip lives in our <a href=\"/calculators/conversion/\" class=\"in-text-link\">🔁 Conversion Hub</a>, from distances to speeds.\n            </p>\n            <p>\n              Pair the gallons with a time estimate: divide the miles by your average speed in the time calculator to know exactly when you arrive.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "speed-converter",
+              "label": "Speed Converter",
+              "icon": "🏎️"
+            },
+            {
+              "id": "length-converter",
+              "label": "Distance Converter",
+              "icon": "📏"
+            },
+            {
+              "id": "time-calculator",
+              "label": "Trip Time",
+              "icon": "⏱️"
+            }
+          ]
+        },
+        "subcategory": "measurement",
+        "subcatTitle": "Units & Measurements",
+        "slug": "gas-mileage-calculator",
+        "url": "/calculators/conversion/measurement/gas-mileage-calculator/",
         "subcatUrl": "/calculators/conversion/measurement/",
         "categoryUrl": "/calculators/conversion/"
       }
@@ -2720,8 +2876,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Health",
     "icon": "💪",
     "colorClass": "health",
-    "badge": "7 Calculators",
-    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, macro splits (protein, carbs, fat), running pace with race time predictions, and pregnancy due dates.",
+    "badge": "9 Calculators",
+    "description": "Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, macro splits (protein, carbs, fat), running pace with race time predictions, ovulation and fertile-window dates, weight-loss goal timelines, and pregnancy due dates.",
     "seoTitle": "Health & Fitness Calculators - BMI, BMR & Calorie Needs | CalculatorBowl",
     "seoDescription": "Free health calculators for BMI body mass index, BMR basal metabolic rate, and daily calorie requirements for weight loss, maintenance, and muscle gain.",
     "calculators": [
@@ -2995,6 +3151,84 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Fitness & Body Metrics",
         "slug": "ideal-weight-calculator",
         "url": "/calculators/health/fitness/ideal-weight-calculator/",
+        "subcatUrl": "/calculators/health/fitness/",
+        "categoryUrl": "/calculators/health/"
+      },
+      {
+        "id": "ovulation-calculator",
+        "name": "Ovulation Calculator (Fertile Window & Cycle Dates)",
+        "shortName": "Ovulation",
+        "icon": "🌸",
+        "badge": "Fertility",
+        "description": "Find your ovulation date, six-day fertile window, cycle status, and the next five period dates from your last period, cycle length, and luteal phase.",
+        "seoTitle": "Ovulation Calculator - Fertile Window & Cycle Dates",
+        "seoDescription": "Find your ovulation date, six-day fertile window, and next five period dates from your last period and cycle length, with a day-by-day cycle status.",
+        "category": "health",
+        "renderFunction": "renderOvulationCalculator",
+        "contextualGuide": {
+          "title": "Cycle & Conception Cross-References",
+          "html": "\n            <p>\n              The fertile window opens the conception timeline that ends at birth — once pregnant, the same calendar logic becomes the <a href=\"/calculators/health/\" class=\"in-text-link\">❤️ Health Hub</a> due-date tracker.\n            </p>\n            <p>\n              Cycle health responds to nutrition and hydration too; keep macros and water intake steady with the related tools below.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "due-date-calculator",
+              "label": "Due Date",
+              "icon": "🍼"
+            },
+            {
+              "id": "bmi-bmr-calculator",
+              "label": "BMI & BMR",
+              "icon": "📋"
+            },
+            {
+              "id": "water-intake-calculator",
+              "label": "Hydration",
+              "icon": "💧"
+            }
+          ]
+        },
+        "subcategory": "pregnancy",
+        "subcatTitle": "Pregnancy & Due Date",
+        "slug": "ovulation-calculator",
+        "url": "/calculators/health/pregnancy/ovulation-calculator/",
+        "subcatUrl": "/calculators/health/pregnancy/",
+        "categoryUrl": "/calculators/health/"
+      },
+      {
+        "id": "weight-loss-calculator",
+        "name": "Weight Loss Calculator (Goal Date & Calorie Deficit)",
+        "shortName": "Weight Loss",
+        "icon": "📉",
+        "badge": "Goals",
+        "description": "Turn a goal weight and weekly loss rate into a target date, required daily calorie deficit, pace-safety check, and BMI at your goal weight.",
+        "seoTitle": "Weight Loss Calculator - Goal Date & Calorie Deficit",
+        "seoDescription": "Set your goal weight and weekly loss rate to get a target date, required daily calorie deficit, pace safety check, and BMI at your goal weight.",
+        "category": "health",
+        "renderFunction": "renderWeightLossCalculator",
+        "contextualGuide": {
+          "title": "Goal-Setting Cross-References",
+          "html": "\n            <p>\n              A date on the calendar keeps effort honest — pair the timeline with body metrics from our <a href=\"/calculators/health/\" class=\"in-text-link\">❤️ Health Hub</a> to watch BMI move alongside the scale.\n            </p>\n            <p>\n              The deficit number is only half the story: match it with a macro split so weight comes from fat, not muscle.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "bmi-bmr-calculator",
+              "label": "BMI & BMR",
+              "icon": "📋"
+            },
+            {
+              "id": "macro-calculator",
+              "label": "Macro Split",
+              "icon": "🥗"
+            },
+            {
+              "id": "ideal-weight-calculator",
+              "label": "Ideal Weight",
+              "icon": "⚖️"
+            }
+          ]
+        },
+        "subcategory": "fitness",
+        "subcatTitle": "Fitness & Body Metrics",
+        "slug": "weight-loss-calculator",
+        "url": "/calculators/health/fitness/weight-loss-calculator/",
         "subcatUrl": "/calculators/health/fitness/",
         "categoryUrl": "/calculators/health/"
       }

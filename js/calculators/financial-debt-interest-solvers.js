@@ -1214,3 +1214,228 @@ function renderAprToApyCalculator(container, calcDef) {
   // Initial calculation
   convertRates();
 }
+
+/* ============================================================================
+ * Debt Snowball & Avalanche — payoff order, debt-free date, interest savings
+ * ========================================================================== */
+function renderDebtSnowballCalculator(container, calcDef) {
+  const defaults = [
+    { b: "2500", a: "19.99", m: "50" },
+    { b: "800", a: "24.99", m: "25" },
+    { b: "5200", a: "7.5", m: "150" },
+    { b: "", a: "", m: "" },
+    { b: "", a: "", m: "" }
+  ];
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="dsStrategy">Payoff Strategy</label>
+        <select id="dsStrategy" class="form-control">
+          <option value="snowball">Snowball — smallest balance first</option>
+          <option value="avalanche">Avalanche — highest APR first</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="dsExtra">Extra Monthly Payment <span class="form-label-hint">beyond minimums</span></label>
+        <div class="input-with-addon">
+          <span class="input-addon prefix">$</span>
+          <input type="number" id="dsExtra" class="form-control" value="100" min="0" step="any">
+        </div>
+      </div>
+    </div>
+
+    <table class="table" style="margin-top: 1rem;">
+      <thead><tr><th>#</th><th>Balance ($)</th><th>APR (%)</th><th>Minimum ($/mo)</th></tr></thead>
+      <tbody>
+        ${defaults.map((r, i) => {
+          const k = i + 1;
+          return `<tr>
+            <td>${k}</td>
+            <td><input type="number" id="dsBal${k}" class="form-control" value="${r.b}" min="0" step="any"></td>
+            <td><input type="number" id="dsApr${k}" class="form-control" value="${r.a}" min="0" step="any"></td>
+            <td><input type="number" id="dsMin${k}" class="form-control" value="${r.m}" min="0" step="any"></td>
+          </tr>`;
+        }).join("")}
+      </tbody>
+    </table>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcDs" class="btn btn-primary"><span>🎯 Create Payoff Plan</span></button>
+      <button type="button" id="btnResetDs" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="dsResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const strategySel = container.querySelector("#dsStrategy");
+  const extraInput = container.querySelector("#dsExtra");
+  const resultDiv = container.querySelector("#dsResultContainer");
+  const balEls = [], aprEls = [], minEls = [];
+  for (let i = 1; i <= 5; i++) {
+    balEls.push(container.querySelector(`#dsBal${i}`));
+    aprEls.push(container.querySelector(`#dsApr${i}`));
+    minEls.push(container.querySelector(`#dsMin${i}`));
+  }
+
+  const money = (n) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const money0 = (n) => n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+
+  function readDebts() {
+    const debts = [];
+    for (let i = 0; i < 5; i++) {
+      const bal = parseFloat(balEls[i].value);
+      if (isNaN(bal) || bal <= 0) continue;
+      const apr = parseFloat(aprEls[i].value);
+      const min = parseFloat(minEls[i].value);
+      if (isNaN(apr) || apr < 0 || isNaN(min) || min <= 0) {
+        return { error: `Debt ${i + 1}: enter a valid APR (0 or more) and a minimum payment above zero.` };
+      }
+      debts.push({ name: `Debt ${i + 1}`, bal, apr, min, settled: false });
+    }
+    return { debts };
+  }
+
+  /* Monthly loop: accrue interest → minimums → extra ( + rolled minimums ) to target */
+  function simulate(debts, strategy, extra, roll) {
+    const list = debts.map(d => ({ ...d }));
+    const order = [...list].sort((x, y) =>
+      strategy === "avalanche"
+        ? (y.apr - x.apr) || (x.bal - y.bal)
+        : (x.bal - y.bal) || (y.apr - x.apr)
+    );
+    let months = 0, interest = 0, freedPool = 0;
+    const payoff = [];
+    let active = list.length;
+    while (active > 0) {
+      months++;
+      if (months > 600) return { months: null, interest, payoff, order };
+      list.forEach(d => {
+        if (d.bal > 0) {
+          const int = d.bal * (d.apr / 100 / 12);
+          d.bal += int;
+          interest += int;
+        }
+      });
+      const newlyPaid = [];
+      list.forEach(d => {
+        if (d.bal > 0.005) { const pay = Math.min(d.min, d.bal); d.bal -= pay; if (d.bal <= 0.005) newlyPaid.push(d); }
+      });
+      let budget = extra + freedPool;
+      let target = order.find(d => d.bal > 0.005);
+      while (budget > 0 && target) {
+        const pay = Math.min(budget, target.bal);
+        target.bal -= pay; budget -= pay;
+        if (target.bal <= 0.005) { newlyPaid.push(target); target = order.find(d => d.bal > 0.005); }
+      }
+      newlyPaid.forEach(d => {
+        if (!d.settled) {
+          d.settled = true; active--;
+          if (roll) freedPool += d.min;
+          payoff.push({ name: d.name, month: months });
+        }
+      });
+    }
+    return { months, interest, payoff, order };
+  }
+
+  function calculate(ev) {
+    const parsed = readDebts();
+    if (parsed.error) { alert(parsed.error); return; }
+    const debts = parsed.debts;
+    if (!debts.length) { alert("Enter at least one debt balance to build a payoff plan."); return; }
+    const extra = parseFloat(extraInput.value);
+    if (isNaN(extra) || extra < 0) { alert("Extra monthly payment must be zero or more."); return; }
+    const strat = strategySel.value === "avalanche" ? "avalanche" : "snowball";
+
+    const plan = simulate(debts, strat, extra, true);
+    if (!plan.months) {
+      resultDiv.innerHTML = `
+        <p style="color: var(--accent-orange);">⚠ These minimums never clear the compounding interest — the balances would grow forever. Raise a minimum payment (or the extra payment) until every debt's minimum exceeds its monthly interest.</p>
+      `;
+      resultDiv.style.display = "block";
+      if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      return;
+    }
+
+    const altStrat = strat === "snowball" ? "avalanche" : "snowball";
+    const alt = simulate(debts, altStrat, extra, true);
+    const baseline = simulate(debts, strat, 0, false);
+    const saved = baseline.months ? baseline.interest - plan.interest : null;
+    const payoffDate = new Date();
+    payoffDate.setMonth(payoffDate.getMonth() + plan.months);
+    const dateStr = payoffDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+    const orderLabel = strat === "snowball" ? "Snowball (smallest balance first)" : "Avalanche (highest APR first)";
+    const firstMonthInterest = debts.reduce((s, d) => s + d.bal * (d.apr / 100 / 12), 0);
+    const minTotal = debts.reduce((s, d) => s + d.min, 0);
+    const orderChips = plan.order.map(d => `${d.name} <b>$${money0(d.bal)}</b> @ ${d.apr}%`).join(" &nbsp;→&nbsp; ");
+    const stuck = debts.filter(d => d.min <= d.bal * (d.apr / 100 / 12)).map(d => d.name);
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Months to Debt-Free</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${plan.months}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Debt-Free Date</div>
+          <div class="result-stat-val">${dateStr}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Total Interest Paid</div>
+          <div class="result-stat-val">$${money(plan.interest)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Saved vs Minimum-Only</div>
+          <div class="result-stat-val">${saved !== null ? `$${money(saved)}` : "—"}</div>
+        </div>
+      </div>
+
+      <p style="margin-top: 1rem; font-size: 0.95rem;">
+        <b>${orderLabel}:</b> ${plan.months} months · $${money(plan.interest)} interest &nbsp;—&nbsp;
+        <b>${altStrat === "snowball" ? "Snowball" : "Avalanche"}:</b> ${alt.months} months · $${money(alt.interest)} interest.
+        Minimum-only (no extra, no roll-over): ${baseline.months ? `${baseline.months} months · $${money(baseline.interest)}` : "never"}.
+      </p>
+
+      ${stuck.length ? `<p style="color: var(--accent-orange);">⚠ ${stuck.join(", ")} — minimum payment does not cover that debt's monthly interest.</p>` : ""}
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Payoff Plan Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Attack order</span>
+          <div class="math-formula-box">${strat === "snowball" ? "sort by balance ↑" : "sort by APR ↓"} then roll every freed minimum forward</div>
+          <p class="step-content">${orderChips}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Monthly mechanics</span>
+          <div class="math-formula-box">interest = Σ balance × APR ÷ 12 &nbsp;·&nbsp; pay minimums, then aim extra at the target</div>
+          <p class="step-content">Month one accrues about <b>$${money(firstMonthInterest)}</b> of interest; minimums total <b>$${money(minTotal)}</b>, plus your <b>$${money(extra)}</b> extra — every dollar past the minimums attacks the ${strat === "snowball" ? "smallest balance" : "highest-rate balance"} until it clears, then the whole payment rolls to the next debt.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Strategy verdict</span>
+          <div class="math-formula-box">avalanche saves interest · snowball saves time-to-first-win</div>
+          <p class="step-content">${plan.months} months on ${strat} versus ${alt.months} months on ${altStrat} — a ${Math.abs(plan.months - alt.months)}-month difference and $${money(Math.abs(plan.interest - alt.interest))} of interest between the two plans. Follow whichever one you will actually stick with.</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  strategySel.addEventListener("change", calculate);
+  extraInput.addEventListener("input", calculate);
+  balEls.concat(aprEls, minEls).forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcDs").addEventListener("click", calculate);
+  container.querySelector("#btnResetDs").addEventListener("click", () => {
+    strategySel.value = "snowball";
+    extraInput.value = "100";
+    defaults.forEach((r, i) => {
+      balEls[i].value = r.b;
+      aprEls[i].value = r.a;
+      minEls[i].value = r.m;
+    });
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

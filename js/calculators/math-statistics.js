@@ -997,3 +997,119 @@ function renderProbabilityCalculator(container, calcDef) {
   syncMode();
   calculate();
 }
+
+/* ============================================================================
+ * Random Number Generator — range, count, unique, sorted (crypto-backed)
+ * ========================================================================== */
+function renderRandomNumberGenerator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="rngMin">Minimum</label>
+        <input type="number" id="rngMin" class="form-control" value="1" step="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="rngMax">Maximum</label>
+        <input type="number" id="rngMax" class="form-control" value="100" step="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="rngCount">How Many Numbers</label>
+        <input type="number" id="rngCount" class="form-control" value="5" min="1" max="100" step="1">
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group" style="display: flex; align-items: center; gap: 0.55rem; padding-top: 1.5rem;">
+        <input type="checkbox" id="rngUnique" checked>
+        <label class="form-label" for="rngUnique" style="margin: 0;">No repeats (unique draws)</label>
+      </div>
+      <div class="form-group" style="display: flex; align-items: center; gap: 0.55rem; padding-top: 1.5rem;">
+        <input type="checkbox" id="rngSort" checked>
+        <label class="form-label" for="rngSort" style="margin: 0;">Sort ascending</label>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnRng" class="btn btn-primary"><span>🎲 Generate Numbers</span></button>
+      <button type="button" id="btnRngReset" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="rngResults" style="margin-top: 1.5rem; line-height: 2;"></div>
+    <p id="rngMeta" style="margin-top: 0.75rem; font-size: 0.92rem; color: var(--text-muted);"></p>
+    <div id="rngHistory" style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-muted);"></div>
+  `;
+
+  const minInput = container.querySelector("#rngMin");
+  const maxInput = container.querySelector("#rngMax");
+  const countInput = container.querySelector("#rngCount");
+  const uniqueChk = container.querySelector("#rngUnique");
+  const sortChk = container.querySelector("#rngSort");
+  const resultsDiv = container.querySelector("#rngResults");
+  const metaEl = container.querySelector("#rngMeta");
+  const historyEl = container.querySelector("#rngHistory");
+  const history = [];
+
+  // Uniform integer: crypto rejection sampling when available, Math.random fallback.
+  function randInt(min, max) {
+    const range = max - min + 1;
+    const hasCrypto = typeof window !== "undefined" && window.crypto && typeof window.crypto.getRandomValues === "function";
+    if (hasCrypto && range > 1 && range <= 4294967296) {
+      const buf = new Uint32Array(1);
+      const limit = Math.floor(4294967296 / range) * range;
+      let v;
+      do { window.crypto.getRandomValues(buf); v = buf[0]; } while (v >= limit);
+      return min + (v % range);
+    }
+    return min + Math.floor(Math.random() * range);
+  }
+
+  function generate(ev) {
+    const min = parseInt(minInput.value, 10);
+    const max = parseInt(maxInput.value, 10);
+    const count = parseInt(countInput.value, 10);
+    if (isNaN(min) || isNaN(max) || isNaN(count)) { alert("Please enter whole numbers for the range and count."); return; }
+    if (max < min) { alert("Maximum must be greater than or equal to the minimum."); return; }
+    if (count < 1 || count > 100) { alert("Generate between 1 and 100 numbers at a time."); return; }
+    const unique = !!uniqueChk.checked;
+    const sort = !!sortChk.checked;
+    const range = max - min + 1;
+    if (unique && count > range) { alert(`Only ${range} unique number${range === 1 ? "" : "s"} exist in that range.`); return; }
+
+    let nums = [];
+    if (unique) {
+      const seen = new Set();
+      while (seen.size < count) seen.add(randInt(min, max));
+      nums = [...seen];
+    } else {
+      for (let k = 0; k < count; k++) nums.push(randInt(min, max));
+    }
+    if (sort) nums.sort((a, b) => a - b);
+
+    history.unshift(nums.join(", "));
+    if (history.length > 5) history.pop();
+
+    const chipStyle = "display:inline-block; padding:0.45rem 0.85rem; margin:0.25rem; border-radius:0.75rem; background:var(--card-bg); border:1px solid var(--border-color); font-size:1.15rem; font-weight:600; font-family:var(--font-mono, ui-monospace, monospace);";
+    resultsDiv.innerHTML = nums.map(v => `<span class="rng-chip" style="${chipStyle}">${v}</span>`).join("");
+    const batchOdds = Math.pow(range, count);
+    metaEl.innerHTML = `Range <b>${min.toLocaleString("en-US")}–${max.toLocaleString("en-US")}</b> (${range.toLocaleString("en-US")} possibilities) · ${count} number${count === 1 ? "" : "s"} · ${unique ? "unique draws" : "independent draws"} · odds of one specific number: <b>1 in ${range.toLocaleString("en-US")}</b>${count > 1 && isFinite(batchOdds) ? ` · odds of this exact batch recurring: 1 in ${batchOdds.toExponential(1)}` : ""}`;
+    historyEl.innerHTML = history.length > 1
+      ? `<b>Last draws:</b><br>${history.map((h, idx) => `<div style="opacity:${idx === 0 ? 1 : 0.75}; margin-top:0.2rem;">${h}</div>`).join("")}`
+      : "";
+
+    if (ev && ev.type === "click") resultsDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [minInput, maxInput, countInput].forEach(el => el.addEventListener("input", generate));
+  [uniqueChk, sortChk].forEach(el => el.addEventListener("change", generate));
+  container.querySelector("#btnRng").addEventListener("click", generate);
+  container.querySelector("#btnRngReset").addEventListener("click", () => {
+    minInput.value = "1";
+    maxInput.value = "100";
+    countInput.value = "5";
+    uniqueChk.checked = true;
+    sortChk.checked = true;
+    history.length = 0;
+    generate();
+  });
+
+  generate();
+}

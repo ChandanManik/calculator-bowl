@@ -282,3 +282,185 @@ function renderMortgageCalculator(container, calcDef) {
 function renderAutoLoanCalculator(container, calcDef) {
   renderLoanCalculator(container, calcDef);
 }
+
+/* ============================================================================
+ * Home Affordability —28/36 DTI caps + taxes/insurance → max home price
+ * ========================================================================== */
+function renderHomeAffordabilityCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="haIncome">Gross Annual Income</label>
+        <div class="input-with-addon">
+          <span class="input-addon prefix">$</span>
+          <input type="number" id="haIncome" class="form-control" value="100000" min="1" step="any">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="haDebts">Other Monthly Debt Payments <span class="form-label-hint">car, cards, student loans</span></label>
+        <div class="input-with-addon">
+          <span class="input-addon prefix">$</span>
+          <input type="number" id="haDebts" class="form-control" value="500" min="0" step="any">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="haDown">Down Payment</label>
+        <div class="input-with-addon">
+          <span class="input-addon prefix">$</span>
+          <input type="number" id="haDown" class="form-control" value="50000" min="0" step="any">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="haRate">Mortgage Interest Rate <span class="form-label-hint">annual %</span></label>
+        <input type="number" id="haRate" class="form-control" value="6.5" min="0" max="30" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="haTerm">Loan Term</label>
+        <select id="haTerm" class="form-control">
+          <option value="30" selected>30 years</option>
+          <option value="20">20 years</option>
+          <option value="15">15 years</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="haTax">Property Tax <span class="form-label-hint">% of price / year</span></label>
+        <input type="number" id="haTax" class="form-control" value="1.1" min="0" max="10" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="haIns">Home Insurance <span class="form-label-hint">$/year</span></label>
+        <div class="input-with-addon">
+          <span class="input-addon prefix">$</span>
+          <input type="number" id="haIns" class="form-control" value="1200" min="0" step="any">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="haFront">Front-End DTI Cap <span class="form-label-hint">housing only %</span></label>
+        <input type="number" id="haFront" class="form-control" value="28" min="1" max="60" step="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="haBack">Back-End DTI Cap <span class="form-label-hint">all debts %</span></label>
+        <input type="number" id="haBack" class="form-control" value="36" min="1" max="80" step="1">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcHa" class="btn btn-primary"><span>🏠 Find My Price Range</span></button>
+      <button type="button" id="btnResetHa" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="haResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const incomeInput = container.querySelector("#haIncome");
+  const debtsInput = container.querySelector("#haDebts");
+  const downInput = container.querySelector("#haDown");
+  const rateInput = container.querySelector("#haRate");
+  const termSel = container.querySelector("#haTerm");
+  const taxInput = container.querySelector("#haTax");
+  const insInput = container.querySelector("#haIns");
+  const frontInput = container.querySelector("#haFront");
+  const backInput = container.querySelector("#haBack");
+  const resultDiv = container.querySelector("#haResultContainer");
+
+  const money = (n) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const money0 = (n) => n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+
+  function calculate(ev) {
+    const income = parseFloat(incomeInput.value);
+    const debts = parseFloat(debtsInput.value);
+    const down = parseFloat(downInput.value);
+    const rate = parseFloat(rateInput.value);
+    const term = parseInt(termSel.value, 10);
+    const taxPct = parseFloat(taxInput.value);
+    const insYr = parseFloat(insInput.value);
+    const front = parseFloat(frontInput.value);
+    const back = parseFloat(backInput.value);
+
+    if (!(income > 0)) { alert("Please enter a gross annual income greater than zero."); return; }
+    if (isNaN(debts) || debts < 0 || isNaN(down) || down < 0) { alert("Monthly debts and down payment cannot be negative."); return; }
+    if (isNaN(rate) || rate < 0 || isNaN(taxPct) || taxPct < 0 || isNaN(insYr) || insYr < 0) { alert("Please enter valid rate, tax, and insurance values."); return; }
+    if (isNaN(front) || front <= 0 || isNaN(back) || back <= 0) { alert("DTI caps must be greater than zero."); return; }
+
+    const grossMonthly = income / 12;
+    const capFront = grossMonthly * (front / 100);
+    const capBack = grossMonthly * (back / 100) - debts;
+    const maxPiti = Math.min(capFront, capBack);
+    if (maxPiti <= 0) { alert("Your existing monthly debts already exceed the back-end DTI limit — pay some down first."); return; }
+
+    const r = rate / 100 / 12;
+    const n = term * 12;
+    const f = r === 0 ? 1 / n : r / (1 - Math.pow(1 + r, -n));   // P&I factor per $1 of loan
+    const t = taxPct / 100 / 12;
+    const i = insYr / 12;
+
+    let price = (maxPiti + down * f - i) / (f + t);
+    if (price < down) { price = down; }                            // cash purchase edge case
+    const loan = Math.max(price - down, 0);
+    const pi = loan * f;
+    const taxM = price * t;
+    const piti = pi + taxM + i;
+    const binding = capFront <= capBack ? `front-end ${front}%` : `back-end ${back}%`;
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Max Home Price</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">$${money0(price)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Max Loan Amount</div>
+          <div class="result-stat-val">$${money0(loan)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Est. Monthly PITI</div>
+          <div class="result-stat-val">$${money(piti)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Principal & Interest</div>
+          <div class="result-stat-val">$${money(pi)}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Affordability Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Lender spending caps</span>
+          <div class="math-formula-box">housing ≤ ${front}% of gross monthly &nbsp;·&nbsp; all debts ≤ ${back}% of gross monthly</div>
+          <p class="step-content">Gross monthly = $${money0(income)} ÷ 12 = <b>$${money(grossMonthly)}</b>. Front-end cap: ${front}% → <b>$${money(capFront)}</b>. Back-end cap: ${back}% − $${money(debts)} of existing debts → <b>$${money(capBack)}</b>. The binding limit is <b>${binding} at $${money(maxPiti)}</b> per month.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Solve for the price</span>
+          <div class="math-formula-box">price = (PITI cap + down × f − insurance) ÷ (f + tax/12), &nbsp; f = r ÷ (1 − (1 + r)^−n)</div>
+          <p class="step-content">f = ${money(r)} ÷ (1 − (1 + ${money(r)})^−${n}) = <b>${f.toFixed(6)}</b>. So price = ($${money(maxPiti)} + $${money0(down)} × ${f.toFixed(6)} − $${money(i)}) ÷ ${((f + t) / 1).toFixed(6)} = <b>$${money0(price)}</b>, with $${money0(down)} down → a <b>$${money0(loan)}</b> ${term}-year loan.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Monthly payment stack</span>
+          <div class="math-formula-box">PITI = principal & interest + property tax + insurance</div>
+          <p class="step-content">$${money(pi)} (P&amp;I) + $${money(taxM)} (tax: ${taxPct}% ÷ 12 of price) + $${money(i)} (insurance) = <b>$${money(piti)}</b> — inside your $${money(maxPiti)} cap. HOA dues, mortgage insurance (under20% down), and closing costs sit on top; pre-approve with a lender to lock the real number.</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [incomeInput, debtsInput, downInput, rateInput, taxInput, insInput, frontInput, backInput]
+    .forEach(el => el.addEventListener("input", calculate));
+  termSel.addEventListener("change", calculate);
+  container.querySelector("#btnCalcHa").addEventListener("click", calculate);
+  container.querySelector("#btnResetHa").addEventListener("click", () => {
+    incomeInput.value = "100000";
+    debtsInput.value = "500";
+    downInput.value = "50000";
+    rateInput.value = "6.5";
+    termSel.value = "30";
+    taxInput.value = "1.1";
+    insInput.value = "1200";
+    frontInput.value = "28";
+    backInput.value = "36";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

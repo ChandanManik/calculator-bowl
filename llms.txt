@@ -7,13 +7,13 @@
 - **Directory**: [Master A-Z Directory](https://calculatorbowl.com/calculators/)
 - **Client-Side Processing**: Instant zero-latency mathematical and financial calculations.
 - **Step-by-Step Breakdowns**: Detailed mathematical solutions showing formulas, variable substitutions, and simplification steps.
-- **Topical Siloing**: 73 precision tools structured across 6 topical pillars.
+- **Topical Siloing**: 79 precision tools structured across 6 topical pillars.
 
 ---
 
 ## 📁 Financial Calculators (Category Hub: [Financial Calculators](https://calculatorbowl.com/calculators/finance/))
 
-*Description*: Plan your retirement savings, 401(k), ROI, CAGR growth, dividend yield, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.
+*Description*: Plan your retirement savings, 401(k), ROI, CAGR growth, dividend yield, debt-free payoff schedules, home affordability, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.
 
 ### [Personal & Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/finance/loans/loan-calculator/`
@@ -204,9 +204,23 @@
 - **Summary**: Calculate dividend yield, shares owned, annual and monthly dividend income, and income per $1,000 invested from stock price and dividend per share.
 - **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
 
+### [Debt Snowball & Avalanche Calculator (Payoff Planner)](https://calculatorbowl.com/calculators/finance/loans/debt-snowball-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/loans/debt-snowball-calculator/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Loans & Mortgages`
+- **Summary**: Build a debt payoff plan: snowball or avalanche order, months to debt-free, total interest, debt-free date, and savings versus minimum payments only.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
+### [Home Affordability Calculator (28/36 Rule)](https://calculatorbowl.com/calculators/finance/loans/home-affordability-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/loans/home-affordability-calculator/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Loans & Mortgages`
+- **Summary**: Estimate how much house you can afford from income, debts, down payment, rate, taxes, and insurance using lender front-end and back-end DTI caps.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
 ## 📁 Math & Statistics Calculators (Category Hub: [Math & Statistics Calculators](https://calculatorbowl.com/calculators/math/))
 
-*Description*: Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, the Pythagorean theorem, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.
+*Description*: Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, the Pythagorean theorem, random number generation, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.
 
 ### [Standard Online Basic Calculator](https://calculatorbowl.com/calculators/math/basic/basic-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/math/basic/basic-calculator/`
@@ -348,9 +362,16 @@
 - **Summary**: Find any missing side of a right triangle with the Pythagorean theorem, plus area, perimeter, and both acute angles with step-by-step substitutions.
 - **Related Tools in Category**: [Basic Calculator](https://calculatorbowl.com/calculators/math/basic/basic-calculator/), [Scientific Calculator](https://calculatorbowl.com/calculators/math/basic/scientific-calculator/), [Percentage Calculator](https://calculatorbowl.com/calculators/math/percentage/percentage-calculator/)
 
+### [Random Number Generator (Range, Unique, Sorted)](https://calculatorbowl.com/calculators/math/statistics/random-number-generator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/math/statistics/random-number-generator/`
+- **Category**: [Math & Statistics Calculators](https://calculatorbowl.com/calculators/math/)
+- **Subcategory**: `Statistics & Probability`
+- **Summary**: Generate secure random numbers in any range with count, unique-draw, and sort options, plus generation history and the odds behind every draw.
+- **Related Tools in Category**: [Basic Calculator](https://calculatorbowl.com/calculators/math/basic/basic-calculator/), [Scientific Calculator](https://calculatorbowl.com/calculators/math/basic/scientific-calculator/), [Percentage Calculator](https://calculatorbowl.com/calculators/math/percentage/percentage-calculator/)
+
 ## 📁 Unit Conversion Calculators (Category Hub: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/))
 
-*Description*: Convert temperature, length, distance, weight, mass, area, volume, speed, pressure, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.
+*Description*: Convert temperature, length, distance, weight, mass, area, volume, speed, pressure, fuel economy and trip fuel costs, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.
 
 ### [Temperature Unit Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/`
@@ -399,6 +420,13 @@
 - **Category**: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/)
 - **Subcategory**: `Units & Measurements`
 - **Summary**: Convert pressure between pascal, kilopascal, bar, atmosphere, PSI, torr and mmHg with exact conversion factors and a full all-unit reference table.
+- **Related Tools in Category**: [Temperature Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/), [Length Converter](https://calculatorbowl.com/calculators/conversion/measurement/length-converter/), [Weight Converter](https://calculatorbowl.com/calculators/conversion/measurement/weight-converter/)
+
+### [Gas Mileage Calculator (MPG & Trip Fuel Cost)](https://calculatorbowl.com/calculators/conversion/measurement/gas-mileage-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/conversion/measurement/gas-mileage-calculator/`
+- **Category**: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/)
+- **Subcategory**: `Units & Measurements`
+- **Summary**: Calculate fuel economy in MPG and L/100km, gallons or liters needed, total trip fuel cost, and cost per mile from distance, MPG, and gas price.
 - **Related Tools in Category**: [Temperature Converter](https://calculatorbowl.com/calculators/conversion/measurement/temperature-converter/), [Length Converter](https://calculatorbowl.com/calculators/conversion/measurement/length-converter/), [Weight Converter](https://calculatorbowl.com/calculators/conversion/measurement/weight-converter/)
 
 ## 📁 Date & Time Calculators (Category Hub: [Date & Time Calculators](https://calculatorbowl.com/calculators/date-time/))
@@ -495,7 +523,7 @@
 
 ## 📁 Health & Fitness Calculators (Category Hub: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/))
 
-*Description*: Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, macro splits (protein, carbs, fat), running pace with race time predictions, and pregnancy due dates.
+*Description*: Calculate BMI, BMR, daily calorie needs (TDEE), body fat percentage (US Navy method), ideal weight, daily water intake, macro splits (protein, carbs, fat), running pace with race time predictions, ovulation and fertile-window dates, weight-loss goal timelines, and pregnancy due dates.
 
 ### [BMI & BMR Calorie Calculator](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/`
@@ -544,5 +572,19 @@
 - **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
 - **Subcategory**: `Fitness & Body Metrics`
 - **Summary**: Find your ideal weight with the Devine, Robinson, Miller, and Hamwi formulas from height and sex, plus the healthy BMI weight band and current-weight comparison.
+- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
+
+### [Ovulation Calculator (Fertile Window & Cycle Dates)](https://calculatorbowl.com/calculators/health/pregnancy/ovulation-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/health/pregnancy/ovulation-calculator/`
+- **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
+- **Subcategory**: `Pregnancy & Due Date`
+- **Summary**: Find your ovulation date, six-day fertile window, cycle status, and the next five period dates from your last period, cycle length, and luteal phase.
+- **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
+
+### [Weight Loss Calculator (Goal Date & Calorie Deficit)](https://calculatorbowl.com/calculators/health/fitness/weight-loss-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/health/fitness/weight-loss-calculator/`
+- **Category**: [Health & Fitness Calculators](https://calculatorbowl.com/calculators/health/)
+- **Subcategory**: `Fitness & Body Metrics`
+- **Summary**: Turn a goal weight and weekly loss rate into a target date, required daily calorie deficit, pace-safety check, and BMI at your goal weight.
 - **Related Tools in Category**: [BMI & Calorie Calc](https://calculatorbowl.com/calculators/health/fitness/bmi-bmr-calculator/), [Body Fat Calculator](https://calculatorbowl.com/calculators/health/fitness/body-fat-calculator/), [Water Intake Calc](https://calculatorbowl.com/calculators/health/fitness/water-intake-calculator/)
 

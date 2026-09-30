@@ -1450,3 +1450,255 @@ function renderIdealWeightCalculator(container, calcDef) {
 
   calculate();
 }
+
+/* ============================================================================
+ * Ovulation Calculator — fertile window, ovulation date, upcoming periods
+ * ========================================================================== */
+function renderOvulationCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="ovLast">Last Period Started</label>
+        <input type="date" id="ovLast" class="form-control">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="ovCycle">Cycle Length <span class="form-label-hint">days</span></label>
+        <input type="number" id="ovCycle" class="form-control" value="28" min="18" max="60" step="1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="ovLuteal">Luteal Phase <span class="form-label-hint">days — usually 13–15</span></label>
+        <input type="number" id="ovLuteal" class="form-control" value="14" min="8" max="21" step="1">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcOv" class="btn btn-primary"><span>🌸 Calculate Fertile Window</span></button>
+      <button type="button" id="btnResetOv" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="ovResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const lastInput = container.querySelector("#ovLast");
+  const cycleInput = container.querySelector("#ovCycle");
+  const lutealInput = container.querySelector("#ovLuteal");
+  const resultDiv = container.querySelector("#ovResultContainer");
+
+  const fmt = (d) => d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  const fmtShort = (d) => d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const addDays = (d, n) => { const x = new Date(d.getTime()); x.setDate(x.getDate() + n); return x; };
+
+  function setDefaults() {
+    const d = addDays(new Date(), -10);
+    lastInput.value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  }
+
+  function calculate(ev) {
+    const raw = lastInput.value;
+    if (!raw) { alert("Please pick the first day of your last period."); return; }
+    const lmp = new Date(`${raw}T00:00:00`);
+    if (isNaN(lmp.getTime())) { alert("Please enter a valid period start date."); return; }
+    const cycle = parseInt(cycleInput.value, 10);
+    const luteal = parseInt(lutealInput.value, 10);
+    if (isNaN(cycle) || cycle < 18 || cycle > 60) { alert("Cycle length must be between 18 and 60 days."); return; }
+    if (isNaN(luteal) || luteal < 8 || luteal > 21) { alert("Luteal phase must be between 8 and 21 days."); return; }
+
+    const nextPeriod = addDays(lmp, cycle);
+    const ovulation = addDays(nextPeriod, -luteal);          // ovulation = next period − luteal length
+    const fertileStart = addDays(ovulation, -5);
+    const fertileEnd = addDays(ovulation, 1);
+    const upcoming = [1, 2, 3, 4, 5].map(k => addDays(lmp, cycle * k));
+
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const cycleDay = Math.floor((today - lmp) / 86400000) + 1;
+    let status;
+    if (cycleDay < 1) {
+      status = "Future date — check your entry";
+    } else if (cycleDay > cycle) {
+      status = `Day ${cycleDay} — ${cycleDay - cycle} day${cycleDay - cycle === 1 ? "" : "s"} past due`;
+    } else {
+      const ovDay = cycle - luteal + 1;                       // ovulation's day number in the cycle
+      const phase = cycleDay === ovDay ? "ovulation day"
+        : cycleDay > ovDay - 1 && cycleDay < ovDay + 2 ? "peak fertility"
+        : cycleDay < ovDay ? "follicular phase" : "luteal phase";
+      const until = ovDay - cycleDay;
+      status = `Day ${cycleDay} of ${cycle} · ${phase}${until > 0 ? ` · ovulation in ${until} day${until === 1 ? "" : "s"}` : ""}`;
+    }
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Ovulation Date</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${fmt(ovulation)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Fertile Window</div>
+          <div class="result-stat-val">${fmtShort(fertileStart)} – ${fmtShort(fertileEnd)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Next Period</div>
+          <div class="result-stat-val">${fmt(nextPeriod)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Cycle Status</div>
+          <div class="result-stat-val" style="font-size: 1.05rem;">${status}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Cycle Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Ovulation date</span>
+          <div class="math-formula-box">ovulation = last period + cycle length − luteal phase</div>
+          <p class="step-content">${fmt(lmp)} + ${cycle} − ${luteal} = <b>${fmt(ovulation)}</b> — the luteal phase (ovulation → next period) is the most stable part of the cycle, so calendars count backwards from your next period.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Six-day fertile window</span>
+          <div class="math-formula-box">fertile = ovulation − 5 days through ovulation + 1 day</div>
+          <p class="step-content">${fmtShort(fertileStart)} → ${fmtShort(fertileEnd)} — sperm survives roughly 3–5 days inside the tract while the egg is viable about 24 hours, so intercourse in the days <i>before</i> ovulation counts most.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Your next five periods</span>
+          <div class="math-formula-box">period<sub>k</sub> = last period + cycle × k</div>
+          <p class="step-content">${upcoming.map(fmt).join(" &nbsp;·&nbsp; ")}</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  lastInput.addEventListener("input", calculate);
+  [cycleInput, lutealInput].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcOv").addEventListener("click", calculate);
+  container.querySelector("#btnResetOv").addEventListener("click", () => {
+    cycleInput.value = "28";
+    lutealInput.value = "14";
+    setDefaults();
+    resultDiv.style.display = "none";
+  });
+
+  setDefaults();
+  calculate();
+}
+
+/* ============================================================================
+ * Weight Loss Goal Calculator — target date, deficit rate, BMI at goal
+ * ========================================================================== */
+function renderWeightLossCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="wlCurrent">Current Weight <span class="form-label-hint">kg</span></label>
+        <input type="number" id="wlCurrent" class="form-control" value="80" min="20" max="400" step="0.1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="wlGoal">Goal Weight <span class="form-label-hint">kg</span></label>
+        <input type="number" id="wlGoal" class="form-control" value="72" min="20" max="400" step="0.1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="wlRate">Loss Rate <span class="form-label-hint">kg per week</span></label>
+        <input type="number" id="wlRate" class="form-control" value="0.5" min="0.1" max="3" step="0.1">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="wlHeight">Height <span class="form-label-hint">cm — for BMI at goal</span></label>
+        <input type="number" id="wlHeight" class="form-control" value="170" min="100" max="250" step="1">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcWl" class="btn btn-primary"><span>📉 Calculate Goal Date</span></button>
+      <button type="button" id="btnResetWl" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="wlResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const currentInput = container.querySelector("#wlCurrent");
+  const goalInput = container.querySelector("#wlGoal");
+  const rateInput = container.querySelector("#wlRate");
+  const heightInput = container.querySelector("#wlHeight");
+  const resultDiv = container.querySelector("#wlResultContainer");
+
+  const fmtDate = (d) => d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+  function calculate(ev) {
+    const current = parseFloat(currentInput.value);
+    const goal = parseFloat(goalInput.value);
+    const rate = parseFloat(rateInput.value);
+    const height = parseFloat(heightInput.value);
+
+    if (isNaN(current) || current <= 0 || isNaN(goal) || goal <= 0) { alert("Please enter valid current and goal weights."); return; }
+    if (goal >= current) { alert("Goal weight must be below your current weight to lose weight."); return; }
+    if (isNaN(rate) || rate <= 0) { alert("Please enter a weekly loss rate greater than zero."); return; }
+    if (isNaN(height) || height <= 0) { alert("Please enter your height in centimetres."); return; }
+
+    const loss = current - goal;
+    const weeks = Math.ceil(loss / rate);
+    const days = weeks * 7;
+    const target = new Date(); target.setHours(0, 0, 0, 0); target.setDate(target.getDate() + days);
+    const dailyDeficit = (rate * 7700) / 7;                     //1 kg of body fat ≈7,700 kcal
+    const bmiNow = current / Math.pow(height / 100, 2);
+    const bmiGoal = goal / Math.pow(height / 100, 2);
+    const pctPerWeek = (rate / current) * 100;
+    const tooFast = rate > current * 0.01 || rate > 1;          // faster than1% body weight / week
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Target Date</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${fmtDate(target)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Weeks to Goal</div>
+          <div class="result-stat-val">${weeks}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Daily Deficit Needed</div>
+          <div class="result-stat-val">${Math.round(dailyDeficit).toLocaleString("en-US")} kcal</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">BMI at Goal</div>
+          <div class="result-stat-val">${bmiGoal.toFixed(1)}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Weight-Loss Plan Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Daily calorie deficit</span>
+          <div class="math-formula-box">deficit = weekly rate (kg) × 7,700 kcal ÷ 7 days</div>
+          <p class="step-content">${rate} × 7,700 ÷ 7 = <b>${Math.round(dailyDeficit).toLocaleString("en-US")} kcal per day</b> below maintenance — trim that from food, burn it with activity, or split the difference.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — Timeline to goal</span>
+          <div class="math-formula-box">weeks = (current − goal) ÷ weekly rate</div>
+          <p class="step-content">${current} − ${goal} = <b>${loss.toFixed(1)} kg</b> to lose; ${loss.toFixed(1)} ÷ ${rate} = <b>${weeks} weeks</b> → <b>${fmtDate(target)}</b>. Water-weight swings hide real fat loss for the first1-2 weeks — weigh yourself at the same time daily and judge by the weekly average.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Pace safety & BMI shift</span>
+          <div class="math-formula-box">safe pace ≤ 1% of body weight per week (≈0.5–1.0 kg)</div>
+          <p class="step-content">Your pace is <b>${pctPerWeek.toFixed(2)}% per week</b> — BMI <b>${bmiNow.toFixed(1)} → ${bmiGoal.toFixed(1)}</b> at goal. ${tooFast
+            ? `⚠ That is faster than1% per week; sustained rates above this raise muscle-loss and gallstone risk — drop the rate toward0.5 kg if hunger, fatigue, or training recovery suffer.`
+            : `✓ That sits inside the1%-per-week guideline most clinicians use for sustainable loss.`}</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [currentInput, goalInput, rateInput, heightInput].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcWl").addEventListener("click", calculate);
+  container.querySelector("#btnResetWl").addEventListener("click", () => {
+    currentInput.value = "80";
+    goalInput.value = "72";
+    rateInput.value = "0.5";
+    heightInput.value = "170";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

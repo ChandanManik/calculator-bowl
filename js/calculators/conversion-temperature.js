@@ -830,3 +830,121 @@ function renderPressureConverter(container, calcDef) {
   calculate();
 }
 
+/* ============================================================================
+ * Gas Mileage Calculator — MPG, fuel needed, trip cost & unit conversions
+ * ========================================================================== */
+function renderGasMileageCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="gmDistance">Trip Distance <span class="form-label-hint">miles</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="gmDistance" class="form-control" value="500" min="0.1" step="any">
+          <span class="input-addon suffix">mi</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="gmEconomy">Fuel Economy <span class="form-label-hint">miles per gallon</span></label>
+        <div class="input-with-addon">
+          <input type="number" id="gmEconomy" class="form-control" value="25" min="0.1" step="any">
+          <span class="input-addon suffix">mpg</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="gmPrice">Gas Price <span class="form-label-hint">per US gallon</span></label>
+        <div class="input-with-addon">
+          <span class="input-addon prefix">$</span>
+          <input type="number" id="gmPrice" class="form-control" value="3.50" min="0" step="0.01">
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcGm" class="btn btn-primary"><span>⛽ Calculate Trip Fuel</span></button>
+      <button type="button" id="btnResetGm" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="gmResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const distanceInput = container.querySelector("#gmDistance");
+  const economyInput = container.querySelector("#gmEconomy");
+  const priceInput = container.querySelector("#gmPrice");
+  const resultDiv = container.querySelector("#gmResultContainer");
+
+  const money = (n) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function calculate(ev) {
+    const dist = parseFloat(distanceInput.value);
+    const econ = parseFloat(economyInput.value);
+    const price = parseFloat(priceInput.value);
+
+    if (isNaN(dist) || dist <= 0) { alert("Please enter a trip distance greater than zero."); return; }
+    if (isNaN(econ) || econ <= 0) { alert("Please enter a fuel economy greater than zero."); return; }
+    if (isNaN(price) || price < 0) { alert("Please enter a valid gas price."); return; }
+
+    const gallons = dist / econ;
+    const liters = gallons * 3.785411784;
+    const cost = gallons * price;
+    const perMile = cost / dist;
+    const per100mi = perMile * 100;
+    const l100 = 235.214583 / econ;                    // US mpg → L/100 km
+    const kmL = 100 / l100;
+    const impMpg = econ * 1.2009499;                   // US mpg → imperial mpg
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Fuel Needed</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${gallons.toFixed(2)} gal</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Trip Cost</div>
+          <div class="result-stat-val">$${money(cost)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Cost per Mile</div>
+          <div class="result-stat-val">$${money(perMile)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Fuel Economy</div>
+          <div class="result-stat-val">${l100.toFixed(2)} L/100km</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Trip Fuel Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 1 — Fuel volume</span>
+          <div class="math-formula-box">gallons = distance ÷ MPG</div>
+          <p class="step-content">${dist.toLocaleString("en-US", { maximumFractionDigits: 2 })} ÷ ${econ} = <b>${gallons.toFixed(2)} US gal</b> = <b>${liters.toFixed(2)} L</b> of gas for the whole trip${gallons > 15 ? " — worth pricing stations along the route" : ""}.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 2 — What it costs</span>
+          <div class="math-formula-box">cost = gallons × price &nbsp;·&nbsp; per mile = cost ÷ distance</div>
+          <p class="step-content">${gallons.toFixed(2)} × $${money(price)} = <b>$${money(cost)}</b> total, or <b>$${money(perMile)}/mile</b> ($${money(per100mi)} per100 miles). Round-trip doubles it: <b>$${money(cost * 2)}</b>.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step 3 — Unit conversions</span>
+          <div class="math-formula-box">L/100km = 235.21 ÷ MPG &nbsp;·&nbsp;1 US gal = 3.785 L</div>
+          <p class="step-content">${econ} mpg US = <b>${l100.toFixed(2)} L/100 km</b> · <b>${kmL.toFixed(2)} km/L</b> · <b>${impMpg.toFixed(2)} mpg (Imperial)</b>. Vehicles quoting L/100km flip the logic: lower is better there, higher is better in mpg.</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [distanceInput, economyInput, priceInput].forEach(el => el.addEventListener("input", calculate));
+  container.querySelector("#btnCalcGm").addEventListener("click", calculate);
+  container.querySelector("#btnResetGm").addEventListener("click", () => {
+    distanceInput.value = "500";
+    economyInput.value = "25";
+    priceInput.value = "3.50";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}
+
