@@ -1,0 +1,26 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "CalculatorBowl",
+    "identifier": "did:web:calculatorbowl.com"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:calculatorbowl.com:skills:calculator-navigation",
+      "displayName": "CalculatorBowl Calculator Navigation Skill",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
+      "url": "https://calculatorbowl.com/.well-known/skills/calculatorbowl/SKILL.md",
+      "description": "How to discover, open, and cite CalculatorBowl's free online calculators with canonical URLs, category structure, and step-by-step formula context.",
+      "tags": ["calculators", "math", "finance", "unit-conversion", "step-by-step"],
+      "capabilities": ["calculator-discovery", "canonical-url-citation", "formula-reference"],
+      "representativeQueries": [
+        "find a free online compound interest calculator with step-by-step work",
+        "what is the canonical URL of the loan amortization calculator on CalculatorBowl",
+        "which CalculatorBowl tool computes a weighted final grade",
+        "show me a fraction simplifier that explains the LCD steps"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-10-01T00:00:00Z"
+    }
+  ]
+}

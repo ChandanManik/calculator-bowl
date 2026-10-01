@@ -366,7 +366,8 @@ class I18nManager {
 
     container.innerHTML = `
       <div class="lang-selector-wrapper" id="langSelectorWrapper">
-        <button type="button" class="lang-btn" id="langToggleBtn" aria-label="Change Language" aria-expanded="false">
+        <button type="button" class="lang-btn" id="langToggleBtn" title="Change Language" aria-expanded="false">
+          <span class="sr-only">Change Language</span>
           <span class="lang-flag" id="currentLangFlag">${current.flag}</span>
           <span class="lang-name-code" id="currentLangCode">${current.code.toUpperCase()}</span>
           <span class="lang-arrow">▾</span>

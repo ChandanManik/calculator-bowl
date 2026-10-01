@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const zlib = require('zlib');
 
 const PORT = 8080;
 const PUBLIC_DIR = path.resolve(__dirname, '..');
@@ -18,6 +19,38 @@ const MIME_TYPES = {
   '.txt': 'text/plain; charset=utf-8',
   '.xml': 'application/xml; charset=utf-8'
 };
+
+// Mirror production (Cloudflare serves gzip'd text assets) so local
+// Lighthouse runs are comparable to live numbers — without this the
+// uncompressed ~1.5MB JS payload inflates throttled mobile transfer by ~5s.
+const COMPRESSIBLE = new Set(['.html', '.css', '.js', '.json', '.txt', '.xml', '.svg']);
+
+function sendFile(req, res, filePath, ext, stats) {
+  const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+  // Mirror production (Cloudflare: max-age=0 + must-revalidate + ETag/304)
+  const etag = '"' + require('crypto').createHash('md5').update(filePath + stats.size + stats.mtimeMs).digest('hex') + '"';
+  const headers = {
+    'Content-Type': contentType,
+    'Access-Control-Allow-Origin': '*',
+    'Vary': 'Accept-Encoding',
+    'Cache-Control': 'public, max-age=0, must-revalidate',
+    'ETag': etag
+  };
+  if (req.headers['if-none-match'] === etag) {
+    res.writeHead(304, headers);
+    res.end();
+    return;
+  }
+  const acceptsGzip = /\bgzip\b/.test(String(req.headers['accept-encoding'] || ''));
+  if (COMPRESSIBLE.has(ext) && acceptsGzip) {
+    headers['Content-Encoding'] = 'gzip';
+    res.writeHead(200, headers);
+    fs.createReadStream(filePath).pipe(zlib.createGzip()).pipe(res);
+  } else {
+    res.writeHead(200, headers);
+    fs.createReadStream(filePath).pipe(res);
+  }
+}
 
 const server = http.createServer((req, res) => {
   let reqPath = decodeURI(req.url.split('?')[0]);
@@ -41,25 +74,14 @@ const server = http.createServer((req, res) => {
         res.end('404 Not Found');
         return;
       }
-      
+
       // SPA Fallback: Serve index.html for clean routes (e.g. /financial, /calc/loan-calculator)
-      const indexPath = path.join(PUBLIC_DIR, 'index.html');
-      res.writeHead(200, {
-        'Content-Type': 'text/html; charset=utf-8',
-        'Access-Control-Allow-Origin': '*'
-      });
-      fs.createReadStream(indexPath).pipe(res);
+      sendFile(req, res, path.join(PUBLIC_DIR, 'index.html'), '.html', stats || { size: 0, mtimeMs: 0 });
       return;
     }
 
     const ext = path.extname(filePath).toLowerCase();
-    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
-
-    res.writeHead(200, {
-      'Content-Type': contentType,
-      'Access-Control-Allow-Origin': '*'
-    });
-    fs.createReadStream(filePath).pipe(res);
+    sendFile(req, res, filePath, ext, stats);
   });
 });
 

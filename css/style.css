@@ -22,6 +22,7 @@
   --accent-primary-glow: rgba(79, 70, 229, 0.15);
   --accent-secondary: #06b6d4;
   --accent-emerald: #10b981;
+  --accent-emerald-contrast: #047857;
   --accent-amber: #f59e0b;
   --accent-rose: #f43f5e;
 
@@ -65,6 +66,7 @@
   --accent-primary-glow: rgba(99, 102, 241, 0.25);
   --accent-secondary: #22d3ee;
   --accent-emerald: #34d399;
+  --accent-emerald-contrast: #34d399;
 
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.35);
@@ -85,6 +87,10 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  /* Reserve the classic scrollbar gutter so content appearing later can't
+     shift the layout horizontally (CLS incident 2026-09: main.x moved
+     55→47.5px when the scrollbar appeared, widening the shift impact). */
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -249,6 +255,11 @@ a:hover {
   background: var(--bg-surface);
 }
 
+/* WCAG 2.5.8 target size: the inner input measured only 86x16px */
+.search-trigger input {
+  min-height: 24px;
+}
+
 .search-shortcut {
   margin-left: auto;
   font-size: 0.7rem;
@@ -257,7 +268,7 @@ a:hover {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-color);
   font-family: var(--font-mono);
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .theme-toggle-btn {
@@ -430,6 +441,31 @@ a:hover {
   width: 100%;
   margin: 0 auto;
   padding: 1.5rem 1.5rem 3rem;
+}
+
+/* While #mainContent has no rendered view yet (before JS injects the route
+   content), reserve viewport height so the footer starts BELOW the fold. The
+   footer's inevitable move down when content arrives is then invisible and
+   cannot contribute to CLS (desktop measured CLS 0.9526 came almost entirely
+   from the initially-visible footer). NOTE: `:empty` does NOT work here —
+   the markup contains whitespace text + an HTML comment inside #mainContent,
+   both of which defeat `:empty`; `:not(:has(*))` only looks for element
+   children and stops matching the moment the view is injected. */
+#mainContent:not(:has(*)) {
+  min-height: calc(100vh - 6rem);
+}
+
+/* Visually hidden but accessible to screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .breadcrumb-container {
@@ -802,7 +838,7 @@ a:hover {
 
 .calc-key.key-mem {
   background: var(--bg-subtle);
-  color: var(--accent-emerald);
+  color: var(--accent-emerald-contrast);
   font-size: 0.95rem;
   font-weight: 800;
   border-color: rgba(16, 185, 129, 0.25);
@@ -924,7 +960,7 @@ a:hover {
   padding: 0.15rem 0.4rem;
   border-radius: 4px;
   background: var(--bg-subtle);
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 
 .directory-item a:hover .directory-item-badge {
@@ -2023,7 +2059,8 @@ a:hover {
   width: 100%;
   max-width: 600px;
   font-size: 0.82rem;
-  color: var(--text-muted);
+  /* --text-muted (2.56:1 on the white footer) fails WCAG AA — use secondary */
+  color: var(--text-secondary);
 }
 
 /* ==========================================================================

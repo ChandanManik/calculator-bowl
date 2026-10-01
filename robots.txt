@@ -5,6 +5,9 @@ Allow: /
 
 # Sitemap
 Sitemap: https://calculatorbowl.com/sitemap.xml
+# ARD capability manifest is discovered via <link rel="ai-catalog"> in the
+# page head + the standard /.well-known/ai-catalog.json path (non-standard
+# "Agentmap:" fields are rejected by standard robots.txt validators).
 
 # LLM & AI Agents Context
 # https://calculatorbowl.com/llms.txt

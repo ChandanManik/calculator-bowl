@@ -5,6 +5,10 @@
  * ============================================================================
  */
 
+/* TDZ-safe: declared before the synchronous initApp() call below can reach
+   trackGA4PageView (init → handleRoute → updateSEO → trackGA4PageView). */
+let lastTrackedGA4Path = null;
+
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initApp);
 } else {
@@ -82,7 +86,19 @@ function initRouter() {
     }
   });
 
-  handleRoute();
+  // Route the initial URL. The homepage renders immediately: its dependencies
+  // (clusters.js, i18n.js, basic-calculator.js) all load BEFORE this file, so
+  // hero content paints as early as possible (LCP). Every other route also
+  // needs calculator-content.js + per-calc renderer files, which load AFTER
+  // this file in defer order — defer those renders to DOMContentLoaded, which
+  // fires only once all defer scripts have executed.
+  const initialPath = (window.location.pathname || "/").toLowerCase();
+  const isHomeRoute = initialPath === "/" || initialPath === "" || initialPath === "/index.html";
+  if (isHomeRoute) {
+    handleRoute();
+  } else {
+    document.addEventListener("DOMContentLoaded", handleRoute, { once: true });
+  }
 }
 
 function navigateTo(path) {
@@ -340,8 +356,8 @@ function updateBreadcrumbs(items) {
 /* ==========================================================================
    Google Analytics 4 (GA4) SPA Route Tracking
    Measurement ID: G-SE1P3EY0GJ
+   (lastTrackedGA4Path is declared at the top of this file.)
    ========================================================================== */
-let lastTrackedGA4Path = null;
 
 function trackGA4PageView(pageTitle, pageLocation, pagePath) {
   if (typeof window.gtag === "function") {
@@ -532,9 +548,9 @@ function renderHomeView(container) {
         <span style="font-size: 1.2rem;">${p.icon}</span>
         <div style="flex: 1;">
           <div style="font-size: 0.88rem; font-weight: 700;">${p.shortName}</div>
-          <div style="font-size: 0.72rem; color: var(--text-muted);">${p.subcatTitle || p.clusterTitle}</div>
+          <div style="font-size: 0.72rem; color: var(--text-secondary);">${p.subcatTitle || p.clusterTitle}</div>
         </div>
-        <span style="color: var(--text-muted); font-size: 0.8rem;">→</span>
+        <span style="color: var(--text-secondary); font-size: 0.8rem;">→</span>
       </a>
     </li>
   `).join("");
@@ -632,17 +648,17 @@ function renderHomeView(container) {
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
         <div style="padding: 1.25rem; background: var(--bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
           <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💰</div>
-          <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Financial & Loans</h4>
+          <h3 style="font-weight: 700; margin-bottom: 0.25rem;">Financial & Loans</h3>
           <p style="font-size: 0.88rem; color: var(--text-secondary);">Calculate loan amortizations, mortgage terms, compound interest growth, and vehicle payments.</p>
         </div>
         <div style="padding: 1.25rem; background: var(--bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
           <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">➗</div>
-          <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Math & Fractions</h4>
+          <h3 style="font-weight: 700; margin-bottom: 0.25rem;">Math & Fractions</h3>
           <p style="font-size: 0.88rem; color: var(--text-secondary);">Add, subtract, multiply, and divide proper/mixed fractions with LCD finding and simplification.</p>
         </div>
         <div style="padding: 1.25rem; background: var(--bg-subtle); border-radius: var(--radius-md); border: 1px solid var(--border-color);">
           <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🔄</div>
-          <h4 style="font-weight: 700; margin-bottom: 0.25rem;">Unit Conversions</h4>
+          <h3 style="font-weight: 700; margin-bottom: 0.25rem;">Unit Conversions</h3>
           <p style="font-size: 0.88rem; color: var(--text-secondary);">Instantly translate between metric and imperial scales for temperature, length, and distance.</p>
         </div>
       </div>
@@ -1014,6 +1030,7 @@ function initMobileMenu() {
     menuBtn.classList.toggle("is-active", isOpen);
     menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
     drawer.setAttribute("aria-hidden", isOpen ? "false" : "true");
+    drawer.inert = !isOpen;
     document.body.classList.toggle("drawer-open", isOpen);
   });
 
@@ -1023,6 +1040,7 @@ function initMobileMenu() {
       menuBtn.classList.remove("is-active");
       menuBtn.setAttribute("aria-expanded", "false");
       drawer.setAttribute("aria-hidden", "true");
+      drawer.inert = true;
       document.body.classList.remove("drawer-open");
     }
   });
@@ -1033,6 +1051,7 @@ function initMobileMenu() {
       menuBtn.classList.remove("is-active");
       menuBtn.setAttribute("aria-expanded", "false");
       drawer.setAttribute("aria-hidden", "true");
+      drawer.inert = true;
       document.body.classList.remove("drawer-open");
     }
   });
@@ -1043,6 +1062,7 @@ function initMobileMenu() {
       menuBtn.classList.remove("is-active");
       menuBtn.setAttribute("aria-expanded", "false");
       drawer.setAttribute("aria-hidden", "true");
+      drawer.inert = true;
       document.body.classList.remove("drawer-open");
     }
   });
