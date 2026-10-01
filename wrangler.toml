@@ -1,5 +1,6 @@
 name = "calculator-bowl"
 compatibility_date = "2026-08-28"
+main = "worker.js"
 
 [assets]
 directory = "."

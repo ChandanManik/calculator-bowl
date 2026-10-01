@@ -377,8 +377,14 @@ function updateSEO(title, description, options = {}) {
     : "https://calculatorbowl.com";
   
   let currentPath = options.canonicalPath || getCurrentRoutePath();
-  if (currentPath !== "/" && !currentPath.endsWith("/")) {
-    currentPath = currentPath + "/";
+  if (currentPath === "/") {
+    // root keeps "/"
+  } else if (currentPath.indexOf("/calculators/") === 0) {
+    // sitemap form for calculator routes: always trailing slash
+    if (!currentPath.endsWith("/")) currentPath = currentPath + "/";
+  } else {
+    // sitemap form for static pages (/terms, /privacy, ...): never trailing slash
+    currentPath = currentPath.replace(/\/+$/, "");
   }
   const currentUrl = cleanBase.replace(/\/+$/, "") + (currentPath === "/" ? "/" : currentPath);
   if (canonicalTag) {
@@ -767,7 +773,7 @@ function renderSubcategoryView(container, cluster, subcategoryKey) {
     `Precision online calculators for ${subcatTitle.toLowerCase()} under ${cluster.title.toLowerCase()}. Calculate with instant formulas and step-by-step solutions.`,
     {
       pageType: "cluster",
-      canonicalPath: '/calculators/' + cluster.id + '/' + subcategoryKey + '/',
+      canonicalPath: '/calculators/' + (cluster.canonicalId || cluster.id) + '/' + subcategoryKey + '/',
       cluster: cluster,
       breadcrumbs: breadcrumbs
     }

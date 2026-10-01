@@ -4,7 +4,7 @@
  * Network-First for Navigation
  */
 
-const CACHE_NAME = 'calculatorbowl-v1.8.5';
+const CACHE_NAME = 'calculatorbowl-v1.8.6';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',

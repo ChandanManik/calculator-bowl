@@ -13,3 +13,6 @@ bun.lockb
 .agents/
 AGENTS.md
 GEMINI.md
+wrangler.jsonc
+wrangler.toml
+worker.js
