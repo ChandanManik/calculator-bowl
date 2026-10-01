@@ -50,3 +50,19 @@
 - **CRITICAL**: wrangler config (`wrangler.jsonc` AND `wrangler.toml`) must keep `"binding": "ASSETS"` inside `assets`. Without it `env` is empty → every SPA route returns 503 (live incident 2026-09-26, rolled back in minutes). Symptom → emergency: remove `main` from both configs and deploy (assets-only restores the site), then re-add `main = "worker.js"` WITH the binding.
 - Worker responses: body is read exactly once (`res.text()`), every path returns a NEW Response — never return a consumed `res`.
 - Verify after deploys: raw canonicals via `WebClient` (no JS) must equal the sitemap form for `/`, `/terms`, hub/subcat/calc pages, and stay `https://calculatorbowl.com/` for unknown paths.
+
+## 7. New Content Checklist (SEO hygiene — add every calculator/page/article, post-incident 2026-09-26)
+New content likhar shomoy ei checklist mene nao — GSC "alternate page"/duplicate class issue barbena:
+
+1. **Canonical form (sitemap = source of truth, 3 jagai match korte hobe)**:
+   - `/calculators/...` path → **always trailing slash** (`/calculators/finance/loans/x-calculator/`); static utility pages (`/terms`, `/privacy`, `/help`, `/suggestions`, `/contact`) → **never trailing slash**.
+   - Registry `url` / `subcatUrl` / cluster `url` already correct form-e thakte hobe (gate layer 2 enforces) — tai notun page add korle URL ta direct sitemap-form-e likho.
+   - Cluster URL build korle shobshomoy `cluster.canonicalId` use koro, `cluster.id` NO: `financial`→`finance`, `conversions`→`conversion`, `datetime`→`date-time`, `network`→`tech-network`.
+   - **Inline/contextual links** (calculator-content.js article, clusters.js `contextualGuide.html`, footer/nav) must use the EXACT sitemap URL — legacy/short form link = notun alternate-page duplicate create korbe. Verify: link ta `sitemap.xml`-e acheki (slash form milche).
+   - Edge worker (`worker.js`) notun routes automatically cover kore — sitemap regenerate holei (test script kore) worker-e onno change lagbe NA.
+2. **Quote/escape hygiene (recurrent bug class — 3 bar hoyeche)**:
+   - `calculator-content.js` FAQ strings double-quoted — tar bhitore raw `"` DORBONA; curly quotes (“ ”) or `&quot;` use koro.
+   - `clusters.js` edit korle scan koro: `Select-String -Pattern '\w\\"[ ]*:'` → stray-escape (`"html\":` mangling) hole fix.
+   - Commit-er age: `node --check` on every changed `.js` (test script o kore — exit 0 required).
+3. **Gate nevoba (non-negotiable)**: rich content + ≥4 FAQs (layer 3), sitemap/llms sync (4/5), scroll click-gate (6) — `node scripts/pre-deploy-seo-gate.js` exit 0 charhe deploy NA.
+4. **Post-deploy verify (new URL gulor jonyo)**: raw canonical (`WebClient` = no-JS) === sitemap form, page HTTP 200, sitemap count +N, llms count +N. Worker deploy hole extra: `/`, `/terms`, ekta hub, ekta calc page + junk path probe (see §6).
