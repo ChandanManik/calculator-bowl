@@ -13,8 +13,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Financial",
     "icon": "💰",
     "colorClass": "financial",
-    "badge": "29 Calculators",
-    "description": "Plan your retirement savings, 401(k), ROI, CAGR growth, dividend yield, debt-free payoff schedules, home affordability, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
+    "badge": "30 Calculators",
+    "description": "Plan your retirement savings, 401(k), ROI, CAGR growth, dividend yield, debt-free payoff schedules, home affordability, full amortization schedules, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.",
     "seoTitle": "Financial, Loan & Investment Calculators | CalculatorBowl",
     "seoDescription": "Accurate financial calculators for loans, mortgages, gold valuation, bitcoin and cryptocurrency conversions, compound interest, simple interest, sales tax, and investment planning.",
     "calculators": [
@@ -1148,6 +1148,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/finance/loans/home-affordability-calculator/",
         "subcatUrl": "/calculators/finance/loans/",
         "categoryUrl": "/calculators/finance/"
+      },
+      {
+        "id": "amortization-calculator",
+        "name": "Amortization Schedule Calculator (Loan Payoff Table)",
+        "shortName": "Amortization",
+        "icon": "🧾",
+        "badge": "Schedule",
+        "description": "See every payment of a fixed-rate loan with a full amortization schedule: monthly principal, interest, remaining balance, extra-payment savings, and payoff date.",
+        "seoTitle": "Amortization Schedule Calculator - Loan Payoff Table",
+        "seoDescription": "See every payment of your loan: a full amortization schedule with principal, interest, and remaining balance each month, plus extra-payment savings and payoff date.",
+        "category": "finance",
+        "renderFunction": "renderAmortizationCalculator",
+        "contextualGuide": {
+          "title": "Loan Math Cross-References",
+          "html": "\n            <p>\n              The schedule is the loan's autobiography — payment by payment, watch it alongside the <a href=\"/calculators/finance/\" class=\"in-text-link\">💰 Financial Hub</a> tools that shaped it.\n            </p>\n            <p>\n              Refinancing rewrites r and n mid-story; re-run the mortgage and early-payoff calculators to judge whether the reset pays for itself.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "loan-calculator",
+              "label": "Loan Payment",
+              "icon": "💵"
+            },
+            {
+              "id": "mortgage-calculator",
+              "label": "Mortgage",
+              "icon": "🏡"
+            },
+            {
+              "id": "debt-snowball-calculator",
+              "label": "Debt Snowball",
+              "icon": "🎯"
+            }
+          ]
+        },
+        "subcategory": "loans",
+        "subcatTitle": "Loans & Mortgages",
+        "slug": "amortization-calculator",
+        "url": "/calculators/finance/loans/amortization-calculator/",
+        "subcatUrl": "/calculators/finance/loans/",
+        "categoryUrl": "/calculators/finance/"
       }
     ],
     "faqs": [
@@ -1173,8 +1212,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Math",
     "icon": "➗",
     "colorClass": "math",
-    "badge": "21 Calculators",
-    "description": "Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, the Pythagorean theorem, random number generation, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.",
+    "badge": "22 Calculators",
+    "description": "Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, the Pythagorean theorem, random number generation, weighted grade averages, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.",
     "seoTitle": "Math & Statistics Calculators - Step-by-Step Solvers | CalculatorBowl",
     "seoDescription": "Free online math and statistics calculators for fractions, mixed numbers, prime factors, GCF, LCM, ratios, standard deviation, and algebra.",
     "calculators": [
@@ -1996,6 +2035,45 @@ const TOPICAL_CLUSTERS = {
         "url": "/calculators/math/statistics/random-number-generator/",
         "subcatUrl": "/calculators/math/statistics/",
         "categoryUrl": "/calculators/math/"
+      },
+      {
+        "id": "grade-calculator",
+        "name": "Weighted Grade Calculator (Final Exam Requirement)",
+        "shortName": "Grade Calculator",
+        "icon": "🎓",
+        "badge": "Grades",
+        "description": "Weighted course grade and letter grade from category percentages, plus the final exam score needed to reach any target class average.",
+        "seoTitle": "Weighted Grade Calculator - Final Exam Score Needed",
+        "seoDescription": "Calculate your weighted course grade and letter grade, then find the score you need on the final exam to hit any target percentage in the class.",
+        "category": "math",
+        "renderFunction": "renderGradeCalculator",
+        "contextualGuide": {
+          "title": "Grade Math Cross-References",
+          "html": "\n            <p>\n              Grade math is weighted-average math in action — the same Σ(weight × grade) ÷ Σweight logic powers the statistics tools across our <a href=\"/calculators/math/\" class=\"in-text-link\">🧮 Math Hub</a>.\n            </p>\n            <p>\n              Curves, drops, and bonus points all reduce to ratio arithmetic — check them against the percentage tools below before you panic about a quiz.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "percentage-calculator",
+              "label": "Percentage Tools",
+              "icon": "📊"
+            },
+            {
+              "id": "mean-median-mode",
+              "label": "Class Average",
+              "icon": "📈"
+            },
+            {
+              "id": "standard-deviation",
+              "label": "Grade Spread",
+              "icon": "📉"
+            }
+          ]
+        },
+        "subcategory": "percentage",
+        "subcatTitle": "Percentage Tools",
+        "slug": "grade-calculator",
+        "url": "/calculators/math/percentage/grade-calculator/",
+        "subcatUrl": "/calculators/math/percentage/",
+        "categoryUrl": "/calculators/math/"
       }
     ],
     "faqs": [
@@ -2358,8 +2436,8 @@ const TOPICAL_CLUSTERS = {
     "shortTitle": "Date & Time",
     "icon": "⏱️",
     "colorClass": "datetime",
-    "badge": "7 Calculators",
-    "description": "Calculate exact chronological age, add or subtract days from any date, next birthday countdown, elapsed time duration, business-day deadlines, weekly work-hours and overtime totals, world time zone conversions, and live weather forecasts.",
+    "badge": "8 Calculators",
+    "description": "Calculate exact chronological age, add or subtract days from any date, next birthday countdown, elapsed time duration, business-day deadlines, weekly work-hours and overtime totals, sleep-cycle bedtimes and wake-up times, world time zone conversions, and live weather forecasts.",
     "seoTitle": "Date & Time Calculators - Age & Duration Solvers | CalculatorBowl",
     "seoDescription": "Free online date, time, and environmental calculators to determine exact chronological age, time durations, and live weather radar forecasts.",
     "calculators": [
@@ -2633,6 +2711,45 @@ const TOPICAL_CLUSTERS = {
         "subcatTitle": "Calendar & Dates",
         "slug": "work-hours-calculator",
         "url": "/calculators/date-time/calendar/work-hours-calculator/",
+        "subcatUrl": "/calculators/date-time/calendar/",
+        "categoryUrl": "/calculators/date-time/"
+      },
+      {
+        "id": "sleep-calculator",
+        "name": "Sleep Calculator (Bedtime & Wake-Up by Cycle)",
+        "shortName": "Sleep",
+        "icon": "😴",
+        "badge": "Cycles",
+        "description": "Bedtime and wake-up times aligned to 90-minute sleep cycles, with cycle counts, sleep durations, and a 15-minute fall-asleep buffer in either direction.",
+        "seoTitle": "Sleep Calculator - Bedtime & Wake-Up Time by Cycle",
+        "seoDescription": "Pick a wake-up time or bedtime and get matching sleep-cycle options: hours and 90-minute cycles per option, with a 15-minute fall-asleep buffer included.",
+        "category": "date-time",
+        "renderFunction": "renderSleepCalculator",
+        "contextualGuide": {
+          "title": "Daily Rhythm Cross-References",
+          "html": "\n            <p>\n              Sleep is the calendar's nightly appointment — anchor it in our <a href=\"/calculators/date-time/\" class=\"in-text-link\">⏰ Date &amp; Time Hub</a> alongside alarms, deadlines, and durations.\n            </p>\n            <p>\n              Pick the wake time first, then count backwards to bed — the work-hours calculator handles the morning side of the same alarm.\n            </p>\n          ",
+          "suggestedLinks": [
+            {
+              "id": "time-calculator",
+              "label": "Duration",
+              "icon": "⏱️"
+            },
+            {
+              "id": "work-hours-calculator",
+              "label": "Work Hours",
+              "icon": "💼"
+            },
+            {
+              "id": "date-calculator",
+              "label": "Date Difference",
+              "icon": "📅"
+            }
+          ]
+        },
+        "subcategory": "calendar",
+        "subcatTitle": "Calendar & Dates",
+        "slug": "sleep-calculator",
+        "url": "/calculators/date-time/calendar/sleep-calculator/",
         "subcatUrl": "/calculators/date-time/calendar/",
         "categoryUrl": "/calculators/date-time/"
       }

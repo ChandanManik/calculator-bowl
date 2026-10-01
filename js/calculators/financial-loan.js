@@ -464,3 +464,188 @@ function renderHomeAffordabilityCalculator(container, calcDef) {
 
   calculate();
 }
+
+/* ============================================================================
+ * Amortization Schedule — full term table, extra payments, interest saved
+ * ========================================================================== */
+function renderAmortizationCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="amAmount">Loan Amount</label>
+        <div class="input-with-addon">
+          <span class="input-addon prefix">$</span>
+          <input type="number" id="amAmount" class="form-control" value="250000" min="1" step="any">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="amRate">Interest Rate <span class="form-label-hint">annual %</span></label>
+        <input type="number" id="amRate" class="form-control" value="6.5" min="0" max="40" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="amTerm">Term</label>
+        <select id="amTerm" class="form-control">
+          <option value="360" selected>30 years (360 payments)</option>
+          <option value="240">20 years (240 payments)</option>
+          <option value="180">15 years (180 payments)</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="amExtra">Extra Monthly Payment <span class="form-label-hint">straight to principal</span></label>
+        <div class="input-with-addon">
+          <span class="input-addon prefix">$</span>
+          <input type="number" id="amExtra" class="form-control" value="0" min="0" step="any">
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcAm" class="btn btn-primary"><span>🧾 Build Schedule</span></button>
+      <button type="button" id="btnResetAm" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="amResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const amountInput = container.querySelector("#amAmount");
+  const rateInput = container.querySelector("#amRate");
+  const termSel = container.querySelector("#amTerm");
+  const extraInput = container.querySelector("#amExtra");
+  const resultDiv = container.querySelector("#amResultContainer");
+
+  const money = (n) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const money0 = (n) => n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+
+  // Fixed-rate amortization engine — returns payment, payoff months, interest, every row.
+  function amort(P, r, n, extra) {
+    const payment = r === 0 ? P / n : (P * r) / (1 - Math.pow(1 + r, -n));
+    let bal = P, months = 0, interest = 0;
+    const rows = [];
+    while (bal > 0.005 && months < n) {
+      const mi = bal * r;
+      let princ = payment + extra - mi;
+      if (princ > bal) princ = bal;
+      if (princ <= 0) break;                     // payment cannot cover interest
+      bal -= princ;
+      months++;
+      interest += mi;
+      rows.push({ i: months, pay: princ + mi, princ, mi, bal });
+    }
+    return { payment, months, interest, rows };
+  }
+
+  function calculate(ev) {
+    const P = parseFloat(amountInput.value);
+    const annual = parseFloat(rateInput.value);
+    const n = parseInt(termSel.value, 10);
+    const extra = parseFloat(extraInput.value);
+
+    if (isNaN(P) || P <= 0) { alert("Please enter a loan amount greater than zero."); return; }
+    if (isNaN(annual) || annual < 0 || annual > 40) { alert("Interest rate must be between 0% and 40%."); return; }
+    if (isNaN(extra) || extra < 0) { alert("Extra monthly payment cannot be negative."); return; }
+
+    const r = annual / 100 / 12;
+    const plan = amort(P, r, n, extra);
+    if (!plan.months) { alert("That payment cannot cover the interest — lower the rate or raise the payment."); return; }
+
+    const baselineInterest = plan.payment * n - P;       // no extra → exactly n payments
+    const saved = baselineInterest - plan.interest;
+    const monthsSaved = n - plan.months;
+    const payoffDate = new Date();
+    payoffDate.setMonth(payoffDate.getMonth() + plan.months);
+    const dateStr = payoffDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+    const first = plan.rows[0];
+    const hundred = amort(P, r, n, extra + 100);          // illustration for the steps
+
+    const rowHtml = plan.rows.map(rw => `
+      <tr style="border-bottom: 1px solid var(--border-color); font-size: 0.85rem;">
+        <td style="padding: 0.5rem 0.75rem; color: var(--text-muted);">${rw.i}</td>
+        <td style="padding: 0.5rem 0.75rem; text-align: right;">$${money(rw.pay)}</td>
+        <td style="padding: 0.5rem 0.75rem; text-align: right; color: var(--accent-emerald);">$${money(rw.princ)}</td>
+        <td style="padding: 0.5rem 0.75rem; text-align: right; color: var(--accent-orange);">$${money(rw.mi)}</td>
+        <td style="padding: 0.5rem 0.75rem; text-align: right; font-weight: 600;">$${money(rw.bal)}</td>
+      </tr>`).join("");
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Monthly Payment (P&I)</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">$${money(plan.payment)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Total Interest</div>
+          <div class="result-stat-val">$${money(plan.interest)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Total Paid</div>
+          <div class="result-stat-val">$${money(plan.interest + P)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Time to Payoff</div>
+          <div class="result-stat-val">${plan.months} months</div>
+        </div>
+      </div>
+
+      <p style="margin-top: 1rem; font-size: 0.95rem;">
+        Payoff around <b>${dateStr}</b>${extra > 0
+          ? ` with <b>$${money(extra)}</b> extra each month: <b>−${monthsSaved} months</b> and <b>−$${money(saved)}</b> of interest versus minimum schedule.`
+          : `. Add an extra payment to see how much principal it deletes — for example $100/month drops the loan by <b>${n - hundred.months} months</b> and saves <b>$${money(baselineInterest - hundred.interest)}</b>.`}
+      </p>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Amortization Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step1 — The payment formula</span>
+          <div class="math-formula-box">M = P × r ÷ (1 − (1 + r)<sup>−n</sup>)</div>
+          <p class="step-content">r = ${annual}% ÷ 12 = <b>${r.toFixed(6)}</b> per month, n = ${n} payments. M = $${money0(P)} × ${r.toFixed(6)} ÷ (1 − (1 + ${r.toFixed(6)})<sup>−${n}</sup>) = <b>$${money(plan.payment)}</b> every month${extra > 0 ? `, plus $${money(extra)} extra = $${money(plan.payment + extra)} out the door` : ""}.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step2 — Why month one hurts</span>
+          <div class="math-formula-box">interest = balance × r &nbsp;·&nbsp; principal = payment − interest</div>
+          <p class="step-content">Your first payment splits <b>$${money(first.mi)}</b> to interest and only <b>$${money(first.princ)}</b> to principal — ${(((first.mi) / (first.pay)) * 100).toFixed(1)}% of the check vanishes on day one, leaving a balance of <b>$${money(first.bal)}</b>. Interest is charged on the whole balance, so early years are interest-heavy and late years principal-heavy — that flip is the whole shape of the schedule below.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step3 — Extra payments & the full table</span>
+          <div class="math-formula-box">every extra dollar hits principal once, and kills every future interest it would have spawned</div>
+          <p class="step-content">${extra > 0
+            ? `You are paying $${money(plan.payment + extra)} monthly across ${plan.months} months instead of ${n} — total interest falls from $${money(baselineInterest)} to $${money(plan.interest)}.`
+            : `Try $50–$200 extra monthly: at +$100 the payoff lands at ${hundred.months} months instead of ${n}, saving $${money(baselineInterest - hundred.interest)}.`} The table lists all ${plan.rows.length} payments: each row shows how much of that month's check buys the loan back versus renting the money, until the balance hits $0.00.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem;">
+        <h4 style="font-family: var(--font-heading); font-size: 1.1rem; margin-bottom: 0.75rem;">Full Payment Schedule (${plan.rows.length} payments)</h4>
+        <div style="max-height: 420px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: 0.75rem;">
+          <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+              <tr style="background: var(--bg-subtle); border-bottom: 1.5px solid var(--border-color); position: sticky; top: 0;">
+                <th style="padding: 0.7rem 0.75rem; font-size: 0.8rem; color: var(--text-muted);">#</th>
+                <th style="padding: 0.7rem 0.75rem; font-size: 0.8rem; color: var(--text-muted); text-align: right;">Payment</th>
+                <th style="padding: 0.7rem 0.75rem; font-size: 0.8rem; color: var(--text-muted); text-align: right;">Principal</th>
+                <th style="padding: 0.7rem 0.75rem; font-size: 0.8rem; color: var(--text-muted); text-align: right;">Interest</th>
+                <th style="padding: 0.7rem 0.75rem; font-size: 0.8rem; color: var(--text-muted); text-align: right;">Balance</th>
+              </tr>
+            </thead>
+            <tbody>${rowHtml}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  [amountInput, rateInput, extraInput].forEach(el => el.addEventListener("input", calculate));
+  termSel.addEventListener("change", calculate);
+  container.querySelector("#btnCalcAm").addEventListener("click", calculate);
+  container.querySelector("#btnResetAm").addEventListener("click", () => {
+    amountInput.value = "250000";
+    rateInput.value = "6.5";
+    termSel.value = "360";
+    extraInput.value = "0";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}

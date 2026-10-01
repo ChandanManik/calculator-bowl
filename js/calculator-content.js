@@ -7176,6 +7176,262 @@ const CALCULATOR_RICH_CONTENT = {
         a: "Run both: driving cost = distance ÷ MPG × price ×2 for the return (add lodging and food on long hauls), while airfare multiplies by passenger count plus airport ground transport. The calculator gives you the honest per-mile driving number to put against the tickets."
       }
     ]
+  },
+
+  // Amortization Calculator
+  "amortization-calculator": {
+    articleTitle: "Reading an Amortization Schedule: Where Every Mortgage Payment Goes",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🧾 Loan Timeline</span>
+          <h4>Balance Falls Slowly at First — Interest Ate the Early Payments</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 220" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="220" rx="12" fill="var(--bg-subtle)"/>
+            <text x="300" y="34" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">$250k at6.5% over30 years — with and without $100 extra</text>
+            <!-- baseline curve -->
+            <path d="M60,58 Q330,118 540,182" fill="none" stroke="var(--text-muted)" stroke-width="3" stroke-dasharray="7 5"/>
+            <text x="316" y="97" font-size="12" fill="var(--text-muted)">minimum schedule ·360 payments</text>
+            <!-- extra curve -->
+            <path d="M60,58 Q295,152 462,182" fill="none" stroke="var(--accent-emerald)" stroke-width="3.5"/>
+            <circle cx="462" cy="182" r="6" fill="var(--accent-emerald)"/>
+            <text x="474" y="176" font-size="12" font-weight="600" fill="var(--accent-emerald)">+$100/mo → done early</text>
+            <!-- axis -->
+            <line x1="60" y1="192" x2="540" y2="192" stroke="var(--border-color)" stroke-width="2"/>
+            <text x="60" y="210" font-size="12" fill="var(--text-muted)">month0 · $250,000</text>
+            <text x="540" y="210" text-anchor="end" font-size="12" fill="var(--text-muted)">month360 · $0</text>
+            <text x="60" y="50" font-size="13" font-weight="600" fill="var(--text-muted)">$250k</text>
+            <text x="300" y="145" text-anchor="middle" font-size="12" fill="var(--accent-orange)">month1:85.7% of the payment is interest</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        An <b>amortization schedule</b> is the full autopsy of a loan: every payment, split into interest, principal, and the shrinking balance that remains. Fixed-rate mortgages and car loans follow the same rigid arithmetic — the payment never changes, but its <i>composition</i> flips from almost-pure-interest to almost-pure-principal over the term. This calculator prints the complete table and lets extra payments rewrite it.
+      </p>
+
+      <h3 class="content-subheading">1. The Payment Formula (and Why Month One Hurts)</h3>
+      <div class="math-formula-box">
+        M = P × r ÷ (1 − (1 + r)<sup>−n</sup>) &nbsp; where r = annual rate ÷ 12, n = number of months
+      </div>
+      <ul class="content-list">
+        <li><b>$250,000 at6.5% for30 years:</b> r =0.0054167, n =360 → M ≈ <b>$1,580.17</b> per month</li>
+        <li>Month one's interest: $250,000 ×0.0054167 = <b>$1,354.17</b> — <b>85.7%</b> of the check. Only ≈$226 reduces the debt</li>
+        <li>Each month the balance dips, interest dips a little, and principal grows a little — the schedule's interest column declines from day one to payoff</li>
+        <li>Total interest over the full term: about <b>$318,900</b> — the loan costs more than itself in fees-to-borrow</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Extra Payments Delete the Tail</h3>
+      <p>
+        A dollar of extra payment attacks principal <b>once</b> — but it also cancels every future interest dollar that principal would have spawned, across all remaining months. Adding just <b>$100/month</b> pulls the payoff forward by roughly five years and shaves tens of thousands off the interest. Two classic accelerators: <b>biweekly payments</b> (half the monthly amount every two weeks =13 full payments a year instead of12) and rounding the payment up to the next hundred. Both must be marked <i>"apply to principal"</i> with the servicer — otherwise it just pre-pays next month's interest.
+      </p>
+
+      <h3 class="content-subheading">3. When the Schedule Actually Matters</h3>
+      <ul class="content-list">
+        <li><b>Refinancing decisions:</b> a lower rate resets the clock — compare remaining interest under the old schedule versus closing costs under the new one</li>
+        <li><b>Selling early:</b> in years1–5 most payments haven't touched principal, so equity grows slowly — a key number before any move</li>
+        <li><b>Buying points:</b> paying upfront to lower the rate shifts the whole curve down; the break-even is how many months of savings offset the point cost</li>
+        <li>Never "skip" a payment and let the servicer apply it to future installments — direct it to principal or the schedule doesn't move</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "What is an amortization schedule?",
+        a: "A table listing every payment of a fixed-rate loan with four columns: the payment number, how much goes to interest, how much reduces principal, and the remaining balance. It starts at the full loan amount and ends at exactly $0.00 on the final row."
+      },
+      {
+        q: "How is the monthly loan payment calculated?",
+        a: "M = P × r ÷ (1 − (1 + r)^−n), where P is the principal, r the monthly interest rate, and n the number of months. For $250,000 at6.5% over30 years that is about $1,580.17 — the same figure every month until payoff."
+      },
+      {
+        q: "How much of my first payment is interest?",
+        a: "On a $250,000 loan at6.5%, month one accrues $1,354.17 of interest — roughly86% of the first payment. Only about $226 reduces the balance, which is why refinancing or extra principal early in the term saves the most money."
+      },
+      {
+        q: "How does an extra payment reduce interest?",
+        a: "Extra dollars go straight to principal, shrinking the balance that future interest is calculated on — compounding works in reverse. $100 extra per month on a $250k/6.5%/30-year loan cuts roughly five years of payments and tens of thousands in interest."
+      }
+    ]
+  },
+
+  // Grade Calculator
+  "grade-calculator": {
+    articleTitle: "Weighted Grades Explained: Course Average, Letter Grade, and the Final You Need",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">🎓 Grade Map</span>
+          <h4>80% Banked at87.14% — The Final Still Worth20%</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <text x="300" y="32" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">Where the100% of the course sits today</text>
+            <!-- weight stack -->
+            <rect x="60" y="46" width="175" height="34" rx="6" fill="var(--accent-blue, #3b82f6)"/>
+            <text x="147" y="68" text-anchor="middle" font-size="12" fill="#fff">Exams35%</text>
+            <rect x="239" y="46" width="125" height="34" rx="6" fill="var(--accent-emerald)"/>
+            <text x="301" y="68" text-anchor="middle" font-size="12" fill="#fff">HW25%</text>
+            <rect x="368" y="46" width="60" height="34" rx="6" fill="var(--accent-purple, #8b5cf6)"/>
+            <text x="398" y="68" text-anchor="middle" font-size="11" fill="#fff">Quiz12</text>
+            <rect x="432" y="46" width="40" height="34" rx="6" fill="var(--accent-orange)"/>
+            <text x="452" y="68" text-anchor="middle" font-size="11" fill="#fff">P8</text>
+            <rect x="476" y="46" width="100" height="34" rx="6" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-dasharray="6 4"/>
+            <text x="526" y="68" text-anchor="middle" font-size="12" font-weight="600" fill="var(--text-muted)">final20%</text>
+            <!-- score scale (zoomed60-100) -->
+            <text x="60" y="108" font-size="13" font-weight="600" fill="var(--text-muted)">Class standing, zoomed60 →100%:</text>
+            <line x1="60" y1="140" x2="560" y2="140" stroke="var(--border-color)" stroke-width="3"/>
+            <g font-size="11" fill="var(--text-muted)" text-anchor="middle">
+              <text x="60" y="162">60</text><text x="185" y="162">65</text><text x="310" y="162">70</text><text x="435" y="162">75+?</text><text x="560" y="162">100</text>
+            </g>
+            <circle cx="378" cy="140" r="8" fill="var(--accent-emerald)"/>
+            <text x="378" y="126" text-anchor="middle" font-size="12" font-weight="600" fill="var(--accent-emerald)">87.14 now</text>
+            <line x1="410" y1="132" x2="410" y2="148" stroke="var(--accent-blue, #3b82f6)" stroke-width="3"/>
+            <text x="410" y="180" text-anchor="middle" font-size="12" fill="var(--accent-blue, #3b82f6)">target88</text>
+            <text x="300" y="204" text-anchor="middle" font-size="13" fill="var(--text-muted)">Σ(weight × grade) =6,971 ÷80 =87.14% → B+ · final needs91.45%</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Syllabi rarely grade by simple average — a35%-weight exam counts over three times as much as a12%-weight quiz pile. A <b>weighted grade</b> multiplies each category by its weight, sums the products, and divides by total weight: the honest number your transcript will see. This calculator does that algebra live, maps it to a letter, and then runs the equation backwards to tell you <b>exactly what the final exam must score</b>.
+      </p>
+
+      <h3 class="content-subheading">1. The Weighted Average, Worked</h3>
+      <div class="math-formula-box">
+        grade = Σ(weight × grade) ÷ Σweights
+      </div>
+      <ul class="content-list">
+        <li>Defaults: Exams85%@35, Homework92%@25, Quizzes78%@12, Participation95%@8 → <b>2,975 +2,300 +936 +760 =6,971</b></li>
+        <li>6,971 ÷80 (weight entered) = <b>87.14%</b> → letter <b>B+</b> on the standard US scale</li>
+        <li>Weights not yet entered are simply <b>remaining opportunity</b> — the calculator tracks them as "weight still up for grabs"</li>
+        <li>Only know one number (e.g., "standing85% of70%")? Enter it as a single row — the algebra is identical</li>
+      </ul>
+
+      <h3 class="content-subheading">2. Letter Scales and the Rounding Wars</h3>
+      <p>
+        The common scale: A ≥93, A− ≥90, B+ ≥87, B ≥83, B− ≥80, C+ ≥77, C ≥73, C− ≥70, D ≥60, else F. But schools diverge — some use the nine-point scale (A ≥90, B ≥80...), some award ±0.5% grace at boundaries, some round86.5− up to B+. Check your syllabus's exact table; a0.1% difference straddling B+/A− is worth an email to the professor with the calculation attached.
+      </p>
+
+      <h3 class="content-subheading">3. What the Final Must Score — the Backwards Equation</h3>
+      <div class="math-formula-box">
+        needed = (target ×100 − Σ(weight × grade)) ÷ remaining weight
+      </div>
+      <ul class="content-list">
+        <li>Target88% with6,971 banked over80% weight → (8,800 −6,971) ÷20 = <b>91.45% needed</b> on the final</li>
+        <li>Result over100%? The target is <b>unreachable</b> — lower the target, or hunt for weight still hidden (participation, late passes, curves)</li>
+        <li>Result negative? Already locked above target — coast is legal</li>
+        <li>Real-world check: a single class is not your GPA — push final-grade results into a GPA view for the transcript picture</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "How do I calculate a weighted grade?",
+        a: "Multiply each category's grade by its weight, add the products, then divide by the sum of the weights: (85×35 +92×25 +78×12 +95×8) ÷80 =87.14%. If weights total less than100%, the gap is simply the weight not yet graded."
+      },
+      {
+        q: "What grade do I need on the final exam?",
+        a: "needed = (target ×100 − Σ(weight × grade)) ÷ remaining weight. For a88% target with6,971 points banked over80% of the course: (8,800 −6,971) ÷20 =91.45% on the final. The calculator updates this live as you adjust categories."
+      },
+      {
+        q: "Why is my grade lower than my test average?",
+        a: "Because categories carry different weights — acing quizzes worth15% while a heavy35% exam drags lowers the weighted result below a naive mean. Recompute with the real weights before assuming a grading error; if the numbers still disagree, show the professor the Σ(w×g) breakdown."
+      },
+      {
+        q: "Is it better to drop a low grade or protect the final?",
+        a: "Depends on weight: dropping a zero in a12%-weight quiz column often recovers more than several points on the final, while a bombed35% exam dominates everything. Run both scenarios here — change the row, watch the target move."
+      }
+    ]
+  },
+
+  // Sleep Calculator
+  "sleep-calculator": {
+    articleTitle: "Sleep Cycles and the90-Minute Rule: Timing Bedtime Like Clockwork",
+    diagramHtml: `
+      <div class="content-infographic-card">
+        <div class="infographic-header">
+          <span class="infographic-badge">😴 Cycle Map</span>
+          <h4>Five × 90 Minutes:11:30 PM →7:00 AM, No Grogginess</h4>
+        </div>
+        <div style="padding: 1.4rem; display: flex; justify-content: center;">
+          <svg viewBox="0 0 600 215" style="width: 100%; max-width: 560px; height: auto;">
+            <rect width="600" height="215" rx="12" fill="var(--bg-subtle)"/>
+            <text x="300" y="32" text-anchor="middle" font-size="15" font-weight="600" fill="var(--text-muted)">Each block is one full NREM → REM pass</text>
+            <g font-size="11" fill="#fff" text-anchor="middle" font-weight="600">
+              <rect x="60" y="52" width="96" height="44" rx="6" fill="var(--accent-blue, #3b82f6)" fill-opacity="0.85"/><text x="108" y="78">C1 · light</text>
+              <rect x="156" y="52" width="96" height="44" rx="6" fill="var(--accent-blue, #3b82f6)" fill-opacity="0.7"/><text x="204" y="78">C2 · deep</text>
+              <rect x="252" y="52" width="96" height="44" rx="6" fill="var(--accent-purple, #8b5cf6)" fill-opacity="0.8"/><text x="300" y="78">C3 · deep</text>
+              <rect x="348" y="52" width="96" height="44" rx="6" fill="var(--accent-emerald)" fill-opacity="0.75"/><text x="396" y="78">C4 · REM</text>
+              <rect x="444" y="52" width="96" height="44" rx="6" fill="var(--accent-emerald)"/><text x="492" y="78">C5 · REM</text>
+            </g>
+            <!-- boundaries -->
+            <g font-size="11" fill="var(--text-muted)" text-anchor="middle">
+              <text x="60" y="120">11:30 PM</text><text x="156" y="120">1:00</text><text x="252" y="120">2:30</text>
+              <text x="348" y="120">4:00</text><text x="444" y="120">5:30</text><text x="540" y="120">7:00 AM</text>
+            </g>
+            <line x1="540" y1="44" x2="540" y2="132" stroke="var(--accent-emerald)" stroke-width="2.5"/>
+            <text x="540" y="148" text-anchor="middle" font-size="12" font-weight="600" fill="var(--accent-emerald)">wake at cycle end</text>
+            <!-- buffer -->
+            <text x="60" y="158" text-anchor="start" font-size="12" fill="var(--accent-orange)">← in bed11:15 (onset ~11:30)</text>
+            <text x="300" y="190" text-anchor="middle" font-size="13" fill="var(--text-muted)">7:00 AM alarm −450 min =11:30 PM asleep · wake mid-cycle (5:30) = sleep inertia</text>
+          </svg>
+        </div>
+      </div>
+    `,
+    articleHtml: `
+      <p>
+        Sleep runs in roughly <b>90-minute cycles</b>: light NREM stages, deep slow-wave sleep, then REM dreaming — repeating four to six times a night. Waking at a <i>cycle boundary</i> feels dramatically different from waking mid-cycle, even on identical hours — that fog after a6:40 alarm on a7:00 schedule is <b>sleep inertia</b>, the cost of dragging the brain out of deep sleep. This calculator counts the clock backwards (or forwards) in whole cycles so the alarm lands on a boundary.
+      </p>
+
+      <h3 class="content-subheading">1. The Cycle Arithmetic</h3>
+      <div class="math-formula-box">
+        bedtime = wake-up − (cycles × 90 min) &nbsp;·&nbsp; wake-up = bedtime + (cycles × 90 min)
+      </div>
+      <ul class="content-list">
+        <li>Alarm at <b>7:00 AM</b>: minus450 min (5 cycles) = <b>11:30 PM asleep</b>; minus540 (6 cycles) =10:00 PM; minus360 (4 cycles) =1:00 AM</li>
+        <li>Bed at <b>11:00 PM</b>: +450 min = wake at <b>6:30 AM</b>; +540 =8:00 AM — the same math reversed</li>
+        <li>Onset takes ~15 minutes — the "In Bed By" card subtracts that buffer so you're <i>asleep</i> on the cycle grid, not just horizontal</li>
+        <li>Cycle length varies per person (±10–20 min); treat the grid as ±one cycle of precision, not a metronome</li>
+      </ul>
+
+      <h3 class="content-subheading">2. How Many Cycles Do You Actually Need?</h3>
+      <ul class="content-list">
+        <li><b>Adults:7–9 hours</b> →5 cycles (7.5h) covers the floor,6 cycles (9h) the ceiling — most people land between</li>
+        <li><b>Teens:8–10h, children:9–12h</b> — younger sleepers run longer cycles and more deep sleep; the90-minute grid still roughly applies</li>
+        <li>Short sleepers exist (DEC2 gene variants) but are rare — deciding you "only need4 cycles" is usually just chronic sleep debt talking</li>
+        <li>Naps: one cycle (90 min) or a sharp20-minute doze — waking from a30–45 min nap dumps you into deep sleep's inertia zone</li>
+      </ul>
+
+      <h3 class="content-subheading">3. Landing the Schedule</h3>
+      <ul class="content-list">
+        <li><b>Consistency beats duration:</b> same wake time7 days a week anchors the circadian clock harder than any bedtime ritual</li>
+        <li>Caffeine's half-life is ~5–6 hours — stop8 hours before onset; alcohol collapses REM in the second half of the night even when you "sleep through"</li>
+        <li>Dim screens30 minutes before bed (or use night modes) — melatonin responds to brightness more than to clock time</li>
+        <li>Night owls aren't lazy: chronotype shifts the whole grid later — pick a realistic anchor, then let the calculator count backwards from it</li>
+      </ul>
+    `,
+    faqs: [
+      {
+        q: "What time should I go to bed if I wake up at 7 AM?",
+        a: "For five full90-minute cycles, be asleep by11:30 PM (get in bed around11:15 PM to cover the ~15-minute onset). Six cycles means10:00 PM; four cycles — too few for most adults — pushes bedtime to1:00 AM."
+      },
+      {
+        q: "Why do I wake up groggy even after8 hours?",
+        a: "You probably woke mid-cycle — deep sleep's inertia lasts15–30 minutes and feels like worse. Shift bedtime by±30–90 minutes so the alarm lands on a cycle boundary, or use a smart alarm that targets light-sleep phases."
+      },
+      {
+        q: "Is6 hours (four cycles) enough sleep?",
+        a: "Not for most adults — long-term short sleep is linked to weight gain, impaired memory, and cardiovascular risk. Occasional four-cycle nights are fine; a permanent schedule is effectively chronic sleep deprivation even if you feel adapted."
+      },
+      {
+        q: "Can I catch up on sleep over the weekend?",
+        a: "Partially — recovery sleep restores some cognitive deficits, but a shifting weekend schedule (sleeping in3+ hours) creates “social jet lag” that worsens Monday performance. Keep the wake time steady and use an earlier bedtime to repay debt instead."
+      }
+    ]
   }
 };
 

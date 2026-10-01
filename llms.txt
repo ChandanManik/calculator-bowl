@@ -7,13 +7,13 @@
 - **Directory**: [Master A-Z Directory](https://calculatorbowl.com/calculators/)
 - **Client-Side Processing**: Instant zero-latency mathematical and financial calculations.
 - **Step-by-Step Breakdowns**: Detailed mathematical solutions showing formulas, variable substitutions, and simplification steps.
-- **Topical Siloing**: 79 precision tools structured across 6 topical pillars.
+- **Topical Siloing**: 82 precision tools structured across 6 topical pillars.
 
 ---
 
 ## 📁 Financial Calculators (Category Hub: [Financial Calculators](https://calculatorbowl.com/calculators/finance/))
 
-*Description*: Plan your retirement savings, 401(k), ROI, CAGR growth, dividend yield, debt-free payoff schedules, home affordability, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.
+*Description*: Plan your retirement savings, 401(k), ROI, CAGR growth, dividend yield, debt-free payoff schedules, home affordability, full amortization schedules, debt-to-income (DTI) ratio, certificate of deposit (CD), early loan payoff, APR to APY conversion, present value discounting, inflation impact, loans, mortgages, gold and bitcoin crypto investments, salary conversions, credit card payoff, future value, markup, depreciation, simple and compound interest with step-by-step breakdowns.
 
 ### [Personal & Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/finance/loans/loan-calculator/`
@@ -218,9 +218,16 @@
 - **Summary**: Estimate how much house you can afford from income, debts, down payment, rate, taxes, and insurance using lender front-end and back-end DTI caps.
 - **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
 
+### [Amortization Schedule Calculator (Loan Payoff Table)](https://calculatorbowl.com/calculators/finance/loans/amortization-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/finance/loans/amortization-calculator/`
+- **Category**: [Financial Calculators](https://calculatorbowl.com/calculators/finance/)
+- **Subcategory**: `Loans & Mortgages`
+- **Summary**: See every payment of a fixed-rate loan with a full amortization schedule: monthly principal, interest, remaining balance, extra-payment savings, and payoff date.
+- **Related Tools in Category**: [Loan Calculator](https://calculatorbowl.com/calculators/finance/loans/loan-calculator/), [Compound Interest](https://calculatorbowl.com/calculators/finance/interest/compound-interest-calculator/), [Simple Interest](https://calculatorbowl.com/calculators/finance/interest/simple-interest-calculator/)
+
 ## 📁 Math & Statistics Calculators (Category Hub: [Math & Statistics Calculators](https://calculatorbowl.com/calculators/math/))
 
-*Description*: Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, the Pythagorean theorem, random number generation, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.
+*Description*: Solve fractions, mixed numbers, prime factors, GCF/LCM, ratios, line slopes, the Pythagorean theorem, random number generation, weighted grade averages, probability, quadratic equations, mean/median/mode, standard deviation, exponents, scientific expressions, and nCr/nPr counting with step-by-step proofs.
 
 ### [Standard Online Basic Calculator](https://calculatorbowl.com/calculators/math/basic/basic-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/math/basic/basic-calculator/`
@@ -369,6 +376,13 @@
 - **Summary**: Generate secure random numbers in any range with count, unique-draw, and sort options, plus generation history and the odds behind every draw.
 - **Related Tools in Category**: [Basic Calculator](https://calculatorbowl.com/calculators/math/basic/basic-calculator/), [Scientific Calculator](https://calculatorbowl.com/calculators/math/basic/scientific-calculator/), [Percentage Calculator](https://calculatorbowl.com/calculators/math/percentage/percentage-calculator/)
 
+### [Weighted Grade Calculator (Final Exam Requirement)](https://calculatorbowl.com/calculators/math/percentage/grade-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/math/percentage/grade-calculator/`
+- **Category**: [Math & Statistics Calculators](https://calculatorbowl.com/calculators/math/)
+- **Subcategory**: `Percentage Tools`
+- **Summary**: Weighted course grade and letter grade from category percentages, plus the final exam score needed to reach any target class average.
+- **Related Tools in Category**: [Basic Calculator](https://calculatorbowl.com/calculators/math/basic/basic-calculator/), [Scientific Calculator](https://calculatorbowl.com/calculators/math/basic/scientific-calculator/), [Percentage Calculator](https://calculatorbowl.com/calculators/math/percentage/percentage-calculator/)
+
 ## 📁 Unit Conversion Calculators (Category Hub: [Unit Conversion Calculators](https://calculatorbowl.com/calculators/conversion/))
 
 *Description*: Convert temperature, length, distance, weight, mass, area, volume, speed, pressure, fuel economy and trip fuel costs, and digital data sizes (bytes, KB, MB, GB, TB) across metric and imperial systems.
@@ -431,7 +445,7 @@
 
 ## 📁 Date & Time Calculators (Category Hub: [Date & Time Calculators](https://calculatorbowl.com/calculators/date-time/))
 
-*Description*: Calculate exact chronological age, add or subtract days from any date, next birthday countdown, elapsed time duration, business-day deadlines, weekly work-hours and overtime totals, world time zone conversions, and live weather forecasts.
+*Description*: Calculate exact chronological age, add or subtract days from any date, next birthday countdown, elapsed time duration, business-day deadlines, weekly work-hours and overtime totals, sleep-cycle bedtimes and wake-up times, world time zone conversions, and live weather forecasts.
 
 ### [Exact Chronological Age Calculator](https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/)
 - **Direct URL**: `https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/`
@@ -480,6 +494,13 @@
 - **Category**: [Date & Time Calculators](https://calculatorbowl.com/calculators/date-time/)
 - **Subcategory**: `Calendar & Dates`
 - **Summary**: Calculate daily and weekly work hours from shift start, end, and unpaid breaks, with overtime over 40 hours and weekly, monthly, and yearly gross pay.
+- **Related Tools in Category**: [Age Calculator](https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/), [Time Calculator](https://calculatorbowl.com/calculators/date-time/calendar/time-duration-calculator/), [Weather & Radar](https://calculatorbowl.com/calculators/date-time/environment/weather-forecast-calculator/)
+
+### [Sleep Calculator (Bedtime & Wake-Up by Cycle)](https://calculatorbowl.com/calculators/date-time/calendar/sleep-calculator/)
+- **Direct URL**: `https://calculatorbowl.com/calculators/date-time/calendar/sleep-calculator/`
+- **Category**: [Date & Time Calculators](https://calculatorbowl.com/calculators/date-time/)
+- **Subcategory**: `Calendar & Dates`
+- **Summary**: Bedtime and wake-up times aligned to 90-minute sleep cycles, with cycle counts, sleep durations, and a 15-minute fall-asleep buffer in either direction.
 - **Related Tools in Category**: [Age Calculator](https://calculatorbowl.com/calculators/date-time/calendar/age-calculator/), [Time Calculator](https://calculatorbowl.com/calculators/date-time/calendar/time-duration-calculator/), [Weather & Radar](https://calculatorbowl.com/calculators/date-time/environment/weather-forecast-calculator/)
 
 ## 📁 Network & Internet Calculators (Category Hub: [Network & Internet Calculators](https://calculatorbowl.com/calculators/tech-network/))

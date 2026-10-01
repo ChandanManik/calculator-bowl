@@ -1368,3 +1368,133 @@ function renderWorkHoursCalculator(container, calcDef) {
 
   calculate();
 }
+
+/* ============================================================================
+ * Sleep Calculator — bedtime / wake times aligned to 90-minute cycles
+ * ========================================================================== */
+function renderSleepCalculator(container, calcDef) {
+  container.innerHTML = `
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label" for="slTime" id="slTimeLabel">I Want to Wake Up At</label>
+        <input type="time" id="slTime" class="form-control" value="07:00">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="slMode">Counting…</label>
+        <select id="slMode" class="form-control">
+          <option value="wake">bedtimes backwards from wake-up</option>
+          <option value="sleep">wake times forwards from bedtime</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcSl" class="btn btn-primary"><span>😴 Plan My Sleep</span></button>
+      <button type="button" id="btnResetSl" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="slResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const timeInput = container.querySelector("#slTime");
+  const modeSel = container.querySelector("#slMode");
+  const labelEl = container.querySelector("#slTimeLabel");
+  const resultDiv = container.querySelector("#slResultContainer");
+
+  const CYCLES = [6, 5, 4, 3];
+
+  const fmtTime = (total) => {
+    const m = ((total % 1440) + 1440) % 1440;
+    let h = Math.floor(m / 60);
+    const mm = m % 60;
+    const ap = h >= 12 ? "PM" : "AM";
+    h = h % 12;
+    if (h === 0) h = 12;
+    return `${h}:${String(mm).padStart(2, "0")} ${ap}`;
+  };
+  const dur = (mins) => {
+    const h = Math.floor(mins / 60), m = mins % 60;
+    return m === 0 ? `${h}h` : `${h}h ${m}m`;
+  };
+
+  function setDefaults() {
+    timeInput.value = "07:00";
+    modeSel.value = "wake";
+  }
+
+  function calculate(ev) {
+    const raw = timeInput.value;
+    const m = /^(\d{1,2}):(\d{2})$/.exec(raw);
+    if (!m || parseInt(m[1], 10) > 23 || parseInt(m[2], 10) > 59) { alert("Please pick a valid time."); return; }
+    const base = parseInt(m[1], 10) * 60 + parseInt(m[2], 10);
+    const wakeMode = modeSel.value !== "sleep";
+
+    // times[i] for CYCLES[i] × 90-minute cycles
+    const times = CYCLES.map(c => fmtTime(wakeMode ? base - c * 90 : base + c * 90));
+    const primary = times[1];                       //5 cycles =7.5h — the sweet spot
+    const inBedBy = fmtTime((wakeMode ? base - 450 : base) - 15);
+    const label = wakeMode ? "Recommended Bedtime" : "Recommended Wake-Up";
+
+    labelEl.textContent = wakeMode ? "I Want to Wake Up At" : "I Want to Fall Asleep At";
+
+    const optionRows = CYCLES.map((c, i) => `
+      <div style="display: flex; justify-content: space-between; padding: 0.45rem 0; border-bottom: 1px dashed var(--border-color); font-size: 0.95rem;">
+        <span><b>${dur(c * 90)}</b> · ${c} cycles</span>
+        <span style="font-weight: 700; color: ${i === 1 ? "var(--accent-emerald)" : "var(--text-primary)"};">${times[i]}${i === 1 ? " ← best" : ""}</span>
+      </div>`).join("");
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">${label}</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${primary}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Sleep Duration</div>
+          <div class="result-stat-val">${dur(450)}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Sleep Cycles</div>
+          <div class="result-stat-val">5 × 90 min</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">In Bed By</div>
+          <div class="result-stat-val">${inBedBy}</div>
+        </div>
+      </div>
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">🌙 Sleep Cycle Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step1 — The cycle math</span>
+          <div class="math-formula-box">${wakeMode ? "bedtime = wake-up − (cycles × 90 min)" : "wake-up = bedtime + (cycles × 90 min)"}</div>
+          <p class="step-content">90 min ×5 = <b>${dur(450)}</b> → ${raw} ${wakeMode ? "−" : "+"} ${dur(450)} = <b>${primary}</b>. Five or six cycles give the full dose of deep and REM sleep; waking inside a cycle leaves you groggy even on "enough" hours.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step2 — Every option${wakeMode ? " for your alarm" : " if you sleep now"}</span>
+          <div class="math-formula-box">option = your time ± (cycles × 90 minutes)</div>
+          <p class="step-content">${optionRows}</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step3 — Land the landing</span>
+          <div class="math-formula-box">onset ≈15 min after lights-out · consistency beats duration</div>
+          <p class="step-content">The "In Bed By" card adds a15-minute buffer for the average person to drift off — target <i>sleep onset</i>, not head-on-pillow. Keep the same wake time7 days a week (weekend shifts under an hour), dim screens30 minutes before bed, and skip caffeine within8 hours and alcohol within3 hours of bedtime — both shred cycle quality even when the clock looks perfect.</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  timeInput.addEventListener("input", calculate);
+  modeSel.addEventListener("change", calculate);
+  container.querySelector("#btnCalcSl").addEventListener("click", calculate);
+  container.querySelector("#btnResetSl").addEventListener("click", () => {
+    setDefaults();
+    resultDiv.style.display = "none";
+  });
+
+  setDefaults();
+  calculate();
+}

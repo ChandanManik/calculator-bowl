@@ -207,3 +207,161 @@ function renderQuadraticCalculator(container, calcDef) {
   btnCalc.addEventListener("click", solve);
   solve();
 }
+
+/* ============================================================================
+ * Weighted Grade Calculator — course %, letter grade, final-exam requirement
+ * ========================================================================== */
+function renderGradeCalculator(container, calcDef) {
+  const cats = ["Exams", "Homework", "Quizzes", "Participation", "Everything else"];
+  const gDefaults = ["85", "92", "78", "95", ""];
+  const wDefaults = ["35", "25", "12", "8", ""];
+  container.innerHTML = `
+    <table class="table">
+      <thead><tr><th>Category</th><th>Grade (%)</th><th>Weight (%)</th></tr></thead>
+      <tbody>
+        ${cats.map((c, i) => {
+          const k = i + 1;
+          return `<tr>
+            <td style="padding-top: 0.55rem;">${c}</td>
+            <td><input type="number" id="gcG${k}" class="form-control" value="${gDefaults[i]}" min="0" max="150" step="0.01"></td>
+            <td><input type="number" id="gcW${k}" class="form-control" value="${wDefaults[i]}" min="0" max="100" step="0.01"></td>
+          </tr>`;
+        }).join("")}
+      </tbody>
+    </table>
+
+    <div class="form-grid" style="margin-top: 1.25rem;">
+      <div class="form-group">
+        <label class="form-label" for="gcTarget">Target Class Grade <span class="form-label-hint">%</span></label>
+        <input type="number" id="gcTarget" class="form-control" value="88" min="0" max="150" step="0.5">
+      </div>
+    </div>
+
+    <div class="calc-actions">
+      <button type="button" id="btnCalcGc" class="btn btn-primary"><span>🎓 Calculate Grade</span></button>
+      <button type="button" id="btnResetGc" class="btn btn-secondary"><span>↺ Reset</span></button>
+    </div>
+
+    <div id="gcResultContainer" class="results-section animate-fade-in" style="display: none; margin-top: 2rem;"></div>
+  `;
+
+  const gEls = [], wEls = [];
+  for (let i = 1; i <= 5; i++) {
+    gEls.push(container.querySelector(`#gcG${i}`));
+    wEls.push(container.querySelector(`#gcW${i}`));
+  }
+  const targetInput = container.querySelector("#gcTarget");
+  const resultDiv = container.querySelector("#gcResultContainer");
+
+  const money = (n) => n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const money0 = (n) => n.toLocaleString("en-US", { maximumFractionDigits: 0 });
+
+  function letterFor(pct) {
+    if (pct >= 93) return "A";
+    if (pct >= 90) return "A−";
+    if (pct >= 87) return "B+";
+    if (pct >= 83) return "B";
+    if (pct >= 80) return "B−";
+    if (pct >= 77) return "C+";
+    if (pct >= 73) return "C";
+    if (pct >= 70) return "C−";
+    if (pct >= 67) return "D+";
+    if (pct >= 63) return "D";
+    if (pct >= 60) return "D−";
+    return "F";
+  }
+
+  function calculate(ev) {
+    let sumW = 0, sumGW = 0;
+    const parts = [];
+    for (let i = 0; i < 5; i++) {
+      const gRaw = gEls[i].value, wRaw = wEls[i].value;
+      if (gRaw === "" && wRaw === "") continue;
+      const g = parseFloat(gRaw), w = parseFloat(wRaw);
+      if (isNaN(g) || g < 0 || g > 150 || isNaN(w) || w < 0 || w > 100) {
+        alert(`Row ${i + 1}: grades must be0–150% and weights0–100%.`);
+        return;
+      }
+      sumW += w;
+      sumGW += g * w;
+      parts.push({ g, w });
+    }
+    if (!parts.length) { alert("Enter at least one category with a grade and weight."); return; }
+    if (sumW > 100) { alert("Weights add up to more than 100% — fix the column."); return; }
+
+    const current = sumGW / sumW;
+    const letter = letterFor(current);
+    const remaining = Math.round((100 - sumW) * 100) / 100;      // weight still up for grabs
+    const target = parseFloat(targetInput.value);
+    if (isNaN(target) || target < 0 || target > 150) { alert("Target grade must be between0% and150%."); return; }
+
+    let required = null, reqWarn = "";
+    if (remaining > 0) {
+      required = (target * 100 - sumGW) / remaining;
+      if (required > 100) reqWarn = `⚠ Hitting ${target}% needs <b>${money(required)}%</b> on the remaining ${remaining}% — above100%, so it is out of reach unless weights or earlier grades change.`;
+      else if (required < 0) required = 0;
+    }
+
+    const partsLine = parts.map(p => `${money0(p.g * p.w)}`).join(" + ");
+
+    resultDiv.innerHTML = `
+      <div class="result-stat-grid">
+        <div class="result-stat-card">
+          <div class="result-stat-label">Current Weighted Grade</div>
+          <div class="result-stat-val" style="color: var(--accent-emerald);">${money(current)}%</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Letter Grade</div>
+          <div class="result-stat-val">${letter}</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Weight Entered</div>
+          <div class="result-stat-val">${money0(sumW)}%</div>
+        </div>
+        <div class="result-stat-card">
+          <div class="result-stat-label">Needed on Remaining ${money0(remaining)}%</div>
+          <div class="result-stat-val">${required === null ? "—" : `${money(required)}%`}</div>
+        </div>
+      </div>
+
+      ${reqWarn ? `<p style="margin-top: 1rem; color: var(--accent-orange);">${reqWarn}</p>` : ""}
+      ${remaining === 0 ? `<p style="margin-top: 1rem; color: var(--text-muted);">All100% of the weight is entered — nothing remains, so the final is already baked into ${money(current)}%.</p>` : ""}
+
+      <div class="steps-wrapper" style="margin-top: 2rem;">
+        <div class="steps-header"><h3 class="steps-title">📊 Grade Breakdown</h3></div>
+        <div class="step-card">
+          <span class="step-num-badge">Step1 — Weighted average</span>
+          <div class="math-formula-box">grade = Σ(weight × grade) ÷ Σweights</div>
+          <p class="step-content">(${parts.map(p => `${money0(p.g)} × ${money0(p.w)}`).join(" + ")}) = <b>${money0(sumGW)}</b> ÷ ${money0(sumW)} = <b>${money(current)}%</b> → letter <b>${letter}</b>. Categories with bigger weights move the needle: one zero in a12%-weight quiz hurts far less than a bombed35% exam.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step2 — Letter scale</span>
+          <div class="math-formula-box">A ≥93 · A− ≥90 · B+ ≥87 · B ≥83 · B− ≥80 · C+ ≥77 · C ≥73 · C− ≥70 · D ≥60 · else F</div>
+          <p class="step-content">${money(current)}% sits at <b>${letter}</b>. Most US scales allow a ±0.5% round-up at boundaries (some schools round87− to B) — if your syllabus differs, compare against its scale before celebrating.</p>
+        </div>
+        <div class="step-card">
+          <span class="step-num-badge">Step3 — What the final must score</span>
+          <div class="math-formula-box">final = (target × 100 − Σ(weight × grade)) ÷ remaining weight</div>
+          <p class="step-content">${required === null
+            ? `No weight remains, so the course grade is locked at ${money(current)}%.`
+            : `(${money0(target)} ×100 − ${money0(sumGW)}) ÷ ${money0(remaining)} = <b>${money(required)}%</b> on what is left. Enter a single row (current standing + its weight) if you only know those two numbers — the algebra is identical.`}</p>
+        </div>
+      </div>
+    `;
+
+    resultDiv.style.display = "block";
+    if (ev && ev.type === "click") resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  gEls.concat(wEls).forEach(el => el.addEventListener("input", calculate));
+  targetInput.addEventListener("input", calculate);
+  container.querySelector("#btnCalcGc").addEventListener("click", calculate);
+  container.querySelector("#btnResetGc").addEventListener("click", () => {
+    gEls.forEach((el, i) => { el.value = gDefaults[i]; });
+    wEls.forEach((el, i) => { el.value = wDefaults[i]; });
+    targetInput.value = "88";
+    resultDiv.style.display = "none";
+  });
+
+  calculate();
+}
