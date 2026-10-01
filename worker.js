@@ -12,6 +12,9 @@
  * response leaves the edge. Paths outside the sitemap keep the homepage
  * canonical (harmless consolidation of soft-404 URLs).
  *
+ * Requires assets.binding = "ASSETS" in wrangler config (verified live:
+ * without it env is empty and every fallback request fails).
+ *
  * Fails open: any error falls back to re-serving the asset unmodified, so a
  * Worker fault can never take pages down.
  *
